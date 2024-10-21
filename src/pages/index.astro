@@ -1,0 +1,31 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Hero from "@components/Hero/hero";
+import Products from "@components/product/product";
+import Quality from "@components/quality/quality";
+import Categories from "@components/categories/categories";
+import About from "@components/about/about";
+import Questions from "@components/questions/questions";
+import Clients from "@components/clients/clients";
+import Inspiration from "@components/inspiration/inspiration";
+import Footer from "@components/Footer/Footer";
+
+---
+
+<Layout>
+	<div class="smooth-wrapper">
+		<div class="smooth-content">
+			<div class="relative bg-effect">
+				<Hero client:load/>
+				<Products client:load/>
+				<Quality client:load/>
+				<Categories client:load/>
+				<About client:load/>
+				<Questions client:load/>
+				<Clients client:load/>
+				<Inspiration client:load/>
+				<Footer client:load/>
+			</div>
+		</div>
+	  </div>
+</Layout>

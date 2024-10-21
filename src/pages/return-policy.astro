@@ -1,0 +1,19 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Navbar from "@components/navbar/navbar";
+import ReturnPolicyComponent from "@components/policy/returnPolicy";
+import Footer from "@components/Footer/Footer";
+
+---
+
+<Layout>
+	<div class="smooth-wrapper">
+		<div class="smooth-content">
+			<div class="relative bg-white">
+				<Navbar client:load/>
+				<ReturnPolicyComponent client:load/>
+				<Footer client:load/>
+			</div>
+		</div>
+	  </div>
+</Layout>

@@ -1,0 +1,13 @@
+.hero-section .hero-content{
+    @apply relative w-full h-full flex flex-col justify-between overflow-hidden ;
+    background: url(/images/hero/hero-bg.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top right 20%;
+
+}
+.hero-section .hero-content::before{
+    @apply content-[''] w-full h-full absolute left-0 top-0;
+    
+    background: linear-gradient(0deg, rgba(0, 0, 0, 0.00) 87.28%, rgba(0, 0, 0, 0.40) 100%), linear-gradient(270deg, rgba(0, 0, 0, 0.00) 33.65%, rgba(0, 0, 0, 0.40) 82.7%);
+}

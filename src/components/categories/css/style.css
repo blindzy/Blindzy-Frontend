@@ -1,0 +1,24 @@
+.categorie-section .container-categories{
+    @apply relative w-full h-full z-[15] xl:py-[11vh] py-[2vh]
+}
+.categorie-section .container-categories::before{
+    @apply sm:content-[''] absolute right-0 top-0 xl:w-[58%] w-[50%] h-full z-10;
+    background: linear-gradient(90deg, rgba(217, 217, 217, 0.01) 11.79%, rgba(159, 137, 232, 0.04) 100%);
+    backdrop-filter: blur(5px);
+    /* pointer-events: none */
+}
+.container-categories .categories-cards{
+    @apply xl:w-[26.354vw] sm:w-[51%] w-full h-full overflow-visible m-0 xl:px-0 px-4;
+}
+.container-categories .categories-cards .swiper-wrapper{
+    @apply w-full h-full ;
+}
+.categories-cards .cards-item{
+    @apply relative w-full h-full overflow-hidden;
+}
+.categories-cards .cards-item img{
+    @apply w-full h-full object-cover;
+}
+.categories-cards .cards-item .content{
+    @apply w-full h-full absolute left-0 top-0 xl:p-[1.25vw] sm:p-[2.344vw] p-4 flex flex-col items-end justify-between;
+}

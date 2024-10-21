@@ -1,0 +1,54 @@
+.inspiration-section .inspiration-cards{
+    @apply overflow-visible xl:px-[1.25vw] sm:px-4 px-2 xl:h-[72.804vh] h-[50vh];
+    
+}
+.inspiration-section .inspiration-cards .swiper-wrapper{
+    @apply flex items-center xl:justify-center
+}
+.inspiration-section .inspiration-cards .cards-item{
+    
+    @apply relative flex items-center xl:rounded-[2.5vw] sm:rounded-[4.688vw] rounded-[4.898vw];
+    width: 10.625vw!important;
+    height: 55.8730vh;
+    transition: var(--transition);
+    overflow: hidden;
+    opacity: 0.8;
+}
+.inspiration-section .inspiration-cards .cards-item .title{
+    transition: var(--transition);
+    @apply absolute xl:left-[1.25vw] sm:left-4 left-2 xl:bottom-[1.25vw] sm:bottom-4 bottom-2 opacity-0 z-[10];
+}
+.inspiration-section .inspiration-cards .cards-item img{
+    @apply w-full h-full object-cover;
+    object-position:  center;
+}
+.inspiration-section .inspiration-cards .cards-item.swiper-slide-prev,
+.inspiration-section .inspiration-cards .cards-item.swiper-slide-next{
+    transform: scaleY(1.15);
+    opacity: 0.9;
+}
+.inspiration-section .inspiration-cards .cards-item.swiper-slide-active{
+    width: 26.354vw!important;
+    height: 100%;
+    opacity: 1;
+}
+.inspiration-section .inspiration-cards .cards-item.swiper-slide-active .title{
+    opacity: 1;
+}
+@media only screen and (max-width: 1024px) {
+    .inspiration-section .inspiration-cards .cards-item{
+        width: auto!important;
+        height: auto;
+    }
+    .inspiration-section .inspiration-cards .cards-item.swiper-slide-active{
+        width: auto!important;
+    }
+    .inspiration-section .inspiration-cards .cards-item.swiper-slide-prev,
+    .inspiration-section .inspiration-cards .cards-item.swiper-slide-next{
+        transform: scaleY(1);
+        opacity: 1;
+    }
+    .inspiration-section .inspiration-cards .cards-item .title{
+        opacity: 1;
+    }
+}

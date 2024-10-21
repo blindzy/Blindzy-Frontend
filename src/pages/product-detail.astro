@@ -1,0 +1,18 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Navbar from "@components/navbar/navbar";
+import ProductDetails from "@components/product/productDetail";
+
+import Footer from "@components/Footer/Footer";
+
+---
+
+<Layout>
+	<div class="smooth-wrapper">
+		<div class="smooth-content bg-white">
+            <Navbar client:load/>
+            <ProductDetails client:load/>
+            <Footer client:load/>
+		</div>
+	  </div>
+</Layout>

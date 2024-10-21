@@ -1,0 +1,20 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Navbar from "@components/navbar/navbar";
+import InnerBanner from "@components/inner-banner/innerBanner";
+import ShopComponent from "@components/shop/Shop";
+
+import Footer from "@components/Footer/Footer";
+
+---
+
+<Layout>
+	<div class="smooth-wrapper">
+		<div class="smooth-content bg-white">
+            <Navbar client:load/>
+            <InnerBanner client:load title="BLINDS SHOP" content="Beautiful Designer Blinds Cou Can Install in 20 Minutes"/>
+            <ShopComponent client:load/>
+            <Footer client:load/>
+		</div>
+	  </div>
+</Layout>

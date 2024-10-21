@@ -1,0 +1,8 @@
+.quailty-step .bg{
+    @apply sm:p-[24px] ps-[3.053vw] py-[3.562vw] sm:pr-[8.906vw] pr-4;
+    background: url(/images/vector/substract.png);
+    background-repeat: no-repeat;
+    background-position: 100%;
+    background-size: contain;
+
+}

@@ -1,0 +1,64 @@
+---
+import "@styles/global.css";
+import { SEO } from "astro-seo";
+import Contact from "@components/popup/contact";
+import CartPopup from "@components/popup/cart-popup";
+
+import "@fontsource/roboto/400.css";
+import "@fontsource/m-plus-rounded-1c/400.css"
+import "@fontsource/m-plus-rounded-1c/500.css"
+import "@fontsource/m-plus-rounded-1c/700.css"
+import "@fontsource/m-plus-rounded-1c/800.css"
+import "@fontsource/m-plus-rounded-1c/900.css"
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+// const canonicalURL = new URL(Astro.url.pathname, Astro.site).toString();
+
+const resolvedImageWithDomain = new URL(
+  "https://imagedelivery.net/J_GCjRXa43nJSxoY2tGPSw/b4c79d75-3ac2-4d88-c352-6a72b6aae200/public",
+  Astro.site
+).toString();
+
+const { title , description} = Astro.props;
+
+const makeTitle = title ? title + " | " + "Blindzy" : "Blindzy";
+const makeDes = description ? description + " | " + "Blindzy" :"Blindzy";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" />
+        <meta name="generator" content={Astro.generator} />
+        <SEO title={makeTitle}
+          description={makeDes}
+          twitter={{
+          creator: "@surjithctly",
+          site: "@web3templates",
+          card: "summary_large_image",
+        }}
+        openGraph={{
+          basic: {
+            type: "website",
+            title: `Astroship - Starter Template for Astro`,
+            image: resolvedImageWithDomain,
+          },
+          image: {
+            alt: "Astroship Homepage Screenshot",
+          },
+        }}
+        />
+    </head>
+    <body>
+        <slot />
+      <Contact client:load /> 
+      <CartPopup client:load /> 
+    </body>
+</html>

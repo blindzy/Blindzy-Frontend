@@ -1,0 +1,19 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Navbar from "@components/navbar/navbar";
+import Users from "@components/user/user";
+import Footer from "@components/Footer/Footer";
+
+---
+
+<Layout>
+	<div class="smooth-wrapper">
+		<div class="smooth-content">
+			<div class="relative bg-white">
+				<Navbar client:load/>
+				<Users client:load/>
+				<Footer client:load/>
+			</div>
+		</div>
+	  </div>
+</Layout>

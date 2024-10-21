@@ -1,0 +1,15 @@
+---
+import Layout from "@layouts/Layout.astro";
+import LoginComponent from "@components/login/login";
+
+---
+
+<Layout>
+	<div class="smooth-wrapper">
+		<div class="smooth-content">
+			<div class="relative bg-white">
+				<LoginComponent client:load/>
+			</div>
+		</div>
+	  </div>
+</Layout>

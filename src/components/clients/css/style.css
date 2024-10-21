@@ -1,0 +1,9 @@
+.client-section .client-cards{
+    @apply w-full overflow-visible xl:px-[1.25vw] sm:px-4 px-2;
+}
+.client-section .client-cards .swiper-wrapper{
+    @apply w-full h-full overflow-visible;
+}
+.client-section .client-cards .cards-item{
+    @apply xl:h-[48.886vh] h-[32vh] flex flex-col justify-between bg-[--white] xl:p-[1.25vw] sm:p-[2.344vw] p-4  border border-[--Black];
+}

@@ -1,0 +1,18 @@
+{
+  "extends": "astro/tsconfigs/base",
+  "compilerOptions": {
+    "baseUrl": "src",
+    "strictNullChecks": true,
+    "jsx": "react",
+    "types": ["astro/client"],
+    "paths": {
+      "@lib/*": ["lib/*"],
+      "@utils/*": ["utils/*"],
+      "@components/*": ["components/*"],
+      "@layouts/*": ["layouts/*"],
+      "@assets/*": ["assets/*"],
+      "@styles/*": ["styles/*"],
+      "@pages/*": ["pages/*"]
+    }
+  }
+}

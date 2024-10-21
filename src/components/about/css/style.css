@@ -1,0 +1,6 @@
+.about-banner .about-bg{
+    background: url(/images//innerBanner/about-bg.png);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
