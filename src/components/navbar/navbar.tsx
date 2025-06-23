@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import './css/style.css';
 
-function navbar(props) {
+interface NavbarProps {
+	customClass?: string;
+}
+
+function Navbar(props: NavbarProps) {
 	useEffect(() => {
 	}, []);
 	return (
@@ -32,9 +36,9 @@ function navbar(props) {
 				</ul>
 				<div className="xl:block hidden">
 					<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-						<path d="M2.25 9H15.75" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-						<path d="M2.25 3.75H15.75" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-						<path d="M9.75 14.25H15.75" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+						<path d="M2.25 9H15.75" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+						<path d="M2.25 3.75H15.75" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+						<path d="M9.75 14.25H15.75" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 					</svg>
 				</div>
 			</div>
@@ -66,9 +70,9 @@ function navbar(props) {
 				</button>
 				<div className="xl:hidden">
 					<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-						<path d="M2.25 9H15.75" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-						<path d="M2.25 3.75H15.75" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-						<path d="M9.75 14.25H15.75" stroke="#0F0F0F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+						<path d="M2.25 9H15.75" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+						<path d="M2.25 3.75H15.75" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+						<path d="M9.75 14.25H15.75" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
 					</svg>
 				</div>
 			</div>
@@ -76,4 +80,4 @@ function navbar(props) {
 	);
 };
   
-  export default navbar;
+export default Navbar; 

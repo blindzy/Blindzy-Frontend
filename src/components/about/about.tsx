@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import './css/style.css';
 
-function About() {
+interface AboutProps {
+	// Add any props if needed in the future
+}
+
+function About(props: AboutProps) {
 
 	useEffect(() => {
 	}, []);

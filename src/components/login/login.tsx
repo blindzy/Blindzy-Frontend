@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { Icon } from '@iconify/react';
 
-function Login() {
+interface LoginProps {
+	// Add any props if needed in the future
+}
+
+function Login(props: LoginProps) {
 
 	useEffect(() => {
 	}, []);
@@ -45,7 +49,7 @@ function Login() {
                         <label htmlFor="remember" className="text-sm">Remember me</label>
                     </div>
                     <div className="flex itemx-cneter gap-1 text-sm">
-                        Don’t have an account? 
+                        Don't have an account? 
                         <a href="/signUp" className="text-primary">Signup</a>
                     </div>
                 </div>

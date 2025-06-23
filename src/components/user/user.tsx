@@ -1,8 +1,11 @@
-import React, { useEffect , useState } from "react";
+﻿import React, { useEffect , useState } from "react";
 import { Icon } from '@iconify/react';
 
-function User() {
-    const [currentTab, setCurrentTab] = useState('orders');
+interface UserProps {
+	// Add any props if needed in the future
+}
+function User(props: UserProps) {
+    const [currentTab, setCurrentTab] = useState<string>('orders');
     const [imageSrc, setImageSrc] = useState<string>('');
 
     const handleImageChange = (event) => {
@@ -17,8 +20,8 @@ function User() {
     
 
 	return (
-        <div className="relative w-screen h-[88vh] flex xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 overflow-hidden" id="user">
-            <div className="w-[480px] h-full flex flex-col justify-between gap-[48px] xl:p-[1.25vw] sm:p-[2.344vw] p-4 xl:pt-[48px] bg-primary rounded-48 text-white shrink-0">
+        <div className="relative w-screen min-h-screen flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 xl:pb-[1.25vw] sm:pb-[2.344vw] pb-20 overflow-hidden" id="user">
+            <div className="xl:w-[480px] w-full xl:h-full h-auto flex flex-col justify-between gap-[48px] xl:p-[1.25vw] sm:p-[2.344vw] p-4 xl:pt-[48px] bg-primary rounded-48 text-white xl:shrink-0">
                 <div className="w-full flex flex-col gap-[48px]">
                     <div className="w-full flex flex-col items-center gap-4">
                         <div className="w-[150px] h-[150px] rounded-[100%]">
@@ -59,32 +62,32 @@ function User() {
                     <button className="w-full cus-btn stroke">Log Out</button>
                 </div>
             </div>
-            <div className="w-full h-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-                <div className="w-full flex items-center justify-center gap-4 p-3 border border-[--Black] rounded-48 shrink-0">
-                    <button className={`w-full cus-btn tab-btn ${currentTab === 'orders'&&'active'}`} onClick={() => setCurrentTab('orders')}>
+            <div className="w-full xl:h-full h-auto flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
+                <div className="w-full flex xl:flex-row flex-col items-center justify-center xl:gap-4 sm:gap-2 gap-2 p-3 border border-[--Black] rounded-48 shrink-0 overflow-x-auto">
+                    <button className={`xl:w-full w-[200px] cus-btn tab-btn ${currentTab === 'orders'&&'active'}`} onClick={() => setCurrentTab('orders')}>
                         Order History
                     </button>
-                    <button className={`w-full cus-btn tab-btn ${currentTab === 'address'&&'active'}`} onClick={() => setCurrentTab('address')}>
+                    <button className={`xl:w-full w-[200px] cus-btn tab-btn ${currentTab === 'address'&&'active'}`} onClick={() => setCurrentTab('address')}>
                         Address Book
                     </button>
-                    <button className={`w-full cus-btn tab-btn ${currentTab === 'payment'&&'active'}`} onClick={() => setCurrentTab('payment')}>
+                    <button className={`xl:w-full w-[200px] cus-btn tab-btn ${currentTab === 'payment'&&'active'}`} onClick={() => setCurrentTab('payment')}>
                         Payment Options
                     </button>
-                    <button className={`w-full cus-btn tab-btn ${currentTab === 'tracking'&&'active'}`} onClick={() => setCurrentTab('tracking')}>
+                    <button className={`xl:w-full w-[200px] cus-btn tab-btn ${currentTab === 'tracking'&&'active'}`} onClick={() => setCurrentTab('tracking')}>
                         Order Tracking
                     </button>
                 </div>
                 {
                     currentTab === 'orders'?(
                         <div className="w-full h-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black overflow-auto scroll-hidden" id="order-history">
-                            <div className="w-full flex flex-col items-center gap-2  p-4 border border-[--Black] rounded-24">
-                                <div className="w-full flex items-center justify-between gap-6">
-                                    <div className="w-[40%] flex items-center gap-2">
+                            <div className="w-full flex flex-col items-center gap-2 p-4 border border-[--Black] rounded-24">
+                                <div className="w-full flex xl:flex-row flex-col items-center xl:justify-between xl:gap-6 gap-4">
+                                    <div className="w-full xl:w-[40%] flex items-center gap-2">
                                         <div className="w-[64px] h-[64px] bg-primary rounded-lg shrink-0"></div>
                                         <h6 className="text-md">Product Name</h6>
                                     </div>
                                     <span className="text-md">$7000</span>
-                                    <div className="w-[40%] flex justify-end">
+                                    <div className="w-full xl:w-[40%] flex xl:justify-end justify-center">
                                         <button className="cus-btn text-sm small shrink-0">
                                             Reorder
                                         </button>
@@ -134,14 +137,14 @@ function User() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-full flex flex-col items-center gap-2  p-4 border border-[--Black] rounded-24">
-                                <div className="w-full flex items-center justify-between gap-6">
-                                    <div className="w-[40%] flex items-center gap-2">
+                            <div className="w-full flex flex-col items-center gap-2 p-4 border border-[--Black] rounded-24">
+                                <div className="w-full flex xl:flex-row flex-col items-center xl:justify-between xl:gap-6 gap-4">
+                                    <div className="w-full xl:w-[40%] flex items-center gap-2">
                                         <div className="w-[64px] h-[64px] bg-primary rounded-lg shrink-0"></div>
                                         <h6 className="text-md">Product Name</h6>
                                     </div>
                                     <span className="text-md">$7000</span>
-                                    <div className="w-[40%] flex justify-end">
+                                    <div className="w-full xl:w-[40%] flex xl:justify-end justify-center">
                                         <button className="cus-btn text-sm small shrink-0">
                                             Reorder
                                         </button>
@@ -191,14 +194,14 @@ function User() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="w-full flex flex-col items-center gap-2  p-4 border border-[--Black] rounded-24">
-                                <div className="w-full flex items-center justify-between gap-6">
-                                    <div className="w-[40%] flex items-center gap-2">
+                            <div className="w-full flex flex-col items-center gap-2 p-4 border border-[--Black] rounded-24">
+                                <div className="w-full flex xl:flex-row flex-col items-center xl:justify-between xl:gap-6 gap-4">
+                                    <div className="w-full xl:w-[40%] flex items-center gap-2">
                                         <div className="w-[64px] h-[64px] bg-primary rounded-lg shrink-0"></div>
                                         <h6 className="text-md">Product Name</h6>
                                     </div>
                                     <span className="text-md">$7000</span>
-                                    <div className="w-[40%] flex justify-end">
+                                    <div className="w-full xl:w-[40%] flex xl:justify-end justify-center">
                                         <button className="cus-btn text-sm small shrink-0">
                                             Reorder
                                         </button>
@@ -250,16 +253,16 @@ function User() {
                             </div>
                         </div>
                     ):currentTab === 'address'?(
-                        <div className="w-full max-h-full flex items-stretch xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black" id="address">
+                        <div className="w-full max-h-full flex xl:flex-row flex-col items-stretch xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black" id="address">
                             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48">
-                                <div className="w-full flex items-center justify-between">
+                                <div className="w-full flex xl:flex-row flex-col xl:items-center xl:justify-between gap-2">
                                     <h5 className="text-lg">ADDRESS</h5>
-                                    <button className="cus-btn text-sm">
+                                    <button className="cus-btn text-sm xl:w-fit w-full">
                                         Edit
                                     </button>
                                 </div>
-                                <p className="text-md w-[80%]">65 Berwick-Cranbourne Rd , Melbourne, Victoria, Australia</p>
-                                <div className="w-full flex items-center justify-between">
+                                <p className="text-md xl:w-[80%] w-full">65 Berwick-Cranbourne Rd , Melbourne, Victoria, Australia</p>
+                                <div className="w-full flex xl:flex-row flex-col xl:items-center xl:justify-between gap-2">
                                     <h5 className="text-md">Postal Code: 3977</h5>
                                     <a href="/" className="flex items-center gap-2 text-md transition hover:text-[--primary]">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -273,7 +276,7 @@ function User() {
                                 </div>
                             </div>
                             <div className="w-full flex flex-col items-center justify-center gap-2 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48">
-                                <h5 className="text-lg">WANT TO ADD A NEW ADDRESS?</h5>
+                                <h5 className="text-lg text-center">WANT TO ADD A NEW ADDRESS?</h5>
                                 <button className="w-fit cus-btn text-sm small">
                                     Add Address
                                 </button>
@@ -285,11 +288,10 @@ function User() {
                         <div className="w-full h-full flex flex-col items-center text-center justify-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black">
                             <h3 className="text-xxl">ORDER TRACKING</h3>
                             <h5 className="text-lg">To Track Your Order Enter Your Order Number</h5>
-                            <div className="w-[50%]">
+                            <div className="xl:w-[50%] w-full">
                                 <input type="text" className="formInput" id="order-number" placeholder="Enter Order Number"/>
                             </div>
                         </div>
-
                     )
                 }
             </div>
@@ -298,3 +300,4 @@ function User() {
 }
 
 export default User;
+

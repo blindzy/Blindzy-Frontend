@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
 
 import './css/style.css';
 
+interface HeroProps {
+	// Add any props if needed in the future
+}
 function Hero(props) {
 
 	useEffect(() => {
@@ -22,11 +25,11 @@ function Hero(props) {
 	}, []);
 
 	return (
-		<section className="innerBanner w-screen xl:px-[1.25vw] sm:px-[2.344vw] px-4" id="innerBanner">
+		<section className="innerBanner w-full px-4 sm:px-6 lg:px-8" id="innerBanner">
 			<div className="inner-content rounded-48 ">
-				<div className="flex flex-col gap-2 text-white">
-                    <h2 className="text-1xl">{props.title}</h2>
-                    <p className="text-md w-[606px]">{props.content}</p>
+				<div className="flex flex-col gap-2 sm:gap-4 text-white">
+                    <h2 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl">{props.title}</h2>
+                    <p className="text-sm sm:text-base lg:text-lg w-full max-w-[606px]">{props.content}</p>
 
                 </div>
 			</div>
@@ -35,3 +38,4 @@ function Hero(props) {
 }
 
 export default Hero;
+

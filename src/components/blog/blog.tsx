@@ -4,8 +4,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
 
-function Blog() {
-	const [selectedCategory, setSelectedCategory] = useState('all');
+interface BlogProps {
+	// Add any props if needed in the future
+}
+
+function Blog(props: BlogProps) {
+	const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
 	useEffect(() => {
         gsap.registerPlugin(ScrollTrigger, ScrollSmoother);

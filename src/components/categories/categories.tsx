@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import './css/style.css';
 import { Icon } from '@iconify/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,7 +6,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation} from 'swiper/modules';
 
-function Categories() {
+interface CategoriesProps {
+	// Add any props if needed in the future
+}
+function Categories(props: CategoriesProps) {
 
 	useEffect(() => {
 	}, []);
@@ -135,3 +138,4 @@ function Categories() {
 }
 
 export default Categories;
+

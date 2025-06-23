@@ -4,7 +4,11 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
 
-function Contact() {
+interface ContactProps {
+	// Add any props if needed in the future
+}
+
+function Contact(props: ContactProps) {
 
 	useEffect(() => {
         gsap.registerPlugin(ScrollTrigger, ScrollSmoother);

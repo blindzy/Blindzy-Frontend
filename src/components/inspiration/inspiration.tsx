@@ -1,4 +1,4 @@
-import React, { useEffect , useState } from "react";
+﻿import React, { useEffect , useState } from "react";
 import './css/style.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -6,8 +6,11 @@ import 'swiper/css/navigation';
 import { Navigation} from 'swiper/modules';
 
 
-function Inspiration() {
-    const [screen, setScreen] = useState(true);
+interface InspirationProps {
+	// Add any props if needed in the future
+}
+function Inspiration(props: InspirationProps) {
+    const [screen, setScreen] = useState<boolean>(true);
 
 	useEffect(() => {
         if(window.innerWidth < 1025){
@@ -121,3 +124,4 @@ function Inspiration() {
 }
 
 export default Inspiration;
+

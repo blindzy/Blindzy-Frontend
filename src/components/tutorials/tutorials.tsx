@@ -1,11 +1,14 @@
-import React, { useEffect , useState} from "react";
+﻿import React, { useEffect , useState} from "react";
 import { Icon } from '@iconify/react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
 
-function Tutorials() {
-	const [selectedCategory, setSelectedCategory] = useState('all');
+interface TutorialsProps {
+	// Add any props if needed in the future
+}
+function Tutorials(props: TutorialsProps) {
+	const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
 	useEffect(() => {
         gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -48,42 +51,42 @@ function Tutorials() {
                     <img src="/images/tutorial/1.png" className="w-full rounded-48"  alt="tutorail" />
                     <div className="flex flex-col text-black">
                         <h4 className="text-xl">DESIGN SPECIFICATIONS</h4>
-                        <p className="text-sm">Welcome, we’re here to bring you a new standard in energy-efficient home solutions. </p>
+                        <p className="text-sm">Welcome, weâ€™re here to bring you a new standard in energy-efficient home solutions. </p>
                     </div>
                 </div>
                 <div className={`sm:col-span-4 col-span-12 flex flex-col xl:gap-[0.833vw] sm:gap-[1.563vw] gap-4 ${selectedCategory === 'all' ? 'visible': 'hidden'}`}>
                     <img src="/images/tutorial/1.png" className="w-full rounded-48"  alt="tutorail" />
                     <div className="flex flex-col text-black">
                         <h4 className="text-xl">DESIGN SPECIFICATIONS</h4>
-                        <p className="text-sm">Welcome, we’re here to bring you a new standard in energy-efficient home solutions. </p>
+                        <p className="text-sm">Welcome, weâ€™re here to bring you a new standard in energy-efficient home solutions. </p>
                     </div>
                 </div>
                 <div className={`sm:col-span-4 col-span-12 flex flex-col xl:gap-[0.833vw] sm:gap-[1.563vw] gap-4 ${selectedCategory === 'all' || selectedCategory === 'blinds' ? 'visible': 'hidden'}`}>
                     <img src="/images/tutorial/1.png" className="w-full rounded-48"  alt="tutorail" />
                     <div className="flex flex-col text-black">
                         <h4 className="text-xl">DESIGN SPECIFICATIONS</h4>
-                        <p className="text-sm">Welcome, we’re here to bring you a new standard in energy-efficient home solutions. </p>
+                        <p className="text-sm">Welcome, weâ€™re here to bring you a new standard in energy-efficient home solutions. </p>
                     </div>
                 </div>
                 <div className={`sm:col-span-4 col-span-12 flex flex-col xl:gap-[0.833vw] sm:gap-[1.563vw] gap-4 ${selectedCategory === 'all' ? 'visible': 'hidden'}`}>
                     <img src="/images/tutorial/1.png" className="w-full rounded-48"  alt="tutorail" />
                     <div className="flex flex-col text-black">
                         <h4 className="text-xl">DESIGN SPECIFICATIONS</h4>
-                        <p className="text-sm">Welcome, we’re here to bring you a new standard in energy-efficient home solutions. </p>
+                        <p className="text-sm">Welcome, weâ€™re here to bring you a new standard in energy-efficient home solutions. </p>
                     </div>
                 </div>
                 <div className={`sm:col-span-4 col-span-12 flex flex-col xl:gap-[0.833vw] sm:gap-[1.563vw] gap-4 ${selectedCategory === 'all' || selectedCategory === 'blinds' ? 'visible': 'hidden'}`}>
                     <img src="/images/tutorial/1.png" className="w-full rounded-48"  alt="tutorail" />
                     <div className="flex flex-col text-black">
                         <h4 className="text-xl">DESIGN SPECIFICATIONS</h4>
-                        <p className="text-sm">Welcome, we’re here to bring you a new standard in energy-efficient home solutions. </p>
+                        <p className="text-sm">Welcome, weâ€™re here to bring you a new standard in energy-efficient home solutions. </p>
                     </div>
                 </div>
                 <div className={`sm:col-span-4 col-span-12 flex flex-col xl:gap-[0.833vw] sm:gap-[1.563vw] gap-4 ${selectedCategory === 'all' || selectedCategory === 'curatins' ? 'visible': 'hidden'}`}>
                     <img src="/images/tutorial/1.png" className="w-full rounded-48"  alt="tutorail" />
                     <div className="flex flex-col text-black">
                         <h4 className="text-xl">DESIGN SPECIFICATIONS</h4>
-                        <p className="text-sm">Welcome, we’re here to bring you a new standard in energy-efficient home solutions. </p>
+                        <p className="text-sm">Welcome, weâ€™re here to bring you a new standard in energy-efficient home solutions. </p>
                     </div>
                 </div>
             </div>
@@ -92,3 +95,4 @@ function Tutorials() {
 }
 
 export default Tutorials;
+

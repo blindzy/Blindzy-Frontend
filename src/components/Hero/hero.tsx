@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
@@ -7,7 +7,10 @@ import Navbar from "@components/navbar/navbar";
 
 import './css/style.css';
 
-function Hero() {
+interface HeroProps {
+	// Add any props if needed in the future
+}
+function Hero(props: HeroProps) {
 
 	useEffect(() => {
 		gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -96,4 +99,4 @@ function Hero() {
 	);
 }
 
-export default Hero;
+export default Hero; 

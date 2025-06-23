@@ -1,17 +1,20 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import { Icon } from '@iconify/react';
 
 import './css/style.css';
 
-function Shop() {
+interface ShopProps {
+	// Add any props if needed in the future
+}
+function Shop(props: ShopProps) {
 
 	useEffect(() => {
 		
 	}, []);
 
 	return (
-		<section className="shop-section w-screen min-h-screen flex items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4" id="blindsShop">
-			<div className="w-[450px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black shrink-0">
+		<section className="shop-section w-screen min-h-screen flex xl:flex-row flex-col items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4" id="blindsShop">
+			<div className="xl:w-[450px] w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black xl:shrink-0">
 				<div className="w-full flex flex-col gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48">
 					<div className="flex flex-col gap-2">
 						<h5 className="text-lg uppercase">Filter </h5>
@@ -202,3 +205,4 @@ function Shop() {
 }
 
 export default Shop;
+

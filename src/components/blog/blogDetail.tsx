@@ -1,10 +1,13 @@
-import React, { useEffect} from "react";
+﻿import React, { useEffect} from "react";
 import { Icon } from '@iconify/react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
 
-function BlogDetail() {
+interface BlogDetailProps {
+	// Add any props if needed in the future
+}
+function BlogDetail(props: BlogDetailProps) {
 
 	useEffect(() => {
         gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -33,19 +36,19 @@ function BlogDetail() {
                     <img src="/images/blog/3.png" className="w-full" alt="blog" />
                 </div>
                 <div className="flex flex-col">
-                    <p className="text-sm">A high school teacher ‘Gemma’ who participated in one of our 16-week Workplace Brain Health programs said it highlighted that her working memory was the key cognitive area needing improvement. During the program Gemma became aware of the strategies she used to compensate for her poor working memory, previously unrecognised to her. </p>
-                    <p className="text-sm">Gemma also found the program helped her to pause and reflect more often and decreased her impulsivity within decision-making.  She said “I talk less and listen more. I listen better now when people are speaking rather than making assumptions. I am less impulsive, interrupt less, and have improved in my ability to read a situation accurately.”</p>
-                    <p className="text-sm">When asked of her overall experience of the program Gemma responded with “The opportunity to walk this pathway with others, discuss the challenges, and work with a team that respected the vulnerability of engaging in learning together has been incredibly valuable.” Gemma indicated she appreciated that management invested in this particular professional development within a team, rather than individual context. </p>
+                    <p className="text-sm">A high school teacher â€˜Gemmaâ€™ who participated in one of our 16-week Workplace Brain Health programs said it highlighted that her working memory was the key cognitive area needing improvement. During the program Gemma became aware of the strategies she used to compensate for her poor working memory, previously unrecognised to her. </p>
+                    <p className="text-sm">Gemma also found the program helped her to pause and reflect more often and decreased her impulsivity within decision-making.  She said â€œI talk less and listen more. I listen better now when people are speaking rather than making assumptions. I am less impulsive, interrupt less, and have improved in my ability to read a situation accurately.â€</p>
+                    <p className="text-sm">When asked of her overall experience of the program Gemma responded with â€œThe opportunity to walk this pathway with others, discuss the challenges, and work with a team that respected the vulnerability of engaging in learning together has been incredibly valuable.â€ Gemma indicated she appreciated that management invested in this particular professional development within a team, rather than individual context. </p>
                 </div>
                 <div className="flex flex-col">
-                    <p className="text-sm">A high school teacher ‘Gemma’ who participated in one of our 16-week Workplace Brain Health programs said it highlighted that her working memory was the key cognitive area needing improvement. During the program Gemma became aware of the strategies she used to compensate for her poor working memory, previously unrecognised to her. </p>
-                    <p className="text-sm">Gemma also found the program helped her to pause and reflect more often and decreased her impulsivity within decision-making.  She said “I talk less and listen more. I listen better now when people are speaking rather than making assumptions. I am less impulsive, interrupt less, and have improved in my ability to read a situation accurately.”</p>
-                    <p className="text-sm">When asked of her overall experience of the program Gemma responded with “The opportunity to walk this pathway with others, discuss the challenges, and work with a team that respected the vulnerability of engaging in learning together has been incredibly valuable.” Gemma indicated she appreciated that management invested in this particular professional development within a team, rather than individual context. </p>
+                    <p className="text-sm">A high school teacher â€˜Gemmaâ€™ who participated in one of our 16-week Workplace Brain Health programs said it highlighted that her working memory was the key cognitive area needing improvement. During the program Gemma became aware of the strategies she used to compensate for her poor working memory, previously unrecognised to her. </p>
+                    <p className="text-sm">Gemma also found the program helped her to pause and reflect more often and decreased her impulsivity within decision-making.  She said â€œI talk less and listen more. I listen better now when people are speaking rather than making assumptions. I am less impulsive, interrupt less, and have improved in my ability to read a situation accurately.â€</p>
+                    <p className="text-sm">When asked of her overall experience of the program Gemma responded with â€œThe opportunity to walk this pathway with others, discuss the challenges, and work with a team that respected the vulnerability of engaging in learning together has been incredibly valuable.â€ Gemma indicated she appreciated that management invested in this particular professional development within a team, rather than individual context. </p>
                 </div>
                 <div className="flex flex-col">
-                    <p className="text-sm">A high school teacher ‘Gemma’ who participated in one of our 16-week Workplace Brain Health programs said it highlighted that her working memory was the key cognitive area needing improvement. During the program Gemma became aware of the strategies she used to compensate for her poor working memory, previously unrecognised to her. </p>
-                    <p className="text-sm">Gemma also found the program helped her to pause and reflect more often and decreased her impulsivity within decision-making.  She said “I talk less and listen more. I listen better now when people are speaking rather than making assumptions. I am less impulsive, interrupt less, and have improved in my ability to read a situation accurately.”</p>
-                    <p className="text-sm">When asked of her overall experience of the program Gemma responded with “The opportunity to walk this pathway with others, discuss the challenges, and work with a team that respected the vulnerability of engaging in learning together has been incredibly valuable.” Gemma indicated she appreciated that management invested in this particular professional development within a team, rather than individual context. </p>
+                    <p className="text-sm">A high school teacher â€˜Gemmaâ€™ who participated in one of our 16-week Workplace Brain Health programs said it highlighted that her working memory was the key cognitive area needing improvement. During the program Gemma became aware of the strategies she used to compensate for her poor working memory, previously unrecognised to her. </p>
+                    <p className="text-sm">Gemma also found the program helped her to pause and reflect more often and decreased her impulsivity within decision-making.  She said â€œI talk less and listen more. I listen better now when people are speaking rather than making assumptions. I am less impulsive, interrupt less, and have improved in my ability to read a situation accurately.â€</p>
+                    <p className="text-sm">When asked of her overall experience of the program Gemma responded with â€œThe opportunity to walk this pathway with others, discuss the challenges, and work with a team that respected the vulnerability of engaging in learning together has been incredibly valuable.â€ Gemma indicated she appreciated that management invested in this particular professional development within a team, rather than individual context. </p>
                 </div>
             </div>
             <div className="w-[592px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48 shrink-0">
@@ -116,3 +119,4 @@ function BlogDetail() {
 }
 
 export default BlogDetail;
+

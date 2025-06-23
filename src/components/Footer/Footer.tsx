@@ -1,8 +1,11 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import './css/style.css';
 import { Icon } from '@iconify/react';
 
-function Footer() {
+interface FooterProps {
+	// Add any props if needed in the future
+}
+function Footer(props: FooterProps) {
 
 	useEffect(() => {
 	}, []);
@@ -94,7 +97,7 @@ function Footer() {
 
                 </div>
                 <div className="w-full flex sm:flex-row flex-col sm:gap-0 gap-4 items-center justify-between  xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-white border border-[--Black] rounded-24">
-                    <p className="text-sm text-black">©2024 All Rights Reserved</p>
+                    <p className="text-sm text-black">Â©2024 All Rights Reserved</p>
                     <div className="flex items-center gap-2">
                         <a href="">
                             <img src="/images/afterPay.png" alt="afterPay" />
@@ -113,7 +116,7 @@ function Footer() {
                         </a>
                     </div>
                     <div className="flex items-center gap-2">
-                        <p className="text-sm text-black">©2024 All Rights Reserved</p>
+                        <p className="text-sm text-black">Â©2024 All Rights Reserved</p>
                         <a href="aithur.com">
                             <svg xmlns="http://www.w3.org/2000/svg" width="92" height="24" viewBox="0 0 92 24" fill="none">
                                 <g clipPath="url(#clip0_30_1229)">
@@ -144,4 +147,4 @@ function Footer() {
 	);
 }
 
-export default Footer;
+export default Footer; 

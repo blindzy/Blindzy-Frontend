@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import { Icon } from '@iconify/react';
 import $ from 'jquery';
 import gsap from "gsap";
 
 import './css/style.css';
 
-function Cart() {
+interface CartProps {
+	// Add any props if needed in the future
+}
+function Cart(props: CartProps) {
 
 	useEffect(() => {
         $('.open__cartPopup').on('click',function(){
@@ -31,7 +34,7 @@ function Cart() {
         <>
             <div className="fixed left-0 top-0 z-[100] contact-popup w-screen h-0 overflow-hidden hidden pointer-events-none" id="cartPopup">
                 <div className="w-screen h-screen xl:p-[1.25vw] sm:p-[2.344vw] p-4">
-                    <div className="w-[640px] h-full ml-auto bg-white flex flex-col justify-between xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 shrink-0 rounded-48">
+                    <div className="xl:w-[640px] w-full h-full xl:ml-auto mx-auto bg-white flex flex-col justify-between xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 shrink-0 rounded-48">
                         <div className="flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 shrink-0">
                             <div className="flex items-center justify-between gap-4 text-black">
                                 <h3 className="text-xxl">Cart</h3>
@@ -140,7 +143,7 @@ function Cart() {
                             </div>
                             <div className="flex items-cener justify-between">
                                 <h3 className="text-xl">TOTAL</h3>
-                                <san className="text-xl">$14000</san>
+                                <span className="text-xl">$14000</span>
                             </div>
                             <button className="cus-btn primary text-center">
                                 Proceed to Checkout
@@ -154,3 +157,4 @@ function Cart() {
 }
 
 export default Cart;
+

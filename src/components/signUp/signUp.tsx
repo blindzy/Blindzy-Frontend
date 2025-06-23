@@ -4,8 +4,12 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
 
-function SignUp() {
-	const [viaEmail, setViaEmail] = useState(false);
+interface SignUpProps {
+	// Add any props if needed in the future
+}
+
+function SignUp(props: SignUpProps) {
+	const [viaEmail, setViaEmail] = useState<boolean>(false);
 
 	useEffect(() => {
         gsap.registerPlugin(ScrollTrigger, ScrollSmoother);

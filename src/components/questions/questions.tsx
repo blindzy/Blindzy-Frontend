@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import './css/style.css';
 
-function Questions() {
+interface QuestionsProps {
+	// Add any props if needed in the future
+}
+function Questions(props: QuestionsProps) {
 
 	useEffect(() => {
 	}, []);
@@ -12,7 +15,7 @@ function Questions() {
                 <div className="w-full flex flex-col xl:gap-[2.5vw] gap-[4.688vw] xl:items-start items-center xl:text-left text-center justify-center xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-primary rounded-48">
                     <div className="xl:w-fit sm:w-[70%] w-full flex flex-col gap-2">
                         <h2 className="text-1xl text-white">HAVE ANY QUESTIONS?</h2>
-                        <p className="xl:w-[29.479vw] text-sm text-white">We’d love to hear from you! Whether it’s measuring tips, installation advice, or product info, the Blindzy team is ready to help.</p>
+                        <p className="xl:w-[29.479vw] text-sm text-white">Weâ€™d love to hear from you! Whether itâ€™s measuring tips, installation advice, or product info, the Blindzy team is ready to help.</p>
                     </div>
                     <div className="flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
                         <button className="open__contactPopup cus-btn white w-fit hover-black">
@@ -66,3 +69,4 @@ function Questions() {
 }
 
 export default Questions;
+

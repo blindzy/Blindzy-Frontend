@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import { Icon } from '@iconify/react';
 import $ from 'jquery';
 import gsap from "gsap";
 
 import './css/style.css';
 
-function Products() {
+interface ProductsProps {
+	// Add any props if needed in the future
+}
+function Products(props: ProductsProps) {
 
 	useEffect(() => {
         $('.open__contactPopup').on('click',function(){
@@ -33,8 +36,8 @@ function Products() {
 
             <div className="fixed left-0 top-0 z-[100] contact-popup w-[0] h-screen overflow-hidden hidden pointer-events-none" id="contactPopup">
                 <div className="w-screen h-screen xl:p-[1.25vw] sm:p-[2.344vw] p-4">
-                    <div className="w-[1107px] ml-auto flex items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 h-full shrink-0">
-                        <div className="w-[360px] text-white flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-primary shrink-0 rounded-48">
+                    <div className="xl:w-[1107px] w-full xl:ml-auto mx-auto flex xl:flex-row flex-col items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 h-full shrink-0">
+                        <div className="xl:w-[360px] w-full text-white flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-primary xl:shrink-0 rounded-48">
                             <h4 className="text-xl">Contact INFO</h4>
                             <div className="flex items-center gap-2 shrink-0">
                                 <Icon icon="uil:plus" className="text-[18px]" />
@@ -63,11 +66,11 @@ function Products() {
                                 <h6 className="text-md">OPENING HOUR</h6>
                                 <div className="flex items-center justify-between gap-8">
                                     <p className="text-sm">WEEK DAYS</p>
-                                    <p className="text-sm">9 AM – 7 PM</p>
+                                    <p className="text-sm">9 AM â€“ 7 PM</p>
                                 </div>
                                 <div className="flex items-center justify-between gap-8">
                                     <p className="text-sm">SATURDAY</p>
-                                    <p className="text-sm">9 AM – 5 PM</p>
+                                    <p className="text-sm">9 AM â€“ 5 PM</p>
                                 </div>
                             </div>
                         </div>
@@ -80,11 +83,11 @@ function Products() {
                                 <p className="text-sm">Lorem ipsum dolor sit amet consectetur nunc faucibus ut ornare.</p>
                             </div>
                             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-                                <div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
+                                <div className="w-full flex xl:flex-row flex-col items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
                                     <input type="text" className="formInput" id="name" placeholder="Your Name"/>
                                     <input type="text" className="formInput" id="name" placeholder="Your"/>
                                 </div>
-                                <div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
+                                <div className="w-full flex xl:flex-row flex-col items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
                                     <input type="text" className="formInput" id="name" placeholder="Phone Number"/>
                                     <input type="text" className="formInput" id="name" placeholder="Enquiry About"/>
                                 </div>
@@ -94,7 +97,7 @@ function Products() {
                                 <div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
                                     <textarea name="" id="" className="formInput h-[162px]"></textarea>
                                 </div>
-                                <button className="w-fit ml-auto cus-btn small shrink-0">
+                                <button className="w-fit xl:ml-auto mx-auto cus-btn small shrink-0">
                                     Send Message
                                 </button>
                             </div>
@@ -108,3 +111,4 @@ function Products() {
 }
 
 export default Products;
+

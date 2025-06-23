@@ -1,10 +1,13 @@
-import React, { useEffect , useState} from "react";
+﻿import React, { useEffect , useState} from "react";
 import { Icon } from '@iconify/react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
 
-function ShippingPolicy() {
+interface ShippingPolicyProps {
+	// Add any props if needed in the future
+}
+function ShippingPolicy(props: ShippingPolicyProps) {
 
 	useEffect(() => {
         gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -94,27 +97,10 @@ function ShippingPolicy() {
                         <p className="text-sm">If you have any questions or concerns about this Privacy Policy or our privacy practices, please contact us.</p>
                     </div>
                 </div>
-                <div className="w-[524px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-48 shrink-0">
-                    <h4 className="text-xl">Table of Content</h4>
-                    <div className="flex items-center gap-2 shrink-0 text-mediumGrey">
-                        <Icon icon="uil:plus" className="text-[18px]" />
-                        <div className="w-full h-[1px] bg-mediumGrey"></div>
-                        <Icon icon="uil:plus" className="text-[18px]" />
-                    </div>
-                    <a href="" className="text-md hover:text-[--primary] transition">Introduction</a>
-                    <a href="" className="text-md hover:text-[--primary] transition">Personal Information</a>
-                    <a href="" className="text-md hover:text-[--primary] transition">Usage Data</a>
-                    <a href="" className="text-md hover:text-[--primary] transition">How We Use Your Information</a>
-                    <a href="" className="text-md hover:text-[--primary] transition">Sharing Your Information</a>
-                    <a href="" className="text-md hover:text-[--primary] transition">Data Security</a>
-                    <a href="" className="text-md hover:text-[--primary] transition">Your Choices and Rights</a>
-                    <a href="" className="text-md hover:text-[--primary] transition">Third-Party Links</a>
-                    <a href="" className="text-md hover:text-[--primary] transition">Changes to This Privacy Policy</a>
-                    <a href="" className="text-md hover:text-[--primary] transition">Contact Us</a>
-                </div>
             </div>
         </div>
 	);
 }
 
 export default ShippingPolicy;
+

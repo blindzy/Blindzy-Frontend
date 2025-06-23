@@ -1,12 +1,15 @@
-import React, { useEffect , useState } from "react";
+﻿import React, { useEffect , useState } from "react";
 import { Icon } from '@iconify/react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
 import './css/style.css';
 
-function Checkout() {
-    const [currentStep, setCurrentStep] = useState(1);
+interface CheckoutProps {
+	// Add any props if needed in the future
+}
+function Checkout(props: CheckoutProps) {
+    const [currentStep, setCurrentStep] = useState<number>(1);
 	useEffect(() => {
 		gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 		ScrollTrigger.normalizeScroll(true);
@@ -20,7 +23,7 @@ function Checkout() {
             });
 		}
 	}, []);
-    const nextStep = (event) => {
+    const nextStep = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         if (currentStep < 3) {
           setCurrentStep(currentStep + 1);
@@ -28,15 +31,15 @@ function Checkout() {
     };
     
       // Function to move to the previous step
-    const prevStep = (event) => {
+    const prevStep = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         if (currentStep > 1) {
           setCurrentStep(currentStep - 1);
         }
     };
 	return (
-		<section className="checkout-section w-screen min-h-screen flex items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:px-[1.25vw] sm:px-[2.344vw] px-4" id="checkout">
-			<div className="w-[666px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black shrink-0 rounded-48">
+		<section className="checkout-section w-screen min-h-screen flex xl:flex-row flex-col items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:px-[1.25vw] sm:px-[2.344vw] px-4" id="checkout">
+			<div className="xl:w-[666px] w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black xl:shrink-0 rounded-48">
                 <h4 className="text-xl">YOUR ORDER</h4>
                 <div className="flex items-center gap-2 shrink-0 text-mediumGrey">
                     <Icon icon="uil:plus" className="text-[18px]" />
@@ -175,17 +178,17 @@ function Checkout() {
 			<div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-48">
                 <div className="flex items-center gap-4">
                     <div className="flex items-center gap-2 shrink-0">
-                        <div className={`w-[24px] h-[24px] flex items-cnter justify-center border text-sm rounded-[24px] transition ${currentStep === 1 || currentStep === 2 ? 'border-[--primary] text-white bg-primary':'border-[--black] text-black'}`}>1</div>
+                        <div className={`w-[24px] h-[24px] flex items-center justify-center border text-sm rounded-[24px] transition ${currentStep === 1 || currentStep === 2 ? 'border-[--primary] text-white bg-primary':'border-[--black] text-black'}`}>1</div>
                         <p className="text-sm">Personal Info</p>
                     </div>
                     <div className="w-full h-[1px] bg-black"></div>
                     <div className="flex items-center gap-2 shrink-0">
-                        <div className={`w-[24px] h-[24px] flex items-cnter justify-center border text-sm rounded-[24px] transition ${currentStep === 2 || currentStep === 3 ? 'border-[--primary] text-white bg-primary':'border-[--black] text-black'}`}>2</div>
+                        <div className={`w-[24px] h-[24px] flex items-center justify-center border text-sm rounded-[24px] transition ${currentStep === 2 || currentStep === 3 ? 'border-[--primary] text-white bg-primary':'border-[--black] text-black'}`}>2</div>
                         <p className="text-sm">Shipping Info</p>
                     </div>
                     <div className="w-full h-[1px] bg-black"></div>
                     <div className="flex items-center gap-2 shrink-0">
-                        <div className={`w-[24px] h-[24px] flex items-cnter justify-center border text-sm rounded-[24px] transition ${currentStep === 3 ? 'border-[--primary] text-white bg-primary':'border-[--black] text-black'}`}>3</div>
+                        <div className={`w-[24px] h-[24px] flex items-center justify-center border text-sm rounded-[24px] transition ${currentStep === 3 ? 'border-[--primary] text-white bg-primary':'border-[--black] text-black'}`}>3</div>
                         <p className="text-sm">Payment</p>
                     </div>
                 </div>
@@ -193,7 +196,7 @@ function Checkout() {
                     <div className={`flex flex-col gap-[32px] ${currentStep === 1 ? 'visible' : 'hidden'}`}>
                         <div className="flex items-center justify-between">
                             <h3 className="text-xxl">CUSTOMER INFO</h3>
-                            <div className="flex ites-center gap-1 text-sm">
+                            <div className="flex items-center gap-1 text-sm">
                                 <p>Already have an account? </p>
                                 <a href="/login" className="text-primary">Login</a>
                             </div>
@@ -208,7 +211,7 @@ function Checkout() {
                                 <input type="text" className="formInput" id="number" placeholder="Number"/>
                             </div>
                             <input type="text" className="formInput" id="company" placeholder="Company Name (Optional)"/>
-                            <div className="w-fit ml-auto flex items-cnter gap-2">
+                            <div className="w-fit ml-auto flex items-center gap-2">
                                 {/* <button className="w-[200px] cus-btn small shrink-0 stroke-black">
                                     Back
                                 </button> */}
@@ -221,7 +224,7 @@ function Checkout() {
                     <div className={`flex flex-col gap-[32px] ${currentStep === 2 ? 'visible' : 'hidden'}`}>
                         <div className="flex items-center justify-between">
                             <h3 className="text-xxl">SHIPPING INFO</h3>
-                            <div className="flex ites-center gap-1 text-sm">
+                            <div className="flex items-center gap-1 text-sm">
                                 <p>Already have an account? </p>
                                 <a href="/login" className="text-primary">Login</a>
                             </div>
@@ -248,7 +251,7 @@ function Checkout() {
                                 <input type="text" className="formInput" id="apartment" placeholder="Apartment, suit, unit, etc. (Optional)"/>
                             </div>
                             <input type="text" className="formInput" id="company-name" placeholder="Company Name (Optional)"/>
-                            <div className="w-fit ml-auto flex items-cnter gap-2">
+                            <div className="w-fit ml-auto flex items-center gap-2">
                                 <button className="w-[200px] cus-btn small shrink-0 stroke-black" onClick={prevStep}>
                                     Back
                                 </button>
@@ -261,7 +264,7 @@ function Checkout() {
                     <div className={`flex flex-col gap-[32px] ${currentStep === 3 ? 'visible' : 'hidden'}`}>
                         <div className="flex items-center justify-between">
                             <h3 className="text-xxl">PaymenT Method</h3>
-                            <div className="flex ites-center gap-1 text-sm">
+                            <div className="flex items-center gap-1 text-sm">
                                 <p>Already have an account? </p>
                                 <a href="/login" className="text-primary">Login</a>
                             </div>
@@ -285,7 +288,7 @@ function Checkout() {
                                     <input type="text" className="formInput" id="securityCode" placeholder="Security Code"/>
                                 </div>
                             </div>
-                            <div className="flex items-cnter justify-between">
+                            <div className="flex items-center justify-between">
                                 <div className="check-box">
                                     <input type="checkbox" id="permanent" name="employment"/>
                                     <div className="icon">
@@ -293,7 +296,7 @@ function Checkout() {
                                     </div>
                                     <label htmlFor="permanent" className="text-sm">Use a different billing address?</label>
                                 </div>
-                                <div className="flex items-cnter gap-2">
+                                <div className="flex items-center gap-2">
                                     <button className="w-[200px] cus-btn small shrink-0 stroke-black" onClick={prevStep}>
                                         Back
                                     </button>
@@ -311,3 +314,4 @@ function Checkout() {
 }
 
 export default Checkout;
+

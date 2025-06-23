@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import { Icon } from '@iconify/react';
 
 import gsap from "gsap";
@@ -9,7 +9,10 @@ import $ from 'jquery';
 
 import './css/style.css';
 
-function ProductDetails() {
+interface ProductDetailsProps {
+	// Add any props if needed in the future
+}
+function ProductDetails(props: ProductDetailsProps) {
 
 	useEffect(() => {
 		gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -32,8 +35,8 @@ function ProductDetails() {
 	}, []);
 
 	return (
-		<section className="innerBanner w-screen h-[86vh] flex items-stretch xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:px-[1.25vw] sm:px-[2.344vw] px-4" id="ProductDetail">
-            <div className="detail-sidebar w-[635px] h-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 text-black border border-[--Black] overflow-auto scroll-hidden rounded-48 shrink-0">
+		<section className="innerBanner w-screen min-h-screen flex xl:flex-row flex-col items-stretch xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:px-[1.25vw] sm:px-[2.344vw] px-4" id="ProductDetail">
+            <div className="detail-sidebar xl:w-[635px] w-full xl:h-full h-auto flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 text-black border border-[--Black] overflow-auto scroll-hidden rounded-48 xl:shrink-0">
                 <h4 className="text-xl">Build Your blind</h4>
                 <div className="flex items-center gap-2 shrink-0 text-mediumGrey">
                     <Icon icon="uil:plus" className="text-[18px]" />
@@ -332,14 +335,14 @@ function ProductDetails() {
                     </div>
                 </div>
             </div>
-            <div className="w-full h-full flex items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 text-black border border-[--Black] rounded-48">
-                <div className="w-full h-full rounded-32 overflow-hidden">
+            <div className="w-full xl:w-auto h-full flex flex-col xl:flex-row items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 text-black border border-[--Black] rounded-48">
+                <div className="w-full xl:w-auto h-full rounded-32 overflow-hidden mb-4 xl:mb-0">
                     <img src="/images/product/product-datail.png" className="w-full object-cover" alt="product-datail" />
                 </div>
-                <div className="w-[350px] shrink-0 flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black">
+                <div className="w-full xl:w-[350px] shrink-0 flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black">
                     <div className="flex flex-col gap-2">
                         <h5 className="text-lg">Product Name</h5>
-                        <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. </p>
+                        <p className="text-sm lg:text-base xl:text-lg">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. </p>
                     </div>
                     <div className="flex items-center gap-2 shrink-0 text-mediumGrey">
                         <Icon icon="uil:plus" className="text-[18px]" />
@@ -347,38 +350,38 @@ function ProductDetails() {
                         <Icon icon="uil:plus" className="text-[18px]" />
                     </div>
                     <div className="flex flex-col gap-2">
-                        <h5 className="text-lg">Customisations</h5>
+                        <h5 className="text-lg xl:text-2xl">Customisations</h5>
                         <div className="flex items-center justify-between">
-                            <p className="text-sm">Color:</p>
-                            <p className="text-sm">Ash</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Color:</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Ash</p>
                         </div>
                         <div className="flex items-center justify-between">
-                            <p className="text-sm">Size:</p>
-                            <p className="text-sm">24cm x 56cm</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Size:</p>
+                            <p className="text-sm lg:text-base xl:text-lg">24cm x 56cm</p>
                         </div>
                         <div className="flex items-center justify-between">
-                            <p className="text-sm">Fit Type:</p>
-                            <p className="text-sm">Recess Fit</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Fit Type:</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Recess Fit</p>
                         </div>
                         <div className="flex items-center justify-between">
-                            <p className="text-sm">Roll Direction:</p>
-                            <p className="text-sm">Front Roll</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Roll Direction:</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Front Roll</p>
                         </div>
                         <div className="flex items-center justify-between">
-                            <p className="text-sm">Chain Colour:</p>
-                            <p className="text-sm">Silver</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Chain Colour:</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Silver</p>
                         </div>
                         <div className="flex items-center justify-between">
-                            <p className="text-sm">Bracket Colour:</p>
-                            <p className="text-sm">Sandstone</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Bracket Colour:</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Sandstone</p>
                         </div>
                         <div className="flex items-center justify-between">
-                            <p className="text-sm">Base Rail Shape:</p>
-                            <p className="text-sm">Oval</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Base Rail Shape:</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Oval</p>
                         </div>
                         <div className="flex items-center justify-between">
-                            <p className="text-sm">Base Rail Colour:</p>
-                            <p className="text-sm">Bone</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Base Rail Colour:</p>
+                            <p className="text-sm lg:text-base xl:text-lg">Bone</p>
                         </div>
                     </div>
                     <div className="flex items-center gap-2 shrink-0 text-mediumGrey">
@@ -397,12 +400,12 @@ function ProductDetails() {
                         </div>
                         <label htmlFor="permanent" className="text-sm">I have double checked my measurements and customisations</label>
                     </div>
-                    <div className="flex items-cnter gap-2">
-                        <button className="w-full cus-btn sm primary">
-                            Add to Cart
+                    <div className="flex items-center gap-2">
+                        <button className="w-fit cus-btn small shrink-0 stroke-black">
+                            Back
                         </button>
-                        <button className="w-full cus-btn sm stroke-black" >
-                            Buy Now
+                        <button className="w-fit cus-btn small primary shrink-0">
+                            Next
                         </button>
                     </div>
                 </div>
@@ -413,3 +416,4 @@ function ProductDetails() {
 }
 
 export default ProductDetails;
+

@@ -1,11 +1,14 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger"
 import DrawSVGPlugin from "gsap/dist/DrawSVGPlugin";
 
 import './css/style.css';
 
-function quailty() {
+interface quailtyProps {
+	// Add any props if needed in the future
+}
+function quailty(props: quailtyProps) {
 
 	useEffect(() => {
         gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
@@ -45,8 +48,8 @@ function quailty() {
 		<section className="quailty-section w-screen h-screen flex xl:flex-row flex-col items-center xl:justify-between justify-center xl:gap-0 sm:gap-[48px] gap-4 mini:py-[1.25vw] xl:py-2 sm:py-[6.25vw] py-2 xl:px-[1.25vw] sm:px-4 px-2 xl:pr-[2.344vw] sm:pr-[4.883vw] overflow-hidden" id="quailty">
             <div className="xl:w-[41.667vw] sm:w-[80%] w-full xl:m-0 mx-auto xl:text-left text-center flex flex-col xl:items-start items-center gap-[2.5vw]">
                 <div className="flex flex-col gap-2">
-                    <h2 className="text-xxxl text-black uppercase">4 Steps to Designer Quality Blinds</h2>
-                    <p className="text-sm text-black"> Lorem ipsum dolor sit amet consectetur. Massa ultricies convallis condimentum etiam gravida tristique. Quisque faucibus molestie aliquam </p>
+                    <h2 className="text-xxxl xl:text-4xl text-black uppercase">4 Steps to Designer Quality Blinds</h2>
+                    <p className="text-sm lg:text-base xl:text-lg text-black"> Lorem ipsum dolor sit amet consectetur. Massa ultricies convallis condimentum etiam gravida tristique. Quisque faucibus molestie aliquam </p>
                 </div>
                 <button className="cus-btn w-fit">
                     Download Guide
@@ -58,8 +61,8 @@ function quailty() {
                         <div className="bg xl:h-[10.573vw] relative flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] sm:gap-4 gap-[2.036vw]">
                             <img src="/images/icon/measuring.png" className="sm:w-fit w-[16.285vw] object-scale-down" alt="measuring" />
                             <div className="flex flex-col xl:gap-[0.833vw] sm:gap-4 gap-2">
-                                <h4 className="text-xl text-black">Measure Up</h4>
-                                <p className="text-md text-black line-clamp-2">Measure your windows and leave the rest up to us!</p>
+                                <h4 className="text-xl xl:text-2xl text-black">Measure Up</h4>
+                                <p className="text-md lg:text-lg xl:text-xl line-clamp-2">Measure your windows and leave the rest up to us!</p>
                             </div>
                         </div>
                         <div className="relative xl:w-[3.333vw] sm:w-[6.25vw] w-[32px] xl:h-[3.333vw] sm:h-[6.25vw] h-[32px] bg-primary text-white flex items-center justify-center xl:rounded-[3.333vw] sm:rounded-[3.333vw] rounded-[32px] shrink-0 z-[10] xl:ms-[-1.25vw] ms-[-2vw]">
@@ -70,8 +73,8 @@ function quailty() {
                         <div className="bg xl:h-[10.573vw] relative flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] sm:gap-4 gap-[2.036vw]">
                             <img src="/images/icon/fabricpattern.png" className="sm:w-fit w-[16.285vw] object-scale-down" alt="fabricpattern" />
                             <div className="flex flex-col xl:gap-[0.833vw] sm:gap-4 gap-2">
-                                <h4 className="text-xl text-black">Chose Samples</h4>
-                                <p className="text-md text-black line-clamp-2">Receive free samples from us to help select and customise your home.</p>
+                                <h4 className="text-xl xl:text-2xl text-black">Chose Samples</h4>
+                                <p className="text-md lg:text-lg xl:text-xl line-clamp-2">Receive free samples from us to help select and customise your home.</p>
                             </div>
                         </div>
                         <div className="relative xl:w-[3.333vw] sm:w-[6.25vw] w-[32px] xl:h-[3.333vw] sm:h-[6.25vw] h-[32px] bg-primary text-white flex items-center justify-center xl:rounded-[3.333vw] sm:rounded-[3.333vw] rounded-[32px] shrink-0 z-[10] xl:ms-[-1.25vw] ms-[-2vw]">
@@ -82,8 +85,8 @@ function quailty() {
                         <div className="bg xl:h-[10.573vw] relative flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] sm:gap-4 gap-[2.036vw]">
                             <img src="/images/icon/customization.png" className="sm:w-fit w-[16.285vw] object-scale-down" alt="customization" />
                             <div className="flex flex-col xl:gap-[0.833vw] sm:gap-4 gap-2">
-                                <h4 className="text-xl text-black">Customise</h4>
-                                <p className="text-md text-black line-clamp-2">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. Leo sit nisl nisl semper sed tellus.</p>
+                                <h4 className="text-xl xl:text-2xl text-black">Customise</h4>
+                                <p className="text-md lg:text-lg xl:text-xl line-clamp-2">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. Leo sit nisl nisl semper sed tellus.</p>
                             </div>
                         </div>
                         <div className="relative xl:w-[3.333vw] sm:w-[6.25vw] w-[32px] xl:h-[3.333vw] sm:h-[6.25vw] h-[32px] bg-primary text-white flex items-center justify-center xl:rounded-[3.333vw] sm:rounded-[3.333vw] rounded-[32px] shrink-0 z-[10] xl:ms-[-1.25vw] ms-[-2vw]">
@@ -94,8 +97,8 @@ function quailty() {
                         <div className="bg xl:h-[10.573vw] relative flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] sm:gap-4 gap-[2.036vw]">
                             <img src="/images/icon/diy-quality.png" className="sm:w-fit w-[16.285vw] object-scale-down" alt="diy-quality" />
                             <div className="flex flex-col xl:gap-[0.833vw] sm:gap-4 gap-2">
-                                <h4 className="text-xl text-black">DIY Install</h4>
-                                <p className="text-md text-black line-clamp-2">Use our simple guides to help install blinds and curtains in your home.</p>
+                                <h4 className="text-xl xl:text-2xl text-black">DIY Install</h4>
+                                <p className="text-md lg:text-lg xl:text-xl line-clamp-2">Use our simple guides to help install blinds and curtains in your home.</p>
                             </div>
                         </div>
                         <div className="relative xl:w-[3.333vw] sm:w-[6.25vw] w-[32px] xl:h-[3.333vw] sm:h-[6.25vw] h-[32px] bg-primary text-white flex items-center justify-center xl:rounded-[3.333vw] sm:rounded-[3.333vw] rounded-[32px] shrink-0 z-[10] xl:ms-[-1.25vw] ms-[-2vw]">
@@ -125,3 +128,4 @@ function quailty() {
 }
 
 export default quailty;
+

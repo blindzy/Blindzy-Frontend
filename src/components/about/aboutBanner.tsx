@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import './css/style.css';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
@@ -6,7 +6,10 @@ import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
 import Navbar from "@components/navbar/navbar";
 
 
-function About() {
+interface AboutProps {
+	// Add any props if needed in the future
+}
+function About(props: AboutProps) {
 
 	useEffect(() => {
 		
@@ -37,3 +40,4 @@ function About() {
 }
 
 export default About;
+

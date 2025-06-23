@@ -1,11 +1,14 @@
-import React, { useEffect , useState} from "react";
+﻿import React, { useEffect , useState} from "react";
 import { Icon } from '@iconify/react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
 
-function Showroom() {
-	const [selectedCategory, setSelectedCategory] = useState('all');
+interface ShowroomProps {
+	// Add any props if needed in the future
+}
+function Showroom(props: ShowroomProps) {
+	const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
 	useEffect(() => {
         gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
@@ -76,3 +79,4 @@ function Showroom() {
 }
 
 export default Showroom;
+

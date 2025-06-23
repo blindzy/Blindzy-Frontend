@@ -1,7 +1,10 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import './css/style.css';
 
-function Products() {
+interface ProductsProps {
+	// Add any props if needed in the future
+}
+function Products(props: ProductsProps) {
 
 	useEffect(() => {
 	}, []);
@@ -57,3 +60,4 @@ function Products() {
 }
 
 export default Products;
+

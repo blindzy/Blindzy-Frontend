@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+﻿import React, { useEffect } from "react";
 import './css/style.css';
 import { Icon } from '@iconify/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,7 +6,10 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation} from 'swiper/modules';
 
-function Clients() {
+interface ClientsProps {
+	// Add any props if needed in the future
+}
+function Clients(props: ClientsProps) {
 
 	useEffect(() => {
 	}, []);
@@ -46,7 +49,7 @@ function Clients() {
                         <div className="flex items-center gap-4">
                             <img src="/images/blindzy-icon.png" className="w-fit" alt="blindzy-icon" />
                             <div className="flex flex-col gap-2">
-                                <h5 className="text-lg text-black">CUSTOMER’S NAME</h5>
+                                <h5 className="text-lg text-black">CUSTOMERâ€™S NAME</h5>
                                 <div className="flex items-center gap-2">
                                     <Icon icon="ic:round-star" className="text-[24px] text-primary"/>
                                     <Icon icon="ic:round-star" className="text-[24px] text-primary"/>
@@ -62,7 +65,7 @@ function Clients() {
                         <div className="flex items-center gap-4">
                             <img src="/images/blindzy-icon.png" className="w-fit" alt="blindzy-icon" />
                             <div className="flex flex-col gap-2">
-                                <h5 className="text-lg text-black">CUSTOMER’S NAME</h5>
+                                <h5 className="text-lg text-black">CUSTOMERâ€™S NAME</h5>
                                 <div className="flex items-center gap-2">
                                     <Icon icon="ic:round-star" className="text-[24px] text-primary"/>
                                     <Icon icon="ic:round-star" className="text-[24px] text-primary"/>
@@ -78,7 +81,7 @@ function Clients() {
                         <div className="flex items-center gap-4">
                             <img src="/images/blindzy-icon.png" className="w-fit" alt="blindzy-icon" />
                             <div className="flex flex-col gap-2">
-                                <h5 className="text-lg text-black">CUSTOMER’S NAME</h5>
+                                <h5 className="text-lg text-black">CUSTOMERâ€™S NAME</h5>
                                 <div className="flex items-center gap-2">
                                     <Icon icon="ic:round-star" className="text-[24px] text-primary"/>
                                     <Icon icon="ic:round-star" className="text-[24px] text-primary"/>
@@ -94,7 +97,7 @@ function Clients() {
                         <div className="flex items-center gap-4">
                             <img src="/images/blindzy-icon.png" className="w-fit" alt="blindzy-icon" />
                             <div className="flex flex-col gap-2">
-                                <h5 className="text-lg text-black">CUSTOMER’S NAME</h5>
+                                <h5 className="text-lg text-black">CUSTOMERâ€™S NAME</h5>
                                 <div className="flex items-center gap-2">
                                     <Icon icon="ic:round-star" className="text-[24px] text-primary"/>
                                     <Icon icon="ic:round-star" className="text-[24px] text-primary"/>
@@ -110,7 +113,7 @@ function Clients() {
                         <div className="flex items-center gap-4">
                             <img src="/images/blindzy-icon.png" className="w-fit" alt="blindzy-icon" />
                             <div className="flex flex-col gap-2">
-                                <h5 className="text-lg text-black">CUSTOMER’S NAME</h5>
+                                <h5 className="text-lg text-black">CUSTOMERâ€™S NAME</h5>
                                 <div className="flex items-center gap-2">
                                     <Icon icon="ic:round-star" className="text-[24px] text-primary"/>
                                     <Icon icon="ic:round-star" className="text-[24px] text-primary"/>
@@ -129,3 +132,4 @@ function Clients() {
 }
 
 export default Clients;
+
