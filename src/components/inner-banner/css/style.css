@@ -1,5 +1,5 @@
 .innerBanner .inner-content{
-    @apply w-full h-[450px] flex items-center xl:p-[1.25vw] sm:p-[2.344vw] p-4 overflow-hidden;
+    @apply w-full h-[450px] flex items-center xl:p-[1.25vw] sm:p-[2.344vw] p-2 overflow-hidden;
     background: url(/images/innerBanner/shop-bg.png);
     background-repeat: no-repeat;
     background-size: cover;

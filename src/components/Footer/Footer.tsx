@@ -41,7 +41,7 @@ function Footer(props: FooterProps) {
                 </div>
             </div>
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-4 gap-2">
-                <div className="w-full h-full flex sm:flex-row flex-col justify-between xl:text-left text-center xl:gap-[1.25vw] sm:gap-4 gap-2 xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-white border border-[--Black] rounded-48">
+                <div className="w-full h-full flex sm:flex-row flex-col justify-between xl:text-left text-center xl:gap-[1.25vw] sm:gap-4 gap-2 xl:p-[1.25vw] sm:p-[2.344vw] p-2 bg-white border border-[--Black] rounded-48">
                     <div className="w-full flex flex-col gap-3 text-black">
                         <h6 className="text-md ">SITE MAP</h6>
                         <a href="/about" className="text-sm hover:text-primary">ABOUT US</a>
@@ -96,7 +96,7 @@ function Footer(props: FooterProps) {
                     </div>
 
                 </div>
-                <div className="w-full flex sm:flex-row flex-col sm:gap-0 gap-4 items-center justify-between  xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-white border border-[--Black] rounded-24">
+                <div className="w-full flex sm:flex-row flex-col sm:gap-0 gap-4 items-center justify-between  xl:p-[1.25vw] sm:p-[2.344vw] p-2 bg-white border border-[--Black] rounded-24">
                     <p className="text-sm text-black">Â©2024 All Rights Reserved</p>
                     <div className="flex items-center gap-2">
                         <a href="">

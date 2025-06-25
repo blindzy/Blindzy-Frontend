@@ -1,28 +1,25 @@
-﻿import React, { useEffect , useState} from "react";
+﻿import React, { useEffect, useState } from "react";
 import { Icon } from '@iconify/react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
+import { useLenis } from '../../hooks/useLenis';
 
 interface TutorialsProps {
 	// Add any props if needed in the future
 }
 function Tutorials(props: TutorialsProps) {
 	const [selectedCategory, setSelectedCategory] = useState<string>('all');
+	const lenis = useLenis();
 
 	useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+        gsap.registerPlugin(ScrollTrigger);
 		ScrollTrigger.normalizeScroll(true);
 
-		const deviceWidth = window.innerWidth;
-		if (deviceWidth > 768) {
-		  ScrollSmoother.create({
-		    smooth: 2,
-		    effects: true,
-		    normalizeScroll: true,
-		  });
+		// If using Lenis, connect it with GSAP
+		if (lenis) {
+			lenis.on('scroll', ScrollTrigger.update);
 		}
-	}, []);
+	}, [lenis]);
     
 
 	return (

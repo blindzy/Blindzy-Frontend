@@ -3,7 +3,7 @@ import { Icon } from '@iconify/react';
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
+import { useLenis } from '../../hooks/useLenis';
 import $ from 'jquery';
 
 
@@ -13,18 +13,20 @@ interface ProductDetailsProps {
 	// Add any props if needed in the future
 }
 function ProductDetails(props: ProductDetailsProps) {
+	const lenis = useLenis();
 
 	useEffect(() => {
-		gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+		gsap.registerPlugin(ScrollTrigger);
 		ScrollTrigger.normalizeScroll(true);
+
+		// If using Lenis, connect it with GSAP
+		if (lenis) {
+			lenis.on('scroll', ScrollTrigger.update);
+		}
 
 		const deviceWidth = window.innerWidth;
 		if (deviceWidth > 768) {
-		  ScrollSmoother.create({
-		    smooth: 2,
-		    effects: true,
-		    normalizeScroll: true,
-		  });
+		  ScrollTrigger.normalizeScroll(false);
 		}
         $('.detail-sidebar').on('mouseenter', function() {
             ScrollTrigger.normalizeScroll(false);
@@ -32,10 +34,10 @@ function ProductDetails(props: ProductDetailsProps) {
         $('.detail-sidebar').on('mouseleave', function() {
             ScrollTrigger.normalizeScroll(true);
         }); 
-	}, []);
+	}, [lenis]);
 
 	return (
-		<section className="innerBanner w-screen min-h-screen flex xl:flex-row flex-col items-stretch xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:px-[1.25vw] sm:px-[2.344vw] px-4" id="ProductDetail">
+		<section className="product-detail w-screen flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-[80px] py-[85px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="ProductDetail">
             <div className="detail-sidebar xl:w-[635px] w-full xl:h-full h-auto flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 text-black border border-[--Black] overflow-auto scroll-hidden rounded-48 xl:shrink-0">
                 <h4 className="text-xl">Build Your blind</h4>
                 <div className="flex items-center gap-2 shrink-0 text-mediumGrey">

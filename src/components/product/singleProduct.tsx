@@ -1,35 +1,31 @@
 ﻿import React, { useEffect } from "react";
 import { Icon } from '@iconify/react';
-
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
+import { useLenis } from '../../hooks/useLenis';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation} from 'swiper/modules';
 
-interface SingleProductedProps {
+interface SingleProductProps {
 	// Add any props if needed in the future
 }
-function SingleProducted(props: SingleProductedProps) {
+function SingleProduct(props: SingleProductProps) {
+	const lenis = useLenis();
 
 	useEffect(() => {
-		gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+		gsap.registerPlugin(ScrollTrigger);
 		ScrollTrigger.normalizeScroll(true);
 
-		const deviceWidth = window.innerWidth;
-		if (deviceWidth > 768) {
-		  ScrollSmoother.create({
-		    smooth: 2,
-		    effects: true,
-		    normalizeScroll: true,
-		  });
+		// If using Lenis, connect it with GSAP
+		if (lenis) {
+			lenis.on('scroll', ScrollTrigger.update);
 		}
-	}, []);
+	}, [lenis]);
 
 	return (
-		<section className="w-screen min-h-screen flex xl:flex-row flex-col items-stretch gap-6 xl:px-16 sm:px-8 px-4 py-8" id="singleProduct">
+		<section className="w-screen min-h-screen flex xl:flex-row flex-col items-stretch gap-6 xl:px-16 sm:px-8 px-2 py-8" id="singleProduct">
 			<div className="w-full flex flex-col xl:flex-row items-start gap-6 bg-white border border-[--Black] rounded-48 p-4 xl:p-8">
                 <div className="relative w-full max-w-[500px] mx-auto xl:mx-0 xl:max-w-[500px] h-auto overflow-hidden mb-6 xl:mb-0">
                     <Swiper
@@ -124,5 +120,5 @@ function SingleProducted(props: SingleProductedProps) {
 	);
 }
 
-export default SingleProducted;
+export default SingleProduct;
 

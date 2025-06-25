@@ -2,7 +2,7 @@
 import './css/style.css';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
+import { useLenis } from '../../hooks/useLenis';
 import Navbar from "@components/navbar/navbar";
 
 
@@ -10,19 +10,17 @@ interface AboutProps {
 	// Add any props if needed in the future
 }
 function About(props: AboutProps) {
+	const lenis = useLenis();
 
 	useEffect(() => {
-		
-		if (window.innerWidth > 1025) {
-			gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-			ScrollTrigger.normalizeScroll(true);
-			ScrollSmoother.create({
-				smooth: 2,
-				effects: true,
-				normalizeScroll: true,
-			});
+		gsap.registerPlugin(ScrollTrigger);
+		ScrollTrigger.normalizeScroll(true);
+
+		// If using Lenis, connect it with GSAP
+		if (lenis) {
+			lenis.on('scroll', ScrollTrigger.update);
 		}
-	}, []);
+	}, [lenis]);
 
 	return (
 		<section className="about-banner w-screen h-screen flex flex-col " id="about">

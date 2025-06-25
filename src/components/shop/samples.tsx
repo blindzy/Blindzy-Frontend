@@ -13,9 +13,9 @@ function Shop(props: ShopProps) {
 	}, []);
 
 	return (
-		<section className="shop-section w-screen min-h-screen flex xl:flex-row flex-col items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4" id="blindsShop">
+		<section className="shop-section w-screen min-h-screen flex xl:flex-row flex-col items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-2" id="blindsShop">
 			<div className="xl:w-[450px] w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black xl:shrink-0">
-				<div className="w-full flex flex-col gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48">
+				<div className="w-full flex flex-col gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-2 border border-[--Black] rounded-48">
 					<div className="flex flex-col gap-2">
 						<h5 className="text-lg uppercase">Filter </h5>
 						<p className="text-sm w-[90%]">Filter the Samples Based on the Product, Materials, and Fabric</p>
@@ -31,7 +31,7 @@ function Shop(props: ShopProps) {
 			<div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
 				<div className="grid items-stretch grid-cols-12 xl:gap-[0.833vw] sm:gap-[1.563vw] gap-4">
 					<div className="sm:col-span-4 col-span-6">
-						<div className="w-full flex flex-col gap-4 text-black border border-[--Black] p-4 rounded-48">
+						<div className="w-full flex flex-col gap-4 text-black border border-[--Black] p-2 rounded-48">
 							<div className="relative rounded-32 overflow-hidden">
 								<img src="/images/product/01.png" className="w-full" alt="" />
 							</div>
@@ -59,7 +59,7 @@ function Shop(props: ShopProps) {
 						</div>
 					</div>
 					<div className="sm:col-span-4 col-span-6">
-						<div className="w-full flex flex-col gap-4 text-black border border-[--Black] p-4 rounded-48">
+						<div className="w-full flex flex-col gap-4 text-black border border-[--Black] p-2 rounded-48">
 							<div className="relative rounded-32 overflow-hidden">
 								<img src="/images/product/02.png" className="w-full" alt="" />
 							</div>
@@ -87,7 +87,7 @@ function Shop(props: ShopProps) {
 						</div>
 					</div>
 					<div className="sm:col-span-4 col-span-6">
-						<div className="w-full flex flex-col gap-4 text-black border border-[--Black] p-4 rounded-48">
+						<div className="w-full flex flex-col gap-4 text-black border border-[--Black] p-2 rounded-48">
 							<div className="relative rounded-32 overflow-hidden">
 								<img src="/images/product/03.png" className="w-full" alt="" />
 							</div>
@@ -115,7 +115,7 @@ function Shop(props: ShopProps) {
 						</div>
 					</div>
 					<div className="sm:col-span-4 col-span-6">
-						<div className="w-full flex flex-col gap-4 text-black border border-[--Black] p-4 rounded-48">
+						<div className="w-full flex flex-col gap-4 text-black border border-[--Black] p-2 rounded-48">
 							<div className="relative rounded-32 overflow-hidden">
 								<img src="/images/product/04.png" className="w-full" alt="" />
 							</div>
@@ -143,7 +143,7 @@ function Shop(props: ShopProps) {
 						</div>
 					</div>
 					<div className="sm:col-span-4 col-span-6">
-						<div className="w-full flex flex-col gap-4 text-black border border-[--Black] p-4 rounded-48">
+						<div className="w-full flex flex-col gap-4 text-black border border-[--Black] p-2 rounded-48">
 							<div className="relative rounded-32 overflow-hidden">
 								<img src="/images/product/05.png" className="w-full" alt="" />
 							</div>
@@ -171,7 +171,7 @@ function Shop(props: ShopProps) {
 						</div>
 					</div>
 					<div className="sm:col-span-4 col-span-6">
-						<div className="w-full flex flex-col gap-4 text-black border border-[--Black] p-4 rounded-48">
+						<div className="w-full flex flex-col gap-4 text-black border border-[--Black] p-2 rounded-48">
 							<div className="relative rounded-32 overflow-hidden">
 								<img src="/images/product/06.png" className="w-full" alt="" />
 							</div>

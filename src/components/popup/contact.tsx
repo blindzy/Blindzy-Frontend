@@ -35,9 +35,9 @@ function Products(props: ProductsProps) {
             <div className="fixed top-0 left-0 z-[90] w-screen h-screen bg-[#00000078] transition backdrop-blur-[10px] opacity-0 pointer-events-none" id="back-drop"></div>
 
             <div className="fixed left-0 top-0 z-[100] contact-popup w-[0] h-screen overflow-hidden hidden pointer-events-none" id="contactPopup">
-                <div className="w-screen h-screen xl:p-[1.25vw] sm:p-[2.344vw] p-4">
+                <div className="w-screen h-screen xl:p-[1.25vw] sm:p-[2.344vw] p-2">
                     <div className="xl:w-[1107px] w-full xl:ml-auto mx-auto flex xl:flex-row flex-col items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 h-full shrink-0">
-                        <div className="xl:w-[360px] w-full text-white flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-primary xl:shrink-0 rounded-48">
+                        <div className="xl:w-[360px] w-full text-white flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-2 bg-primary xl:shrink-0 rounded-48 order-2 xl:order-1">
                             <h4 className="text-xl">Contact INFO</h4>
                             <div className="flex items-center gap-2 shrink-0">
                                 <Icon icon="uil:plus" className="text-[18px]" />
@@ -66,15 +66,15 @@ function Products(props: ProductsProps) {
                                 <h6 className="text-md">OPENING HOUR</h6>
                                 <div className="flex items-center justify-between gap-8">
                                     <p className="text-sm">WEEK DAYS</p>
-                                    <p className="text-sm">9 AM â€“ 7 PM</p>
+                                    <p className="text-sm">9 AM â€" 7 PM</p>
                                 </div>
                                 <div className="flex items-center justify-between gap-8">
                                     <p className="text-sm">SATURDAY</p>
-                                    <p className="text-sm">9 AM â€“ 5 PM</p>
+                                    <p className="text-sm">9 AM â€" 5 PM</p>
                                 </div>
                             </div>
                         </div>
-                        <div className="relative w-full max-h-full h-fit flex flex-col gap-[48px] text-black xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-white rounded-48 overflow-scroll scroll-hidden">
+                        <div className="relative w-full max-h-full h-fit flex flex-col gap-[48px] text-black xl:p-[1.25vw] sm:p-[2.344vw] p-2 bg-white rounded-48 overflow-scroll scroll-hidden order-1 xl:order-2">
                             <button className="absolute top-6 right-6 transition text-black text-[32px] hover:text-primary" onClick={contactClose}>
                                 <Icon icon="iconamoon:close-bold" />
                             </button>

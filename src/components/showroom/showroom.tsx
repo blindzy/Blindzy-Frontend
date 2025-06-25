@@ -2,32 +2,29 @@
 import { Icon } from '@iconify/react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import { ScrollSmoother } from "gsap/dist/ScrollSmoother";
+import { useLenis } from '../../hooks/useLenis';
 
 interface ShowroomProps {
 	// Add any props if needed in the future
 }
 function Showroom(props: ShowroomProps) {
 	const [selectedCategory, setSelectedCategory] = useState<string>('all');
+	const lenis = useLenis();
 
 	useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+        gsap.registerPlugin(ScrollTrigger);
 		ScrollTrigger.normalizeScroll(true);
 
-		const deviceWidth = window.innerWidth;
-		if (deviceWidth > 768) {
-		  ScrollSmoother.create({
-		    smooth: 2,
-		    effects: true,
-		    normalizeScroll: true,
-		  });
+		// If using Lenis, connect it with GSAP
+		if (lenis) {
+			lenis.on('scroll', ScrollTrigger.update);
 		}
-	}, []);
+	}, [lenis]);
     
 
 	return (
-        <div className="relative w-screen flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 xl:pt-0 sm:pt-0 pt-0 overflow-hidden" id="showroom">
-            <div className="w-full border border-[--Black] p-4 text-center rounded-[48px]">
+        <div className="relative w-screen flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-2 xl:pt-0 sm:pt-0 pt-0 overflow-hidden" id="showroom">
+            <div className="w-full border border-[--Black] p-4 text-center xl:rounded-[2.5vw] sm:rounded-[4.688vw] rounded-[15px]">
                 <h1 className="text-1xl text-black uppercase">Showroom</h1>
             </div>
             <div className="flex items-center justify-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">

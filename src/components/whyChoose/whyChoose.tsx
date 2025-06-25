@@ -45,7 +45,7 @@ function WhyChoose(props: WhyChooseProps) {
 	return (
 		<section className="why-choose w-screen h-screen justify-between xl:p-[1.25vw] sm:p-[2.344vw] p-4" id="whyChoose">
             <div className="w-full h-full flex flex-col gap-[100px] bg-primary rounded-48 xl:pt-[48px] sm:pt-[48px] pt-6 pb-0 overflow-hidden">
-                <div className="xl:w-[1000px] w-full flex flex-col gap-2 xl:px-[48px] sm:px-[2.344vw] px-4 text-white">
+                <div className="xl:w-[1000px] w-full flex flex-col gap-2 xl:px-[48px] sm:px-[2.344vw] px-2 text-white">
                     <h2 className="text-xxl">WHY CHOOSE US?</h2>
                     <p className="text-sm">We invite you to join us on our mission to make home decorating fun and affordable for everyone. Explore our stunning collection of custom blinds and curtains today and experience the 5 Minute Blinds difference for yourself!</p>
                 </div>

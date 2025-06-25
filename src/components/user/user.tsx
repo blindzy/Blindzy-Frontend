@@ -7,6 +7,7 @@ interface UserProps {
 function User(props: UserProps) {
     const [currentTab, setCurrentTab] = useState<string>('orders');
     const [imageSrc, setImageSrc] = useState<string>('');
+    const [fade, setFade] = useState<'in' | 'out'>('in');
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -15,13 +16,24 @@ function User(props: UserProps) {
             setImageSrc(imageUrl);
         }
     };
+
+    // Fade animation handler
+    const handleTabChange = (tab: string) => {
+        if (tab === currentTab) return;
+        setFade('out');
+        setTimeout(() => {
+            setCurrentTab(tab);
+            setFade('in');
+        }, 200); // 200ms fade out, then fade in
+    };
+
 	useEffect(() => {
 	}, []);
     
 
 	return (
-        <div className="relative w-screen min-h-screen flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 xl:pb-[1.25vw] sm:pb-[2.344vw] pb-20 overflow-hidden" id="user">
-            <div className="xl:w-[480px] w-full xl:h-full h-auto flex flex-col justify-between gap-[48px] xl:p-[1.25vw] sm:p-[2.344vw] p-4 xl:pt-[48px] bg-primary rounded-48 text-white xl:shrink-0">
+        <div className="relative w-screen h-[88vh] flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 overflow-hidden" id="user">
+            <div className="xl:w-[480px] w-full h-full flex flex-col justify-between gap-[48px] xl:p-[1.25vw] sm:p-[2.344vw] p-4 xl:pt-[48px] bg-primary rounded-48 text-white xl:shrink-0">
                 <div className="w-full flex flex-col gap-[48px]">
                     <div className="w-full flex flex-col items-center gap-4">
                         <div className="w-[150px] h-[150px] rounded-[100%]">
@@ -62,21 +74,19 @@ function User(props: UserProps) {
                     <button className="w-full cus-btn stroke">Log Out</button>
                 </div>
             </div>
-            <div className="w-full xl:h-full h-auto flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
+            <div className="w-full h-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
                 <div className="w-full flex xl:flex-row flex-col items-center justify-center xl:gap-4 sm:gap-2 gap-2 p-3 border border-[--Black] rounded-48 shrink-0 overflow-x-auto">
-                    <button className={`xl:w-full w-[200px] cus-btn tab-btn ${currentTab === 'orders'&&'active'}`} onClick={() => setCurrentTab('orders')}>
+                    <button className={`xl:w-full w-[200px] cus-btn tab-btn ${currentTab === 'orders'&&'active'}`} onClick={() => handleTabChange('orders')}>
                         Order History
                     </button>
-                    <button className={`xl:w-full w-[200px] cus-btn tab-btn ${currentTab === 'address'&&'active'}`} onClick={() => setCurrentTab('address')}>
+                    <button className={`xl:w-full w-[200px] cus-btn tab-btn ${currentTab === 'address'&&'active'}`} onClick={() => handleTabChange('address')}>
                         Address Book
                     </button>
-                    <button className={`xl:w-full w-[200px] cus-btn tab-btn ${currentTab === 'payment'&&'active'}`} onClick={() => setCurrentTab('payment')}>
+                    <button className={`xl:w-full w-[200px] cus-btn tab-btn ${currentTab === 'payment'&&'active'}`} onClick={() => handleTabChange('payment')}>
                         Payment Options
                     </button>
-                    <button className={`xl:w-full w-[200px] cus-btn tab-btn ${currentTab === 'tracking'&&'active'}`} onClick={() => setCurrentTab('tracking')}>
-                        Order Tracking
-                    </button>
                 </div>
+                <div className={`transition-opacity duration-200 ${fade === 'in' ? 'opacity-100' : 'opacity-0'}`}> 
                 {
                     currentTab === 'orders'?(
                         <div className="w-full h-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black overflow-auto scroll-hidden" id="order-history">
@@ -284,16 +294,9 @@ function User(props: UserProps) {
                         </div>
                     ):currentTab === 'payment'?(
                         <></>
-                    ):currentTab === 'tracking'&&(
-                        <div className="w-full h-full flex flex-col items-center text-center justify-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black">
-                            <h3 className="text-xxl">ORDER TRACKING</h3>
-                            <h5 className="text-lg">To Track Your Order Enter Your Order Number</h5>
-                            <div className="xl:w-[50%] w-full">
-                                <input type="text" className="formInput" id="order-number" placeholder="Enter Order Number"/>
-                            </div>
-                        </div>
-                    )
+                    ):null
                 }
+                </div>
             </div>
         </div>
 	);

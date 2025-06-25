@@ -11,7 +11,7 @@ function AboutDetail(props: AboutDetailProps) {
 	}, []);
 
 	return (
-		<section className="about-detail w-screen flex flex-col gap-[80px] py-[85px] xl:px-[1.25vw] sm:px-[2.344vw] px-4" id="aboutDetail">
+		<section className="about-detail w-screen flex flex-col gap-[80px] py-[85px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="aboutDetail">
             <div className="flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
                 <div className="w-full flex flex-col gap-4 text-black">
                     <h2 className="text-xxl xl:text-3xl">Who We Are</h2>
