@@ -2,9 +2,19 @@
     @apply relative w-full h-full z-[15] xl:py-[11vh] py-[2vh]
 }
 .categorie-section .container-categories::before{
-    @apply sm:content-[''] absolute right-0 top-0 xl:w-[58%] w-[50%] h-full z-10;
-    background: linear-gradient(90deg, rgba(217, 217, 217, 0.01) 11.79%, rgba(159, 137, 232, 0.04) 100%);
-    backdrop-filter: blur(5px);
+    @apply sm:content-[''] absolute right-0 top-0 xl:w-[38%] w-[25%] h-full z-10;
+    /* Softer, more blended gradient and increased blur */
+    background: linear-gradient(
+        90deg,
+        rgba(159, 137, 232, 0.10) 0%,
+        rgba(159, 137, 232, 0.07) 60%,
+        rgba(159, 137, 232, 0.03) 80%,
+        rgba(159, 137, 232, 0.00) 100%
+    );
+    backdrop-filter: blur(3px);
+    /* Feather the left edge for a width-wise blend (clear on left, blur on right) */
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 20%, black 100%);
     /* pointer-events: none */
 }
 

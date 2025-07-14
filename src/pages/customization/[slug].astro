@@ -1,0 +1,49 @@
+---
+export async function getStaticPaths() {
+  return [
+    { params: { slug: 'shutter-customisation' } },
+    { params: { slug: 'curtain-customisation' } },
+    { params: { slug: 'double-curtain-customisation' } },
+    { params: { slug: 'blind-customisation' } },
+    { params: { slug: 'double-roller-blind-customisation' } },
+    { params: { slug: 'vertical-blind-customisation' } },
+  ];
+}
+
+import Layout from "@layouts/Layout.astro";
+import Navbar from "@components/navbar/navbar";
+import Footer from "@components/Footer/Footer";
+import ShutterCustomisation from "@components/customization/shutters";
+import CurtainCustomisation from "@components/customization/curtain";
+import DoubleCurtainCustomisation from "@components/customization/doubleCurtain";
+import BlindCustomisation from "@components/customization/blind";
+import DoubleBlindCustomisation from "@components/customization/doubleBlind";
+import VerBlindCustomisation from "@components/customization/verBlind";
+const { slug } = Astro.params;
+const safeSlug = String(slug);
+---
+
+<Layout>
+  <div class="smooth-wrapper">
+    <div class="smooth-content bg-white">
+      <Navbar client:load />
+
+      {safeSlug === 'shutter-customisation' && <ShutterCustomisation client:load />}
+      {safeSlug === 'curtain-customisation' && <CurtainCustomisation client:load />}
+      {safeSlug === 'double-curtain-customisation' && <DoubleCurtainCustomisation client:load />}
+      {safeSlug === 'blind-customisation' && <BlindCustomisation client:load />}
+      {safeSlug === 'double-roller-blind-customisation' && <DoubleBlindCustomisation client:load />}
+      {safeSlug === 'vertical-blind-customisation' && <VerBlindCustomisation client:load />}
+      {![
+        'shutter-customisation',
+        'curtain-customisation',
+        'double-curtain-customisation',
+        'blind-customisation',
+        'double-roller-blind-customisation',
+        'vertical-blind-customisation',
+      ].includes(safeSlug) && <div class="text-center py-20 text-xl text-gray-400">Page not found</div>}
+
+      <Footer client:load />
+    </div>
+  </div>
+</Layout>

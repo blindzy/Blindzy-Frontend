@@ -1,15 +1,48 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Icon } from '@iconify/react';
+import { api, ApiService } from '../../services/api';
 
 interface LoginProps {
 	// Add any props if needed in the future
 }
 
 function Login(props: LoginProps) {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState('');
+	const [success, setSuccess] = useState('');
 
 	useEffect(() => {
 	}, []);
     
+	const handleSubmit = async (e: React.FormEvent) => {
+		e.preventDefault();
+		setLoading(true);
+		setError('');
+		setSuccess('');
+
+		try {
+			const response = await api.login(email, password);
+			setSuccess('Login successful! Redirecting...');
+			
+			// Store session data
+			localStorage.setItem('session', JSON.stringify(response.session));
+			localStorage.setItem('user', JSON.stringify(response.customer));
+			// Store customer ID for API headers
+			ApiService.storeCustomerId(response.customer.id);
+			
+			// Redirect to user dashboard
+			setTimeout(() => {
+				window.location.href = '/user';
+			}, 1500);
+		} catch (err) {
+			setError('Invalid email or password. Please try again.');
+			console.error('Login error:', err);
+		} finally {
+			setLoading(false);
+		}
+	};
 
 	return (
         <div className="relative w-screen h-screen flex items-center justify-center xl:p-[1.25vw] sm:p-[2.344vw] p-2 overflow-hidden" id="signUp">
@@ -21,13 +54,46 @@ function Login(props: LoginProps) {
                     <Icon icon="uil:plus" className="text-[18px]" />
                 </div>
                 <h3 className="text-xxl">Login</h3>
-                <form action="/" className="w-full">
+                
+                {error && (
+                    <div className="w-full p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+                        {error}
+                    </div>
+                )}
+                
+                {success && (
+                    <div className="w-full p-3 bg-green-100 border border-green-400 text-green-700 rounded">
+                        {success}
+                    </div>
+                )}
+                
+                <form onSubmit={handleSubmit} className="w-full">
                     <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
                         
-                        <input type="email" className="formInput" id="email" placeholder="Email"/>
-                        <input type="text" className="formInput" id="password" placeholder="Password"/>
-                        <button className="w-full cus-btn small text-sm rounded-full-override" type="submit">
-                            Log In
+                        <input 
+                            type="email" 
+                            className="formInput" 
+                            id="email" 
+                            placeholder="Email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                        <input 
+                            type="password" 
+                            className="formInput" 
+                            id="password" 
+                            placeholder="Password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                        <button 
+                            className="w-full cus-btn small text-sm rounded-full-override" 
+                            type="submit"
+                            disabled={loading}
+                        >
+                            {loading ? 'Logging in...' : 'Log In'}
                         </button>
                     </div>
                 </form>

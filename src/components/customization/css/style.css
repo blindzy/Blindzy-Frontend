@@ -1,0 +1,3 @@
+.selector input:checked ~ label {
+  border-color: var(--primary) !important;
+}

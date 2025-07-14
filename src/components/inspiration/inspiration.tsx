@@ -84,7 +84,7 @@ function Inspiration(props: InspirationProps) {
                     </Swiper>
                 </div>
             ):(
-                <div className="w-full flex items-stretch sm:gap-4 gap-2 overflow-auto sm:px-4 px-2 scroll-hidden">
+                <div className="w-full flex items-stretch sm:gap-4 gap-2 xl:overflow-hidden overflow-auto sm:px-4 px-2 scroll-hidden">
                         <div className="relative sm:w-[50vw] w-[80vw] shrink-0 rounded-48 overflow-hidden" >
                             <img src="/images/inspiration/4.png" className="w-full object-cover" alt="inspiration" />
                             <h4 className="absolute sm:left-[16px] left-[8px] sm:bottom-[16px] bottom-[8px] text-xl text-white z-[10]">SHUTTERS</h4>

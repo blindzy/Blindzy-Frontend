@@ -193,10 +193,16 @@
   @apply xl:w-[4.167vw] sm:w-[6.25vw] w-[9.796vw] xl:h-[4.167vw] sm:h-[6.25vw] h-[9.796vw] flex items-center justify-center border transition xl:text-[1.25vw] sm:text-[2.344vw] text-[4.898vw] xl:rounded-[4.167vw] sm:rounded-[6.25vw] rounded-[9.796vw];
 }
 .arrow-btn.white{
-  @apply text-black bg-white border-[--white] hover:bg-[--Black] hover:text-[--white];
+  @apply text-white bg-transparent border-[--white] border-2 transition-colors duration-200;
+}
+.arrow-btn.white:hover{
+  @apply text-black bg-white border-[--white];
 }
 .arrow-btn.black{
-  @apply text-white bg-black border-[--Black] hover:bg-[--white] hover:text-[--Black];
+  @apply text-black bg-white border-[--white] border-2 transition-colors duration-200;
+}
+.arrow-btn.black:hover{
+  @apply text-white bg-transparent border-[--white];
 }
 .arrow-btn.stroke{
   @apply text-black bg-transparent border-[--black] hover:bg-[--Black] hover:text-[--white];
@@ -352,7 +358,7 @@ textarea.formInput{
   mix-blend-mode: hue;
 }
 .selector input:checked ~ label{
-  @apply border-[--Black];
+  @apply border-[--primary];
 }
 
 /* [type="file"] */

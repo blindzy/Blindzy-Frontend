@@ -36,8 +36,8 @@ function Hero(props: HeroProps) {
 	}, [lenis]);
 
 	return (
-		<section className="hero-section w-screen h-screen xl:p-[1.25vw] sm:p-4 p-2" id="hero">
-			<div className="hero-content rounded-48 ">
+		<section className="hero-section w-screen h-screen overflow-hidden" id="hero">
+			<div className="hero-content ">
 				<Navbar/>
 				<div className="relative w-full h-full flex xl:flex-row flex-col items-center xl:justify-between sm:justify-end justify-center xl:gap-0 gap-[48px]  mini:p-[1.25vw] xl:p-2 mini:pt-0 xl:pt-0 sm:p-[2.344vw] sm:pt-0 p-2 pt-0 z-[10]">
 					<div className="xl:w-[35.521vw] sm:w-[80%] w-full xl:m-0 mx-auto xl:text-left text-center flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">

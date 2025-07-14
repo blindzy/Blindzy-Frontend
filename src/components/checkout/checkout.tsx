@@ -44,7 +44,7 @@ function Checkout(props: CheckoutProps) {
 						<div className="w-full h-[1px] bg-mediumGrey"></div>
 						<Icon icon="uil:plus" className="text-[18px]" />
 					</div>
-					<div className="w-full max-h-[400px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 overflow-auto line-scroll">
+					<div className="w-full max-h-[400px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:overflow-hidden overflow-auto line-scroll">
 						<div className="w-full flex flex-col gap-2.5 p-4 border border-[--Black] rounded-24">
 							<div className="flex items-center gap-2">
 								<div className="w-[64px] h-[64px] bg-primary rounded-xl shrink-0"></div>

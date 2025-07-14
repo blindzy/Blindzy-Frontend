@@ -5,14 +5,15 @@ let lenis: Lenis | null = null;
 export const initLenis = () => {
   if (typeof window === 'undefined') return;
 
-  // Only initialize on desktop devices
+  // Only initialize on desktop devices (strictly > 1024px)
   const deviceWidth = window.innerWidth;
-  if (deviceWidth <= 768) return;
+  if (deviceWidth <= 1024) return;
 
-  // Create Lenis instance with minimal configuration
+  // Create Lenis instance with smoother configuration
   lenis = new Lenis({
-    duration: 1.2,
-    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    duration: 2.0, // smoother, slower scroll
+    easing: (t) => 1 - Math.pow(1 - t, 4), // strong ease-out
+    smoothWheel: true,
   });
 
   // RAF loop
