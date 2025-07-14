@@ -48,7 +48,7 @@ function Navbar(props: NavbarProps) {
 	};
 
 	return (
-		<div className={`relative w-full flex items-center justify-between mini:p-[1.25vw] xl:p-2 sm:p-[2.344vw] p-2 z-[10] ${props.customClass && props.customClass}`}>
+		<div className={`relative w-full flex items-center justify-between mini:p-[1.25vw] xl:p-2 sm:p-[2.344vw] p-2 z-[100] ${props.customClass && props.customClass}`}>
 
 			{/* LEFT SECTION with max width */}
 			<div className="max-w-[1125px] w-full">
@@ -76,16 +76,16 @@ function Navbar(props: NavbarProps) {
 								Curtains <svg width="12" height="8" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" stroke="currentColor" strokeWidth="2" fill="none" /></svg>
 							</button>
 							{openDropdown === 'curtains' && (
-								<div className="absolute left-0 top-full mt-3 w-52 bg-white border border-gray-200 rounded-2xl shadow-xl z-20 p-2 transition-all duration-300 space-y-1">
+								<div className="absolute left-0 top-full mt-3 w-52 bg-white border border-gray-200 rounded-2xl shadow-xl z-50 p-2 transition-all duration-300 space-y-1">
 									<a
 										href="/customization/curtain-customisation"
-										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary]"
+										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary] cursor-pointer"
 									>
 										Curtains
 									</a>
 									<a
 										href="/customization/double-curtain-customisation"
-										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary]"
+										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary] cursor-pointer"
 									>
 										Double Curtains
 									</a>
@@ -104,22 +104,22 @@ function Navbar(props: NavbarProps) {
 								Blinds <svg width="12" height="8" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" stroke="currentColor" strokeWidth="2" fill="none" /></svg>
 							</button>
 							{openDropdown === 'blinds' && (
-								<div className="absolute left-0 top-full mt-3 w-64 bg-white border border-gray-200 rounded-2xl shadow-xl z-20 p-2 transition-all duration-300 space-y-1">
+								<div className="absolute left-0 top-full mt-3 w-64 bg-white border border-gray-200 rounded-2xl shadow-xl z-50 p-2 transition-all duration-300 space-y-1">
 									<a
 										href="/customization/blind-customisation"
-										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary]"
+										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary] cursor-pointer"
 									>
 										Blinds
 									</a>
 									<a
 										href="/customization/double-roller-blind-customisation"
-										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary]"
+										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary] cursor-pointer"
 									>
 										Double Roller Blinds
 									</a>
 									<a
 										href="/customization/vertical-blind-customisation"
-										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary]"
+										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary] cursor-pointer"
 									>
 										Vertical Blinds
 									</a>

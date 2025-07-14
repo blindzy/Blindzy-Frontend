@@ -735,4 +735,5 @@ textarea.formInput{
   background-size: cover;
   background-position: left bottom;
   height: calc(100vh + 120px);
+  pointer-events: none;
 }
