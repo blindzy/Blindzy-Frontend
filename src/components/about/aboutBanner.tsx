@@ -10,9 +10,11 @@ interface AboutProps {
 	// Add any props if needed in the future
 }
 function About(props: AboutProps) {
-	const lenis = useLenis();
+	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
+	const lenis = isDesktop ? useLenis() : null;
 
 	useEffect(() => {
+		if (!isDesktop) return;
 		gsap.registerPlugin(ScrollTrigger);
 		ScrollTrigger.normalizeScroll(true);
 
@@ -20,12 +22,12 @@ function About(props: AboutProps) {
 		if (lenis) {
 			lenis.on('scroll', ScrollTrigger.update);
 		}
-	}, [lenis]);
+	}, [lenis, isDesktop]);
 
 	return (
 		<section className="about-banner w-screen h-screen flex flex-col " id="about">
             <Navbar customClass="shrink-0"/>
-            <div className="w-full h-full xl:p-[1.25vw] sm:p-4 p-2 xl:pt-0 sm:pt-0 p-0">
+            <div className="w-full h-full xl:p-[1.25vw] sm:p-4 xl:pt-0 sm:pt-0 p-0">
                 <div className="about-bg w-full h-full flex items-center justify-center overflow-hidden rounded-48">
                     <div className="w-[38.281vw] flex flex-col text-center gap-2 text-white">
                         <h2 className="text-1xl uppercase">about blindzy</h2>

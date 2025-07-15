@@ -9,7 +9,8 @@ interface CheckoutProps {
 	// Add any props if needed in the future
 }
 function Checkout(props: CheckoutProps) {
-	const lenis = useLenis();
+	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
+	const lenis = isDesktop ? useLenis() : null;
 	const [currentStep, setCurrentStep] = useState<number>(1);
 	useEffect(() => {
 		gsap.registerPlugin(ScrollTrigger);
@@ -109,7 +110,7 @@ function Checkout(props: CheckoutProps) {
 								<p>See More</p>
 								<Icon icon="icon-park-outline:down" />
 							</div>
-							<div className="flex flex-col gap-2 hidden">
+							<div className="flex flex-col gap-2">
 								<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
 									<Icon icon="uil:plus" className="text-[18px]" />
 									<div className="w-full h-[1px] bg-mediumGrey"></div>
@@ -191,7 +192,7 @@ function Checkout(props: CheckoutProps) {
 						</div>
 					</div>
 					<form action="">
-						<div className={`flex flex-col gap-[32px] ${currentStep === 1 ? 'visible' : 'hidden'}`}>
+						<div className={`flex flex-col gap-[32px] ${currentStep === 1 ? 'flex' : 'hidden'}`}>
 							<div className="flex items-center justify-between">
 								<h3 className="text-xxl">CUSTOMER INFO</h3>
 								<div className="flex items-center gap-1 text-sm">
@@ -219,7 +220,7 @@ function Checkout(props: CheckoutProps) {
 								</div>
 							</div>
 						</div>
-						<div className={`flex flex-col gap-[32px] ${currentStep === 2 ? 'visible' : 'hidden'}`}>
+						<div className={`flex flex-col gap-[32px] ${currentStep === 2 ? 'flex' : 'hidden'}`}>
 							<div className="flex items-center justify-between">
 								<h3 className="text-xxl">SHIPPING INFO</h3>
 								<div className="flex items-center gap-1 text-sm">
@@ -259,7 +260,7 @@ function Checkout(props: CheckoutProps) {
 								</div>
 							</div>
 						</div>
-						<div className={`flex flex-col gap-[32px] ${currentStep === 3 ? 'visible' : 'hidden'}`}>
+						<div className={`flex flex-col gap-[32px] ${currentStep === 3 ? 'flex' : 'hidden'}`}>
 							<div className="flex items-center justify-between">
 								<h3 className="text-xxl">PaymenT Method</h3>
 								<div className="flex items-center gap-1 text-sm">

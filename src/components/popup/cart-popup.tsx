@@ -71,8 +71,8 @@ function Cart(props: CartProps) {
     return (
         <>
             <div className="fixed left-0 top-0 z-[100] contact-popup w-screen h-0 overflow-hidden hidden pointer-events-none" id="cartPopup">
-                <div className="w-screen h-screen xl:p-[1.25vw] sm:p-[2.344vw] p-4">
-                    <div className="xl:w-[640px] w-full h-full xl:ml-auto mx-auto bg-white flex flex-col justify-between xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 shrink-0 rounded-48">
+                <div className="w-screen h-screen xl:p-[1.25vw] sm:p-[2.344vw] p-4 overflow-auto">
+                    <div className="max-w-[640px] w-full h-full ml-auto mr-4 bg-white flex flex-col justify-between xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 shrink-0 rounded-48 overflow-y-auto box-border">
                         <div className="flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 shrink-0">
                             <div className="flex items-center justify-between gap-4 text-black">
                                 <h3 className="text-xxl">Cart</h3>
@@ -119,21 +119,28 @@ function Cart(props: CartProps) {
                                             <span className="text-md text-black">{getItemPrice(item)}</span>
                                         </div>
                                         <div className="flex items-center justify-between gap-4">
-                                            <div className="quantity">
+                                            <div className="quantity flex items-center border border-gray-300 rounded-md overflow-hidden">
                                                 <button
-                                                    className="minus"
-                                                    onClick={() => updateQuantity(item.id, Math.max(1, item.quantity - 1))}
+                                                    className="px-2 py-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                                                    onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                                    disabled={item.quantity <= 1}
                                                 >
                                                     <Icon icon="uil:minus" />
                                                 </button>
-                                                <input type="text" value={item.quantity} readOnly />
+                                                <input
+                                                    type="text"
+                                                    value={item.quantity}
+                                                    readOnly
+                                                    className="w-10 text-center bg-white border-l border-r border-gray-300"
+                                                />
                                                 <button
-                                                    className="plus"
+                                                    className="px-2 py-1"
                                                     onClick={() => updateQuantity(item.id, item.quantity + 1)}
                                                 >
                                                     <Icon icon="uil:plus" />
                                                 </button>
                                             </div>
+
                                             <span
                                                 className="text-md text-[--danger] cursor-pointer border border-black rounded-xl p-2.5 w-10 h-10 flex items-center justify-center transition hover:bg-gray-100"
                                                 onClick={() => removeItem(item.id)}
@@ -142,9 +149,9 @@ function Cart(props: CartProps) {
                                                     <path opacity="0.4" d="M4.26489 5.85706L4.75971 15.2463C4.83591 16.7102 6.0419 17.8571 7.5058 17.8571H12.2099C13.6738 17.8571 14.8798 16.7101 14.956 15.2467L15.4508 5.85706H4.26489Z" fill="#D72B2A" />
                                                     <path d="M16.1072 4.85706H12.8572V3.60706C12.8572 2.64226 12.072 1.85706 11.1072 1.85706H8.60718C7.64238 1.85706 6.85718 2.64226 6.85718 3.60706V4.85706H3.60718C3.19308 4.85706 2.85718 5.19296 2.85718 5.60706C2.85718 6.02116 3.19308 6.35706 3.60718 6.35706H16.1072C16.5213 6.35706 16.8572 6.02116 16.8572 5.60706C16.8572 5.19296 16.5213 4.85706 16.1072 4.85706ZM8.35718 3.60706C8.35718 3.47136 8.47148 3.35706 8.60718 3.35706H11.1072C11.2429 3.35706 11.3572 3.47136 11.3572 3.60706V4.85706H8.35718V3.60706Z" fill="#D72B2A" />
                                                 </svg>
-
                                             </span>
                                         </div>
+
                                     </div>
                                 </div>
                             ))}

@@ -51,9 +51,15 @@ function Navbar(props: NavbarProps) {
 		<div className={`relative w-full flex items-center justify-between mini:p-[1.25vw] xl:p-2 sm:p-[2.344vw] p-2 z-[100] ${props.customClass && props.customClass}`}>
 
 			{/* LEFT SECTION with max width */}
-			<div className="max-w-[1125px] w-full">
-				<div className="flex items-center gap-[2.3vw] py-3 xl:px-[1.2vw] sm:px-[2.2vw] px-4 bg-white xl:rounded-[2.5vw] sm:rounded-[4.688vw] rounded-[15px] border border-[--Black] shadow-lg">
-					<a href="/">
+			<div className="max-w-[1125px] w-full h-full" style={{ maxHeight: '64px' }}>
+				<div className="flex items-center gap-4 p-1 sm:py-4 xl:ps-4 xl:pr-1 pr-4 bg-transparent border-0 sm:bg-white sm:border sm:border-black sm:rounded-full rounded-full h-full" style={{ maxHeight: '64px' }}>
+					{/* Mobile left section */}
+					<div className="sm:hidden flex items-center w-[172px] h-[42px] gap-[11px] p-[1px]">
+						<img src="/favicon2.png" className="w-[33px] h-[40px]" alt="Blindzy icon" />
+						<span className="text-white navbar-blindzy-text align-middle">Blindzy</span>
+					</div>
+					{/* Desktop/tablet left section */}
+					<a href="/" className="hidden sm:flex items-center">
 						<img src="/images/logo.png" className="sm:w-fit w-[100px]" alt=" logo" />
 					</a>
 					<ul className="xl:flex hidden items-center gap-[1.5vw]">
@@ -128,7 +134,7 @@ function Navbar(props: NavbarProps) {
 
 
 						</li>
-						
+
 						<li>
 							<a className="text-sm px-1 py-1 text-black transition uppercase hover:text-[--primary]" href="/tutorial">Tutorials</a>
 						</li>
@@ -144,7 +150,27 @@ function Navbar(props: NavbarProps) {
 			</div>
 
 			{/* RIGHT SECTION: icons + contact + menu */}
-			<div className="flex items-center gap-4 p-1 xl:ps-4 xl:pr-1 pr-4 bg-white xl:rounded-[2.5vw] sm:rounded-[4.688vw] rounded-[15px] border border-[--Black]">
+			<div className="flex items-center gap-4 p-1 sm:py-2 xl:ps-4 xl:pr-1 pr-4 bg-white xl:rounded-full border-black sm:rounded-full rounded-full border h-full" style={{ maxHeight: '64px' }}>
+				{/* Mobile right section */}
+				<div className="sm:hidden flex items-center justify-center w-[104px] h-[48px] gap-2 p-1" style={{ padding: '4px 8px' }}>
+					<button className="open__cartPopup flex items-center justify-center w-10 h-10">
+						<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+							<path d="M15.75 17.5L18.25 13" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+							<path d="M24.25 17.5L21.75 13" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+							<path d="M26 17.5L25.403 24.666C25.317 25.703 24.45 26.5 23.41 26.5H16.59C15.55 26.5 14.683 25.703 14.597 24.666L14 17.5" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+							<path d="M12.75 17.5H27.25" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+						</svg>
+					</button>
+					<button className="flex items-center justify-center w-10 h-10" onClick={() => setMenuOpen(true)}>
+						<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<path d="M0 16C0 7.16344 7.16344 0 16 0H24C32.8366 0 40 7.16344 40 16V24C40 32.8366 32.8366 40 24 40H16C7.16344 40 0 32.8366 0 24V16Z" fill="white" />
+							<path d="M13.25 25.25H26.75" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+							<path d="M13.25 14.75H26.75" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+							<path d="M19.75 20H26.75" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+						</svg>
+					</button>
+				</div>
+				{/* Desktop/tablet right section */}
 				<div className="sm:flex hidden items-center gap-4">
 					<a href="/user" className="group w-[2.083vw] h-[2.083vw] flex items-center justify-center">
 						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -166,16 +192,10 @@ function Navbar(props: NavbarProps) {
 						)}
 					</button>
 				</div>
-				<button className="cus-btn sm open__contactPopup">
+				<button className="cus-btn hidden sm:block open__contactPopup" style={{ maxHeight: '56px', height: '56px' }}>
 					Contact Us
 				</button>
-				<div className="xl:hidden">
-					<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none" onClick={() => setMenuOpen(true)} style={{ cursor: 'pointer' }}>
-						<path d="M2.25 9H15.75" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-						<path d="M2.25 3.75H15.75" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-						<path d="M9.75 14.25H15.75" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-					</svg>
-				</div>
+
 			</div>
 
 			<MenuDropdown open={menuOpen} onClose={() => setMenuOpen(false)} />

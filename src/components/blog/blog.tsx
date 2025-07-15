@@ -10,9 +10,11 @@ interface BlogProps {
 
 function Blog(props: BlogProps) {
 	const [selectedCategory, setSelectedCategory] = useState<string>('all');
-	const lenis = useLenis();
+	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
+	const lenis = isDesktop ? useLenis() : null;
 
 	useEffect(() => {
+        if (!isDesktop) return;
         gsap.registerPlugin(ScrollTrigger);
 		ScrollTrigger.normalizeScroll(true);
 
@@ -20,7 +22,7 @@ function Blog(props: BlogProps) {
 		if (lenis) {
 			lenis.on('scroll', ScrollTrigger.update);
 		}
-	}, [lenis]);
+	}, [lenis, isDesktop]);
     
 
 	return (

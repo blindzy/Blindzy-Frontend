@@ -8,9 +8,11 @@ interface BlogDetailProps {
 	// Add any props if needed in the future
 }
 function BlogDetail(props: BlogDetailProps) {
-	const lenis = useLenis();
+	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
+	const lenis = isDesktop ? useLenis() : null;
 
 	useEffect(() => {
+        if (!isDesktop) return;
         gsap.registerPlugin(ScrollTrigger);
 		ScrollTrigger.normalizeScroll(true);
 
@@ -18,7 +20,7 @@ function BlogDetail(props: BlogDetailProps) {
 		if (lenis) {
 			lenis.on('scroll', ScrollTrigger.update);
 		}
-	}, [lenis]);
+	}, [lenis, isDesktop]);
     
 
 	return (

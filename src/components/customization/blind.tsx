@@ -37,7 +37,8 @@ function CustomCheckbox() {
 }
 
 function Blind(props: ProductDetailsProps) {
-    const lenis = useLenis();
+    const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
+    const lenis = isDesktop ? useLenis() : null;
     const [customisations, setCustomisations] = useState({
         color: '07',
         fitType: 'fit-1',
@@ -103,7 +104,7 @@ function Blind(props: ProductDetailsProps) {
                         {Array.from({ length: 11 }, (_, i) => i + 1).slice(-5).map((num) => {
                             const paddedNum = num < 10 ? `0${num}` : `${num}`;
                             return (
-                                <div className="w-fit shrink-0 selector" key={`color-${paddedNum}}`}>
+                                <div className="w-fit shrink-0 selector" key={`color-${paddedNum}`}>
                                     <input
                                         type="radio"
                                         name="color"
@@ -111,106 +112,17 @@ function Blind(props: ProductDetailsProps) {
                                         value={paddedNum}
                                         checked={customisations.color === paddedNum}
                                         onChange={handleColorChange}
+                                        className="hidden"
                                     />
-                                    <label htmlFor={`color-${paddedNum}`} className="p-2.5 rounded-xl">
-                                        <img src={`/images/colors/${paddedNum}.png`} className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt={`color-${paddedNum}`} />
-                                    </label>
+                                    <label htmlFor={`color-${paddedNum}`} className="block w-8 h-8 rounded-full border-2 cursor-pointer" style={{ backgroundImage: `url(/images/colors/${paddedNum}.png)` }}></label>
                                 </div>
                             );
                         })}
                     </div>
                 </div>
-                <div className="flex items-center gap-2 shrink-0 text-mediumGrey">
-                    <Icon icon="uil:plus" className="text-[18px]" />
-                    <div className="w-full h-[1px] bg-mediumGrey"></div>
-                    <Icon icon="uil:plus" className="text-[18px]" />
-                </div>
-                <h5 className="text-lg mt-4">Controls</h5>
-                <p>Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. </p>
-                <div className="flex items-stretch gap-2">
-                    {["left", "right"].map((side, idx) => (
-                        <div className="w-full selector flex flex-col items-start" key={`control-${side}`}> 
-                            <input
-                                type="radio"
-                                name="control"
-                                id={`control-${side}`}
-                                value={side}
-                                checked={customisations.control === side}
-                                onChange={handleControlChange}
-                                className="hidden"
-                            />
-                            <label
-                                htmlFor={`control-${side}`}
-                                className="block rounded-2xl bg-transparent hover:bg-transparent transition-all w-full"
-                            >
-                                <img
-                                    src={`/images/custom/${side}.png`}
-                                    className="w-full object-cover object-center rounded-2xl border border-[--lightGrey]"
-                                    alt={`${side} control`}
-                                />
-                                <div className="image-after"></div>
-                            </label>
-                            <span className="text-base font-bold mt-2 self-start text-left capitalize font-rounded">{side}</span>
-                        </div>
-                    ))}
-                </div>
-                <div className="flex items-center gap-2 shrink-0 text-mediumGrey">
-                    <Icon icon="uil:plus" className="text-[18px]" />
-                    <div className="w-full h-[1px] bg-mediumGrey"></div>
-                    <Icon icon="uil:plus" className="text-[18px]" />
-                </div>
-                <h5 className="text-lg mt-4">Select Fit</h5>
-                <p>Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. </p>
-                <div className="flex items-stretch gap-2">
-                    {[1, 2].map(num => (
-                        <div className="w-full selector flex flex-col items-start" key={`fit-${num}`}> 
-                            <input
-                                type="radio"
-                                name="fitType"
-                                id={`fit-${num}`}
-                                value={`fit-${num}`}
-                                checked={customisations.fitType === `fit-${num}`}
-                                onChange={handleFitChange}
-                                className="hidden"
-                            />
-                            <label
-                                htmlFor={`fit-${num}`}
-                                className="block rounded-2xl bg-transparent hover:bg-transparent transition-all w-full"
-                            >
-                                <img
-                                    src={`/images/product/fit-${num}.png`}
-                                    className="w-full object-cover object-center rounded-2xl border border-[--lightGrey]"
-                                    alt={`fit-${num}`}
-                                />
-                                <div className="image-after"></div>
-                            </label>
-                            <span className="text-base font-bold mt-2 self-start text-left capitalize font-rounded">{`fit-${num}`}</span>
-                        </div>
-                    ))}
-                </div>
             </div>
-            <div className="w-full max-w-[629px] h-full flex flex-col items-center gap-4 p-4 text-black border border-[--Black] rounded-48 xl:sticky xl:top-8">
-                <div className="w-full rounded-32 overflow-hidden">
-                    <img src="/images/product/product-datail.png" className="w-full object-cover" alt="product-detail" />
-                </div>
-                <div className="w-full flex flex-col gap-4">
-                    <h5 className="text-lg xl:text-2xl">Customisations</h5>
-                    {Object.entries(customisations).map(([key, value]) => (
-                        <div className="flex items-center justify-between" key={key}>
-                            <p className="capitalize text-sm lg:text-base xl:text-lg">{key.replace(/([A-Z])/g, ' $1')}:</p>
-                            <p className="text-sm lg:text-base xl:text-lg">{value}</p>
-                        </div>
-                    ))}
-                    <div className="flex items-center justify-between">
-                        <h5 className="text-lg">TOTAL PRICE</h5>
-                        <h5 className="text-lg">-</h5>
-                    </div>
-                    <CustomCheckbox />
-                    <div className="flex items-center gap-2">
-                        <button className="w-1/2 cus-btn small primary" onClick={handleAddToCart}>Add to Cart</button>
-                        <button className="w-1/2 cus-btn small stroke-black">Buy Now</button>
-                    </div>
-                </div>
+            <div className="product-details xl:w-[1223px] w-full flex flex-col gap-4 p-4 text-black overflow-auto scroll-hidden rounded-48">
+                {/* Product details content */}
             </div>
         </section>
     );

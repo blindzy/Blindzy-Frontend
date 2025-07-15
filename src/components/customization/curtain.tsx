@@ -41,7 +41,9 @@ function CustomCheckbox() {
 }
 
 function curtains(props: ProductDetailsProps) {
-	const lenis = useLenis();
+	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
+	const lenis = isDesktop ? useLenis() : null;
+
 	// Only keep the attributes that are actually customisable on the left
 	const [customisations, setCustomisations] = useState({
 		fabricColor: 'fabric-1',

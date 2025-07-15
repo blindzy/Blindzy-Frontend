@@ -6,6 +6,9 @@ export default {
 		  roboto: ['Roboto', 'sans-serif'],
 		  poppins: ['Poppins', 'sans-serif'],
 		},
+		borderRadius: {
+		  '48': '48px',
+		},
 	  },
 	  screens: {
 		'mbl': {'min': '0px', 'max': '768px'},

@@ -9,7 +9,8 @@ interface ShowroomProps {
 }
 function Showroom(props: ShowroomProps) {
 	const [selectedCategory, setSelectedCategory] = useState<string>('all');
-	const lenis = useLenis();
+	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
+	const lenis = isDesktop ? useLenis() : null;
 
 	useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);

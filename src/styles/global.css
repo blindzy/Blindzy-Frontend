@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@900&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -736,4 +738,44 @@ textarea.formInput{
   background-position: left bottom;
   height: calc(100vh + 120px);
   pointer-events: none;
+}
+
+.menu-main-link {
+  font-family: 'M PLUS Rounded 1c', 'Rounded Mplus 1c', var(--rounded), sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 36px;
+  line-height: 120%;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.menu-option-link {
+  font-family: 'M PLUS Rounded 1c', 'Rounded Mplus 1c', var(--rounded), sans-serif;
+  font-weight: 800;
+  font-style: normal;
+  font-size: 28px;
+  line-height: 120%;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.menu-customisation-link {
+  font-family: 'M PLUS Rounded 1c', 'Rounded Mplus 1c', var(--rounded), sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 22px;
+  line-height: 120%;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.navbar-blindzy-text {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-style: normal;
+  font-size: 29.3px;
+  line-height: 100%;
+  letter-spacing: 0;
+  text-transform: uppercase;
 }

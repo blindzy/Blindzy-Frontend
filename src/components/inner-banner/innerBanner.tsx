@@ -11,9 +11,11 @@ interface InnerBannerProps {
 	// Add any props if needed in the future
 }
 function InnerBanner(props: InnerBannerProps) {
-	const lenis = useLenis();
+	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
+	const lenis = isDesktop ? useLenis() : null;
 
 	useEffect(() => {
+		if (!isDesktop) return;
 		gsap.registerPlugin(ScrollTrigger);
 		ScrollTrigger.normalizeScroll(true);
 
@@ -21,7 +23,7 @@ function InnerBanner(props: InnerBannerProps) {
 		if (lenis) {
 			lenis.on('scroll', ScrollTrigger.update);
 		}
-	}, [lenis]);
+	}, [lenis, isDesktop]);
 
 	return (
 		<section className="innerBanner w-full px-2 sm:px-6 lg:px-8" id="innerBanner">

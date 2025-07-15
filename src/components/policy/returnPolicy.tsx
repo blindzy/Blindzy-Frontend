@@ -8,7 +8,8 @@ interface ReturnPolicyProps {
 	// Add any props if needed in the future
 }
 function ReturnPolicy(props: ReturnPolicyProps) {
-	const lenis = useLenis();
+	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
+	const lenis = isDesktop ? useLenis() : null;
 
 	useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);

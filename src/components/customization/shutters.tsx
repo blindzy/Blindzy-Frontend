@@ -25,7 +25,8 @@ function CustomCheckbox() {
 }
 
 function shutters(props: ProductDetailsProps) {
-    const lenis = useLenis();
+    const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
+    const lenis = isDesktop ? useLenis() : null;
     const [customisations, setCustomisations] = useState({
         color: '07',
         fitType: 'fit-1',

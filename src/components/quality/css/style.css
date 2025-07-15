@@ -1,8 +1,20 @@
 .quailty-step .bg{
-    @apply sm:p-[24px] ps-[3.053vw] py-[3.562vw] sm:pr-[8.906vw] pr-4;
+    padding: 3.562vw 16px 3.562vw 3.053vw; /* py-[3.562vw] ps-[3.053vw] pr-4 */
     background: url(/images/vector/substract.png);
     background-repeat: no-repeat;
-    background-position: 100%;
-    background-size: contain;
+    background-position: 100%; /* Position the background image to the right */
+    background-size: contain;   /* Scale the background image to fit within the element */
+    overflow: hidden;           /* Ensure content, including images, stays within the bounds of this element */
+}
 
+@media (min-width: 640px) { /* sm breakpoint */
+    .quailty-step .bg {
+        padding: 24px 8.906vw 24px 24px; /* sm:p-[24px] sm:pr-[8.906vw] */
+    }
+}
+
+@media (min-width: 1280px) { /* xl breakpoint */
+    .quailty-step .bg {
+        height: 10.573vw; /* xl:h-[10.573vw] */
+    }
 }

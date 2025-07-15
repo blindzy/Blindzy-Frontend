@@ -22,7 +22,7 @@ function Categories(props: CategoriesProps) {
                         <h2 className="text-xxxl text-white">
                             EXPLORE ALL CATEGORIES
                         </h2>
-                        <p className="text-sm text-white">Lorem ipsum dolor sit amet consectetur. Vel id pellentesque mollis orci purus. Est arcu adipiscing eget a maecenas mauris.</p>
+                        <p className="text-base text-white">Browse the different options for window furnishings.</p>
                     </div>
                     <div className="sm:flex hidden items-stretch gap-4">
                         <button className="arrow-btn white" id="card-prev">
