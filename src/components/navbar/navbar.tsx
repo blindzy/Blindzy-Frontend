@@ -192,9 +192,14 @@ function Navbar(props: NavbarProps) {
 						)}
 					</button>
 				</div>
-				<button className="cus-btn hidden sm:block open__contactPopup" style={{ maxHeight: '56px', height: '56px' }}>
+				<button
+					className="cus-btn items-center justify-center gap-3 h-[56px] open__contactPopup"
+					style={{ width: 155 }}
+				>
 					Contact Us
 				</button>
+
+
 
 			</div>
 

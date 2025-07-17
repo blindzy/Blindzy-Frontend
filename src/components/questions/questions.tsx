@@ -27,7 +27,7 @@ function Questions(props: QuestionsProps) {
                     </div>
                 </div>
                 <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-2">
-                    <div className="card w-full relative rounded-48 overflow-hidden card-shadow">
+                    <div className="questioncard w-full relative rounded-48 overflow-hidden questioncard-shadow">
                         <img src="/images/questions/1.png" className="w-full" alt="" />
                         <div className="absolute left-0 top-0 w-full h-full flex flex-col justify-between items-end xl:p-[1.25vw] sm:p-[2.344vw] p-2 ">
                             <a href="/shop" className="cus-btn white w-fit">
@@ -39,7 +39,7 @@ function Questions(props: QuestionsProps) {
                         </div>
                     </div>
                     <div className="w-full flex items-stretch xl:gap-[1.25vw] sm:gap-[2.344vw] gap-2">
-                        <div className="card w-full relative rounded-48 overflow-hidden card-shadow">
+                        <div className="questioncard w-full relative rounded-48 overflow-hidden questioncard-shadow">
                             <img src="/images/questions/2.png" className="w-full" alt="" />
                             <div className="absolute left-0 top-0 w-full h-full flex flex-col justify-between items-end xl:p-[1.25vw] sm:p-[2.344vw] p-2 ">
                                 <a href="/shop" className="cus-btn white w-fit">
@@ -50,7 +50,7 @@ function Questions(props: QuestionsProps) {
                                 </div>
                             </div>
                         </div>
-                        <div className="card w-full relative rounded-48 overflow-hidden card-shadow">
+                        <div className="questioncard w-full relative rounded-48 overflow-hidden questioncard-shadow">
                             <img src="/images/questions/3.png" className="w-full" alt="" />
                             <div className="absolute left-0 top-0 w-full h-full flex flex-col justify-between items-end xl:p-[1.25vw] sm:p-[2.344vw] p-2 ">
                                 <a href="/shop" className="cus-btn white w-fit">

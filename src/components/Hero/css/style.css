@@ -46,11 +46,19 @@
     align-items: center;
     justify-content: center;
     padding-top: 0;
+    font-size: 21px;
     padding-bottom: 0;
   }
   .hero-main-content .cus-btn.white {
     color: #fff;
     background: transparent;
+    font-size: 21px;
     border: 1px solid #fff;
+  }
+  .hero-section .hero-content {
+    background: url(/images/hero/hero-bg2.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: top;
   }
 }

@@ -18,7 +18,7 @@ function Cart(props: CartProps) {
             $('body').addClass('scroll-none');
             $('#cartPopup').show();
             $('#back-drop').css({ 'pointerEvents': 'auto', 'opacity': 1 });
-            $('#cartPopup').css({ height: '100vw', pointerEvents: 'auto', display: 'block' });
+            $('#cartPopup').css({ height: '100vh', pointerEvents: 'auto', display: 'block' });
             loadCart();
         })
     }, []);
@@ -71,8 +71,8 @@ function Cart(props: CartProps) {
     return (
         <>
             <div className="fixed left-0 top-0 z-[100] contact-popup w-screen h-0 overflow-hidden hidden pointer-events-none" id="cartPopup">
-                <div className="w-screen h-screen xl:p-[1.25vw] sm:p-[2.344vw] p-4 overflow-auto">
-                    <div className="max-w-[640px] w-full h-full ml-auto mr-4 bg-white flex flex-col justify-between xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 shrink-0 rounded-48 overflow-y-auto box-border">
+                <div className="w-screen h-screen xl:p-[1.25vw] sm:p-[2.344vw] p-4">
+                    <div className="max-w-[640px] w-full min-h-[694px] max-h-screen h-auto ml-auto mr-4 bg-white flex flex-col xl:p-[1.25vw] sm:p-[2.344vw] p-4 rounded-48 box-border">
                         <div className="flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 shrink-0">
                             <div className="flex items-center justify-between gap-4 text-black">
                                 <h3 className="text-xxl">Cart</h3>
@@ -87,7 +87,7 @@ function Cart(props: CartProps) {
                                 <Icon icon="uil:plus" className="text-[18px] text-[--mediumGrey]" />
                             </div>
                         </div>
-                        <div className="w-full h-full flex flex-col gap-8 overflow-scroll scroll-hidden ">
+                        <div className="flex-1 min-h-0 overflow-y-auto scroll-hidden mb-4">
                             {loading && (
                                 <div className="text-center py-8">Loading cart...</div>
                             )}
@@ -156,13 +156,13 @@ function Cart(props: CartProps) {
                                 </div>
                             ))}
                         </div>
-                        <div className="flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 shrink-0">
+                        <div className="flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 shrink-0 bg-white pt-2">
                             <div className="flex items-center gap-2 shrink-0">
                                 <Icon icon="uil:plus" className="text-[18px] text-[--mediumGrey]" />
                                 <div className="w-full h-[1px] bg-mediumGrey"></div>
                                 <Icon icon="uil:plus" className="text-[18px] text-[--mediumGrey]" />
                             </div>
-                            <div className="flex items-center justify-between">
+                            <div className="flex items-center justify-between shrink-0">
                                 <h3 className="text-xl">TOTAL</h3>
                                 <span className="text-xl">{getTotalPrice()}</span>
                             </div>

@@ -25,7 +25,7 @@ function Hero(props: HeroProps) {
 
 		gsap.to("#hero", {
 		    scrollTrigger: {
-		        trigger: "#hero",
+		        trigger: ".hero-content",
 		        start: "top top",
 		        end: "center top",
 		        scrub: 1,
@@ -47,13 +47,13 @@ function Hero(props: HeroProps) {
 							<h2 className="text-xxxl text-white uppercase">Installing Blinds Made Easy</h2>
 							<p className="text-sm text-white">Welcome to Blindzy, your trusted source for custom DIY window furnishings in Australia. Browse our wide range of affordable, high quality window furnishings, and follow our simple installation guides to effortlessly transform your home.</p>
 						</div>
-						<div className="flex items-center xl:justify-start justify-center xl:gap-[1.25vw] gap-4">
-							<a href="/samples" className="cus-btn">Get Free Samples</a>
+						<div className="flex items-center xl:justify-start justify-center gap-[24px]">
+							<a href="/samples" className="cus-btn" style={{ width: 254 }}>Get Free Samples</a>
 							<div className="xl:block hidden shrink-0">
-								<a href="/about" className="cus-btn stroke">Learn More</a>
+								<a href="/about" className="cus-btn stroke" style={{ width: 187 }}>Learn More</a>
 							</div>
 							<div className="xl:hidden shrink-0">
-								<a href="/about" className="cus-btn white">Learn More</a>
+								<a href="/about" className="cus-btn white" style={{ width: 187 }}>Learn More</a>
 							</div>
 						</div>
 					</div>
@@ -76,32 +76,32 @@ function Hero(props: HeroProps) {
 						</div>
 					</div>
 					{/* Cards: hidden on mobile, visible on xl and up */}
-					<div className="hidden xl:flex xl:w-[350px] w-full xl:h-full h-auto flex-wrap flex-col mini:gap-[1.25vw] justify-between xl:gap-2 gap-4">
-						<div className="xl:w-full w-[48%] flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
+					<div className="hidden xl:flex xl:w-[340px] w-full  xl:h-full h-full flex-col gap-6">
+						<div className="w-full h-full flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
 							<img src="/images/icon/box.png" className="w-fit shrink-0" alt="box" />
 							<div className="flex flex-col gap-1">
-								<h6 className="text-md bold">Free Delivery</h6>
+								<p className="text-[21px] font-bold">Free Delivery</p>
 								<p className="text-xs text-black"> Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
 							</div>
 						</div>
-						<div className="xl:w-full w-[48%] flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
+						<div className="w-full h-full flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
 							<img src="/images/icon/guarantee.png" className="w-fit shrink-0" alt="guarantee" />
 							<div className="flex flex-col gap-1">
-								<h6 className="text-md bold">10 Years Warranty</h6>
+								<p className="text-[21px] font-bold">10 Years Warranty</p>
 								<p className="text-xs text-black"> Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
 							</div>
 						</div>
-						<div className="xl:w-full w-[48%] flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
+						<div className="w-full h-full flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
 							<img src="/images/icon/australia.png" className="w-fit shrink-0" alt="australia" />
 							<div className="flex flex-col gap-1">
-								<h6 className="text-md bold">Made in Australia</h6>
+								<p className="text-[21px] font-bold">Made in Australia</p>
 								<p className="text-xs text-black"> Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
 							</div>
 						</div>
-						<div className="xl:w-full w-[48%] flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
+						<div className="w-full h-full flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
 							<img src="/images/icon/diy.png" className="w-fit shrink-0" alt="diy" />
 							<div className="flex flex-col gap-1">
-								<h6 className="text-md bold">Install Yourself</h6>
+								<p className="text-[21px] font-bold">Install Yourself</p>
 								<p className="text-xs text-black"> Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
 							</div>
 						</div>

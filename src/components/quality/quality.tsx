@@ -66,14 +66,14 @@ function Quality(props: QualityProps) {
     }, []); // Empty dependency array ensures this effect runs only once on mount
 
     return (
-        <section className="quailty-section w-screen h-screen flex xl:flex-row flex-col items-center xl:justify-between justify-center xl:gap-0 sm:gap-[48px] gap-4 mini:py-[1.25vw] xl:py-2 sm:py-[6.25vw] py-2 xl:px-[1.25vw] sm:px-4 px-2 xl:pr-[2.344vw] sm:pr-[4.883vw] overflow-hidden" id="quailty">
+        <section className="quailty-section w-screen h-screen flex xl:flex-row flex-col items-center xl:justify-between justify-center xl:gap-0 sm:gap-[48px] sm:h-[960px] gap-4 mini:py-[1.25vw] xl:py-2 sm:py-[6.25vw] py-2 xl:px-[1.25vw] sm:px-7 px-2 xl:pr-[2.344vw] sm:pr-[4.883vw] overflow-hidden" id="quailty">
             {/* Left content area */}
             <div className="xl:w-[41.667vw] sm:w-[80%] w-full xl:m-0 mx-auto xl:text-left text-center flex flex-col xl:items-start items-center gap-[2.5vw]">
                 <div className="flex flex-col gap-2">
                     <h2 className="text-xxxl xl:text-4xl text-black uppercase">4 Steps to Designer Quality Blinds</h2>
                     <p className="text-sm lg:text-base xl:text-lg text-black"> Lorem ipsum dolor sit amet consectetur. Massa ultricies convallis condimentum etiam gravida tristique. Quisque faucibus molestie aliquam </p>
                 </div>
-                <button className="cus-btn w-fit">
+                <button className="cus-btn w-fit sm:w-full">
                     Download Guide
                 </button>
             </div>

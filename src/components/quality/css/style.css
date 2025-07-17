@@ -17,4 +17,55 @@
     .quailty-step .bg {
         height: 10.573vw; /* xl:h-[10.573vw] */
     }
+    #quailty .cus-btn {
+        width: 239px;
+        height: 64px;
+        min-width: 0;
+        max-width: 239px;
+        max-height: 64px;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1279px) {
+    #quailty .cus-btn {
+        width: 239px;
+        height: 64px;
+        min-width: 0;
+        max-width: 239px;
+        max-height: 64px;
+    }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  #quailty .cus-btn {
+    width: 100%;
+    height: 56px;
+    min-width: 0;
+    max-width: 100%;
+    max-height: 56px;
+    margin: 0 auto 16px auto;
+    display: block;
+  }
+}
+
+@media (max-width: 639px) {
+  .quailty-step .bg {
+    background: url(/images/vector/Subtract2.png);
+    background-repeat: no-repeat;
+    background-position: 100%;
+    background-size: contain;
+    overflow: hidden;    
+    width: 320px;
+        height: 123px;
+    /* padding: 3.562vw 16px 3.562vw 3.053vw; */
+  }
+  #quailty .cus-btn {
+    width: 169px;
+    height: 56px;
+    min-width: 0;
+    max-width: 169px;
+    max-height: 56px;
+    margin: 0 auto 16px auto;
+  }
+  
 }

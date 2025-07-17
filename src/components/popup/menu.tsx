@@ -21,13 +21,36 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ open, onClose }) => {
 
   useEffect(() => {
     if (open) {
+      // Strict scroll lock
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = '0';
+      document.body.style.right = '0';
+      document.body.style.width = '100vw';
       document.body.classList.add('overflow-hidden');
       setShowAnim(true);
+      return () => {};
     } else {
+      // Restore scroll
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
       document.body.classList.remove('overflow-hidden');
+      if (scrollY) {
+        window.scrollTo(0, -parseInt(scrollY || '0'));
+      }
       setShowAnim(false);
     }
     return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.left = '';
+      document.body.style.right = '';
+      document.body.style.width = '';
       document.body.classList.remove('overflow-hidden');
     };
   }, [open]);
@@ -39,12 +62,12 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ open, onClose }) => {
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm">
+    <div className="fixed inset-0 z-[9999] bg-black/40 backdrop-blur-sm w-screen h-screen" onTouchMove={handleTouchMove}>
       {/* Sidebar menu - pinned to top-right with margin */}
       <div
-        className={`absolute bg-white h-auto flex flex-col rounded-[32px] shadow-lg z-50 overflow-hidden m-0 transition-opacity duration-500 ease-out
+        className={`absolute no-scrollbar bg-white h-auto flex flex-col rounded-[32px] shadow-lg z-[10000] overflow-hidden m-0 transition-opacity duration-500 ease-out
         ${showAnim ? 'opacity-100' : 'opacity-0'}
-        w-full p-2 max-w-full sm:w-[393px] sm:max-w-full sm:p-2 md:top-4 md:right-4 md:max-w-xs md:p-2 overflow-y-auto max-h-screen`}
+        w-[393px] max-w-full p-6 top-4 right-4 overflow-y-auto max-h-screen`}
         style={{ willChange: 'opacity' }}
         onTouchMove={handleTouchMove}
       >
@@ -93,12 +116,23 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ open, onClose }) => {
             </button>
             {customOpen && (
               <div id="customisation-dropdown" className="mt-1">
-                <a href="/customization/shutter-customisation" className="menu-customisation-link block px-4 py-2 text-black rounded transition-all duration-200 hover:text-[--primary] sm:menu-customisation-link">Customize Shutters</a>
-                <a href="/customization/curtain-customisation" className="menu-customisation-link block px-4 py-2 text-black rounded transition-all duration-200 hover:text-[--primary] sm:menu-customisation-link">Customize Curtains</a>
-                <a href="/customization/double-curtain-customisation" className="menu-customisation-link block px-4 py-2 text-black rounded transition-all duration-200 hover:text-[--primary] sm:menu-customisation-link">Customize Double Curtains</a>
-                <a href="/customization/blind-customisation" className="menu-customisation-link block px-4 py-2 text-black rounded transition-all duration-200 hover:text-[--primary] sm:menu-customisation-link">Customize Blinds</a>
-                <a href="/customization/double-roller-blind-customisation" className="menu-customisation-link block px-4 py-2 text-black rounded transition-all duration-200 hover:text-[--primary] sm:menu-customisation-link">Customize Double Blinds</a>
-                <a href="/customization/vertical-blind-customisation" className="menu-customisation-link block px-4 py-2 text-black rounded transition-all duration-200 hover:text-[--primary] sm:menu-customisation-link">Customize Vertical Blinds</a>
+                {[
+                  { href: "/customization/shutter-customisation", label: "Customize Shutters" },
+                  { href: "/customization/curtain-customisation", label: "Customize Curtains" },
+                  { href: "/customization/double-curtain-customisation", label: "Customize Double Curtains" },
+                  { href: "/customization/blind-customisation", label: "Customize Blinds" },
+                  { href: "/customization/double-roller-blind-customisation", label: "Customize Double Blinds" },
+                  { href: "/customization/vertical-blind-customisation", label: "Customize Vertical Blinds" },
+                ].map(link => (
+                  <a
+  key={link.href}
+  href={link.href}
+  className="block px-4 py-2 text-base font-normal text-gray-800 hover:text-[--primary] transition-all duration-200"
+>
+  {link.label}
+</a>
+
+                ))}
               </div>
             )}
           </div>
