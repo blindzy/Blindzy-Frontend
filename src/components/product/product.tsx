@@ -18,47 +18,68 @@ function Products(props: ProductsProps) {
 			cardRefs.forEach((ref, idx) => {
 				const el = ref.current;
 				if (!el) return;
+	
 				const overlay = el.querySelector?.('.image-overlay') as HTMLDivElement | null;
 				const svgWrapper = el.querySelector?.('.svg-wrapper');
 				const h4 = el.querySelector?.('h4');
 				const p = el.querySelector?.('p');
 				const btn = el.querySelector?.('.cus-btn');
+	
+				// Set overlay image and styles once
+				if (overlay) {
+					overlay.style.backgroundImage = bgImages[idx];
+					overlay.style.backgroundSize = 'cover';
+					overlay.style.backgroundPosition = 'center';
+					overlay.style.backgroundRepeat = 'no-repeat';
+					overlay.style.opacity = '0';
+				}
+	
 				const onEnter = () => {
 					if (overlay) {
-						overlay.style.backgroundImage = bgImages[idx];
-						overlay.style.backgroundSize = 'cover';
-						overlay.style.backgroundPosition = 'center';
-						overlay.style.backgroundRepeat = 'no-repeat';
-						gsap.to(overlay, { opacity: 1, duration: 0.4 });
+						gsap.to(overlay, { opacity: 1, duration: 0.6, ease: "power2.out" });
 					}
-					gsap.to(el, { backgroundColor: '#0F0F0F', color: '#fff', duration: 0.3 });
-					gsap.to([h4, p], { color: '#fff', duration: 0.3 });
-					gsap.to(svgWrapper, { opacity: 0, duration: 0.2 });
-					gsap.to(btn, { backgroundColor: '#fff', color: '#000', border: '1px solid #fff', duration: 0.3 });
+					gsap.to([h4, p], { color: '#fff', duration: 0.4, ease: 'power2.out' });
+					gsap.to(svgWrapper, { opacity: 0, duration: 0.3, ease: 'power2.out' });
+					gsap.to(btn, {
+						backgroundColor: '#fff',
+						color: '#000',
+						border: '1px solid #fff',
+						duration: 0.4,
+						ease: 'power2.out',
+					});
 				};
+	
 				const onLeave = () => {
 					if (overlay) {
-						gsap.to(overlay, { opacity: 0, duration: 0.4 });
+						gsap.to(overlay, { opacity: 0, duration: 0.6, ease: "power2.out" });
 					}
-					gsap.to(el, { backgroundColor: '#fff', color: '#000', duration: 0.3 });
-					gsap.to([h4, p], { color: '#000', duration: 0.3 });
-					gsap.to(svgWrapper, { opacity: 1, duration: 0.2 });
-					gsap.to(btn, { backgroundColor: '#9F89E8', color: '#fff', border: 'none', duration: 0.3 });
+					gsap.to([h4, p], { color: '#000', duration: 0.4, ease: 'power2.out' });
+					gsap.to(svgWrapper, { opacity: 1, duration: 0.3, ease: 'power2.out' });
+					gsap.to(btn, {
+						backgroundColor: '#9F89E8',
+						color: '#fff',
+						border: 'none',
+						duration: 1,
+						ease: 'power2.out',
+					});
 				};
+	
 				el.addEventListener?.('mouseenter', onEnter);
 				el.addEventListener?.('mouseleave', onLeave);
+	
+				// Clean up listeners
 				return () => {
 					el.removeEventListener?.('mouseenter', onEnter);
 					el.removeEventListener?.('mouseleave', onLeave);
 				};
 			});
 		}
-	}, [cardRefs]);
+	},	 [cardRefs]);
 
 	return (
 		<section className="product-section relative w-screen xl:h-screen flex items-center justify-center z-[10] xl:py-0 sm:py-[6.25vw] py-[64px]" id="product">
             <div className="w-full flex items-center xl:justify-center xl:gap-[1.25vw] sm:gap-[16px] gap-4 xl:px-[1.25vw] sm:px-4 px-2 xl:overflow-hidden overflow-auto scroll-hidden">
-                <div ref={cardRefs[0]} className="card showroom-1 xl:w-full sm:w-[60vw] w-[90vw] xl:h-[64vh] h-[50vh] xl:shrink shrink-0 flex flex-col gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-white border border-[--Black] rounded-48 relative overflow-hidden">
+                <div ref={cardRefs[0]} onClick={() => window.location.href = "/shop"} className="card showroom-1 cursor-pointer xl:w-full sm:w-[60vw] w-[90vw] xl:h-[64vh] h-[50vh] xl:shrink shrink-0 flex flex-col gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-white border border-[--Black] rounded-48 relative overflow-hidden">
                     <div className="image-overlay"></div>
                     <a href="/shop" className="w-fit ml-auto cus-btn small shrink-0">
                         Explore
@@ -73,7 +94,7 @@ function Products(props: ProductsProps) {
                         </div>
                     </div>
                 </div>
-                <div ref={cardRefs[1]} className="card showroom-2 xl:w-full sm:w-[60vw] w-[90vw] xl:h-[64vh] h-[50vh] xl:shrink shrink-0 flex flex-col gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-white border border-[--Black] rounded-48 relative overflow-hidden">
+                <div ref={cardRefs[1]} onClick={() => window.location.href = "/shop"} className="card showroom-2 cursor-pointer xl:w-full sm:w-[60vw] w-[90vw] xl:h-[64vh] h-[50vh] xl:shrink shrink-0 flex flex-col gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-white border border-[--Black] rounded-48 relative overflow-hidden">
                     <div className="image-overlay"></div>
                     <a href="/shop" className="w-fit ml-auto cus-btn small shrink-0">
                         Explore
@@ -88,7 +109,7 @@ function Products(props: ProductsProps) {
                         </div>
                     </div>
                 </div>
-                <div ref={cardRefs[2]} className="card showroom-3 xl:w-full sm:w-[60vw] w-[90vw] xl:h-[64vh] h-[50vh] xl:shrink shrink-0 flex flex-col gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-white border border-[--Black] rounded-48 relative overflow-hidden">
+                <div ref={cardRefs[2]} onClick={() => window.location.href = "/shop"} className="card showroom-3 cursor-pointer xl:w-full sm:w-[60vw] w-[90vw] xl:h-[64vh] h-[50vh] xl:shrink shrink-0 flex flex-col gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-white border border-[--Black] rounded-48 relative overflow-hidden">
                     <div className="image-overlay"></div>
                     <a href="/shop" className="w-fit ml-auto cus-btn small shrink-0">
                         Explore
