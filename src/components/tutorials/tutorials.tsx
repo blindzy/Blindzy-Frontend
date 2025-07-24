@@ -29,13 +29,25 @@ function Tutorials(props: TutorialsProps) {
                 <h1 className="text-1xl text-black uppercase">Tutorials</h1>
             </div>
             <div className="flex items-center justify-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-                <button className={`w-fit cus-btn small ${selectedCategory === 'all' ? '' : 'white'}`} onClick={() => setSelectedCategory('all')}>
+                <button
+                    className={`w-fit cus-btn small ${selectedCategory === 'all' ? '' : ''}`}
+                    style={selectedCategory === 'all' ? {} : { background: 'transparent', color: 'inherit', border: '1px solid transparent' }}
+                    onClick={() => setSelectedCategory('all')}
+                >
                     All
                 </button>
-                <button className={`w-fit cus-btn small ${selectedCategory === 'blinds' ? '' : 'white'}`} onClick={() => setSelectedCategory('blinds')}>
+                <button
+                    className={`w-fit cus-btn small ${selectedCategory === 'blinds' ? '' : ''}`}
+                    style={selectedCategory === 'blinds' ? {} : { background: 'transparent', color: 'inherit', border: '1px solid transparent' }}
+                    onClick={() => setSelectedCategory('blinds')}
+                >
                     Blinds
                 </button>
-                <button className={`w-fit cus-btn small ${selectedCategory === 'curatins' ? '' : 'white'}`} onClick={() => setSelectedCategory('curatins')}>
+                <button
+                    className={`w-fit cus-btn small ${selectedCategory === 'curatins' ? '' : ''}`}
+                    style={selectedCategory === 'curatins' ? {} : { background: 'transparent', color: 'inherit', border: '1px solid transparent' }}
+                    onClick={() => setSelectedCategory('curatins')}
+                >
                     Curatins
                 </button>
             </div>

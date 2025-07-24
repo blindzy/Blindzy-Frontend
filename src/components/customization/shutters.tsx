@@ -9,6 +9,7 @@ import $ from 'jquery';
 import { api } from '../../services/api';
 
 import './css/style.css';
+import ProductCard from './ProductCard';
 
 interface ProductDetailsProps { }
 
@@ -182,34 +183,19 @@ function shutters(props: ProductDetailsProps) {
                     ))}
                 </div>
             </div>
-
-            <div className="w-full max-w-[629px] h-full flex flex-col items-center gap-4 p-4 text-black border border-[--Black] rounded-48 xl:sticky xl:top-8">
-                <div className="w-full rounded-32 overflow-hidden">
-                    <img src="/images/product/product-datail.png" className="w-full object-cover" alt="product-detail" />
-                </div>
-
-                <div className="w-full flex flex-col gap-4">
-                    <h5 className="text-lg xl:text-2xl">Customisations</h5>
-                    {Object.entries(customisations).map(([key, value]) => (
-                        <div className="flex items-center justify-between" key={key}>
-                            <p className="capitalize text-sm lg:text-base xl:text-lg">{key.replace(/([A-Z])/g, ' $1')}:</p>
-                            <p className="text-sm lg:text-base xl:text-lg">{value}</p>
-                        </div>
-                    ))}
-
-                    <div className="flex items-center justify-between">
-                        <h5 className="text-lg">TOTAL PRICE</h5>
-                        <h5 className="text-lg">-</h5>
-                    </div>
-
-                    <CustomCheckbox />
-
-                    <div className="flex items-center gap-2">
-                        <button className="w-1/2 cus-btn small primary" onClick={handleAddToCart}>Add to Cart</button>
-                        <button className="w-1/2 cus-btn small stroke-black">Buy Now</button>
-                    </div>
-                </div>
-            </div>
+            <ProductCard
+                    customisations={{
+                        fabricColor: customisations.color,
+                        fitType: customisations.fitType,
+                        hinge: customisations.hinge
+                    }}
+                    fields={['fabricColor', 'fitType', 'hinge']}
+                    imageSrc="/images/product/product-datail.png"
+                    productName="Shutter Product"
+                    productDescription="Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. "
+                    price="-"
+                />
+           
         </section>
     );
 }

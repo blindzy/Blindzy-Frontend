@@ -64,8 +64,21 @@
     height: 56px;
     min-width: 0;
     max-width: 169px;
-    max-height: 56px;
+    max-height: none;
     margin: 0 auto 16px auto;
+    background: #9F89E8 !important; /* Assuming primary is #9F89E8, adjust if different */
+    border: none !important;
+    color: #fff !important;
+    padding: 3.721vw 5.581vw !important;
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: inherit;
+    display: block;
+    white-space: nowrap !important;
   }
-  
+  #quailty {
+    height: auto !important;
+    min-height: 100vh;
+    overflow: visible !important;
+  }
 }

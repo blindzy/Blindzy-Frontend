@@ -1,3 +1,5 @@
+import { API_CONFIG } from '../config/api';
+
 // API Configuration
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:9000/api';
 
@@ -321,14 +323,11 @@ class ApiService {
 
     // Get customer ID from localStorage if present
     const customerId = typeof window !== 'undefined' ? localStorage.getItem('customer_id') : null;
-    // Get Medusa publishable key from env
-    const medusaApiKey = "pk_5393bfc53ae1105a600ba8a13435e980ee7289976625b4ddad33f77d633c4306";
     const config: RequestInit = {
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json',
         ...(customerId ? { 'x-customer-id': customerId } : {}),
-        ...(medusaApiKey ? { 'x-publishable-api-key': medusaApiKey } : {}),
         ...options.headers,
       },
       ...options,
@@ -344,6 +343,35 @@ class ApiService {
       return await response.json();
     } catch (error) {
       console.error('API Request failed:', error);
+      throw error;
+    }
+  }
+
+  // Medusa API request method
+  private async medusaRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
+    const url = `${API_CONFIG.MEDUSA_BASE_URL}${endpoint}`;
+    const medusaApiKey = API_CONFIG.MEDUSA_PUBLISHABLE_KEY;
+    
+    const config: RequestInit = {
+      headers: {
+        'Content-Type': 'application/json',
+        'x-publishable-api-key': medusaApiKey,
+        ...options.headers,
+      },
+      ...options,
+    };
+
+    try {
+      const response = await fetch(url, config);
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || `Medusa API Error: ${response.status} ${response.statusText}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      console.error('Medusa API Request failed:', error);
       throw error;
     }
   }
@@ -490,10 +518,34 @@ class ApiService {
     if (USE_SAMPLE_DATA) {
       return Promise.resolve(sampleAuthResponse);
     }
-    return this.request('/custom/auth/register', {
+    
+    // Use Medusa API for registration
+    const medusaResponse = await this.medusaRequest<any>('/store/customers/register', {
       method: 'POST',
-      body: JSON.stringify(userData),
+      body: JSON.stringify({
+        first_name: userData.first_name,
+        last_name: userData.last_name,
+        email: userData.email,
+        phone: userData.phone || '',
+        username: userData.username || userData.email,
+        password: userData.password,
+      }),
     });
+
+    // Transform Medusa response to match our AuthResponse interface
+    return {
+      customer: {
+        id: medusaResponse.customer.id,
+        email: medusaResponse.customer.email,
+        first_name: medusaResponse.customer.first_name,
+        last_name: medusaResponse.customer.last_name,
+        phone: medusaResponse.customer.phone,
+      },
+      session: {
+        id: medusaResponse.session?.id || '',
+        token: medusaResponse.session?.access_token || '',
+      },
+    };
   }
 
   async logout(): Promise<void> {
@@ -590,6 +642,46 @@ class ApiService {
       return Promise.resolve(sampleBlogCategories);
     }
     return this.request('/store/blog/categories');
+  }
+
+  // Medusa Customer APIs
+  async medusaLogin(email: string, password: string): Promise<any> {
+    return this.medusaRequest<any>('/store/customers/login', {
+      method: 'POST',
+      body: JSON.stringify({ email, password }),
+    });
+  }
+
+  async medusaSendResetEmail(email: string): Promise<any> {
+    return this.medusaRequest<any>('/store/customers/send-reset-email', {
+      method: 'POST',
+      body: JSON.stringify({ email }),
+    });
+  }
+
+  async medusaVerifyOtp(email: string, otp: string): Promise<any> {
+    return this.medusaRequest<any>('/store/customers/verify-otp', {
+      method: 'POST',
+      body: JSON.stringify({ email, otp }),
+    });
+  }
+
+  async medusaResetPassword(email: string, newPassword: string): Promise<any> {
+    return this.medusaRequest<any>('/store/customers/reset-password', {
+      method: 'POST',
+      body: JSON.stringify({ email, newPassword }),
+    });
+  }
+
+  async medusaGetCustomer(email: string): Promise<any> {
+    return this.medusaRequest<any>(`/store/customers/get-customer?email=${encodeURIComponent(email)}`);
+  }
+
+  async medusaUpdateCustomer(id: string, update: Partial<User>): Promise<any> {
+    return this.medusaRequest<any>('/store/customers/update-customer', {
+      method: 'PATCH',
+      body: JSON.stringify({ id, ...update }),
+    });
   }
 
   // Helper to store customer ID after login/register

@@ -86,10 +86,13 @@ function SignUp() {
             window.location.href = '/user';
           }, 1500);
         } catch (err: any) {
-          const serverError =
+          let serverError =
             err?.response?.data?.error ||
             err?.message ||
             'Failed to create account. Please try again.';
+          if (typeof serverError === 'string' && serverError.toLowerCase().includes('email or username already exists')) {
+            serverError = 'An account with this email or username already exists. Please log in or use a different email.';
+          }
           setError(serverError);
           console.error('Signup error:', err);
         } finally {

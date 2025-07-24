@@ -7,6 +7,7 @@ import { useLenis } from '../../hooks/useLenis';
 import $ from 'jquery';
 
 import './css/style.css';
+import ProductCard from './ProductCard';
 
 interface ProductDetailsProps {
 	// Add any props if needed in the future
@@ -40,7 +41,7 @@ function CustomCheckbox() {
 	);
 }
 
-function curtains(props: ProductDetailsProps) {
+function Curtains(props: ProductDetailsProps) {
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
 	const lenis = isDesktop ? useLenis() : null;
 
@@ -296,96 +297,27 @@ function curtains(props: ProductDetailsProps) {
 					</div>
 				</div>
 			</div>
-			<div className="w-full max-w-[629px] xl:w-[629px] xl:max-w-[629px] h-full flex flex-col items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 text-black border border-[--Black] rounded-48 xl:sticky xl:top-8">
-				<div className="w-full xl:w-auto h-full rounded-32 overflow-hidden mb-4 xl:mb-0">
-					<img src="/images/product/product-datail.png" className="w-full object-cover" alt="product-datail" />
-				</div>
-				<div className="w-full shrink-0 flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black">
-					<div className="flex flex-col gap-2">
-						<h5 className="text-lg">Product Name</h5>
-						<p className="text-sm lg:text-base xl:text-lg">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. </p>
-					</div>
-					<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
-						<Icon icon="uil:plus" className="text-[18px]" />
-						<div className="w-full h-[1px] bg-mediumGrey"></div>
-						<Icon icon="uil:plus" className="text-[18px]" />
-					</div>
-					<div className="w-full flex flex-col gap-4">
-						<h5 className="text-lg xl:text-2xl">Customisations</h5>
-						<div className="flex items-center justify-between">
-							<p className="capitalize text-sm lg:text-base xl:text-lg">Fabric Colour:</p>
-							<p className="text-sm lg:text-base xl:text-lg">{customisations.fabricColor.replace('fabric-', 'Fabric ')}</p>
-						</div>
-						<div className="flex items-center justify-between">
-							<p className="capitalize text-sm lg:text-base xl:text-lg">Controls:</p>
-							<p className="text-sm lg:text-base xl:text-lg">{customisations.controls === 'control-left' ? 'Left' : 'Right'}</p>
-						</div>
-						<div className="flex items-center justify-between">
-							<p className="capitalize text-sm lg:text-base xl:text-lg">Fit Type:</p>
-							<p className="text-sm lg:text-base xl:text-lg">{customisations.fitType === 'fit-1' ? 'Fit' : 'Recess'}</p>
-						</div>
-						<div className="flex items-center justify-between">
-							<p className="capitalize text-sm lg:text-base xl:text-lg">Stack:</p>
-							<p className="text-sm lg:text-base xl:text-lg">{
-								customisations.stack === 'leftStack' ? 'Left Stack' :
-								customisations.stack === 'rightStack' ? 'Right Stack' :
-								'Center Opening'
-							}</p>
-						</div>
-						<div className="flex items-center justify-between">
-							<p className="capitalize text-sm lg:text-base xl:text-lg">Style:</p>
-							<p className="text-sm lg:text-base xl:text-lg">{
-								customisations.style === 'sFold' ? 'S Fold' :
-								customisations.style === 'pinch' ? 'Triple Pinch Pleat' :
-								'Pencil Pleat'
-							}</p>
-						</div>
-						<div className="flex items-center justify-between">
-							<p className="capitalize text-sm lg:text-base xl:text-lg">Hem:</p>
-							<p className="text-sm lg:text-base xl:text-lg">{
-								customisations.hem === 'lead-weight' ? 'Lead Weight' : '70mm Hem'
-							}</p>
-						</div>
-						<div className="flex items-center justify-between">
-							<p className="capitalize text-sm lg:text-base xl:text-lg">Curtain Track Type:</p>
-							<p className="text-sm lg:text-base xl:text-lg">{
-								customisations.curtainType === 'designer' ? 'Designer' : 'Residential'
-							}</p>
-						</div>
-						<div className="flex items-center justify-between">
-							<p className="capitalize text-sm lg:text-base xl:text-lg">Wand Length:</p>
-							<p className="text-sm lg:text-base xl:text-lg">{customisations.wandLength}mm</p>
-						</div>
-						<div className="flex items-center justify-between">
-							<p className="capitalize text-sm lg:text-base xl:text-lg">Track Colour:</p>
-							<p className="text-sm lg:text-base xl:text-lg">{customisations.trackColour === 'track-white' ? 'White' : 'Black'}</p>
-						</div>
-						<div className="flex items-center justify-between">
-							<p className="capitalize text-sm lg:text-base xl:text-lg">Bracket Style:</p>
-							<p className="text-sm lg:text-base xl:text-lg">{customisations.bracketStyle === 'bracket-standard' ? 'Standard' : 'Extension'}</p>
-						</div>
-						<div className="flex items-center justify-between">
-							<h5 className="text-lg">TOTAL PRICE</h5>
-							<h5 className="text-lg">-</h5>
-						</div>
-					</div>
-					<div className="flex items-center gap-2">
-						<CustomCheckbox />
-					</div>
-					<div className="flex items-center gap-2">
-						<button className="w-1/2 cus-btn small primary shrink-0">
-							Add to Cart
-						</button>
-						<button className="w-1/2 cus-btn small shrink-0 stroke-black">
-							Buy Now
-						</button>
-					</div>
-				</div>
-
-			</div>
+			<ProductCard
+					customisations={{
+						fabricColor: customisations.fabricColor,
+						fitType: customisations.fitType,
+						stack: customisations.stack,
+						style: customisations.style,
+						hem: customisations.hem,
+						curtainType: customisations.curtainType,
+						wandLength: customisations.wandLength,
+						trackColour: customisations.trackColour,
+						bracketStyle: customisations.bracketStyle
+					}}
+					fields={['fabricColor', 'fitType', 'stack', 'style', 'hem', 'curtainType', 'wandLength', 'trackColour', 'bracketStyle']}
+					imageSrc="/images/product/product-datail.png"
+					productName="Curtain Product"
+					productDescription="Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. "
+					price="-"
+				/>
 		</section>
 	);
 }
 
-export default curtains;
+export default Curtains;
 

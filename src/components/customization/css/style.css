@@ -1,3 +1,58 @@
 .selector input:checked ~ label {
   border-color: var(--primary) !important;
+  border-width: 2px;
+}
+
+/* Hide scrollbars for webkit browsers */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* Internet Explorer 10+ */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Safari and Chrome */
+}
+
+/* Enable mouse wheel scrolling */
+.scrollable-content {
+  scroll-behavior: smooth;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.scrollable-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Ensure the scrollable container can receive scroll events */
+.scrollable-content:focus {
+  outline: none;
+}
+
+/* Prevent scroll chaining to parent elements */
+.scrollable-content {
+  overscroll-behavior-y: contain;
+  overscroll-behavior-x: contain;
+}
+
+/* Product card specific scroll handling */
+.product-card-container {
+  isolation: isolate; /* Create a new stacking context */
+}
+
+.product-card-container .scrollable-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure scroll events are properly handled within the product card */
+.product-card-container .scrollable-content:hover {
+  cursor: auto;
+}
+
+/* Prevent any scroll interference from parent elements */
+.product-card-container * {
+  scroll-behavior: auto;
 }

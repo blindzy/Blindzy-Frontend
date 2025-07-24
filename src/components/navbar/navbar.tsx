@@ -192,12 +192,13 @@ function Navbar(props: NavbarProps) {
 						)}
 					</button>
 				</div>
-				<button
-					className="cus-btn items-center justify-center gap-3 h-[56px] open__contactPopup"
+				<a
+					className="cus-btn items-center justify-center gap-3 h-[56px]"
 					style={{ width: 155 }}
+					href="/contact"
 				>
 					Contact Us
-				</button>
+				</a>
 
 
 

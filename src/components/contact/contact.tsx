@@ -30,7 +30,7 @@ function Contact(props: ContactProps) {
             </div>
             <div className="flex items-stretch xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
                 <div className="w-[575px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-[48px]">
-                    <h4 className="text-xl ">Contact METHODS</h4>
+                    <h4 className="text-xl uppercase">Contact METHODS</h4>
                     <div className="flex items-center gap-2 shrink-0 text-mediumGrey">
                         <Icon icon="uil:plus" className="text-[18px]" />
                         <div className="w-full h-[1px] bg-mediumGrey"></div>
@@ -55,7 +55,7 @@ function Contact(props: ContactProps) {
                         <Icon icon="uil:plus" className="text-[18px]" />
                     </div>
                     <div className="w-full flex flex-col gap-3">
-                        <h6 className="text-md">OPENING HOUR</h6>
+                        <h6 className="text-md">Open Hours</h6>
                         <div className="flex items-center justify-between gap-8">
                             <p className="text-sm">WEEK DAYS</p>
                             <p className="text-sm">9 AM – 7 PM</p>
@@ -68,7 +68,7 @@ function Contact(props: ContactProps) {
                 </div>
                 <div className="w-full flex flex-col xl:gap-[48px] xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-[48px]">
                     <div className="flex flex-col gap-4">
-                        <h4 className="text-xl">Fill Out The Form to Contact us</h4>
+                        <h4 className="text-xl uppercase">Fill Out The Form to Contact us</h4>
                         <p className="text-sm">Lorem ipsum dolor sit amet consectetur nunc faucibus ut ornare.</p>
                     </div>
                     <form action="">

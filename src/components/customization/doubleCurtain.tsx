@@ -7,6 +7,7 @@ import { useLenis } from '../../hooks/useLenis';
 import $ from 'jquery';
 
 import './css/style.css';
+import ProductCard from './ProductCard';
 
 interface ProductDetailsProps {
 	// Add any props if needed in the future
@@ -51,9 +52,12 @@ function doubleCurtains(props: ProductDetailsProps) {
 		blackoutColor: '07',
 		sheerFabricColor: 'fabric-1',
 		sheerColor: '07',
-		style: 'sFold',
+		blockoutStyle: 'sFold',
+		sheerStyle: 'sFold',
+		blockoutControls: 'control-left',
+		sheerControls: 'control-left',
 		hem: 'lead-weight',
-		controls: 'control-left',
+		sheerHem: 'sheer-lead-weight',
 		fit: 'fit-1',
 		curtainType: 'designer',
 		stack: 'leftStack',
@@ -117,7 +121,8 @@ function doubleCurtains(props: ProductDetailsProps) {
 								name="setup"
 								id={`setup-${option.id}`}
 								value={option.id}
-								defaultChecked={idx === 0}
+								checked={customisations.setup === option.id}
+								onChange={(e) => setCustomisations({ ...customisations, setup: e.target.value })}
 								className="hidden" // Hide native radio
 							/>
 							<label
@@ -148,68 +153,24 @@ function doubleCurtains(props: ProductDetailsProps) {
 						<h5 className="text-lg">Choose Your Blackout Fabric</h5>
 						<p>Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. </p>
 						<div className="flex flex-wrap items-stretch  gap-2">
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="fabricColor" id="fabricColor-1" value="" defaultChecked />
-								<label htmlFor="fabricColor-1" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-1.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="fabricColor" />
+							{/* Fabric Color radios */}
+							<>
+								{[1,2,3,4,5,6,7,8,9,10].map(num => (
+									<div className="w-fit shrink-0 selector" key={`fabricColor-${num}`}>
+										<input
+											type="radio"
+											name="fabricColor"
+											id={`fabricColor-${num}`}
+											value={`fabric-${num}`}
+											checked={customisations.fabricColor === `fabric-${num}`}
+											onChange={(e) => setCustomisations({ ...customisations, fabricColor: e.target.value })}
+										/>
+										<label htmlFor={`fabricColor-${num}`} className="p-2.5 rounded-xl">
+											<img src={`/images/colors/fabric-${num}.png`} className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt={`fabricColor-${num}`} />
 								</label>
 							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="fabricColor" id="fabricColor-2" value="" defaultChecked />
-								<label htmlFor="fabricColor-2" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-2.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="fabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-
-								<input type="radio" name="fabricColor" id="fabricColor-3" value="" defaultChecked />
-								<label htmlFor="fabricColor-3" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-3.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="fabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="fabricColor" id="fabricColor-4" value="" defaultChecked />
-								<label htmlFor="fabricColor-4" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-4.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="fabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="fabricColor" id="fabricColor-5" value="" defaultChecked />
-								<label htmlFor="fabricColor-5" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-5.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="fabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="fabricColor" id="fabricColor-6" value="" defaultChecked />
-								<label htmlFor="fabricColor-6" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-6.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="fabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="fabricColor" id="fabricColor-7" value="" defaultChecked />
-								<label htmlFor="fabricColor-7" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-7.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="fabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="fabricColor" id="fabricColor-8" value="" defaultChecked />
-								<label htmlFor="fabricColor-8" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-8.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="fabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="fabricColor" id="fabricColor-9" value="" defaultChecked />
-								<label htmlFor="fabricColor-9" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-9.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="fabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="fabricColor" id="fabricColor-10" value="" defaultChecked />
-								<label htmlFor="fabricColor-10" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-10.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="fabricColor" />
-								</label>
-							</div>
-
+								))}
+							</>
 						</div>
 					</div>
 
@@ -234,7 +195,8 @@ function doubleCurtains(props: ProductDetailsProps) {
 											name="chainColor"
 											id={`chainColor-${paddedNum}`}
 											value={paddedNum}
-											defaultChecked={num === 7}
+											checked={customisations.blackoutColor === paddedNum}
+											onChange={(e) => setCustomisations({ ...customisations, blackoutColor: e.target.value })}
 										/>
 										<label htmlFor={`chainColor-${paddedNum}`} className="p-2.5 rounded-xl">
 											<img
@@ -259,22 +221,22 @@ function doubleCurtains(props: ProductDetailsProps) {
 						<div className="flex flex-col gap-1">
 							<div className="flex items-stretch gap-2">
 								<div className="w-full selector">
-									<input type="radio" name="Style" id="sFold" value="" defaultChecked />
-									<label htmlFor="sFold" className="rounded-24">
+									<input type="radio" name="blockoutStyle" id="blockout-sFold" value="sFold" checked={customisations.blockoutStyle === "sFold"} onChange={e => setCustomisations({ ...customisations, blockoutStyle: e.target.value })} />
+									<label htmlFor="blockout-sFold" className="rounded-24">
 										<img src="/images/custom/sFold.png" className="w-full object-cover object-center" alt="sFold" />
 										<div className="image-after"></div>
 									</label>
 								</div>
 								<div className="w-full selector">
-									<input type="radio" name="Style" id="pinch" value="" />
-									<label htmlFor="pinch" className="rounded-24">
+									<input type="radio" name="blockoutStyle" id="blockout-pinch" value="pinch" checked={customisations.blockoutStyle === "pinch"} onChange={e => setCustomisations({ ...customisations, blockoutStyle: e.target.value })} />
+									<label htmlFor="blockout-pinch" className="rounded-24">
 										<img src="/images/custom/pinch.png" className="w-full object-cover object-center" alt="pinch" />
 										<div className="image-after"></div>
 									</label>
 								</div>
 								<div className="w-full selector">
-									<input type="radio" name="Style" id="pencil" value="" />
-									<label htmlFor="pencil" className="rounded-24">
+									<input type="radio" name="blockoutStyle" id="blockout-pencil" value="pencil" checked={customisations.blockoutStyle === "pencil"} onChange={e => setCustomisations({ ...customisations, blockoutStyle: e.target.value })} />
+									<label htmlFor="blockout-pencil" className="rounded-24">
 										<img src="/images/custom/pencil.png" className="w-full object-cover object-center" alt="pencil" />
 										<div className="image-after"></div>
 									</label>
@@ -315,7 +277,8 @@ function doubleCurtains(props: ProductDetailsProps) {
 											name="curtainHem"
 											id={option.key}
 											value={option.key}
-											defaultChecked={idx === 0}
+											checked={customisations.hem === option.key}
+											onChange={(e) => setCustomisations({ ...customisations, hem: e.target.value })}
 											className="hidden"
 										/>
 										<label htmlFor={option.key} className="block rounded-24 bg-transparent hover:bg-transparent transition-all">
@@ -349,68 +312,24 @@ function doubleCurtains(props: ProductDetailsProps) {
 						<h5 className="text-lg">Choose Your Sheer Fabric</h5>
 						<p>Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. </p>
 						<div className="flex flex-wrap items-stretch  gap-2">
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="sheerFabricColor" id="sheerFabricColor-1" value="" defaultChecked />
-								<label htmlFor="sheerFabricColor-1" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-1.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="sheerFabricColor" />
+							{/* Sheer Fabric Color radios */}
+							<>
+								{[1,2,3,4,5,6,7,8,9,10].map(num => (
+									<div className="w-fit shrink-0 selector" key={`sheerFabricColor-${num}`}>
+										<input
+											type="radio"
+											name="sheerFabricColor"
+											id={`sheerFabricColor-${num}`}
+											value={`fabric-${num}`}
+											checked={customisations.sheerFabricColor === `fabric-${num}`}
+											onChange={(e) => setCustomisations({ ...customisations, sheerFabricColor: e.target.value })}
+										/>
+										<label htmlFor={`sheerFabricColor-${num}`} className="p-2.5 rounded-xl">
+											<img src={`/images/colors/fabric-${num}.png`} className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt={`sheerFabricColor-${num}`} />
 								</label>
 							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="sheerFabricColor" id="sheerFabricColor-2" value="" defaultChecked />
-								<label htmlFor="sheerFabricColor-2" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-2.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="sheerFabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-
-								<input type="radio" name="sheerFabricColor" id="sheerFabricColor-3" value="" defaultChecked />
-								<label htmlFor="sheerFabricColor-3" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-3.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="sheerFabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="sheerFabricColor" id="sheerFabricColor-4" value="" defaultChecked />
-								<label htmlFor="sheerFabricColor-4" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-4.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="sheerFabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="sheerFabricColor" id="sheerFabricColor-5" value="" defaultChecked />
-								<label htmlFor="sheerFabricColor-5" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-5.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="sheerFabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="sheerFabricColor" id="sheerFabricColor-6" value="" defaultChecked />
-								<label htmlFor="sheerFabricColor-6" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-6.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="sheerFabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="sheerFabricColor" id="sheerFabricColor-7" value="" defaultChecked />
-								<label htmlFor="sheerFabricColor-7" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-7.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="sheerFabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="sheerFabricColor" id="sheerFabricColor-8" value="" defaultChecked />
-								<label htmlFor="sheerFabricColor-8" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-8.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="sheerFabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="sheerFabricColor" id="sheerFabricColor-9" value="" defaultChecked />
-								<label htmlFor="sheerFabricColor-9" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-9.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="sheerFabricColor" />
-								</label>
-							</div>
-							<div className="w-fit shrink-0 selector">
-								<input type="radio" name="sheerFabricColor" id="sheerFabricColor-10" value="" defaultChecked />
-								<label htmlFor="sheerFabricColor-10" className="p-2.5 rounded-xl">
-									<img src="/images/colors/fabric-10.png" className="w-full border border-[--lightGrey] object-cover object-center rounded-lg" alt="sheerFabricColor" />
-								</label>
-							</div>
-
+								))}
+							</>
 						</div>
 					</div>
 
@@ -435,7 +354,8 @@ function doubleCurtains(props: ProductDetailsProps) {
 											name="sheerChainColor"
 											id={`sheerChainColor-${paddedNum}`}
 											value={paddedNum}
-											defaultChecked={num === 7}
+											checked={customisations.sheerColor === paddedNum}
+											onChange={(e) => setCustomisations({ ...customisations, sheerColor: e.target.value })}
 										/>
 										<label htmlFor={`sheerChainColor-${paddedNum}`} className="p-2.5 rounded-xl">
 											<img
@@ -460,22 +380,22 @@ function doubleCurtains(props: ProductDetailsProps) {
 						<div className="flex flex-col gap-1">
 							<div className="flex items-stretch gap-2">
 								<div className="w-full selector">
-									<input type="radio" name="sheerStyle" id="sheerStyle-sFold" value="" defaultChecked />
-									<label htmlFor="sheerStyle-sFold" className="rounded-24">
+									<input type="radio" name="sheerStyle" id="sheer-sFold" value="sFold" checked={customisations.sheerStyle === "sFold"} onChange={e => setCustomisations({ ...customisations, sheerStyle: e.target.value })} />
+									<label htmlFor="sheer-sFold" className="rounded-24">
 										<img src="/images/custom/sFold.png" className="w-full object-cover object-center" alt="sFold" />
 										<div className="image-after"></div>
 									</label>
 								</div>
 								<div className="w-full selector">
-									<input type="radio" name="sheerStyle" id="sheerStyle-pinch" value="" />
-									<label htmlFor="sheerStyle-pinch" className="rounded-24">
+									<input type="radio" name="sheerStyle" id="sheer-pinch" value="pinch" checked={customisations.sheerStyle === "pinch"} onChange={e => setCustomisations({ ...customisations, sheerStyle: e.target.value })} />
+									<label htmlFor="sheer-pinch" className="rounded-24">
 										<img src="/images/custom/pinch.png" className="w-full object-cover object-center" alt="pinch" />
 										<div className="image-after"></div>
 									</label>
 								</div>
 								<div className="w-full selector">
-									<input type="radio" name="sheerStyle" id="sheerStyle-pencil" value="" />
-									<label htmlFor="sheerStyle-pencil" className="rounded-24">
+									<input type="radio" name="sheerStyle" id="sheer-pencil" value="pencil" checked={customisations.sheerStyle === "pencil"} onChange={e => setCustomisations({ ...customisations, sheerStyle: e.target.value })} />
+									<label htmlFor="sheer-pencil" className="rounded-24">
 										<img src="/images/custom/pencil.png" className="w-full object-cover object-center" alt="pencil" />
 										<div className="image-after"></div>
 									</label>
@@ -516,7 +436,8 @@ function doubleCurtains(props: ProductDetailsProps) {
 											name="sheerHem"
 											id={option.key}
 											value={option.key}
-											defaultChecked={idx === 0}
+											checked={customisations.sheerHem === option.key}
+											onChange={(e) => setCustomisations({ ...customisations, sheerHem: e.target.value })}
 											className="hidden"
 										/>
 										<label htmlFor={option.key} className="block rounded-24 bg-transparent hover:bg-transparent transition-all">
@@ -543,14 +464,14 @@ function doubleCurtains(props: ProductDetailsProps) {
 					<div className="flex flex-col gap-1">
 						<div className="flex items-stretch gap-2">
 							<div className="w-full selector">
-								<input type="radio" name="controls" id="control-left" value="" defaultChecked />
-								<label htmlFor="control-left" className="rounded-24">
+								<input type="radio" name="blockoutControls" id="blockout-control-left" value="control-left" checked={customisations.blockoutControls === "control-left"} onChange={e => setCustomisations({ ...customisations, blockoutControls: e.target.value })} />
+								<label htmlFor="blockout-control-left" className="rounded-24">
 									<img src="/images/custom/leftStyle.png" className="w-full object-scale-down" alt="control-left" />
 								</label>
 							</div>
 							<div className="w-full selector">
-								<input type="radio" name="controls" id="control-right" value="" />
-								<label htmlFor="control-right" className="rounded-24">
+								<input type="radio" name="blockoutControls" id="blockout-control-right" value="control-right" checked={customisations.blockoutControls === "control-right"} onChange={e => setCustomisations({ ...customisations, blockoutControls: e.target.value })} />
+								<label htmlFor="blockout-control-right" className="rounded-24">
 									<img src="/images/custom/rightStyle.png" className="w-full" alt="control-right" />
 								</label>
 							</div>
@@ -578,7 +499,8 @@ function doubleCurtains(props: ProductDetailsProps) {
 										name="fit"
 										id={`fit-${num}`}
 										value={`fit-${num}`}
-										defaultChecked={num === 1}
+										checked={customisations.fit === `fit-${num}`}
+										onChange={(e) => setCustomisations({ ...customisations, fit: e.target.value })}
 										className="hidden"
 									/>
 									<label htmlFor={`fit-${num}`} className="block rounded-24 bg-transparent hover:bg-transparent transition-all">
@@ -618,7 +540,8 @@ function doubleCurtains(props: ProductDetailsProps) {
 										name="curtainType"
 										id={option.key}
 										value={option.key}
-										defaultChecked={idx === 0}
+										checked={customisations.curtainType === option.key}
+										onChange={(e) => setCustomisations({ ...customisations, curtainType: e.target.value })}
 										className="hidden"
 									/>
 									<label htmlFor={option.key} className="block rounded-24 bg-transparent hover:bg-transparent transition-all">
@@ -649,23 +572,23 @@ function doubleCurtains(props: ProductDetailsProps) {
 					<p>Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. </p>
 					<div className="flex items-stretch gap-2">
 						<div className="w-full selector flex flex-col items-start">
-							<input type="radio" name="Stack" id="rail-1" value="" defaultChecked />
-							<label htmlFor="rail-1" className="rounded-24 w-full block">
-								<img src="/images/custom/leftStack.png" className="w-full object-cover object-center" alt="rail-1" />
+							<input type="radio" name="stack" id="leftStack" value="leftStack" checked={customisations.stack === "leftStack"} onChange={e => setCustomisations({ ...customisations, stack: e.target.value })} />
+							<label htmlFor="leftStack" className="rounded-24 w-full block">
+								<img src="/images/custom/leftStack.png" className="w-full object-cover object-center" alt="leftStack" />
 								<div className="image-after"></div>
 							</label>
 							<span className="text-base font-bold mt-1 ml-1 font-rounded">Left Stack</span>
 						</div>
 						<div className="w-full selector flex flex-col items-start">
-							<input type="radio" name="Stack" id="rail-2" value="" />
-							<label htmlFor="rail-2" className="rounded-24 w-full block">
-								<img src="/images/custom/rightStack.png" className="w-full object-cover object-center" alt="rail-2" />
+							<input type="radio" name="stack" id="rightStack" value="rightStack" checked={customisations.stack === "rightStack"} onChange={e => setCustomisations({ ...customisations, stack: e.target.value })} />
+							<label htmlFor="rightStack" className="rounded-24 w-full block">
+								<img src="/images/custom/rightStack.png" className="w-full object-cover object-center" alt="rightStack" />
 								<div className="image-after"></div>
 							</label>
 							<span className="text-base font-bold mt-1 ml-1 font-rounded">Right Stack</span>
 						</div>
 						<div className="w-full selector flex flex-col items-start">
-							<input type="radio" name="Stack" id="centerOpening" value="" />
+							<input type="radio" name="stack" id="centerOpening" value="centerOpening" checked={customisations.stack === "centerOpening"} onChange={e => setCustomisations({ ...customisations, stack: e.target.value })} />
 							<label htmlFor="centerOpening" className="rounded-24 w-full block">
 								<img src="/images/custom/centerOpening.png" className="w-full object-cover object-center" alt="centerOpening" />
 								<div className="image-after"></div>
@@ -685,21 +608,21 @@ function doubleCurtains(props: ProductDetailsProps) {
 					<div className="flex flex-col gap-1">
 						<div className="flex items-stretch gap-2">
 							<div className="w-full selector">
-								<input type="radio" name="wandLength" id="length-910" value="910" defaultChecked />
+								<input type="radio" name="wandLength" id="length-910" value="910" checked={customisations.wandLength === "910"} onChange={(e) => setCustomisations({ ...customisations, wandLength: e.target.value })} />
 								<label htmlFor="length-910" className="rounded-24">
 									<img src="/images/custom/short.png" className="w-full object-cover object-center" alt="910mm" />
 									<div className="image-after"></div>
 								</label>
 							</div>
 							<div className="w-full selector">
-								<input type="radio" name="wandLength" id="length-1220" value="1220" />
+								<input type="radio" name="wandLength" id="length-1220" value="1220" checked={customisations.wandLength === "1220"} onChange={(e) => setCustomisations({ ...customisations, wandLength: e.target.value })} />
 								<label htmlFor="length-1220" className="rounded-24">
 									<img src="/images/custom/medium.png" className="w-full object-cover object-center" alt="1220mm" />
 									<div className="image-after"></div>
 								</label>
 							</div>
 							<div className="w-full selector">
-								<input type="radio" name="wandLength" id="length-1520" value="1520" />
+								<input type="radio" name="wandLength" id="length-1520" value="1520" checked={customisations.wandLength === "1520"} onChange={(e) => setCustomisations({ ...customisations, wandLength: e.target.value })} />
 								<label htmlFor="length-1520" className="rounded-24">
 									<img src="/images/custom/long.png" className="w-full object-cover object-center" alt="1520mm" />
 									<div className="image-after"></div>
@@ -741,7 +664,8 @@ function doubleCurtains(props: ProductDetailsProps) {
 										name="trackColour"
 										id={option.key}
 										value={option.key}
-										defaultChecked={idx === 0}
+										checked={customisations.trackColour === option.key}
+										onChange={(e) => setCustomisations({ ...customisations, trackColour: e.target.value })}
 										className="hidden"
 									/>
 									<label htmlFor={option.key} className="block rounded-24 bg-transparent hover:bg-transparent transition-all">
@@ -762,53 +686,67 @@ function doubleCurtains(props: ProductDetailsProps) {
 					</div>
 				</div>
 			</div>
-
-			<div className="w-full max-w-[629px] xl:w-[629px] xl:max-w-[629px] h-full flex flex-col items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 text-black border border-[--Black] rounded-48 xl:sticky xl:top-8">
-				<div className="w-full xl:w-auto h-full rounded-32 overflow-hidden mb-4 xl:mb-0">
-					<img src="/images/product/product-datail.png" className="w-full object-cover" alt="product-datail" />
-				</div>
-				<div className="w-full shrink-0 flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black">
-					<div className="flex flex-col gap-2">
-						<h5 className="text-lg">Product Name</h5>
-						<p className="text-sm lg:text-base xl:text-lg">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. </p>
-					</div>
-					<div className="flex items-center gap-2 shrink-0 text-mediumGrey py-4">
-						<Icon icon="uil:plus" className="text-[18px]" />
-						<div className="w-full h-[1px] bg-mediumGrey"></div>
-						<Icon icon="uil:plus" className="text-[18px]" />
-					</div>
-					<div className="flex flex-col gap-2">
-						<h5 className="text-lg xl:text-2xl">Customisations</h5>
-						{Object.entries(customisations).map(([key, value]) => (
-							<div className="flex items-center justify-between" key={key}>
-								<p className="capitalize text-sm lg:text-base xl:text-lg">{key.replace(/([A-Z])/g, ' $1')}:</p>
-								<p className="text-sm lg:text-base xl:text-lg">{value}</p>
-							</div>
-						))}
-					</div>
-					<div className="flex items-center gap-2 shrink-0 text-mediumGrey py-4">
-						<Icon icon="uil:plus" className="text-[18px]" />
-						<div className="w-full h-[1px] bg-mediumGrey"></div>
-						<Icon icon="uil:plus" className="text-[18px]" />
-					</div>
-					<div className="flex items-center justify-between">
-						<h5 className="text-lg">TOTAL PRICE</h5>
-						<h5 className="text-lg">-</h5>
-					</div>
-					<div className="flex items-center gap-2">
-						<CustomCheckbox />
-					</div>
-					<div className="flex items-center gap-2">
-						<button className="w-1/2 cus-btn small primary shrink-0">
-							Add to Cart
-						</button>
-						<button className="w-1/2 cus-btn small shrink-0 stroke-black">
-							Buy Now
-						</button>
-					</div>
-				</div>
-
-			</div>
+			<ProductCard
+				customisations={{
+					fabricColor: customisations.fabricColor,
+					blackoutColor: customisations.blackoutColor,
+					sheerFabricColor: customisations.sheerFabricColor,
+					sheerColor: customisations.sheerColor,
+					blockoutStyle: customisations.blockoutStyle,
+					sheerStyle: customisations.sheerStyle,
+					blockoutControls: customisations.blockoutControls,
+					sheerControls: customisations.sheerControls,
+					hem: customisations.hem,
+					sheerHem: customisations.sheerHem,
+					setup: customisations.setup,
+					fitType: customisations.fit,
+					curtainType: customisations.curtainType,
+					stack: customisations.stack,
+					wandLength: customisations.wandLength,
+					trackColour: customisations.trackColour
+				}}
+				fields={[
+					"fabricColor",
+					"blackoutColor",
+					"sheerFabricColor",
+					"sheerColor",
+					"blockoutStyle",
+					"sheerStyle",
+					"blockoutControls",
+					"sheerControls",
+					"hem",
+					"sheerHem",
+					"setup",
+					"fitType",
+					"curtainType",
+					"stack",
+					"wandLength",
+					"trackColour"
+				]}
+				customLabels={{
+					fabricColor: "Blockout Fabric",
+					blackoutColor: "Blockout Colour",
+					sheerFabricColor: "Sheer Fabric",
+					sheerColor: "Sheer Colour",
+					blockoutStyle: "Blockout Style",
+					sheerStyle: "Sheer Style",
+					blockoutControls: "Blockout Controls",
+					sheerControls: "Sheer Controls",
+					hem: "Blockout Hem",
+					sheerHem: "Sheer Hem",
+					setup: "Setup",
+					fitType: "Fit Type",
+					curtainType: "Curtain Track Type",
+					stack: "Stack",
+					wandLength: "Wand Length",
+					trackColour: "Track Colour"
+				}}
+				imageSrc="/images/product/product-datail.png"
+				productName="Double Curtain Product"
+				productDescription="Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. "
+				price="-"
+			/>
+			
 		</section>
 	);
 }

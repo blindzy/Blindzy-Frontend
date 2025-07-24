@@ -1,4 +1,5 @@
-﻿import React, { useEffect , useState } from "react";
+﻿import React, { useEffect , useState, useRef } from "react";
+import { Icon } from '@iconify/react';
 import './css/style.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -11,6 +12,8 @@ interface InspirationProps {
 }
 function Inspiration(props: InspirationProps) {
     const [screen, setScreen] = useState<boolean>(true);
+    const prevRef = useRef(null);
+    const nextRef = useRef(null);
 
 	useEffect(() => {
         if(window.innerWidth < 1025){
@@ -22,32 +25,42 @@ function Inspiration(props: InspirationProps) {
 		<section className="inspiration-section w-screen xl:h-screen flex flex-col items-center justify-center gap-[48px] xl:py-[1.25vw] sm:py-[11vh] py-[6vh] overflow-hidden" id="inspiration">
             <div className="flex items-center xl:justify-between justify-center xl:text-left text-center w-full xl:px-[1.25vw] sm:px-4 px-2">
                 <h2 className="text-xxxl text-black uppercase">INSPIRATIONS</h2>
+                <div className="sm:flex hidden items-stretch gap-4">
+                    <button className="arrow-btn stroke" ref={prevRef} id="inspiration-slider-prev">
+                        <Icon icon="ri:arrow-left-line" />
+                    </button>
+                    <button className="arrow-btn primary" ref={nextRef} id="inspiration-slider-next">
+                        <Icon icon="ri:arrow-right-line" />
+                    </button>
+                </div>
             </div>
             {screen ?(
                 <div className="w-full overflow-hidden">
                     <Swiper
-                        navigation={{ nextEl: "#slider-next", prevEl: "#slider-prev" }}
                         modules={[Navigation]}
-                        // loop={true}
                         grabCursor={true}
-                        // centeredSlides={true}
                         spaceBetween={16}
                         slidesPerView={1}
+                        className="inspiration-cards"
                         initialSlide={3}
-                        className="inspiration-cards" 
                         breakpoints={{
                             1260: {
                                 slidesPerView:7,
                                 spaceBetween: 24,
-                                initialSlide: 3,
                                 centeredSlides: true,
                             },
                             765: {
                                 slidesPerView: 2,
                                 spaceBetween: 16,
-                                initialSlide: 1,
                             },
                         }}
+                        onBeforeInit={(swiper) => {
+                            // @ts-ignore
+                            swiper.params.navigation.prevEl = prevRef.current;
+                            // @ts-ignore
+                            swiper.params.navigation.nextEl = nextRef.current;
+                        }}
+                        navigation={{ prevEl: prevRef.current, nextEl: nextRef.current }}
                     >
                         <SwiperSlide className="cards-item rounded-48" >
                             <img src="/images/inspiration/4.png" className="" alt="inspiration" />

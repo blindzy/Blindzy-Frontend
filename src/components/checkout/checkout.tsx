@@ -8,10 +8,14 @@ import './css/style.css';
 interface CheckoutProps {
 	// Add any props if needed in the future
 }
+
 function Checkout(props: CheckoutProps) {
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
 	const lenis = isDesktop ? useLenis() : null;
 	const [currentStep, setCurrentStep] = useState<number>(1);
+	const [expandedProducts, setExpandedProducts] = useState<{ [key: number]: boolean }>({});
+	const productSectionRef = React.useRef<HTMLDivElement>(null);
+
 	useEffect(() => {
 		gsap.registerPlugin(ScrollTrigger);
 		ScrollTrigger.normalizeScroll(true);
@@ -21,6 +25,41 @@ function Checkout(props: CheckoutProps) {
 			lenis.on('scroll', ScrollTrigger.update);
 		}
 	}, [lenis]);
+
+	// Handle wheel events for product section scrolling
+	const handleProductSectionWheel = React.useCallback((e: WheelEvent) => {
+		if (productSectionRef.current) {
+			e.preventDefault();
+			e.stopPropagation();
+			
+			const element = productSectionRef.current;
+			const scrollAmount = e.deltaY;
+			element.scrollTop += scrollAmount;
+		}
+	}, []);
+
+	React.useEffect(() => {
+		const productElement = productSectionRef.current;
+		if (productElement) {
+			productElement.addEventListener('wheel', handleProductSectionWheel, { passive: false });
+			
+			return () => {
+				productElement.removeEventListener('wheel', handleProductSectionWheel);
+			};
+		}
+	}, [handleProductSectionWheel]);
+
+	const toggleProductDetails = (productIndex: number) => {
+		setExpandedProducts(prev => ({
+			...prev,
+			[productIndex]: !prev[productIndex]
+		}));
+	};
+
+	const isProductExpanded = (productIndex: number) => {
+		return expandedProducts[productIndex] || false;
+	};
+
     const nextStep = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         if (currentStep < 3) {
@@ -37,15 +76,15 @@ function Checkout(props: CheckoutProps) {
     };
 	return (
 		<section className="checkout-section w-screen flex flex-col gap-[80px] py-[85px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="checkout">
-			<div className="flex xl:flex-row flex-col gap-4 w-full">
-				<div className="xl:w-[35%] w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black xl:shrink-0 rounded-48">
-					<h4 className="text-xl">YOUR ORDER</h4>
+			<div className="flex xl:flex-row flex-col gap-4 w-full xl:items-start">
+				<div className="xl:w-[35%] w-full xl:h-[824px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black xl:shrink-0 rounded-48">
+					<h4 className="text-xl shrink-0">YOUR ORDER</h4>
 					<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
 						<Icon icon="uil:plus" className="text-[18px]" />
 						<div className="w-full h-[1px] bg-mediumGrey"></div>
 						<Icon icon="uil:plus" className="text-[18px]" />
 					</div>
-					<div className="w-full max-h-[400px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:overflow-hidden overflow-auto line-scroll">
+					<div className="w-full flex-1 min-h-0 flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 overflow-y-auto line-scroll" ref={productSectionRef}>
 						<div className="w-full flex flex-col gap-2.5 p-4 border border-[--Black] rounded-24">
 							<div className="flex items-center gap-2">
 								<div className="w-[64px] h-[64px] bg-primary rounded-xl shrink-0"></div>
@@ -54,49 +93,51 @@ function Checkout(props: CheckoutProps) {
 									<h6 className="text-md">$7000</h6>
 								</div>
 							</div>
-							<div className="w-fit mx-auto flex items-center justify-center cursor-pointer text-sm text-primary hover:text-[--Black]">
-								<p>See More</p>
-								<Icon icon="icon-park-outline:down" />
+							<div className="w-fit mx-auto flex items-center justify-center cursor-pointer text-sm text-primary hover:text-[--Black]" onClick={() => toggleProductDetails(0)}>
+								<p>{isProductExpanded(0) ? 'See Less' : 'See More'}</p>
+								<Icon icon={isProductExpanded(0) ? "icon-park-outline:up" : "icon-park-outline:down"} />
 							</div>
-							<div className="flex flex-col gap-2">
-								<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
-									<Icon icon="uil:plus" className="text-[18px]" />
-									<div className="w-full h-[1px] bg-mediumGrey"></div>
-									<Icon icon="uil:plus" className="text-[18px]" />
+							{isProductExpanded(0) && (
+								<div className="flex flex-col gap-2">
+									<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
+										<Icon icon="uil:plus" className="text-[18px]" />
+										<div className="w-full h-[1px] bg-mediumGrey"></div>
+										<Icon icon="uil:plus" className="text-[18px]" />
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Color:</p>
+										<p>Ash</p>
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Size:</p>
+										<p>24cm x 56cm</p>
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Fit Type:</p>
+										<p>Recess Fit</p>
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Roll Direction:</p>
+										<p>Front Roll</p>
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Chain Colour:</p>
+										<p>Silver</p>
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Bracket Colour:</p>
+										<p>Sandstone</p>
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Base Rail Shape:</p>
+										<p>Oval</p>
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Base Rail Colour:</p>
+										<p>Bone</p>
+									</div>
 								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Color:</p>
-									<p>Ash</p>
-								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Size:</p>
-									<p>24cm x 56cm</p>
-								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Fit Type:</p>
-									<p>Recess Fit</p>
-								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Roll Direction:</p>
-									<p>Front Roll</p>
-								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Chain Colour:</p>
-									<p>Silver</p>
-								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Bracket Colour:</p>
-									<p>Sandstone</p>
-								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Base Rail Shape:</p>
-									<p>Oval</p>
-								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Base Rail Colour:</p>
-									<p>Bone</p>
-								</div>
-							</div>
+							)}
 						</div>
 						<div className="w-full flex flex-col gap-2.5 p-4 border border-[--Black] rounded-24">
 							<div className="flex items-center gap-2">
@@ -106,49 +147,51 @@ function Checkout(props: CheckoutProps) {
 									<h6 className="text-md">$7000</h6>
 								</div>
 							</div>
-							<div className="w-fit mx-auto flex items-center justify-center cursor-pointer text-sm text-primary hover:text-[--Black]">
-								<p>See More</p>
-								<Icon icon="icon-park-outline:down" />
+							<div className="w-fit mx-auto flex items-center justify-center cursor-pointer text-sm text-primary hover:text-[--Black]" onClick={() => toggleProductDetails(1)}>
+								<p>{isProductExpanded(1) ? 'See Less' : 'See More'}</p>
+								<Icon icon={isProductExpanded(1) ? "icon-park-outline:up" : "icon-park-outline:down"} />
 							</div>
-							<div className="flex flex-col gap-2">
-								<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
-									<Icon icon="uil:plus" className="text-[18px]" />
-									<div className="w-full h-[1px] bg-mediumGrey"></div>
-									<Icon icon="uil:plus" className="text-[18px]" />
+							{isProductExpanded(1) && (
+								<div className="flex flex-col gap-2">
+									<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
+										<Icon icon="uil:plus" className="text-[18px]" />
+										<div className="w-full h-[1px] bg-mediumGrey"></div>
+										<Icon icon="uil:plus" className="text-[18px]" />
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Color:</p>
+										<p>Ash</p>
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Size:</p>
+										<p>24cm x 56cm</p>
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Fit Type:</p>
+										<p>Recess Fit</p>
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Roll Direction:</p>
+										<p>Front Roll</p>
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Chain Colour:</p>
+										<p>Silver</p>
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Bracket Colour:</p>
+										<p>Sandstone</p>
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Base Rail Shape:</p>
+										<p>Oval</p>
+									</div>
+									<div className="w-full flex items-center justify-between text-sm text-black">
+										<p>Base Rail Colour:</p>
+										<p>Bone</p>
+									</div>
 								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Color:</p>
-									<p>Ash</p>
-								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Size:</p>
-									<p>24cm x 56cm</p>
-								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Fit Type:</p>
-									<p>Recess Fit</p>
-								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Roll Direction:</p>
-									<p>Front Roll</p>
-								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Chain Colour:</p>
-									<p>Silver</p>
-								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Bracket Colour:</p>
-									<p>Sandstone</p>
-								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Base Rail Shape:</p>
-									<p>Oval</p>
-								</div>
-								<div className="w-full flex items-center justify-between text-sm text-black">
-									<p>Base Rail Colour:</p>
-									<p>Bone</p>
-								</div>
-							</div>
+							)}
 						</div>
 					</div>
 					<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
@@ -156,11 +199,11 @@ function Checkout(props: CheckoutProps) {
 						<div className="w-full h-[1px] bg-mediumGrey"></div>
 						<Icon icon="uil:plus" className="text-[18px]" />
 					</div>
-					<div className="flex items-center justify-between">
+					<div className="flex items-center justify-between shrink-0">
 						<h5 className="text-lg">SUBTOTAL</h5>
 						<h5 className="text-lg">$14000</h5>
 					</div>
-					<div className="flex items-center justify-between">
+					<div className="flex items-center justify-between shrink-0">
 						<h5 className="text-lg">SHIPPING</h5>
 						<h5 className="text-lg">$20</h5>
 					</div>
@@ -169,12 +212,12 @@ function Checkout(props: CheckoutProps) {
 						<div className="w-full h-[1px] bg-mediumGrey"></div>
 						<Icon icon="uil:plus" className="text-[18px]" />
 					</div>
-					<div className="flex items-center justify-between">
+					<div className="flex items-center justify-between shrink-0">
 						<h5 className="text-xl">TOTAL</h5>
 						<h5 className="text-xl">$14000</h5>
 					</div>
 				</div>
-				<div className="xl:w-[65%] w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-48">
+				<div className="xl:w-[65%] w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-48 xl:self-start">
 					<div className="flex items-center gap-4">
 						<div className="flex items-center gap-2 shrink-0">
 							<div className={`w-[24px] h-[24px] flex items-center justify-center border text-sm rounded-[24px] transition ${currentStep === 1 || currentStep === 2 ? 'border-[--primary] text-white bg-primary':'border-[--black] text-black'}`}>1</div>
@@ -237,7 +280,7 @@ function Checkout(props: CheckoutProps) {
 									</div>
 									<div className="formSelect">
 										<select name="" id="" className="formInput">
-											<option value="" selected hidden disabled>Country / Region</option>
+											<option value="" selected hidden disabled>State</option>
 										</select>
 									</div>
 								</div>
@@ -262,7 +305,7 @@ function Checkout(props: CheckoutProps) {
 						</div>
 						<div className={`flex flex-col gap-[32px] ${currentStep === 3 ? 'flex' : 'hidden'}`}>
 							<div className="flex items-center justify-between">
-								<h3 className="text-xxl">PaymenT Method</h3>
+								<h3 className="text-xxl uppercase">PaymenT Method</h3>
 								<div className="flex items-center gap-1 text-sm">
 									<p>Already have an account? </p>
 									<a href="/login" className="text-primary">Login</a>
@@ -283,7 +326,7 @@ function Checkout(props: CheckoutProps) {
 									</div>
 									
 									<div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-										<input type="date" className="formInput" id="expiration-date" placeholder="Expiration Date (MM / YY)"/>
+										<input type="expirydate" className="formInput" id="expiration-date" placeholder="Expiration Date (MM / YY)"/>
 										<input type="text" className="formInput" id="securityCode" placeholder="Security Code"/>
 									</div>
 								</div>

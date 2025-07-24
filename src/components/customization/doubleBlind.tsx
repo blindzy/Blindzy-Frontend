@@ -7,6 +7,7 @@ import { useLenis } from '../../hooks/useLenis';
 import $ from 'jquery';
 
 import './css/style.css';
+import ProductCard from './ProductCard';
 
 interface ProductDetailsProps {
 	// Add any props if needed in the future
@@ -467,47 +468,53 @@ function doubleBlind(props: ProductDetailsProps) {
                     })}
                 </div>
 			</div>
-			<div className="w-full max-w-[629px] xl:w-[629px] xl:max-w-[629px] h-full flex flex-col items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 text-black border border-[--Black] rounded-48 xl:sticky xl:top-8">
-				<div className="w-full xl:w-auto h-full rounded-32 overflow-hidden mb-4 xl:mb-0">
-					<img src="/images/product/product-datail.png" className="w-full object-cover" alt="product-datail" />
-				</div>
-				<div className="w-full shrink-0 flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black">
-					<div className="flex flex-col gap-2">
-						<h5 className="text-lg">Product Name</h5>
-						<p className="text-sm lg:text-base xl:text-lg">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. </p>
-					</div>
-					<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
-						<Icon icon="uil:plus" className="text-[18px]" />
-						<div className="w-full h-[1px] bg-mediumGrey"></div>
-						<Icon icon="uil:plus" className="text-[18px]" />
-					</div>
-					<div className="w-full flex flex-col gap-4">
-						<h5 className="text-lg xl:text-2xl">Customisations</h5>
-						{Object.entries(customisations).map(([key, value]) => (
-							<div className="flex items-center justify-between" key={key}>
-								<p className="capitalize text-sm lg:text-base xl:text-lg">{key.replace(/([A-Z])/g, ' $1')}:</p>
-								<p className="text-sm lg:text-base xl:text-lg">{value}</p>
-							</div>
-						))}
-						<div className="flex items-center justify-between">
-							<h5 className="text-lg">TOTAL PRICE</h5>
-							<h5 className="text-lg">-</h5>
-						</div>
-					</div>
-					<div className="flex items-center gap-2">
-						<CustomCheckbox />
-					</div>
-					<div className="flex items-center gap-2">
-						<button className="w-1/2 cus-btn small primary shrink-0">
-							Add to Cart
-						</button>
-						<button className="w-1/2 cus-btn small shrink-0 stroke-black">
-							Buy Now
-						</button>
-					</div>
-				</div>
-
-			</div>
+			<ProductCard
+				customisations={{
+					fabricColor: customisations.fabricColor,
+					blackoutColor: customisations.blackoutColor,
+					sheerFabricColor: customisations.sheerFabricColor,
+					sheerColor: customisations.sheerColor,
+					setup: customisations.setup,
+					controls: customisations.control,
+					fitType: customisations.fit,
+					rollDirection: customisations.rollDirection,
+					chainColor: customisations.chainColor,
+					bracketColor: customisations.bracketColor,
+					baseRailShape: customisations.baseRailShape,
+					baseRailColour: customisations.baseRailColor
+				}}
+				fields={[
+					"fabricColor",
+					"blackoutColor",
+					"sheerFabricColor",
+					"sheerColor",
+					"setup",
+					"controls",
+					"fitType",
+					"rollDirection",
+					"chainColor",
+					"bracketColor",
+					"baseRailShape",
+					"baseRailColour"
+				]}
+				customLabels={{
+					fabricColor: "Blockout Fabric",
+					blackoutColor: "Blockout Colour",
+					sheerFabricColor: "Sheer Fabric",
+					sheerColor: "Sheer Colour",
+					controls: "Controls",
+					fitType: "Fit Type",
+					rollDirection: "Roll Direction",
+					chainColor: "Chain Colour",
+					bracketColor: "Bracket Colour",
+					baseRailShape: "Base Rail Shape",
+					baseRailColour: "Base Rail Colour"
+				}}
+				imageSrc="/images/product/product-datail.png"
+				productName="Double Blind Product"
+				productDescription="Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. "
+				price="-"
+			/>
 		</section>
 	);
 }

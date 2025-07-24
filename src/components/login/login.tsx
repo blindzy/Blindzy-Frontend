@@ -23,15 +23,16 @@ function Login(props: LoginProps) {
 		setSuccess('');
 
 		try {
-			const response = await api.login(email, password);
+			const response = await api.medusaLogin(email, password);
 			setSuccess('Login successful! Redirecting...');
-			
-			// Store session data
-			localStorage.setItem('session', JSON.stringify(response.session));
-			localStorage.setItem('user', JSON.stringify(response.customer));
-			// Store customer ID for API headers
-			ApiService.storeCustomerId(response.customer.id);
-			
+			// Store session data (Medusa may return customer and session)
+			if (response.session) {
+				localStorage.setItem('session', JSON.stringify(response.session));
+			}
+			if (response.customer) {
+				localStorage.setItem('user', JSON.stringify(response.customer));
+				ApiService.storeCustomerId(response.customer.id);
+			}
 			// Redirect to user dashboard
 			setTimeout(() => {
 				window.location.href = '/user';

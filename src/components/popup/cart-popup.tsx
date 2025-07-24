@@ -86,6 +86,8 @@ function Cart(props: CartProps) {
                                 <div className="w-full h-[1px] bg-mediumGrey"></div>
                                 <Icon icon="uil:plus" className="text-[18px] text-[--mediumGrey]" />
                             </div>
+                            <div className="bg-red-500 mbl:bg-blue-500 p-4">Test Block</div>
+
                         </div>
                         <div className="flex-1 min-h-0 overflow-y-auto scroll-hidden mb-4">
                             {loading && (

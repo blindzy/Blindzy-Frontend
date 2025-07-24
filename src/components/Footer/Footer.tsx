@@ -28,7 +28,7 @@ function Footer(props: FooterProps) {
                             <path d="M25.9023 26.4766L28.8143 29.3886" className="stroke-black" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </a>
-                    <button className="w-full open__contactPopup h-[17.4603vh] effect-btn black">
+                    <a href="/contact" className="w-full h-[17.4603vh] effect-btn black">
                         <span>Contact Us</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
                             <path d="M16.0001 15.6785C17.2461 15.6785 18.2561 14.6685 18.2561 13.4225C18.2561 12.1765 17.2461 11.1665 16.0001 11.1665C14.7542 11.1665 13.7441 12.1765 13.7441 13.4225C13.7441 14.6685 14.7542 15.6785 16.0001 15.6785Z" className="fill-white"/>
@@ -37,7 +37,7 @@ function Footer(props: FooterProps) {
                             <path d="M28.8887 8.05518V24.9441" className="stroke-white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                             <path d="M3.11133 8.05518V24.9441" className="stroke-white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
-                    </button>
+                    </a>
                 </div>
             </div>
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-4 gap-2">
@@ -45,11 +45,9 @@ function Footer(props: FooterProps) {
                     <div className="w-full flex flex-col gap-3 text-black">
                         <h6 className="text-md ">SITE MAP</h6>
                         <a href="/about" className="text-sm hover:text-primary">ABOUT US</a>
-                        <button className="w-fit sm:m-0 mx-auto open__contactPopup text-left text-sm hover:text-primary">CONTACT US</button>
+                        <a href="/contact" className="w-fit sm:m-0 mx-auto text-left text-sm hover:text-primary">CONTACT US</a>
                         <a href="/privacy-policy" className="text-sm hover:text-primary">TERMS & CONDITIONS</a>
                         <a href="/privacy-policy" className="text-sm hover:text-primary">PRIVACY POLICY</a>
-                        <a href="/return-policy" className="text-sm hover:text-primary">RETURN POLICY</a>
-                        <a href="/shipping-policy" className="text-sm hover:text-primary">SHIPPING POLICY</a>
                     </div>
                     <div className="flex sm:flex-col items-center gap-2 shrink-0">
                         <Icon icon="uil:plus" className="text-[18px] text-black" />
@@ -97,7 +95,7 @@ function Footer(props: FooterProps) {
 
                 </div>
                 <div className="w-full flex sm:flex-row flex-col sm:gap-0 gap-4 items-center justify-between  xl:p-[1.25vw] sm:p-[2.344vw] p-2 bg-white border border-[--Black] rounded-24">
-                    <p className="text-sm text-black">Â©2024 All Rights Reserved</p>
+                    <p className="text-sm text-black uppercase">©2024 All Rights Reserved</p>
                     <div className="flex items-center gap-2">
                         <a href="">
                             <img src="/images/afterPay.png" alt="afterPay" />
@@ -116,7 +114,7 @@ function Footer(props: FooterProps) {
                         </a>
                     </div>
                     <div className="flex items-center gap-2">
-                        <p className="text-sm text-black">Â©2024 All Rights Reserved</p>
+                        <p className="text-sm text-black uppercase">©2024 All Rights Reserved</p>
                         <a href="aithur.com">
                             <svg xmlns="http://www.w3.org/2000/svg" width="92" height="24" viewBox="0 0 92 24" fill="none">
                                 <g clipPath="url(#clip0_30_1229)">
