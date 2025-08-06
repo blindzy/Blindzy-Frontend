@@ -12,6 +12,9 @@ interface QualityProps {
 function Quality(props: QualityProps) {
 
     useEffect(() => {
+        // Only run on client side
+        if (typeof window === 'undefined') return;
+        
         // Check for mobile screen size
         if (window.innerWidth < 640) {
             // On mobile, show all steps immediately, no animation

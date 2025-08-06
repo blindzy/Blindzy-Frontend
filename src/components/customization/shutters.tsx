@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from '@iconify/react';
-
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
@@ -29,6 +28,8 @@ function shutters(props: ProductDetailsProps) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
     const [customisations, setCustomisations] = useState({
+        width: '',
+        height: '',
         color: '07',
         fitType: 'fit-1',
         hinge: 'white',
@@ -51,7 +52,8 @@ function shutters(props: ProductDetailsProps) {
     }, [lenis]);
 
     const handleAddToCart = () => {
-        api.addToCart('1');
+        // api.addToCart('1'); // Commented out - needs proper implementation
+        console.log('Add to cart functionality needs to be implemented');
     };
 
     const handleColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -62,6 +64,12 @@ function shutters(props: ProductDetailsProps) {
     };
     const handleHingeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCustomisations(prev => ({ ...prev, hinge: e.target.value }));
+    };
+    const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCustomisations(prev => ({ ...prev, width: e.target.value }));
+    };
+    const handleHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCustomisations(prev => ({ ...prev, height: e.target.value }));
     };
 
 	return (
@@ -78,8 +86,24 @@ function shutters(props: ProductDetailsProps) {
                 <p>Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. </p>
                 <div className="w-full flex items-center gap-4">
                     <input type="text" className="formInput" id="roomName" placeholder="Room Name" />
-                    <input type="text" className="formInput" id="width" placeholder="Width" />
-                    <input type="text" className="formInput" id="height" placeholder="Height" />
+                    <input 
+                        type="number" 
+                        className="formInput" 
+                        id="width" 
+                        placeholder="Width (meters)" 
+                        value={customisations.width}
+                        onChange={handleWidthChange}
+                        onInput={handleWidthChange}
+                    />
+                    <input 
+                        type="number" 
+                        className="formInput" 
+                        id="height" 
+                        placeholder="Height (meters)" 
+                        value={customisations.height}
+                        onChange={handleHeightChange}
+                        onInput={handleHeightChange}
+                    />
                 </div>
                 <div className="flex items-center gap-2 shrink-0 text-mediumGrey">
 					<Icon icon="uil:plus" className="text-[18px]" />
@@ -185,13 +209,15 @@ function shutters(props: ProductDetailsProps) {
             </div>
             <ProductCard
                     customisations={{
+                        width: customisations.width,
+                        height: customisations.height,
                         fabricColor: customisations.color,
                         fitType: customisations.fitType,
                         hinge: customisations.hinge
                     }}
-                    fields={['fabricColor', 'fitType', 'hinge']}
+                    fields={['width', 'height', 'fabricColor', 'fitType', 'hinge']}
                     imageSrc="/images/product/product-datail.png"
-                    productName="Shutter Product"
+                    productName="Premium Plantation Shutters"
                     productDescription="Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. "
                     price="-"
                 />

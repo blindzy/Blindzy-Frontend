@@ -40,10 +40,29 @@ function CustomCheckbox() {
 function Blind(props: ProductDetailsProps) {
     const lenis = useLenis();
     const [customisations, setCustomisations] = useState({
+        width: '',
+        height: '',
         color: '07',
         fitType: 'fit-1',
         control: 'left',
     });
+
+    // Load dimensions from URL if coming from shop page
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const urlParams = new URLSearchParams(window.location.search);
+            const shopWidth = urlParams.get('shopWidth');
+            const shopHeight = urlParams.get('shopHeight');
+            
+            if (shopWidth && shopHeight) {
+                setCustomisations(prev => ({
+                    ...prev,
+                    width: shopWidth,
+                    height: shopHeight,
+                }));
+            }
+        }
+    }, []);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -70,9 +89,18 @@ function Blind(props: ProductDetailsProps) {
     const handleControlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCustomisations(prev => ({ ...prev, control: e.target.value }));
     };
+    const handleWidthChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setCustomisations(prev => ({ ...prev, width: value }));
+    };
+    const handleHeightChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setCustomisations(prev => ({ ...prev, height: value }));
+    };
 
     const handleAddToCart = () => {
-        api.addToCart('1');
+        // api.addToCart('1'); // Commented out - needs proper implementation
+        console.log('Add to cart functionality needs to be implemented');
     };
 
     return (
@@ -88,9 +116,30 @@ function Blind(props: ProductDetailsProps) {
                 <h5 className="text-lg mt-4">Enter Measurements</h5>
                 <p>Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. </p>
                 <div className="w-full flex items-center gap-4">
-                    <input type="text" className="formInput" id="roomName" placeholder="Room Name" />
-                    <input type="text" className="formInput" id="width" placeholder="Width" />
-                    <input type="text" className="formInput" id="height" placeholder="Height" />
+                    <input 
+                        type="text" 
+                        className="formInput" 
+                        id="roomName" 
+                        placeholder="Room Name" 
+                    />
+                    <input 
+                        type="number" 
+                        className="formInput" 
+                        id="width" 
+                        placeholder="Width (meters)" 
+                        value={customisations.width || ''}
+                        onChange={handleWidthChange}
+                        onInput={handleWidthChange}
+                    />
+                    <input 
+                        type="number" 
+                        className="formInput" 
+                        id="height" 
+                        placeholder="Height (meters)" 
+                        value={customisations.height || ''}
+                        onChange={handleHeightChange}
+                        onInput={handleHeightChange}
+                    />
                 </div>
                 <div className="flex items-center gap-2 shrink-0 text-mediumGrey">
                     <Icon icon="uil:plus" className="text-[18px]" />
@@ -192,13 +241,15 @@ function Blind(props: ProductDetailsProps) {
             </div>
             <ProductCard
                     customisations={{
+                        width: customisations.width,
+                        height: customisations.height,
                         fabricColor: customisations.color,
                         fitType: customisations.fitType,
                         controls: customisations.control
                     }}
-                    fields={['fabricColor', 'fitType', 'controls']}
+                    fields={['width', 'height', 'fabricColor', 'fitType', 'controls']}
                     imageSrc="/images/product/product-datail.png"
-                    productName="Blind Product"
+                    productName="Zebra Roller Blinds"
                     productDescription="Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. "
                     price="-"
                 />

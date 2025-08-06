@@ -28,10 +28,9 @@ interface ProductCustomisations {
 }
 
 // CustomCheckbox as a standalone component
-function CustomCheckbox() {
-	const [checked, setChecked] = useState(false);
+function CustomCheckbox({ checked, onChange }: { checked: boolean; onChange: (checked: boolean) => void }) {
 	return (
-		<div className="flex items-center gap-2 cursor-pointer select-none" onClick={() => setChecked(!checked)}>
+		<div className="flex items-center gap-2 cursor-pointer select-none" onClick={() => onChange(!checked)}>
 			<div className={`w-5 h-5 border-2 rounded flex items-center justify-center transition ${checked ? 'bg-primary border-primary' : 'border-gray-400 bg-white'}`}>
 				{checked && <Icon icon="tabler:check" className="text-white text-sm" />}
 			</div>
@@ -45,8 +44,82 @@ function CustomCheckbox() {
 function ProductDetails(props: ProductDetailsProps) {
 	const lenis = useLenis();
 	const [customisations, setCustomisations] = useState<ProductCustomisations | null>(null);
+	const [isConfirmed, setIsConfirmed] = useState(false);
+	const [loading, setLoading] = useState(false);
+	
+	// Sample product ID - in real implementation, this should come from props or URL params
+	const productId = '1';
+
+	const addToCart = async () => {
+		if (!isConfirmed) {
+			alert('Please confirm that you have double checked your measurements and customisations');
+			return;
+		}
+
+		if (!customisations) {
+			alert('Please wait for product customisations to load');
+			return;
+		}
+
+		try {
+			setLoading(true);
+			
+			// Get customer email from localStorage
+			const customerData = localStorage.getItem('user');
+			const customer = customerData ? JSON.parse(customerData) : null;
+			
+			if (!customer?.email) {
+				alert('Please log in to add items to cart');
+				window.location.href = '/login';
+				return;
+			}
+
+			// Get form values for customization
+			const roomName = (document.getElementById('roomName') as HTMLInputElement)?.value || '';
+			const width = (document.getElementById('width') as HTMLInputElement)?.value || '';
+			const height = (document.getElementById('height') as HTMLInputElement)?.value || '';
+			
+			if (!width || !height) {
+				alert('Please enter both width and height measurements');
+				return;
+			}
+
+			await api.addToCart({
+				email: customer.email,
+				product_id: productId,
+				quantity: 1,
+				customizations: {
+					...customisations,
+					roomName,
+					width,
+					height,
+					measurements: `${width} x ${height}`
+				}
+			});
+			
+			alert('Product added to cart successfully!');
+			// Refresh cart count in navbar
+			window.dispatchEvent(new CustomEvent('cartUpdated'));
+		} catch (error) {
+			console.error('Error adding to cart:', error);
+			alert('Failed to add product to cart. Please try again.');
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const buyNow = async () => {
+		await addToCart();
+		// Redirect to checkout if successful
+		if (!loading) {
+			window.location.href = '/checkout';
+		}
+	};
 
 	useEffect(() => {
+		// Only run on client side
+		if (typeof window === 'undefined') return;
+		
 		gsap.registerPlugin(ScrollTrigger);
 		ScrollTrigger.normalizeScroll(true);
 
@@ -436,14 +509,22 @@ function ProductDetails(props: ProductDetailsProps) {
 						<h5 className="text-lg">{customisations ? `$${customisations.price.toFixed(2)}` : '-'}</h5>
 					</div>
 					<div className="flex items-center gap-2">
-						<CustomCheckbox />
+						<CustomCheckbox checked={isConfirmed} onChange={setIsConfirmed} />
 					</div>
 					<div className="flex items-center gap-2">
-						<button className="w-1/2 cus-btn small primary shrink-0">
-							Add to Cart
+						<button 
+							className="w-1/2 cus-btn small primary shrink-0"
+							onClick={addToCart}
+							disabled={loading}
+						>
+							{loading ? 'Adding...' : 'Add to Cart'}
 						</button>
-						<button className="w-1/2 cus-btn small shrink-0 stroke-black">
-							Buy Now
+						<button 
+							className="w-1/2 cus-btn small shrink-0 stroke-black"
+							onClick={buyNow}
+							disabled={loading}
+						>
+							{loading ? 'Processing...' : 'Buy Now'}
 						</button>
 					</div>
 				</div>

@@ -48,7 +48,7 @@ function Categories(props: CategoriesProps) {
 
 	return (
 		<section className="categorie-section w-screen xl:h-screen xl:p-[1.25vw] sm:p-4 p-2" id="categorie">
-			<div className="relative bg-effect w-full xl:h-full bg-primary rounded-48 xl:ps-[2.5vw] xl:py-0 py-[64px] flex xl:flex-row flex-col xl:items-end justigy-between xl:gap-[6.667vw] gap-[9vh] overflow-hidden pt-12 pb-12 sm:pt-0 sm:pb-0 mbl:px-0 mbl:py:12 mbl:gap-12">
+			<div className="relative w-full xl:h-full bg-primary rounded-48 xl:ps-[2.5vw] xl:py-0 py-[64px] flex xl:flex-row flex-col xl:items-end justigy-between xl:gap-[6.667vw] gap-[9vh] overflow-hidden pt-12 pb-12 sm:pt-0 sm:pb-0 mbl:px-0 mbl:py:12 mbl:gap-12">
 				
 				{/* Left Column */}
 				<div className="relative xl:w-[24.375vw] w-[80%] xl:m-0 mx-auto xl:pb-[11vh] flex flex-col xl:items-start items-center xl:text-left text-center justify-between xl:gap-[14vh] gap-[48px] z-[15] shrink-0">

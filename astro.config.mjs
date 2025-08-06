@@ -7,5 +7,17 @@ export default defineConfig({
     react({
       include: ['**/react/*'],
     }),
-    tailwind()]
+    tailwind()
+  ],
+  vite: {
+    server: {
+      proxy: {
+        '/api': {
+          target: 'http://localhost:9000',
+          changeOrigin: true,
+          secure: false,
+        }
+      }
+    }
+  }
 });

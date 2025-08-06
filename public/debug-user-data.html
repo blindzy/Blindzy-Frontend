@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Data Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
+        button { padding: 10px 15px; margin: 5px; background: #007cba; color: white; border: none; cursor: pointer; }
+        .success { color: green; }
+        .error { color: red; }
+        .info { color: blue; }
+    </style>
+</head>
+<body>
+    <h1>User Data Debug Tool</h1>
+    
+    <div class="section">
+        <h3>Current LocalStorage Data</h3>
+        <div id="current-data"></div>
+        <button onclick="checkCurrentData()">Refresh Current Data</button>
+    </div>
+    
+    <div class="section">
+        <h3>Set Test Real User Data</h3>
+        <button onclick="setRealUserData()">Set Real User (Alice Johnson)</button>
+        <button onclick="setSampleUserData()">Set Sample User</button>
+        <button onclick="clearUserData()">Clear User Data</button>
+    </div>
+    
+    <div class="section">
+        <h3>Test API Functions</h3>
+        <button onclick="testGetUserProfile()">Test getUserProfile()</button>
+        <div id="api-result"></div>
+    </div>
+
+    <script>
+        function checkCurrentData() {
+            const userData = localStorage.getItem('user');
+            const userEmail = localStorage.getItem('userEmail');
+            
+            const display = document.getElementById('current-data');
+            
+            if (userData) {
+                try {
+                    const parsed = JSON.parse(userData);
+                    const isSample = parsed.first_name === 'Sample' && parsed.last_name === 'User';
+                    
+                    display.innerHTML = `
+                        <div class="${isSample ? 'error' : 'success'}">
+                            <strong>User Data:</strong><br>
+                            Name: ${parsed.first_name} ${parsed.last_name}<br>
+                            Email: ${parsed.email}<br>
+                            Phone: ${parsed.phone}<br>
+                            ID: ${parsed.id}<br>
+                            <strong>Type: ${isSample ? 'SAMPLE DATA' : 'REAL DATA'}</strong>
+                        </div>
+                        <div class="info">
+                            <strong>UserEmail:</strong> ${userEmail || 'Not set'}
+                        </div>
+                    `;
+                } catch (e) {
+                    display.innerHTML = `<div class="error">Error parsing user data: ${e.message}</div>`;
+                }
+            } else {
+                display.innerHTML = '<div class="error">No user data found in localStorage</div>';
+            }
+        }
+        
+        function setRealUserData() {
+            const realUser = {
+                id: 'user_' + Date.now(),
+                email: 'alice.johnson@example.com',
+                first_name: 'Alice',
+                last_name: 'Johnson',
+                phone: '+61400111222'
+            };
+            
+            localStorage.setItem('user', JSON.stringify(realUser));
+            localStorage.setItem('userEmail', realUser.email);
+            
+            alert('Real user data set! Refresh current data to see changes.');
+            checkCurrentData();
+        }
+        
+        function setSampleUserData() {
+            const sampleUser = {
+                id: 'user1',
+                email: 'sample@user.com',
+                first_name: 'Sample',
+                last_name: 'User',
+                phone: '+123456789'
+            };
+            
+            localStorage.setItem('user', JSON.stringify(sampleUser));
+            localStorage.setItem('userEmail', sampleUser.email);
+            
+            alert('Sample user data set! Refresh current data to see changes.');
+            checkCurrentData();
+        }
+        
+        function clearUserData() {
+            localStorage.removeItem('user');
+            localStorage.removeItem('userEmail');
+            alert('User data cleared!');
+            checkCurrentData();
+        }
+        
+        function testGetUserProfile() {
+            // This would require importing the API, which is complex in this context
+            document.getElementById('api-result').innerHTML = 
+                '<div class="info">API testing requires the main application context. Please check the browser console in the main app.</div>';
+        }
+        
+        // Initialize
+        checkCurrentData();
+    </script>
+</body>
+</html>

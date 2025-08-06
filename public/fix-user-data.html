@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fix User Data</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        .log { background: #f5f5f5; padding: 10px; margin: 10px 0; border-radius: 4px; }
+        .success { color: green; }
+        .warning { color: orange; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Fix User Data Issues</h1>
+    
+    <div>
+        <button onclick="checkCurrentData()">🔍 Check Current Data</button>
+        <button onclick="clearSampleData()">🧹 Clear Sample Data</button>
+        <button onclick="setTestUser()">👤 Set Test User</button>
+        <button onclick="clearAllData()">❌ Clear All Data</button>
+    </div>
+    
+    <div id="output"></div>
+
+    <script>
+        function log(message, type = 'info') {
+            const output = document.getElementById('output');
+            const div = document.createElement('div');
+            div.className = `log ${type}`;
+            div.innerHTML = message;
+            output.appendChild(div);
+            console.log(message);
+        }
+
+        function checkCurrentData() {
+            log('📋 Checking current localStorage data...');
+            
+            const user = localStorage.getItem('user');
+            const userEmail = localStorage.getItem('userEmail');
+            
+            log(`User data: ${user || 'Not found'}`);
+            log(`User email: ${userEmail || 'Not found'}`);
+            
+            if (user) {
+                try {
+                    const parsed = JSON.parse(user);
+                    if (parsed.first_name === 'Sample' && parsed.last_name === 'User') {
+                        log('⚠️ Found sample user data!', 'warning');
+                    } else {
+                        log(`✅ Real user found: ${parsed.first_name} ${parsed.last_name}`, 'success');
+                    }
+                } catch (e) {
+                    log('❌ Error parsing user data: ' + e.message, 'error');
+                }
+            } else {
+                log('ℹ️ No user data in localStorage');
+            }
+        }
+
+        function clearSampleData() {
+            log('🧹 Clearing sample data...');
+            
+            const user = localStorage.getItem('user');
+            if (user) {
+                try {
+                    const parsed = JSON.parse(user);
+                    if (parsed.first_name === 'Sample' && parsed.last_name === 'User') {
+                        localStorage.removeItem('user');
+                        localStorage.removeItem('userEmail');
+                        log('✅ Sample user data cleared!', 'success');
+                    } else {
+                        log('ℹ️ No sample data found to clear');
+                    }
+                } catch (e) {
+                    log('❌ Error parsing user data, clearing anyway', 'error');
+                    localStorage.removeItem('user');
+                    localStorage.removeItem('userEmail');
+                }
+            } else {
+                log('ℹ️ No user data to clear');
+            }
+        }
+
+        function setTestUser() {
+            log('👤 Setting test user...');
+            
+            const testUser = {
+                id: 'user_' + Date.now(),
+                email: 'john.doe@example.com',
+                first_name: 'John',
+                last_name: 'Doe',
+                phone: '+1234567890'
+            };
+
+            localStorage.setItem('user', JSON.stringify(testUser));
+            localStorage.setItem('userEmail', testUser.email);
+            
+            log(`✅ Test user set: ${testUser.first_name} ${testUser.last_name}`, 'success');
+            log('🔄 Refresh the main application to see changes');
+        }
+
+        function clearAllData() {
+            log('❌ Clearing all user data...');
+            localStorage.removeItem('user');
+            localStorage.removeItem('userEmail');
+            log('✅ All user data cleared!', 'success');
+        }
+
+        // Auto-check on load
+        window.onload = function() {
+            checkCurrentData();
+        }
+    </script>
+</body>
+</html>

@@ -14,6 +14,9 @@ function Navbar(props: NavbarProps) {
 	const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
 	useEffect(() => {
+		// Only run on client side
+		if (typeof window === 'undefined') return;
+		
 		loadCart();
 
 		const handleCartUpdate = () => {
@@ -39,11 +42,25 @@ function Navbar(props: NavbarProps) {
 
 	const loadCart = async () => {
 		try {
-			const cartData = await api.getCart();
+			// Only access localStorage on client side
+			if (typeof window === 'undefined') return;
+			
+			const userData = localStorage.getItem('user');
+			const user = userData ? JSON.parse(userData) : null;
+			if (!user?.email) {
+				// No user logged in, set empty cart
+				setCart({ id: '', items: [], total: 0, subtotal: 0, tax_total: 0, shipping_total: 0 });
+				setCartCount(0);
+				return;
+			}
+			const cartData = await api.getCart(user.email);
 			setCart(cartData);
 			setCartCount(cartData.items.length);
 		} catch (error) {
 			console.error('Error loading cart:', error);
+			// Set empty cart on error
+			setCart({ id: '', items: [], total: 0, subtotal: 0, tax_total: 0, shipping_total: 0 });
+			setCartCount(0);
 		}
 	};
 

@@ -500,7 +500,7 @@ textarea.formInput{
 
 @layer components {
 
-  body {@apply bg-lightestGrey font-normal; font-size: clamp(12px, 0.833vw, 20px);}
+  body {@apply bg-white font-normal; font-size: clamp(12px, 0.833vw, 20px);}
   body.scroll-none{
     @apply  overflow-hidden;
     height: 100vh!important;
@@ -537,7 +537,7 @@ textarea.formInput{
     @apply bg-primary;
   }
   #smooth-wrapper{
-    @apply bg-lightestGrey;
+    @apply bg-white;
   }
 
   .container-fluid{@apply w-full h-full sm:px-6 px-2 box-border}

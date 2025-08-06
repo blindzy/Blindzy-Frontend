@@ -1,0 +1,847 @@
+{
+  "info": {
+    "name": "Blindzy Medusa Complete API Collection",
+    "description": "Complete collection of all API endpoints in the Blindzy Medusa project",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "🚀 Core APIs",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/health",
+              "host": ["{{baseUrl}}"],
+              "path": ["health"]
+            },
+            "description": "Check if Medusa server is running"
+          }
+        }
+      ]
+    },
+    {
+      "name": "🛠️ Admin APIs",
+      "item": [
+        {
+          "name": "Admin Authentication",
+          "item": [
+            {
+              "name": "Create Admin User",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@blindzy.com\",\n  \"password\": \"admin123456\",\n  \"first_name\": \"Admin\",\n  \"last_name\": \"User\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/users",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "users"]
+                },
+                "description": "Create admin user (first time setup)"
+              }
+            },
+            {
+              "name": "Admin Login",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "exec": [
+                      "if (pm.response.code === 200) {",
+                      "    const response = pm.response.json();",
+                      "    if (response.token) {",
+                      "        pm.environment.set('adminToken', response.token);",
+                      "        console.log('Admin token saved to environment');",
+                      "    }",
+                      "}"
+                    ]
+                  }
+                }
+              ],
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"admin@blindzy.com\",\n  \"password\": \"admin123456\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/auth",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "auth"]
+                },
+                "description": "Login and get admin token"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Custom Products",
+          "item": [
+            {
+              "name": "Create Custom Product",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Premium Roller Blind\",\n  \"description\": \"High-quality roller blind with multiple customization options\",\n  \"base_price\": 149.99,\n  \"type\": \"Roller\",\n  \"product_image_url\": \"https://example.com/roller-blind.jpg\",\n  \"customization_options\": [\n    {\n      \"option_name\": \"Color\",\n      \"input_type\": \"select\",\n      \"required\": true,\n      \"choices\": [\n        {\n          \"choice_label\": \"White\",\n          \"choice_value\": \"white\",\n          \"price_modifier\": 0,\n          \"is_default\": true\n        },\n        {\n          \"choice_label\": \"Black\",\n          \"choice_value\": \"black\",\n          \"price_modifier\": 10.00\n        }\n      ]\n    },\n    {\n      \"option_name\": \"Size\",\n      \"input_type\": \"select\",\n      \"required\": true,\n      \"choices\": [\n        {\n          \"choice_label\": \"Small (60x120cm)\",\n          \"choice_value\": \"small\",\n          \"price_modifier\": 0,\n          \"is_default\": true\n        },\n        {\n          \"choice_label\": \"Large (120x180cm)\",\n          \"choice_value\": \"large\",\n          \"price_modifier\": 50.00\n        }\n      ]\n    }\n  ]\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/admin/products/custom_product",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["admin", "products", "custom_product"]
+                },
+                "description": "Create a custom product with customization options"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "🛍️ Store APIs",
+      "item": [
+        {
+          "name": "Products",
+          "item": [
+            {
+              "name": "Get All Custom Products",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/store/products/custom",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "products", "custom"]
+                },
+                "description": "Get list of all custom products with basic info"
+              }
+            },
+            {
+              "name": "Get Product Details",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/store/products/custom/{{productId}}",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "products", "custom", "{{productId}}"]
+                },
+                "description": "Get specific product with full customization options"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Customers",
+          "item": [
+            {
+              "name": "Customer Registration",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"abeera@team.aithur.com\",\n  \"password\": \"password123\",\n  \"first_name\": \"Abeera\",\n  \"last_name\": \"Khan\",\n  \"phone\": \"+1234567890\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/register",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "register"]
+                },
+                "description": "Register a new customer account"
+              }
+            },
+            {
+              "name": "Customer Login",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"abeera@team.aithur.com\",\n  \"password\": \"password123\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/login",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "login"]
+                },
+                "description": "Customer login"
+              }
+            },
+            {
+              "name": "Get Customer Details",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/get-customer",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "get-customer"]
+                },
+                "description": "Get current customer details"
+              }
+            },
+            {
+              "name": "Update Customer",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"phone\": \"+1234567890\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/update-customer",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "update-customer"]
+                },
+                "description": "Update customer information"
+              }
+            },
+            {
+              "name": "Verify OTP",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"customer@example.com\",\n  \"otp\": \"123456\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/verify-otp",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "verify-otp"]
+                },
+                "description": "Verify OTP for email verification"
+              }
+            },
+            {
+              "name": "Send Reset Email",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"customer@example.com\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/send-reset-email",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "send-reset-email"]
+                },
+                "description": "Send password reset email"
+              }
+            },
+            {
+              "name": "Reset Password",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"token\": \"reset-token\",\n  \"password\": \"newpassword123\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/reset-password",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "reset-password"]
+                },
+                "description": "Reset customer password with token"
+              }
+            },
+            {
+              "name": "Contact Form",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"customer@example.com\",\n  \"message\": \"I have a question about your products\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/contact",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "contact"]
+                },
+                "description": "Submit contact form"
+              }
+            },
+            {
+              "name": "Upload User Profile Picture",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"image\": \"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQ...\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/user-pfp",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "user-pfp"]
+                },
+                "description": "Upload customer profile picture"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Addresses",
+          "item": [
+            {
+              "name": "Create Address",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"customer-uuid\",\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"address_line_1\": \"123 Main St\",\n  \"city\": \"New York\",\n  \"postal_code\": \"10001\",\n  \"country_code\": \"US\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/addresses",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "addresses"]
+                },
+                "description": "Create customer address"
+              }
+            },
+            {
+              "name": "Update Address",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"first_name\": \"John\",\n  \"last_name\": \"Doe\",\n  \"address_line_1\": \"456 Oak St\",\n  \"city\": \"New York\",\n  \"postal_code\": \"10002\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/addresses/{{addressId}}",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "addresses", "{{addressId}}"]
+                },
+                "description": "Update customer address"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Cart",
+          "item": [
+            {
+              "name": "Get Cart",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/cart?email=abeera@team.aithur.com",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "cart"],
+                  "query": [
+                    {
+                      "key": "email",
+                      "value": "abeera@team.aithur.com"
+                    }
+                  ]
+                },
+                "description": "Get customer cart"
+              }
+            },
+            {
+              "name": "Add to Cart",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"email\": \"abeera@team.aithur.com\",\n  \"product_id\": \"{{productId}}\",\n  \"quantity\": 1,\n  \"customizations\": {\n    \"color\": \"white\",\n    \"size\": \"large\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/cart",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "cart"]
+                },
+                "description": "Add item to cart"
+              }
+            },
+            {
+              "name": "Update Cart Item",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quantity\": 2\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/cart/{{cartItemId}}",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "cart", "{{cartItemId}}"]
+                },
+                "description": "Update cart item quantity"
+              }
+            },
+            {
+              "name": "Clear Cart",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/cart/clear",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "cart", "clear"]
+                },
+                "description": "Clear all items from cart"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Payment Cards",
+          "item": [
+            {
+              "name": "Add Payment Card",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer_id\": \"customer-uuid\",\n  \"card_number\": \"4111111111111111\",\n  \"expiry_month\": \"12\",\n  \"expiry_year\": \"2025\",\n  \"cardholder_name\": \"John Doe\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/card",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "card"]
+                },
+                "description": "Add payment card"
+              }
+            },
+            {
+              "name": "Update Payment Card",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"expiry_month\": \"01\",\n  \"expiry_year\": \"2026\",\n  \"cardholder_name\": \"John Doe\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/card/{{cardId}}",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "card", "{{cardId}}"]
+                },
+                "description": "Update payment card"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Checkout",
+          "item": [
+            {
+              "name": "Start Checkout",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cart_id\": \"cart-uuid\",\n  \"shipping_address_id\": \"address-uuid\",\n  \"billing_address_id\": \"address-uuid\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/checkout",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "checkout"]
+                },
+                "description": "Start checkout process"
+              }
+            },
+            {
+              "name": "Calculate Shipping",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cart_id\": \"cart-uuid\",\n  \"shipping_address\": {\n    \"postal_code\": \"10001\",\n    \"country_code\": \"US\"\n  }\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/checkout/calculate-shipping",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "checkout", "calculate-shipping"]
+                },
+                "description": "Calculate shipping costs"
+              }
+            },
+            {
+              "name": "Complete Checkout",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"checkout_id\": \"checkout-uuid\",\n  \"payment_method\": \"card\",\n  \"card_id\": \"card-uuid\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/checkout/ship",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "checkout", "ship"]
+                },
+                "description": "Complete checkout and create order"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Orders",
+          "item": [
+            {
+              "name": "Get Customer Orders",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/order",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "order"]
+                },
+                "description": "Get customer order history"
+              }
+            },
+            {
+              "name": "Get Order Details",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/order/{{orderId}}",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "order", "{{orderId}}"]
+                },
+                "description": "Get specific order details"
+              }
+            }
+          ]
+        },
+        {
+          "name": "Samples",
+          "item": [
+            {
+              "name": "Get All Samples",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/samples/get-all",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "samples", "get-all"]
+                },
+                "description": "Get all available samples"
+              }
+            },
+            {
+              "name": "Get One Sample",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "x-publishable-api-key",
+                    "value": "{{publishableKey}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/store/customers/samples/get-one",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["store", "customers", "samples", "get-one"]
+                },
+                "description": "Get specific sample details"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "🧪 Test APIs",
+      "item": [
+        {
+          "name": "Test Custom Product",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/test/custom_product",
+              "host": ["{{baseUrl}}"],
+              "path": ["test", "custom_product"]
+            },
+            "description": "Test endpoint for custom products"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:9000",
+      "type": "string"
+    },
+    {
+      "key": "publishableKey",
+      "value": "pk_c5c3a7c4c2f5e1c991a5feec30098bdaad87511c48b8f8a99cac999d528295aa",
+      "type": "string",
+      "description": "Publishable API key for store endpoints"
+    },
+    {
+      "key": "adminToken",
+      "value": "",
+      "type": "string",
+      "description": "Admin authentication token"
+    },
+    {
+      "key": "productId",
+      "value": "550e8400-e29b-41d4-a716-446655440000",
+      "type": "string",
+      "description": "Sample product ID for testing"
+    },
+    {
+      "key": "addressId",
+      "value": "",
+      "type": "string",
+      "description": "Customer address ID"
+    },
+    {
+      "key": "cartItemId",
+      "value": "",
+      "type": "string",
+      "description": "Cart item ID"
+    },
+    {
+      "key": "cardId",
+      "value": "",
+      "type": "string",
+      "description": "Payment card ID"
+    },
+    {
+      "key": "orderId",
+      "value": "",
+      "type": "string",
+      "description": "Order ID"
+    }
+  ]
+}
+

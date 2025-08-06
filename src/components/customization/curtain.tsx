@@ -47,6 +47,8 @@ function Curtains(props: ProductDetailsProps) {
 
 	// Only keep the attributes that are actually customisable on the left
 	const [customisations, setCustomisations] = useState({
+		width: '',
+		height: '',
 		fabricColor: 'fabric-1',
 		controls: 'control-left',
 		fitType: 'fit-1',
@@ -98,8 +100,24 @@ function Curtains(props: ProductDetailsProps) {
 				<p>Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. </p>
 				<div className="w-full flex items-center gap-4">
 					<input type="text" className="formInput" id="roomName" placeholder="Room Name" />
-					<input type="text" className="formInput" id="width" placeholder="Width" />
-					<input type="text" className="formInput" id="height" placeholder="Height" />
+					<input 
+						type="number" 
+						className="formInput" 
+						id="width" 
+						placeholder="Width (meters)" 
+						value={customisations.width}
+						onChange={handleChange('width')}
+						onInput={handleChange('width')}
+					/>
+					<input 
+						type="number" 
+						className="formInput" 
+						id="height" 
+						placeholder="Height (meters)" 
+						value={customisations.height}
+						onChange={handleChange('height')}
+						onInput={handleChange('height')}
+					/>
 				</div>
 				<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
 					<Icon icon="uil:plus" className="text-[18px]" />
@@ -311,7 +329,7 @@ function Curtains(props: ProductDetailsProps) {
 					}}
 					fields={['fabricColor', 'fitType', 'stack', 'style', 'hem', 'curtainType', 'wandLength', 'trackColour', 'bracketStyle']}
 					imageSrc="/images/product/product-datail.png"
-					productName="Curtain Product"
+					productName="Elegant Curtains"
 					productDescription="Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. "
 					price="-"
 				/>

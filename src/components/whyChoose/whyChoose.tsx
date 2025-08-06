@@ -11,6 +11,8 @@ interface WhyChooseProps {
 function WhyChoose(props: WhyChooseProps) {
 
 	useEffect(() => {
+		// Only run on client side
+		if (typeof window === 'undefined') return;
 
         const multiplier = {
             translate: .25,

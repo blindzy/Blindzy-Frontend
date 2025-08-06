@@ -4,6 +4,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { api } from '../../services/api';
+import { testApiConfig, testApiCall } from '../../utils/testApi';
+import { testBackendHealth } from '../../utils/testBackend';
 
 function SignUp() {
 	const [viaEmail, setViaEmail] = useState(false);
@@ -30,6 +32,18 @@ function SignUp() {
 		if (lenis) {
 			lenis.on('scroll', ScrollTrigger.update);
 		}
+		
+		// Test API configuration and backend health on component mount
+		const runTests = async () => {
+			console.log('=== Running API Tests ===');
+			const config = testApiConfig();
+			console.log('API Config Test Result:', config);
+			
+			const healthTest = await testBackendHealth();
+			console.log('Backend Health Test Result:', healthTest);
+		};
+		
+		runTests();
 	}, [lenis]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -41,65 +55,83 @@ function SignUp() {
 	};
 
 	const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setLoading(true);
-        setError('');
-        setSuccess('');
-      
-        // Validate passwords match
-        if (formData.password !== formData.confirmPassword) {
-          setError('Passwords do not match');
-          setLoading(false);
-          return;
-        }
-      
-        // Validate email format
-        if (!/\S+@\S+\.\S+/.test(formData.email)) {
-          setError('Enter a valid email address');
-          setLoading(false);
-          return;
-        }
-      
-        // Validate terms agreement
-        if (!agreedToTerms) {
-          setError('You must agree to our Terms and Policies');
-          setLoading(false);
-          return;
-        }
-      
-        try {
-          const response = await api.register({
-            email: formData.email,
-            password: formData.password,
-            first_name: formData.first_name,
-            last_name: formData.last_name,
-            phone: formData.phone,
-            username: formData.username,
-          });
-      
-          setSuccess('Account created successfully! Redirecting...');
-          localStorage.setItem('session', JSON.stringify(response.session));
-          localStorage.setItem('user', JSON.stringify(response.customer));
-          localStorage.setItem('customer_id', response.customer.id); // ✅ Required
-      
-          setTimeout(() => {
-            window.location.href = '/user';
-          }, 1500);
-        } catch (err: any) {
-          let serverError =
-            err?.response?.data?.error ||
-            err?.message ||
-            'Failed to create account. Please try again.';
-          if (typeof serverError === 'string' && serverError.toLowerCase().includes('email or username already exists')) {
-            serverError = 'An account with this email or username already exists. Please log in or use a different email.';
-          }
-          setError(serverError);
-          console.error('Signup error:', err);
-        } finally {
-          setLoading(false);
-        }
-      };
-      
+		e.preventDefault();
+		setLoading(true);
+		setError('');
+		setSuccess('');
+
+		// Validate required fields
+		if (!formData.first_name || !formData.last_name || !formData.email || !formData.password || !formData.confirmPassword || !formData.username) {
+			setError('Please fill all required fields.');
+			setLoading(false);
+			return;
+		}
+
+		// Validate passwords match
+		if (formData.password !== formData.confirmPassword) {
+			setError('Passwords do not match');
+			setLoading(false);
+			return;
+		}
+
+		// Validate email format
+		if (!/\S+@\S+\.\S+/.test(formData.email)) {
+			setError('Enter a valid email address');
+			setLoading(false);
+			return;
+		}
+
+		// Validate terms agreement
+		if (!agreedToTerms) {
+			setError('You must agree to our Terms and Policies');
+			setLoading(false);
+			return;
+		}
+
+		try {
+			// Test API configuration before making the request
+			console.log('Testing API before signup...');
+			const apiTest = await testApiCall();
+			console.log('API Test Result:', apiTest);
+			
+			// POST all required fields to backend
+			const payload = {
+				first_name: formData.first_name,
+				last_name: formData.last_name,
+				email: formData.email,
+				phone: formData.phone,
+				username: formData.username,
+				password: formData.password,
+			};
+			
+			console.log('Signup payload:', payload);
+			const response = await api.register(payload);
+			console.log('Signup response:', response);
+
+			setSuccess('Account created successfully! Redirecting...');
+			localStorage.setItem('session', JSON.stringify(response.session));
+			localStorage.setItem('user', JSON.stringify(response.customer));
+			localStorage.setItem('customer_id', response.customer.id);
+
+			setTimeout(() => {
+				window.location.href = '/user';
+			}, 1500);
+		} catch (err: any) {
+			console.error('Full signup error:', err);
+			console.error('Error message:', err?.message);
+			console.error('Error stack:', err?.stack);
+			
+			let serverError = err?.message || 'Failed to create account. Please try again.';
+			if (typeof serverError === 'string' && serverError.toLowerCase().includes('email or username already exists')) {
+				serverError = 'An account with this email or username already exists. Please log in or use a different email.';
+			}
+			setError(serverError);
+			console.error('Signup error:', err);
+		} finally {
+			setLoading(false);
+		}
+	};
+	  
 	return (
 		<div className="relative w-screen h-screen flex items-center justify-center xl:p-[1.25vw] sm:p-[2.344vw] p-2 overflow-hidden" id="signUp">
 			<div className="w-full max-w-[750px] flex flex-col items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black shrink-0 p-4">

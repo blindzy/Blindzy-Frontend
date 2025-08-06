@@ -1,7 +1,7 @@
 ---
 import Layout from "@layouts/Layout.astro";
 import Navbar from "@components/navbar/navbar";
-import Contacts from "@components/contact/contact";
+import ContactComponent from "@components/contact/contact";
 import Footer from "@components/Footer/Footer";
 
 ---
@@ -9,9 +9,9 @@ import Footer from "@components/Footer/Footer";
 <Layout>
 	<div class="smooth-wrapper">
 		<div class="smooth-content">
-			<div class="relative  bg-effect">
+			<div class="relative">
 				<Navbar client:load/>
-				<Contacts client:load/>
+				<ContactComponent client:load/>
 				<Footer client:load/>
 			</div>
 		</div>

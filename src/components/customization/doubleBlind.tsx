@@ -100,8 +100,8 @@ function doubleBlind(props: ProductDetailsProps) {
 				<p>Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. </p>
 				<div className="w-full flex items-center gap-4">
 					<input type="text" className="formInput" id="roomName" placeholder="Room Name" />
-					<input type="text" className="formInput" id="width" placeholder="Width" />
-					<input type="text" className="formInput" id="height" placeholder="Height" />
+					<input type="text" className="formInput" id="width" placeholder="Width (meters)" />
+					<input type="text" className="formInput" id="height" placeholder="Height (meters)" />
 				</div>
 				<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
 					<Icon icon="uil:plus" className="text-[18px]" />
@@ -511,7 +511,7 @@ function doubleBlind(props: ProductDetailsProps) {
 					baseRailColour: "Base Rail Colour"
 				}}
 				imageSrc="/images/product/product-datail.png"
-				productName="Double Blind Product"
+				productName="Double Roller Blinds"
 				productDescription="Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. "
 				price="-"
 			/>
