@@ -1,7 +1,7 @@
 // API Configuration
 export const API_CONFIG = {
   // Medusa Backend Configuration
-  MEDUSA_BASE_URL: import.meta.env.VITE_API_URL || 'http://localhost:9000',
+  MEDUSA_BASE_URL: import.meta.env.VITE_API_URL || 'http://208.87.135.120:9000',
   MEDUSA_PUBLISHABLE_KEY: import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY || 'pk_c5c3a7c4c2f5e1c991a5feec30098bdaad87511c48b8f8a99cac999d528295aa',
   
   // Development - Using proxy server to avoid CORS issues

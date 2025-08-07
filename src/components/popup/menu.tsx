@@ -6,17 +6,10 @@ interface MenuDropdownProps {
   onClose: () => void;
 }
 
-const menuLinks = [
-  { label: 'Home', href: '/' },
-  { label: 'Shutters', href: '/shop' },
-  { label: 'Curtains', href: '/shop' },
-  { label: 'Blinds', href: '/shop' },
-  { label: 'Tutorials', href: '/tutorial' },
-  { label: 'Showroom', href: '/showroom' },
-];
-
 const MenuDropdown: React.FC<MenuDropdownProps> = ({ open, onClose }) => {
   const [customOpen, setCustomOpen] = useState(false);
+  const [curtainsOpen, setCurtainsOpen] = useState(false);
+  const [blindsOpen, setBlindsOpen] = useState(false);
   const [showAnim, setShowAnim] = useState(open);
 
   useEffect(() => {
@@ -91,15 +84,64 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ open, onClose }) => {
 
         {/* Menu Links */}
         <nav className="flex flex-col gap-2 px-6">
-          {menuLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              className="menu-main-link menu-option-link py-2 px-2 rounded transition hover:bg-gray-100 sm:menu-main-link sm:menu-option-link"
+          <a href="/" className="menu-main-link menu-option-link py-2 px-2 rounded transition hover:bg-gray-100 sm:menu-main-link sm:menu-option-link">
+            Home
+          </a>
+          <a href="/shop" className="menu-main-link menu-option-link py-2 px-2 rounded transition hover:bg-gray-100 sm:menu-main-link sm:menu-option-link">
+            Shutters
+          </a>
+          
+          {/* Curtains Dropdown */}
+          <div>
+            <button
+              type="button"
+              className="menu-main-link menu-option-link py-2 px-2 rounded transition hover:bg-gray-100 w-full text-left flex items-center justify-between sm:menu-main-link sm:menu-option-link"
+              onClick={() => setCurtainsOpen((prev) => !prev)}
+              aria-expanded={curtainsOpen}
             >
-              {link.label}
-            </a>
-          ))}
+              Curtains
+              <Icon
+                icon={curtainsOpen ? 'mdi:chevron-up' : 'mdi:chevron-down'}
+                className="text-lg transition-transform"
+              />
+            </button>
+            {curtainsOpen && (
+              <div className="pl-4 mt-1">
+                <a href="/shop" className="block py-2 px-2 text-base font-normal text-gray-800 hover:text-[--primary] transition-all duration-200">Simple Curtains</a>
+                <a href="/shop" className="block py-2 px-2 text-base font-normal text-gray-800 hover:text-[--primary] transition-all duration-200">Double Curtains</a>
+              </div>
+            )}
+          </div>
+
+          {/* Blinds Dropdown */}
+          <div>
+            <button
+              type="button"
+              className="menu-main-link menu-option-link py-2 px-2 rounded transition hover:bg-gray-100 w-full text-left flex items-center justify-between sm:menu-main-link sm:menu-option-link"
+              onClick={() => setBlindsOpen((prev) => !prev)}
+              aria-expanded={blindsOpen}
+            >
+              Blinds
+              <Icon
+                icon={blindsOpen ? 'mdi:chevron-up' : 'mdi:chevron-down'}
+                className="text-lg transition-transform"
+              />
+            </button>
+            {blindsOpen && (
+              <div className="pl-4 mt-1">
+                <a href="/shop" className="block py-2 px-2 text-base font-normal text-gray-800 hover:text-[--primary] transition-all duration-200">Blinds</a>
+                <a href="/shop" className="block py-2 px-2 text-base font-normal text-gray-800 hover:text-[--primary] transition-all duration-200">Vertical Blinds</a>
+                <a href="/shop" className="block py-2 px-2 text-base font-normal text-gray-800 hover:text-[--primary] transition-all duration-200">Double Roller Blinds</a>
+              </div>
+            )}
+          </div>
+
+          <a href="/tutorial" className="menu-main-link menu-option-link py-2 px-2 rounded transition hover:bg-gray-100 sm:menu-main-link sm:menu-option-link">
+            Tutorials
+          </a>
+          <a href="/showroom" className="menu-main-link menu-option-link py-2 px-2 rounded transition hover:bg-gray-100 sm:menu-main-link sm:menu-option-link">
+            Showroom
+          </a>
           <div className="mt-4">
             <button
               type="button"
@@ -117,12 +159,12 @@ const MenuDropdown: React.FC<MenuDropdownProps> = ({ open, onClose }) => {
             {customOpen && (
               <div id="customisation-dropdown" className="mt-1">
                 {[
-                  { href: "/customization/shutter-customisation", label: "Customize Shutters" },
-                  { href: "/customization/curtain-customisation", label: "Customize Curtains" },
-                  { href: "/customization/double-curtain-customisation", label: "Customize Double Curtains" },
-                  { href: "/customization/blind-customisation", label: "Customize Blinds" },
-                  { href: "/customization/double-roller-blind-customisation", label: "Customize Double Blinds" },
-                  { href: "/customization/vertical-blind-customisation", label: "Customize Vertical Blinds" },
+                  { href: "/shop", label: "Customize Shutters" },
+                  { href: "/shop", label: "Customize Curtains" },
+                  { href: "/shop", label: "Customize Double Curtains" },
+                  { href: "/shop", label: "Customize Blinds" },
+                  { href: "/shop", label: "Customize Double Blinds" },
+                  { href: "/shop", label: "Customize Vertical Blinds" },
                 ].map(link => (
                   <a
   key={link.href}

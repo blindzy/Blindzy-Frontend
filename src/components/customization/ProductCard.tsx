@@ -130,11 +130,9 @@ const ProductCard: React.FC<ProductCardProps> = ({
   useEffect(() => {
     const checkBackendStatus = async () => {
       try {
-        // Try a simple health check to the backend
-        const response = await fetch('http://localhost:9000/health', { 
-          method: 'GET',
-          timeout: 3000 
-        } as any);
+        const response = await fetch('http://208.87.135.120:9000/health', { 
+          method: 'GET'
+        });
         if (response.ok) {
           setBackendStatus('online');
         } else {

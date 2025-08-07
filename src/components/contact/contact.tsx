@@ -31,7 +31,7 @@ function Contact(props: ContactProps) {
 		"Content-Type": "application/json",
 		"x-publishable-api-key": "pk_c1345b52039702b7035e1cf270b942de49b7b14d0ac24fe91cca9a32a1ec4546",
 	};
-	const baseUrl = "http://localhost:9000";
+	const baseUrl = "http://208.87.135.120:9000";
 
 	// Handle form input changes
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {

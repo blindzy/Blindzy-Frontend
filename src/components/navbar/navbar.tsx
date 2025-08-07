@@ -87,69 +87,42 @@ function Navbar(props: NavbarProps) {
 							<a className="text-sm px-2 py-1 text-black transition uppercase whitespace-nowrap hover:text-[--primary]" href="/about">About Us</a>
 						</li>
 						<li>
-							<a className="text-sm px-1 py-1 text-black transition uppercase hover:text-[--primary]" href="/customization/shutter-customisation">Shutters</a>
+							<a className="text-sm px-1 py-1 text-black transition uppercase hover:text-[--primary]" href="/shop">Shutters</a>
 						</li>
-						{/* Curtains Dropdown */}
 						<li className="relative navbar-dropdown">
-							<button
+							<button 
 								className="text-sm px-1 py-1 text-black transition uppercase hover:text-[--primary] flex items-center gap-1"
 								onClick={() => setOpenDropdown(openDropdown === 'curtains' ? null : 'curtains')}
-								style={{ borderBottom: openDropdown === 'curtains' ? '2px solid var(--primary)' : undefined }}
 							>
-								Curtains <svg width="12" height="8" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" stroke="currentColor" strokeWidth="2" fill="none" /></svg>
+								Curtains
+								<svg className={`w-3 h-3 transition-transform ${openDropdown === 'curtains' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+								</svg>
 							</button>
 							{openDropdown === 'curtains' && (
-								<div className="absolute left-0 top-full mt-3 w-52 bg-white border border-gray-200 rounded-2xl shadow-xl z-50 p-2 transition-all duration-300 space-y-1">
-									<a
-										href="/customization/curtain-customisation"
-										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary] cursor-pointer"
-									>
-										Curtains
-									</a>
-									<a
-										href="/customization/double-curtain-customisation"
-										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary] cursor-pointer"
-									>
-										Double Curtains
-									</a>
+								<div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+									<a href="/shop" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-[--primary]">Curtains</a>
+									<a href="/shop" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-[--primary]">Double Curtains</a>
 								</div>
 							)}
-
-
 						</li>
-						{/* Blinds Dropdown */}
 						<li className="relative navbar-dropdown">
-							<button
+							<button 
 								className="text-sm px-1 py-1 text-black transition uppercase hover:text-[--primary] flex items-center gap-1"
 								onClick={() => setOpenDropdown(openDropdown === 'blinds' ? null : 'blinds')}
-								style={{ borderBottom: openDropdown === 'blinds' ? '2px solid var(--primary)' : undefined }}
 							>
-								Blinds <svg width="12" height="8" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" stroke="currentColor" strokeWidth="2" fill="none" /></svg>
+								Blinds
+								<svg className={`w-3 h-3 transition-transform ${openDropdown === 'blinds' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+								</svg>
 							</button>
 							{openDropdown === 'blinds' && (
-								<div className="absolute left-0 top-full mt-3 w-64 bg-white border border-gray-200 rounded-2xl shadow-xl z-50 p-2 transition-all duration-300 space-y-1">
-									<a
-										href="/customization/blind-customisation"
-										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary] cursor-pointer"
-									>
-										Blinds
-									</a>
-									<a
-										href="/customization/double-roller-blind-customisation"
-										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary] cursor-pointer"
-									>
-										Double Roller Blinds
-									</a>
-									<a
-										href="/customization/vertical-blind-customisation"
-										className="block px-4 py-2 text-sm text-black rounded transition-all duration-200 hover:text-[--primary] cursor-pointer"
-									>
-										Vertical Blinds
-									</a>
+								<div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
+									<a href="/shop" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-[--primary]">Blinds</a>
+									<a href="/shop" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-[--primary]">Vertical Blinds</a>
+									<a href="/shop" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-[--primary]">Double Roller Blinds</a>
 								</div>
 							)}
-
-
 						</li>
 
 						<li>

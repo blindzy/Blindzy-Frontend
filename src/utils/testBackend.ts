@@ -1,6 +1,6 @@
 // Health check test for the backend
 export async function testBackendHealth() {
-  const baseUrl = 'http://localhost:9000';
+  const baseUrl = 'http://208.87.135.120:9000';
   const publishableKey = 'pk_c5c3a7c4c2f5e1c991a5feec30098bdaad87511c48b8f8a99cac999d528295aa';
   
   console.log('Testing backend connectivity...');
