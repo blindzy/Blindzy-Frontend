@@ -68,7 +68,7 @@
   @apply xl:rounded-[2.5vw] sm:rounded-[4.688vw] rounded-[6.107vw]
 }
 .rounded-32{
-  @apply xl:rounded-[1.667vw] sm:rounded-[3.125vw] rounded-[3.265vw]
+  @apply xl:rounded-[1.667vw] sm:rounded-[3.125vw] rounded-[5.581vw]
 }
 .rounded-24{
   @apply xl:rounded-[1.25vw] sm:rounded-[2.344vw] rounded-[16px]
