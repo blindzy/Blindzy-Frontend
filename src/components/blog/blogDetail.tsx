@@ -1,4 +1,5 @@
-﻿import React, { useEffect } from "react";
+﻿import * as React from "react";
+import { useEffect, useRef, useState } from "react";
 import { Icon } from '@iconify/react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
