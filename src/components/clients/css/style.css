@@ -1,9 +1,9 @@
 .client-section .client-cards{
-    @apply w-full overflow-visible xl:px-[1.25vw] sm:px-4 px-2;
+    @apply sm:w-full w-[368px] sm:overflow-hidden overflow-visible xl:px-[1.25vw] sm:px-[2.344vw] px-[5.455vw] !m-0
 }
 .client-section .client-cards .swiper-wrapper{
-    @apply w-full h-full overflow-visible;
+    @apply xl:py-6 sm:py-12 py-8;
 }
 .client-section .client-cards .cards-item{
-    @apply xl:h-[48.886vh] h-[32vh] flex flex-col justify-between bg-[--white] xl:p-[1.25vw] sm:p-[2.344vw] p-2  border border-[--Black];
+    @apply xl:h-[48.886vh] sm:h-[42.969vw] h-[77.273vw] flex flex-col justify-between bg-[--white] xl:p-[1.25vw] sm:p-[2.344vw] p-[5.455vw]  border border-[--Black];
 }

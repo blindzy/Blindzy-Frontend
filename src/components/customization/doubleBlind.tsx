@@ -136,7 +136,7 @@ function doubleBlind(props: ProductDetailsProps) {
 								/>
 								<div className="image-after"></div>
 							</label>
-							<span className="text-base font-bold mt-2 capitalize font-rounded text-left">{option.label}</span>
+							<span className="text-base font-bold mt-2 capitalize font-plus text-left">{option.label}</span>
 						</div>
 					))}
 				</div>
@@ -257,7 +257,7 @@ function doubleBlind(props: ProductDetailsProps) {
                                 />
                                 <div className="image-after"></div>
                             </label>
-                            <span className="text-base font-bold mt-2 self-start text-left capitalize font-rounded">{side}</span>
+                            <span className="text-base font-bold mt-2 self-start text-left capitalize font-plus">{side}</span>
                         </div>
                     ))}
                 </div>
@@ -291,7 +291,7 @@ function doubleBlind(props: ProductDetailsProps) {
                                 />
                                 <div className="image-after"></div>
                             </label>
-                            <span className="text-base font-bold mt-2 self-start text-left capitalize font-rounded">{`fit-${num}`}</span>
+                            <span className="text-base font-bold mt-2 self-start text-left capitalize font-plus">{`fit-${num}`}</span>
                         </div>
                     ))}
                 </div>
@@ -331,7 +331,7 @@ function doubleBlind(props: ProductDetailsProps) {
                                 />
                                 <div className="image-after"></div>
                             </label>
-                            <span className="text-base font-bold mt-2 self-start text-left capitalize font-rounded">{option.label}</span>
+                            <span className="text-base font-bold mt-2 self-start text-left capitalize font-plus">{option.label}</span>
                         </div>
                     ))}
                 </div>
@@ -432,7 +432,7 @@ function doubleBlind(props: ProductDetailsProps) {
                                 />
                                 <div className="image-after"></div>
                             </label>
-                            <span className="text-base font-bold mt-2 self-start text-left capitalize font-rounded">{label}</span>
+                            <span className="text-base font-bold mt-2 self-start text-left capitalize font-plus">{label}</span>
                         </div>
                     ))}
                 </div>

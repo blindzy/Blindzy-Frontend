@@ -1,9 +1,6 @@
-.categorie-section .container-categories{
-    @apply relative w-full xl:h-full z-[15] xl:py-[11vh] py-[2vh];
-}
-.categorie-section .container-categories::before{
-    @apply sm:content-[''] absolute right-0 top-0 xl:w-[38%] w-[25%] h-full z-10;
-    /* Softer, more blended gradient and increased blur */
+
+.categories-section .container-categories::before{
+    @apply xl:content-[''] absolute right-0 top-0 xl:w-[38%] w-[25%] h-full z-10;
     background: linear-gradient(
         90deg,
         rgba(159, 137, 232, 0.10) 0%,
@@ -12,90 +9,9 @@
         rgba(159, 137, 232, 0.00) 100%
     );
     backdrop-filter: blur(3px);
-    /* Feather the left edge for a width-wise blend (clear on left, blur on right) */
     -webkit-mask-image: linear-gradient(to right, transparent 0%, black 20%, black 100%);
     mask-image: linear-gradient(to right, transparent 0%, black 20%, black 100%);
-    /* pointer-events: none */
-}
-
-/* Remove blur effect for smaller screens */
-@media only screen and (max-width: 1279px) {
-    .categorie-section .container-categories::before{
-        backdrop-filter: none;
-    }
-}
-
-.container-categories .categories-cards{
-    @apply xl:w-[26.354vw] sm:w-[51%] w-full xl:h-full overflow-visible m-0 xl:px-0 px-4;
 }
 .container-categories .categories-cards .swiper-wrapper{
-    @apply w-full xl:h-full ;
-}
-.categories-cards .cards-item{
-    @apply relative w-full xl:h-full overflow-hidden;
-}
-.categories-cards .cards-item img{
-    @apply w-full xl:h-full object-cover;
-}
-.categories-cards .cards-item .content{
-    @apply w-full xl:h-full absolute left-0 top-0 xl:p-[1.25vw] sm:p-[2.344vw] p-6 flex flex-col items-end justify-between;
-}
-/* Ensure Shop Now button is always visible on mobile */
-.categories-cards .cards-item .content .cus-btn.white {
-  display: flex;
-  padding: 12px 24px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  z-index: 30 !important;
-  position: relative;
-}
-
-@media (max-width: 639px) {
-  /* Ensure Shop Now button is always visible and styled on mobile only */
-  .categories-cards .cards-item .content .cus-btn.white {
-    display: flex;
-    height: 48px;
-    width: 124px;
-    font-size: 16px;
-    padding: 8px 16px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    z-index: 30 !important;
-    position: relative;
-  }
-  .categorie-section .container-categories {
-    padding-top: 0 !important;
-    padding-bottom: 0 !important;
-  }
-  /* Swiper navigation buttons: right aligned and 56px size on mobile */
-  .container-categories .flex.justify-center.gap-4 {
-    justify-content: flex-end !important;
-  }
-  .arrow-btn {
-    width: 56px !important;
-    height: 56px !important;
-    min-width: 56px !important;
-    min-height: 56px !important;
-    font-size: 24px !important;
-  }
-}
-
-@media (min-width: 640px) {
-  .categories-cards .cards-item .content .cus-btn.white {
-    height: 48px;
-    width: 124px;
-    font-size: 16px;
-    position: absolute !important;
-    top: 24px;
-    right: 24px;
-    margin-bottom: 0 !important;
-    z-index: 30 !important;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-  }
+    @apply w-full h-full overflow-visible;
 }

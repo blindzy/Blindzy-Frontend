@@ -136,7 +136,7 @@ function doubleCurtains(props: ProductDetailsProps) {
 								/>
 								<div className="image-after"></div>
 							</label>
-							<span className="text-base font-bold mt-2 capitalize font-rounded text-left">{option.label}</span>
+							<span className="text-base font-bold mt-2 capitalize font-plus text-left">{option.label}</span>
 						</div>
 					))}
 				</div>
@@ -243,9 +243,9 @@ function doubleCurtains(props: ProductDetailsProps) {
 								</div>
 							</div>
 							<div className="flex gap-2 mt-1">
-								<span className="w-full text-base font-bold text-left font-rounded">S Fold</span>
-								<span className="w-full text-base font-bold text-left font-rounded">Triple Pinch Pleat</span>
-								<span className="w-full text-base font-bold text-left font-rounded">Pencil Pleat</span>
+								<span className="w-full text-base font-bold text-left font-plus">S Fold</span>
+								<span className="w-full text-base font-bold text-left font-plus">Triple Pinch Pleat</span>
+								<span className="w-full text-base font-bold text-left font-plus">Pencil Pleat</span>
 							</div>
 						</div>
 					</div>
@@ -293,8 +293,8 @@ function doubleCurtains(props: ProductDetailsProps) {
 								))}
 							</div>
 							<div className="flex gap-2 mt-1">
-								<span className="w-full text-base font-bold text-left font-rounded">Lead Weight</span>
-								<span className="w-full text-base font-bold text-left font-rounded">70mm Hem</span>
+								<span className="w-full text-base font-bold text-left font-plus">Lead Weight</span>
+								<span className="w-full text-base font-bold text-left font-plus">70mm Hem</span>
 							</div>
 						</div>
 					</div>
@@ -402,9 +402,9 @@ function doubleCurtains(props: ProductDetailsProps) {
 								</div>
 							</div>
 							<div className="flex gap-2 mt-1">
-								<span className="w-full text-base font-bold text-left font-rounded">S Fold</span>
-								<span className="w-full text-base font-bold text-left font-rounded">Triple Pinch Pleat</span>
-								<span className="w-full text-base font-bold text-left font-rounded">Pencil Pleat</span>
+								<span className="w-full text-base font-bold text-left font-plus">S Fold</span>
+								<span className="w-full text-base font-bold text-left font-plus">Triple Pinch Pleat</span>
+								<span className="w-full text-base font-bold text-left font-plus">Pencil Pleat</span>
 							</div>
 						</div>
 					</div>
@@ -452,8 +452,8 @@ function doubleCurtains(props: ProductDetailsProps) {
 								))}
 							</div>
 							<div className="flex gap-2 mt-1">
-								<span className="w-full text-base font-bold text-left font-rounded">Lead Weight</span>
-								<span className="w-full text-base font-bold text-left font-rounded">70mm Hem</span>
+								<span className="w-full text-base font-bold text-left font-plus">Lead Weight</span>
+								<span className="w-full text-base font-bold text-left font-plus">70mm Hem</span>
 							</div>
 						</div>
 					</div>
@@ -477,8 +477,8 @@ function doubleCurtains(props: ProductDetailsProps) {
 							</div>
 						</div>
 						<div className="flex gap-2 mt-1">
-							<span className="w-full text-base font-bold text-left font-rounded">Left</span>
-							<span className="w-full text-base font-bold text-left font-rounded">Right</span>
+							<span className="w-full text-base font-bold text-left font-plus">Left</span>
+							<span className="w-full text-base font-bold text-left font-plus">Right</span>
 						</div>
 					</div>
 				</div>
@@ -515,8 +515,8 @@ function doubleCurtains(props: ProductDetailsProps) {
 							))}
 						</div>
 						<div className="flex gap-2 mt-1">
-							<span className="w-full text-base font-bold text-left font-rounded">Fit</span>
-							<span className="w-full text-base font-bold text-left font-rounded">Recess</span>
+							<span className="w-full text-base font-bold text-left font-plus">Fit</span>
+							<span className="w-full text-base font-bold text-left font-plus">Recess</span>
 						</div>
 					</div>
 					<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
@@ -556,8 +556,8 @@ function doubleCurtains(props: ProductDetailsProps) {
 							))}
 						</div>
 						<div className="flex gap-2 mt-1">
-							<span className="w-full text-base font-bold text-left font-rounded">Designer</span>
-							<span className="w-full text-base font-bold text-left font-rounded">Residential</span>
+							<span className="w-full text-base font-bold text-left font-plus">Designer</span>
+							<span className="w-full text-base font-bold text-left font-plus">Residential</span>
 						</div>
 					</div>
 					<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
@@ -577,7 +577,7 @@ function doubleCurtains(props: ProductDetailsProps) {
 								<img src="/images/custom/leftStack.png" className="w-full object-cover object-center" alt="leftStack" />
 								<div className="image-after"></div>
 							</label>
-							<span className="text-base font-bold mt-1 ml-1 font-rounded">Left Stack</span>
+							<span className="text-base font-bold mt-1 ml-1 font-plus">Left Stack</span>
 						</div>
 						<div className="w-full selector flex flex-col items-start">
 							<input type="radio" name="stack" id="rightStack" value="rightStack" checked={customisations.stack === "rightStack"} onChange={e => setCustomisations({ ...customisations, stack: e.target.value })} />
@@ -585,7 +585,7 @@ function doubleCurtains(props: ProductDetailsProps) {
 								<img src="/images/custom/rightStack.png" className="w-full object-cover object-center" alt="rightStack" />
 								<div className="image-after"></div>
 							</label>
-							<span className="text-base font-bold mt-1 ml-1 font-rounded">Right Stack</span>
+							<span className="text-base font-bold mt-1 ml-1 font-plus">Right Stack</span>
 						</div>
 						<div className="w-full selector flex flex-col items-start">
 							<input type="radio" name="stack" id="centerOpening" value="centerOpening" checked={customisations.stack === "centerOpening"} onChange={e => setCustomisations({ ...customisations, stack: e.target.value })} />
@@ -593,7 +593,7 @@ function doubleCurtains(props: ProductDetailsProps) {
 								<img src="/images/custom/centerOpening.png" className="w-full object-cover object-center" alt="centerOpening" />
 								<div className="image-after"></div>
 							</label>
-							<span className="text-base font-bold mt-1 ml-1 font-rounded">Center Opening</span>
+							<span className="text-base font-bold mt-1 ml-1 font-plus">Center Opening</span>
 						</div>
 					</div>
 				</div>
@@ -630,9 +630,9 @@ function doubleCurtains(props: ProductDetailsProps) {
 							</div>
 						</div>
 						<div className="flex gap-2 mt-1">
-							<span className="w-full text-base font-bold text-left font-rounded">910mm</span>
-							<span className="w-full text-base font-bold text-left font-rounded">1220mm</span>
-							<span className="w-full text-base font-bold text-left font-rounded">1520mm</span>
+							<span className="w-full text-base font-bold text-left font-plus">910mm</span>
+							<span className="w-full text-base font-bold text-left font-plus">1220mm</span>
+							<span className="w-full text-base font-bold text-left font-plus">1520mm</span>
 						</div>
 					</div>
 				</div>
@@ -680,8 +680,8 @@ function doubleCurtains(props: ProductDetailsProps) {
 							))}
 						</div>
 						<div className="flex gap-2 mt-1">
-							<span className="w-full text-base font-bold text-left font-rounded">White</span>
-							<span className="w-full text-base font-bold text-left font-rounded">Black</span>
+							<span className="w-full text-base font-bold text-left font-plus">White</span>
+							<span className="w-full text-base font-bold text-left font-plus">Black</span>
 						</div>
 					</div>
 				</div>

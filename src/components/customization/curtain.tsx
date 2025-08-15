@@ -153,7 +153,7 @@ function Curtains(props: ProductDetailsProps) {
 								<label htmlFor={id} className="rounded-24 block cursor-pointer border-2 transition-all w-full" style={{ borderColor: customisations.controls === id ? 'var(--primary)' : 'var(--lightGrey)' }}>
 									<img src={`/images/custom/${id.replace('control-','').toLowerCase()}Style.png`} className="w-full object-cover object-center rounded-24" alt={id} />
 								</label>
-								<span className="block text-center mt-1 text-base font-bold font-rounded">{id === 'control-left' ? 'Left' : 'Right'}</span>
+								<span className="block text-center mt-1 text-base font-bold font-plus">{id === 'control-left' ? 'Left' : 'Right'}</span>
 							</div>
 						))}
 					</div>
@@ -173,7 +173,7 @@ function Curtains(props: ProductDetailsProps) {
 								<label htmlFor={`fitType-${num}`} className="block rounded-24 cursor-pointer border-2 transition-all w-full" style={{ borderColor: customisations.fitType === `fit-${num}` ? 'var(--primary)' : 'var(--lightGrey)' }}>
 									<img src={num === 1 ? "/images/custom/fit.png" : "/images/custom/recess.png"} className="w-full object-cover object-center rounded-24" alt={`fitType-${num}`} />
 								</label>
-								<span className="block text-center mt-1 text-base font-bold font-rounded">{num === 1 ? 'Fit' : 'Recess'}</span>
+								<span className="block text-center mt-1 text-base font-bold font-plus">{num === 1 ? 'Fit' : 'Recess'}</span>
 							</div>
 						))}
 					</div>
@@ -194,7 +194,7 @@ function Curtains(props: ProductDetailsProps) {
 								<label htmlFor={id} className="rounded-24 w-full block cursor-pointer border-2 transition-all" style={{ borderColor: customisations.stack === id ? 'var(--primary)' : 'var(--lightGrey)' }}>
 									<img src={`/images/custom/${id}.png`} className="w-full object-cover object-center rounded-24" alt={id} />
 								</label>
-								<span className="text-base font-bold mt-1 font-rounded">{id === 'leftStack' ? 'Left Stack' : id === 'rightStack' ? 'Right Stack' : 'Center Opening'}</span>
+								<span className="text-base font-bold mt-1 font-plus">{id === 'leftStack' ? 'Left Stack' : id === 'rightStack' ? 'Right Stack' : 'Center Opening'}</span>
 							</div>
 						))}
 					</div>
@@ -214,7 +214,7 @@ function Curtains(props: ProductDetailsProps) {
 								<label htmlFor={id} className="rounded-24 block cursor-pointer border-2 transition-all w-full" style={{ borderColor: customisations.style === id ? 'var(--primary)' : 'var(--lightGrey)' }}>
 									<img src={`/images/custom/${id}.png`} className="w-full object-cover object-center rounded-24" alt={id} />
 								</label>
-								<span className="block text-center mt-1 text-base font-bold font-rounded">{id === 'sFold' ? 'S Fold' : id === 'pinch' ? 'Triple Pinch Pleat' : 'Pencil Pleat'}</span>
+								<span className="block text-center mt-1 text-base font-bold font-plus">{id === 'sFold' ? 'S Fold' : id === 'pinch' ? 'Triple Pinch Pleat' : 'Pencil Pleat'}</span>
 							</div>
 						))}
 					</div>
@@ -234,7 +234,7 @@ function Curtains(props: ProductDetailsProps) {
 								<label htmlFor={id} className="block rounded-24 cursor-pointer border-2 transition-all w-full" style={{ borderColor: customisations.hem === id ? 'var(--primary)' : 'var(--lightGrey)' }}>
 									<img src={`/images/custom/${id === 'lead-weight' ? 'leadWeight' : '70mm'}.png`} className="w-full object-cover object-center rounded-24" alt={id} />
 								</label>
-								<span className="block text-center mt-1 text-base font-bold font-rounded">{id === 'lead-weight' ? 'Lead Weight' : '70mm Hem'}</span>
+								<span className="block text-center mt-1 text-base font-bold font-plus">{id === 'lead-weight' ? 'Lead Weight' : '70mm Hem'}</span>
 							</div>
 						))}
 					</div>
@@ -254,7 +254,7 @@ function Curtains(props: ProductDetailsProps) {
 								<label htmlFor={id} className="block rounded-24 cursor-pointer border-2 transition-all w-full" style={{ borderColor: customisations.curtainType === id ? 'var(--primary)' : 'var(--lightGrey)' }}>
 									<img src={`/images/custom/${id}.png`} className="w-full object-cover object-center rounded-24" alt={id} />
 								</label>
-								<span className="block text-center mt-1 text-base font-bold font-rounded">{id === 'designer' ? 'Designer' : 'Residential'}</span>
+								<span className="block text-center mt-1 text-base font-bold font-plus">{id === 'designer' ? 'Designer' : 'Residential'}</span>
 							</div>
 						))}
 					</div>
@@ -274,7 +274,7 @@ function Curtains(props: ProductDetailsProps) {
 								<label htmlFor={`length-${id}`} className="rounded-24 block cursor-pointer border-2 transition-all w-full" style={{ borderColor: customisations.wandLength === id ? 'var(--primary)' : 'var(--lightGrey)' }}>
 									<img src={`/images/custom/${id === '910' ? 'short' : id === '1220' ? 'medium' : 'long'}.png`} className="w-full object-cover object-center rounded-24" alt={id} />
 								</label>
-								<span className="block text-center mt-1 text-base font-bold font-rounded">{id}mm</span>
+								<span className="block text-center mt-1 text-base font-bold font-plus">{id}mm</span>
 							</div>
 						))}
 					</div>
@@ -289,7 +289,7 @@ function Curtains(props: ProductDetailsProps) {
 								<label htmlFor={id} className="block rounded-24 cursor-pointer border-2 transition-all w-full" style={{ borderColor: customisations.trackColour === id ? 'var(--primary)' : 'var(--lightGrey)' }}>
 									<img src={`/images/custom/${id === 'track-white' ? 'white' : 'black'}.png`} className="w-full object-cover object-center rounded-24" alt={id} />
 								</label>
-								<span className="block text-center mt-1 text-base font-bold font-rounded">{id === 'track-white' ? 'White' : 'Black'}</span>
+								<span className="block text-center mt-1 text-base font-bold font-plus">{id === 'track-white' ? 'White' : 'Black'}</span>
 							</div>
 						))}
 					</div>
@@ -309,7 +309,7 @@ function Curtains(props: ProductDetailsProps) {
 								<label htmlFor={id} className="block rounded-24 cursor-pointer border-2 transition-all w-full" style={{ borderColor: customisations.bracketStyle === id ? 'var(--primary)' : 'var(--lightGrey)' }}>
 									<img src={`/images/custom/${id === 'bracket-standard' ? 'standard' : 'extension'}.png`} className="w-full object-cover object-center rounded-24" alt={id} />
 								</label>
-								<span className="block text-center mt-1 text-base font-bold font-rounded">{id === 'bracket-standard' ? 'Standard' : 'Extension'}</span>
+								<span className="block text-center mt-1 text-base font-bold font-plus">{id === 'bracket-standard' ? 'Standard' : 'Extension'}</span>
 							</div>
 						))}
 					</div>

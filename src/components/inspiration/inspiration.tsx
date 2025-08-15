@@ -5,6 +5,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation} from 'swiper/modules';
+import { Button } from "@lib/components/ui/button";
+
 
 
 interface InspirationProps {
@@ -22,20 +24,20 @@ function Inspiration(props: InspirationProps) {
 	}, []);
 
 	return (
-		<section className="inspiration-section w-screen xl:h-screen flex flex-col items-center justify-center gap-[48px] xl:py-[1.25vw] sm:py-[11vh] py-[6vh] overflow-hidden" id="inspiration">
-            <div className="flex items-center xl:justify-between justify-center xl:text-left text-center w-full xl:px-[1.25vw] sm:px-4 px-2">
-                <h2 className="text-xxxl text-black uppercase">INSPIRATIONS</h2>
-                <div className="sm:flex hidden items-stretch gap-4">
-                    <button className="arrow-btn stroke" ref={prevRef} id="inspiration-slider-prev">
-                        <Icon icon="ri:arrow-left-line" />
-                    </button>
-                    <button className="arrow-btn primary" ref={nextRef} id="inspiration-slider-next">
-                        <Icon icon="ri:arrow-right-line" />
-                    </button>
+		<section className="inspiration-section w-screen xl:h-screen flex items-center xl:py-[1.25vw] sm:py-[11vh] py-[6vh] overflow-hidden" id="inspiration">
+            <div className="w-full flex flex-wrap items-center justify-between  overflow-hidden">
+                <div className="xl:w-fit w-full xl:text-left text-center order-1 xl:px-[1.25vw] sm:px-[2.344vw] px-[5.455vw]">
+                    <h2 className="text-xxxl text-black uppercase">INSPIRATIONS</h2>
                 </div>
-            </div>
-            {screen ?(
-                <div className="w-full overflow-hidden">
+                <div className="xl:w-fit w-full flex justify-end gap-4 xl:order-1 order-3 xl:pe-[1.25vw] sm:px-[2.344vw] px-[5.455vw]">
+                    <Button variant={'light'} size={'xxl'} className="rounded-full" ref={prevRef}>
+                        <Icon icon="ri:arrow-left-line" />
+                    </Button>
+                    <Button variant={'primary'} size={'xxl'} className="rounded-full border-[--white]" ref={nextRef}>
+                        <Icon icon="ri:arrow-right-line" />
+                    </Button>
+                </div>
+                <div className="w-full xl:order-3 order-2 overflow-hidden">
                     <Swiper
                         modules={[Navigation]}
                         grabCursor={true}
@@ -96,42 +98,7 @@ function Inspiration(props: InspirationProps) {
                         </SwiperSlide>
                     </Swiper>
                 </div>
-            ):(
-                <div className="w-full flex items-stretch sm:gap-4 gap-2 xl:overflow-hidden overflow-auto sm:px-4 px-2 scroll-hidden">
-                        <div className="relative sm:w-[50vw] w-[80vw] shrink-0 rounded-48 overflow-hidden" >
-                            <img src="/images/inspiration/4.png" className="w-full object-cover" alt="inspiration" />
-                            <h4 className="absolute sm:left-[16px] left-[8px] sm:bottom-[16px] bottom-[8px] text-xl text-white z-[10]">SHUTTERS</h4>
-                        </div>
-                        <div className="relative sm:w-[50vw] w-[80vw] shrink-0 rounded-48 overflow-hidden" >
-                            <img src="/images/inspiration/3.png" className="w-full object-cover " alt="inspiration" />
-                            <h4 className="absolute sm:left-[16px] left-[8px] sm:bottom-[16px] bottom-[8px] text-xl text-white z-[10]">SHUTTERS</h4>
-                        </div>
-                        <div className="relative sm:w-[50vw] w-[80vw] shrink-0 rounded-48 overflow-hidden" >
-                            <img src="/images/inspiration/2.png" className="w-full object-cover " alt="inspiration" />
-                            <h4 className="absolute sm:left-[16px] left-[8px] sm:bottom-[16px] bottom-[8px] text-xl text-white z-[10]">SHUTTERS</h4>
-                        </div>
-                        <div className="relative sm:w-[50vw] w-[80vw] shrink-0 rounded-48 overflow-hidden" >
-                            <img src="/images/inspiration/1.png" className="w-full object-cover " alt="inspiration" />
-                            <h4 className="absolute sm:left-[16px] left-[8px] sm:bottom-[16px] bottom-[8px] text-xl text-white z-[10]">SHUTTERS</h4>
-                        </div>
-                        <div className="relative sm:w-[50vw] w-[80vw] shrink-0 rounded-48 overflow-hidden" >
-                            <img src="/images/inspiration/2.png" className="w-full object-cover " alt="inspiration" />
-                            <h4 className="absolute sm:left-[16px] left-[8px] sm:bottom-[16px] bottom-[8px] text-xl text-white z-[10]">SHUTTERS</h4>
-                        </div>
-                        <div className="relative sm:w-[50vw] w-[80vw] shrink-0 rounded-48 overflow-hidden" >
-                            <img src="/images/inspiration/3.png" className="w-full object-cover " alt="inspiration" />
-                            <h4 className="absolute sm:left-[16px] left-[8px] sm:bottom-[16px] bottom-[8px] text-xl text-white z-[10]">SHUTTERS</h4>
-                        </div>
-                        <div className="relative sm:w-[50vw] w-[80vw] shrink-0 rounded-48 overflow-hidden" >
-                            <img src="/images/inspiration/4.png" className="w-full object-cover " alt="inspiration" />
-                            <h4 className="absolute sm:left-[16px] left-[8px] sm:bottom-[16px] bottom-[8px] text-xl text-white z-[10]">SHUTTERS</h4>
-                        </div>
-                        <div className="relative sm:w-[50vw] w-[80vw] shrink-0 rounded-48 overflow-hidden" >
-                            <img src="/images/inspiration/1.png" className="w-full object-cover " alt="inspiration" />
-                            <h4 className="absolute sm:left-[16px] left-[8px] sm:bottom-[16px] bottom-[8px] text-xl text-white z-[10]">SHUTTERS</h4>
-                        </div>
-                </div>
-            )}
+            </div>
 		</section>
 	);
 }

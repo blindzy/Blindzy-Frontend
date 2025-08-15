@@ -200,7 +200,7 @@ function Blind(props: ProductDetailsProps) {
                                 />
                                 <div className="image-after"></div>
                             </label>
-                            <span className="text-base font-bold mt-2 self-start text-left capitalize font-rounded">{side}</span>
+                            <span className="text-base font-bold mt-2 self-start text-left capitalize font-plus">{side}</span>
                         </div>
                     ))}
                 </div>
@@ -234,7 +234,7 @@ function Blind(props: ProductDetailsProps) {
                                 />
                                 <div className="image-after"></div>
                             </label>
-                            <span className="text-base font-bold mt-2 self-start text-left capitalize font-rounded">{`fit-${num}`}</span>
+                            <span className="text-base font-bold mt-2 self-start text-left capitalize font-plus">{`fit-${num}`}</span>
                         </div>
                     ))}
                 </div>

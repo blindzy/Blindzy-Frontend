@@ -1,10 +1,11 @@
 import React, { useEffect , useState } from "react";
-import { Icon } from '@iconify/react';
 import { api } from '../../services/api';
 import type { Product } from '../../services/api';
 import { pricingEngine, PricingEngine } from '../../utils/pricingEngine';
+import { Button } from "@lib/components/ui/button";
+import { Label } from "@lib/components/ui/label";
+import { Plus  } from 'lucide-react';
 
-import './css/style.css';
 
 // Sample products array for shop page independence from backend API
 // This replaces API calls with local data for consistent development/testing
@@ -251,7 +252,6 @@ const sampleProducts: Product[] = [
 	},
 ];
 
-import './css/style.css';
 
 interface ShopProps {
 	
@@ -576,94 +576,111 @@ function Shop(props: ShopProps) {
 		}
 	};
 
+	const instruction = [ 
+		{
+			icon: '/images/icon/box-sm.png',
+			alt: 'Box',
+			title: 'Free Delivery',
+			desc: 'Phasellus lectus sit felis nascetu ante imperdiet semper leo.'
+		},
+		{
+			icon: '/images/icon/guarantee-sm.png',
+			alt: 'guarantee',
+			title: '10 Years Warranty',
+			desc: 'Phasellus lectus sit felis nascetu ante imperdiet semper leo.'
+		},
+		{
+			icon: '/images/icon/australia-sm.png',
+			alt: 'australia',
+			title: 'Made in Australia',
+			desc: 'Phasellus lectus sit felis nascetu ante imperdiet semper leo.'
+		},
+		{
+			icon: '/images/icon/diy-sm.png',
+			alt: 'diy',
+			title: 'Install Yourself',
+			desc: 'Phasellus lectus sit felis nascetu ante imperdiet semper leo.'
+		}
+	]
+
 	return (
-		<section className="shop-section w-full min-h-screen flex flex-col lg:flex-row items-start gap-4 lg:gap-6 xl:gap-8 p-2 sm:p-6 xl:p-8" id="shop">
-			<div className="w-full lg:w-[450px] xl:w-[500px] flex flex-col gap-4 lg:gap-6 xl:gap-8 text-black shrink-0">
-				<div className="w-full flex flex-col gap-4 p-2 sm:p-6 xl:p-8 border border-[--Black] rounded-48">
+		<section className="shop-section w-full min-h-screen flex flex-col xl:flex-row items-start gap-4 sm:gap-6 xl:gap-[1.25vw] p-2 sm:p-6 xl:p-[1.25vw]" id="shop">
+			<div className="w-full xl:w-[23.438vw] flex flex-col xl:gap-6 text-[--Black] shrink-0">
+				<div className="w-full flex flex-col gap-4 p-6 sm:p-6 xl:p-[1.25vw] border border-[--Black] rounded-48">
 					<div className="flex flex-col gap-2">
-						<h5 className="text-lg xl:text-xl uppercase">GET AN INSTANT PRICE</h5>
-						<p className="text-sm xl:text-base w-[90%]">Enter window size for real-time pricing. Fine-tune later.</p>
+						<h5 className="text-lg uppercase">GET AN INSTANT PRICE</h5>
+						<p className="text-sm xl:w-[90%]">Enter window size for real-time pricing. Fine-tune later.</p>
 					</div>
-					<input 
-						type="number" 
-						className="formInput" 
-						id="Width" 
-						placeholder="Width (meters)"
-						value={dimensions.width}
-						onChange={(e) => setDimensions({...dimensions, width: e.target.value})}
-					/>
-					<input 
-						type="number" 
-						className="formInput" 
-						id="Height" 
-						placeholder="Height (meters)"
-						value={dimensions.height}
-						onChange={(e) => setDimensions({...dimensions, height: e.target.value})}
-					/>
-					<button 
-						className="w-full cus-btn sm-text"
+					<div className="w-full flex items-center gap-2 py-2 px-3 border border-[--Black] rounded-full">
+						<Label htmlFor="Width" className="shrink-0">Width: <span className="text-xs">(m)</span></Label>
+						<input 
+							type="number" 
+							id="Width" 
+							className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
+							value={dimensions.width}
+							onChange={(e) => setDimensions({...dimensions, width: e.target.value})}
+						/>
+					</div>
+					<div className="w-full flex items-center gap-2 py-2 px-3 border border-[--Black] rounded-full">
+						<Label htmlFor="Height" className="shrink-0">Height: <span className="text-xs">(m)</span></Label>
+						<input 
+							type="number" 
+							id="Height" 
+							className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
+							value={dimensions.height}
+							onChange={(e) => setDimensions({...dimensions, height: e.target.value})}
+						/>
+					</div>
+					<Button 
+						variant={'primary'}
+						size={'small'}
+						className="w-full"
 						onClick={calculatePrice}
 						disabled={!dimensions.width || !dimensions.height || calculating}
 					>
 						{calculating ? 'Calculating...' : 'Calculate Price'}
-					</button>
+					</Button>
 				</div>
 				{/* Sidebar info cards (large screens only) */}
-				<div className="hidden lg:flex flex-col gap-2">
-					<div className="flex items-center gap-4 p-2 sm:p-6 xl:p-8 border border-[--Black] rounded-32">
-						<img src="/images/icon/box-sm.png" className="w-fit shrink-0" alt="Box" />
-						<div className="w-full flex flex-col gap-1">
-							<h6 className="text-md xl:text-lg">Free Delivery</h6>
-							<p className="text-xs xl:text-sm">Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
+				<div className="hidden xl:flex flex-col gap-2">
+					{instruction.map((card, idx) => (
+						<div key={idx} className="flex items-center gap-4 p-2 sm:p-6 xl:p-[1.25vw] border border-[--Black] rounded-32">
+							<img src={card.icon} className="w-fit shrink-0" alt={card.alt} />
+							<div className="w-full flex flex-col gap-1">
+								<h6 className="text-md">{card.title}</h6>
+								<p className="text-xs">{card.desc}</p>
+							</div>
 						</div>
-					</div>
-					<div className="flex items-center gap-4 p-2 sm:p-6 xl:p-8 border border-[--Black] rounded-32">
-						<img src="/images/icon/guarantee-sm.png" className="w-fit shrink-0" alt="guarantee" />
-						<div className="w-full flex flex-col gap-1">
-							<h6 className="text-md xl:text-lg">10 Years Warranty</h6>
-							<p className="text-xs xl:text-sm"> Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
-						</div>
-					</div>
-					<div className="flex items-center gap-4 p-2 sm:p-6 xl:p-8 border border-[--Black] rounded-32">
-						<img src="/images/icon/australia-sm.png" className="w-fit shrink-0" alt="australia" />
-						<div className="w-full flex flex-col gap-1">
-							<h6 className="text-md xl:text-lg">Made in Australia</h6>
-							<p className="text-xs xl:text-sm"> Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
-						</div>
-					</div>
-					<div className="flex items-center gap-4 p-2 sm:p-6 xl:p-8 border border-[--Black] rounded-32">
-						<img src="/images/icon/diy-sm.png" className="w-fit shrink-0" alt="diy" />
-						<div className="w-full flex flex-col gap-1">
-							<h6 className="text-md xl:text-lg">Install Yourself</h6>
-							<p className="text-xs xl:text-sm"> Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
-						</div>
-					</div>
+					))}
 				</div>
-
 			</div>
-			<div className="w-full flex flex-col gap-4 lg:gap-6 xl:gap-8">
-				<div className="w-full p-2 sm:p-4 xl:p-6 flex flex-col md:flex-row items-center justify-between gap-4 border border-[--Black] rounded-48">
-					<h6 className="text-md xl:text-lg text-black">{getProductCountInfo()}</h6>
-					<div className="flex flex-wrap items-center justify-center gap-2 sm:gap-4 xl:gap-6">
-						<button className={`cus-btn tab-btn ${selectedCategory === 'all' ? 'active' : ''}`}
+			<div className="w-full flex flex-col gap-4 sm:gap-6 xl:gap-[1.25vw]">
+				<div className="w-full p-4 sm:py-[1.563vw] xl:py-[0.833vw] sm:px-[2.344vw] xl:p-[1.25vw] flex flex-col md:flex-row items-center justify-between gap-4 border border-[--Black] sm:rounded-full rounded-[32px]">
+					<h6 className="text-md sm:block hidden text-black">{getProductCountInfo()}</h6>
+					<div className="relative flex sm:w-fit w-full shrink-0 ">
+						<span className={`absolute left-0 top-0 transition w-[25%] sm:w-[14.648vw] xl:w-[9vw] h-full bg-[--primary] rounded-full
+							${selectedCategory === 'all'? 'left-0' : selectedCategory === 'blockout' ? 'left-[25%]' : selectedCategory === 'light-filtering' ? 'left-[50%]' : selectedCategory === 'sunscreen' ? 'left-[75%]' : ''}
+						`}/>
+						<button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'all' ? 'text-[--white]' : ''}`}
 							onClick={() => setSelectedCategory('all')}>
 							All Products
 						</button>
-						<button className={`cus-btn tab-btn ${selectedCategory === 'blockout' ? 'active' : ''}`}
+						<button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'blockout' ? 'text-[--white]' : ''}`}
 							onClick={() => setSelectedCategory('blockout')}>
 							Blockout
 						</button>
-						<button className={`cus-btn tab-btn ${selectedCategory === 'light-filtering' ? 'active' : ''}`}
+						<button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'light-filtering' ? 'text-[--white]' : ''}`}
 							onClick={() => setSelectedCategory('light-filtering')}>
 							Light Filtering
 						</button>
-						<button className={`cus-btn tab-btn ${selectedCategory === 'sunscreen' ? 'active' : ''}`}
+						<button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'sunscreen' ? 'text-[--white]' : ''}`}
 							onClick={() => setSelectedCategory('sunscreen')}>
 							Sunscreen
 						</button>
+
 					</div>
 				</div>
-				<div className="grid items-stretch grid-cols-12 gap-4 lg:gap-5 xl:gap-6">
+				<div className="grid items-stretch grid-cols-12 gap-4 sm:gap-6 xl:gap-[1.25vw]">
 					{/*PRODUCT CARDS  */}
 					{loading && <div className="col-span-12 text-center py-8">Loading products...</div>}
 					{error && <div className="col-span-12 text-center py-8 text-red-500">{error}</div>}
@@ -680,82 +697,60 @@ function Shop(props: ShopProps) {
 					)}
 					{!loading && !error && getFilteredProducts().map((product) => {
 						return (
-							<div key={product.id} className={`transition col-span-12 sm:col-span-6 lg:col-span-12 xl:col-span-4`}>
-								<div className="w-full max-w-[450px] h-[550px] lg:h-[750px] flex flex-col gap-4 lg:gap-5 xl:gap-6 text-black border border-[--Black] p-2 lg:p-5 xl:p-6 rounded-48 mx-auto">
-									<div className="relative rounded-32 overflow-hidden h-[250px]">
-										<img src={getProductImage(product)} className="w-full h-full object-cover" alt={product.title} />
-										<div className="absolute left-4 top-4 px-3 py-2 bg-white rounded-[50px] z-[10]">
-											<p className="text-sm lg:text-base xl:text-base">
-												{getProductTags(product)}
-											</p>
-										</div>
-									</div>
-									<div className="flex items-center justify-between">
-										<h5 className="text-lg lg:text-xl xl:text-xl">{product.title}</h5>
-										<h5 className="text-lg lg:text-xl xl:text-xl text-primary">
+							<div key={product.id} className={`col-span-12 sm:col-span-6 xl:col-span-4 flex flex-col justify-between gap-4 xl:gap-[0.833vw] p-4 xl:p-[0.833vw] border border-[--Black] rounded-48`}>
+								<div className="relative rounded-32 overflow-hidden h-[250px] sm:h-[24.414vw] xl:h-[13.021vw]">
+									<img src={getProductImage(product)} className="w-full h-full object-cover" alt={product.title} />
+									<p className="text-sm absolute left-4 top-4 px-3 py-2 bg-white rounded-[50px] z-[1]">
+										{getProductTags(product)}
+									</p>
+								</div>
+								<div className="flex flex-col gap-4 xl:gap-[0.833vw]">
+									<div className="flex items-center justify-between gap-2">
+										<h5 className="text-lg line-clamp-1">{product.title}</h5>
+										<h5 className="text-lg text-primary shrink-0 ">
 											{getProductPrice(product, dynamicPricing)}
 										</h5>
 									</div>
-									<p className="text-sm lg:text-base xl:text-base line-clamp-2">{product.description}</p>
-									<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
-										<Icon icon="uil:plus" className="text-[18px]" />
-										<div className="w-full h-[1px] bg-mediumGrey"></div>
-										<Icon icon="uil:plus" className="text-[18px]" />
+									<p className="text-sm line-clamp-2">{product.description}</p>
+									<div className="flex items-center gap-2 shrink-0 text-[--mediumGrey]">
+										<Plus className="size-[18px]" />
+										<div className="w-full border-b border-[--mediumGrey]"></div>
+										<Plus className="size-[18px]" />
 									</div>
-									<h6 className="text-md lg:text-lg">Available Colors</h6>
-									<div className="flex items-stretch gap-2">
+									<h6 className="text-md">Available Colors</h6>
+									<div className="flex flex-wrap items-stretch gap-2">
 										{/* Default color options - you can extend this based on product options */}
 										{['/images/colors/01.png', '/images/colors/02.png', '/images/colors/03.png', '/images/colors/04.png', '/images/colors/05.png', '/images/colors/06.png'].map((color, index) => (
-											<div key={index} className="border transition border-[--lightGrey] cursor-pointer p-2 rounded-xl">
-												<img src={color} className="w-fit object-scale-down rounded-lg" alt="colors" />
+											<div key={index} className="size-[55px] sm:size-[5.371vw] xl:size-[2.865vw] shrink-0 border transition border-[--lightGrey] cursor-pointer p-[6px] sm:p-[0.586vw] xl:p-[0.313vw] rounded-[18px] sm:rounded-[1.758vw] xl:rounded-[0.938vw]">
+												<img src={color} className="size-full object-cover rounded-[12px] sm:rounded-[1.172vw] xl:rounded-[0.625vw] overflow-hidden" alt="colors" />
 											</div>
 										))}
 									</div>
-									<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
-										<Icon icon="uil:plus" className="text-[18px]" />
-										<div className="w-full h-[1px] bg-mediumGrey"></div>
-										<Icon icon="uil:plus" className="text-[18px]" />
+									<div className="flex items-center gap-2 shrink-0 text-[--mediumGrey]">
+										<Plus className="size-[18px]" />
+										<div className="w-full border-b border-[--mediumGrey]"></div>
+										<Plus className="size-[18px]" />
 									</div>
-									<div className="flex gap-2 mt-auto">
-										<a href={getCustomizationPage(product)} className="flex-1 cus-btn text-center">
+									<Button variant={'primary'} size={'small'} asChild>
+										<a href={getCustomizationPage(product)} >
 											Customise
 										</a>
-									</div>
+									</Button>
 								</div>
 							</div>
 						);
 					})}
 				</div>
-				{/* Info cards at bottom (small screens only) */}
-				<div className="flex flex-col gap-2 mt-6 lg:hidden">
-					<div className="flex items-center gap-4 p-2 sm:p-6 xl:p-8 border border-[--Black] rounded-32">
-						<img src="/images/icon/box-sm.png" className="w-fit shrink-0" alt="Box" />
-						<div className="w-full flex flex-col gap-1">
-							<h6 className="text-md xl:text-lg">Free Delivery</h6>
-							<p className="text-xs xl:text-sm">Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
+				<div className="xl:hidden flex flex-col gap-2">
+					{instruction.map((card, idx) => (
+						<div key={idx} className="flex items-center gap-6 p-6 sm:p-6 xl:p-[1.25vw] border border-[--Black] rounded-48">
+							<img src={card.icon} className="sm:w-fit w-[64px] object-cover shrink-0" alt={card.alt} />
+							<div className="w-full flex flex-col gap-1">
+								<h6 className="text-xl">{card.title}</h6>
+								<p className="text-md">{card.desc}</p>
+							</div>
 						</div>
-					</div>
-					<div className="flex items-center gap-4 p-2 sm:p-6 xl:p-8 border border-[--Black] rounded-32">
-						<img src="/images/icon/guarantee-sm.png" className="w-fit shrink-0" alt="guarantee" />
-						<div className="w-full flex flex-col gap-1">
-							<h6 className="text-md xl:text-lg">10 Years Warranty</h6>
-							<p className="text-xs xl:text-sm"> Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
-						</div>
-					</div>
-					<div className="flex items-center gap-4 p-2 sm:p-6 xl:p-8 border border-[--Black] rounded-32">
-						<img src="/images/icon/australia-sm.png" className="w-fit shrink-0" alt="australia" />
-						<div className="w-full flex flex-col gap-1">
-							<h6 className="text-md xl:text-lg">Made in Australia</h6>
-							<p className="text-xs xl:text-sm"> Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
-						</div>
-					</div>
-					<div className="flex items-center gap-4 p-2 sm:p-6 xl:p-8 border border-[--Black] rounded-32">
-						<img src="/images/icon/diy-sm.png" className="w-fit shrink-0" alt="diy" />
-						<div className="w-full flex flex-col gap-1">
-							<h6 className="text-md xl:text-lg">Install Yourself</h6>
-							<p className="text-xs xl:text-sm"> Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
-						</div>
-					</div>
+					))}
 				</div>
 			</div>
 		</section>

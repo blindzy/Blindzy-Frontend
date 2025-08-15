@@ -5,6 +5,8 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
+import { Button } from "@lib/components/ui/button";
+
 
 interface CategoriesProps {
 	// Add any props if needed in the future
@@ -47,79 +49,72 @@ function Categories(props: CategoriesProps) {
 	useEffect(() => {}, []);
 
 	return (
-		<section className="categorie-section w-screen xl:h-screen xl:p-[1.25vw] sm:p-4 p-2" id="categorie">
-			<div className="relative w-full xl:h-full bg-primary rounded-48 xl:ps-[2.5vw] xl:py-0 py-[64px] flex xl:flex-row flex-col xl:items-end justigy-between xl:gap-[6.667vw] gap-[9vh] overflow-hidden pt-12 pb-12 sm:pt-0 sm:pb-0 mbl:px-0 mbl:py:12 mbl:gap-12">
-				
+		<section className="categories-section w-screen xl:h-screen xl:p-[1.25vw] sm:p-4 p-2" id="categories">
+			<div className="relative w-full xl:h-full bg-[--primary] rounded-48 xl:ps-[2.5vw] xl:py-0 sm:py-[6.25vw] py-[10.909vw] flex xl:flex-row flex-col xl:items-end justify-between xl:gap-[6.667vw] sm:gap-[6.25vw] gap-[10.909vw] overflow-hidden pt-12 pb-12 xl:pt-0 xl:pb-0">
 				{/* Left Column */}
-				<div className="relative xl:w-[24.375vw] w-[80%] xl:m-0 mx-auto xl:pb-[11vh] flex flex-col xl:items-start items-center xl:text-left text-center justify-between xl:gap-[14vh] gap-[48px] z-[15] shrink-0">
-					<div className="flex flex-col gap-2">
+				<div className="relative xl:w-[24.375vw] w-full xl:m-0 mx-auto xl:pb-[11vh] flex flex-col xl:items-start items-center xl:text-left text-center justify-between xl:gap-[14vh] gap-[10.909vw] z-[15] shrink-0">
+					<div className="flex flex-col gap-2 sm:px-0 px-8">
 						<h2 className="text-xxxl text-white">EXPLORE ALL CATEGORIES</h2>
-						<p className="text-sm mbl:text-sm text-white mb-12 sm:mb-0 mbl:mb-0">Browse the different options for window furnishings.</p>
+						<p className="sm:w-fit w-[80%] mx-auto text-sm mbl:text-sm text-white mb-12 sm:mb-0 mbl:mb-0">Browse the different options for window furnishings.</p>
 					</div>
-					<div className="sm:flex hidden items-stretch gap-4">
-						<button className="arrow-btn white" id="card-prev">
+					<div className="xl:flex hidden items-stretch gap-4">
+						<Button variant={'outline_white'} size={'xxl'} className="rounded-full" id="card-prev">
 							<Icon icon="ri:arrow-left-line" />
-						</button>
-						<button className="arrow-btn black" id="card-next">
+						</Button>
+						<Button variant={'light'} size={'xxl'} className="rounded-full border-[--white]" id="card-next">
 							<Icon icon="ri:arrow-right-line" />
-						</button>
+						</Button>
 					</div>
 				</div>
 
 				{/* Right Column - Swiper */}
-				<div className="container-categories relative w-full h-full overflow-hidden flex flex-col mb-12 sm:mb-0 p-0 mbl:p-0 mbl:mb-0 mbl:px-4">
+				<div className="container-categories relative w-full xl:h-full h-fit overflow-hidden xl:py-[112px] m-0 xl:px-0 px-4 z-[15] xl:rounded-s-[2.5vw]">
 					<Swiper
 						navigation={{ nextEl: "#card-next", prevEl: "#card-prev" }}
 						modules={[Navigation]}
 						spaceBetween={16}
 						slidesPerView={1}
-						className="categories-cards"
+						className="xl:w-[26.354vw] w-[95%]  xl:h-full sm:h-[53.711vw] h-[460px] !m-0 !overflow-visible"
 						breakpoints={{
 							640: { slidesPerView: 1, spaceBetween: 16 },
-							765: { slidesPerView: 1, spaceBetween: 16 },
-							1025: { slidesPerView: 1, spaceBetween: 16 },
+							765: { slidesPerView: 2, spaceBetween: 16 },
+							1150: { slidesPerView: 1, spaceBetween: 16 },
 						}}
 						onSwiper={(swiper) => swiper.slideTo(0, 0)} // Ensure correct first slide positioning
 					>
 						{categoriesData.map((item, idx) => (
 							<SwiperSlide
-								className="cards-item rounded-48 relative flex flex-col flex-shrink-0 self-stretch mbl:max-w-[81.425vw] mbl:p-6 mbl:h-[458px] mbl:max-h-[458px] mbl:min-h-[458px] sm:p-6 sm:rounded-48"
+								className="size-full overflow-hidden rounded-48 relative shrink-0 p-6 "
 								key={idx}
 							>
-								{/* Image as background */}
 								<img
 									src={item.img}
 									alt="categories"
 									className="absolute inset-0 w-full h-full object-cover rounded-48 z-0 mbl:ml-0"
 								/>
-								{/* Unified content wrapper above image */}
-								<div className="content absolute left-0 top-0 z-20 w-full h-full flex flex-col justify-between mbl:pl-0 mbl:ml-0">
-									{/* Shop Now button in top-right */}
-									<a
-										href="/shop"
-										className="cus-btn white w-fit sm:absolute sm:top-6 sm:right-6 z-30 mb-4 sm:mb-0"
-									>
-										Shop Now
-									</a>
-									{/* Texts in bottom-left */}
+								<div className="size-full flex flex-col justify-between relative z-10">
+									<Button variant={'light'} size={'large'} asChild className="w-fit ms-auto border-none">
+										<a href="/shop">
+											Shop Now
+										</a>
+									</Button>
 									<div
-										className="absolute left-6 bottom-6 flex flex-col text-white text-left z-10 w-[80%] max-w-[90%]"
+										className="w-full flex flex-col gap-2 text-white text-left z-10 "
 									>
-										<h3 className="text-xxl mbl:text-[7.125vw]">{item.title}</h3>
+										<h3 className="text-xxl ">{item.title}</h3>
 										<p className="text-sm">{item.desc}</p>
 									</div>
 								</div>
 							</SwiperSlide>
 						))}
 					</Swiper>
-					{/* Mobile navigation buttons below Swiper */}
-					<div className="flex justify-center gap-4 mt-4 sm:hidden mbl:mt-12 mbl:pr-4">
-						<button className="arrow-btn white" id="card-prev">
+					<div className="flex justify-end gap-4 xl:hidden sm:mt-[6.25vw] mt-[10.909vw]">
+						<Button variant={'outline_white'} size={'xxl'} className="rounded-full" id="card-prev">
 							<Icon icon="ri:arrow-left-line" />
-						</button>
-						<button className="arrow-btn black" id="card-next">
+						</Button>
+						<Button variant={'light'} size={'xxl'} className="rounded-full border-[--white]" id="card-next">
 							<Icon icon="ri:arrow-right-line" />
-						</button>
+						</Button>
 					</div>
 				</div>
 			</div>

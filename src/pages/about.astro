@@ -7,13 +7,7 @@ import Footer from "@components/Footer/Footer";
 ---
 
 <Layout>
-	<div class="smooth-wrapper">
-		<div class="smooth-content  bg-effect">
-      <div class="relative bg-effect">
-          <AboutBanner client:load/>
-          <AboutDetail client:load/>
-      </div>
-      <Footer client:load/>
-		</div>
-	  </div>
+  <AboutBanner client:load/>
+  <AboutDetail client:visible/>
+  <Footer client:visible/>
 </Layout>

@@ -13,19 +13,13 @@ import Footer from "@components/Footer/Footer";
 ---
 
 <Layout>
-	<div class="smooth-wrapper">
-		<div class="smooth-content">
-			<div class="relative bg-effect">
-				<Hero client:load/>
-				<Products client:load/>
-				<Quality client:load/>
-				<Categories client:load/>
-				<About client:load/>
-				<Questions client:load/>
-				<Clients client:load/>
-				<Inspiration client:load/>
-				<Footer client:load/>
-			</div>
-		</div>
-	  </div>
+	<Hero client:load/>
+	<Products client:visible/>
+	<Quality client:visible/>
+	<Categories client:visible/>
+	<About client:visible/>
+	<Questions client:visible/>
+	<Clients client:visible/>
+	<!-- <Inspiration client:visible/> -->
+	<Footer client:visible/>
 </Layout>

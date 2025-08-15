@@ -1,9 +1,7 @@
 ---
 import "@styles/global.css";
 import { SEO } from "astro-seo";
-import Contact from "@components/popup/contact";
 // @ts-ignore
-import CartPopup from "../components/popup/cart-popup";
 
 import "@fontsource/roboto/400.css";
 import "@fontsource/m-plus-rounded-1c/400.css"
@@ -58,8 +56,8 @@ const makeDes = description ? description + " | " + "Blindzy" :"Blindzy";
         />
     </head>
     <body>
-        <slot />
-      <Contact client:load /> 
-      <CartPopup client:load /> 
+      <div class="relative bg-effect">
+      </div>
+      <slot />
     </body>
 </html>

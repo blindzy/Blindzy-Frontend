@@ -1,202 +1,249 @@
-import React, { useEffect, useState } from "react";
-import { api, type Cart } from '../../services/api';
+
+import * as React from "react";
+import { useEffect, useRef, useState } from "react";
+import { ChevronDown , X , Plus  } from 'lucide-react';
+import { Button } from "@lib/components/ui/button";
 import './css/style.css';
-import MenuDropdown from '../popup/menu';
 
-interface NavbarProps {
-	customClass?: string;
+export interface NavbarProps {
+  customClass?: string;
+  logo?: string;
+  // other props...
 }
-
 function Navbar(props: NavbarProps) {
-	const [cart, setCart] = useState<Cart | null>(null);
-	const [cartCount, setCartCount] = useState(0);
-	const [menuOpen, setMenuOpen] = useState(false);
-	const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+    const backDrop = useRef(null);
+    const [isSidebarOpen, setSidebarOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
+    const [openDropdown, setOpenDropdown] = useState<number | null>(null);
 
-	useEffect(() => {
-		// Only run on client side
-		if (typeof window === 'undefined') return;
-		
-		loadCart();
+    const toggleDropdown = (index: number) => {
+        setOpenDropdown(openDropdown === index ? null : index);
+    };
 
-		const handleCartUpdate = () => {
-			loadCart();
-		};
+    const navigation = [
+        {
+            Name : 'Home',
+            Link : '/'
+        },
+        {
+            Name : 'About Us',
+            Link : '/about'
+        },
+        {
+            Name : 'Curtains',
+            Link : '',
+            dropdown : [
+                {
+                    Name : 'curtains',
+                    Link : '/shop'
+                },
+                {
+                    Name : 'Double Curtains',
+                    Link : '/shop'
+                }
+            ]
+        },
+        {
+            Name : 'Blinds',
+            Link : '',
+            dropdown: [
+                {
+                    Name : 'Blinds',
+                    Link : '/shop'
+                },
+                {
+                    Name : 'Vertical Blinds',
+                    Link : '/shop'
+                },
+                {
+                    Name : 'Double Roller Blinds',
+                    Link : '/shop'
+                }
+            ]
+        },
+        {
+            Name : 'Tutorials',
+            Link : '/tutorial',
+        },
+        {
+            Name : 'showroom',
+            Link : '/showroom',
+        },
+        {
+            Name : 'Blogs',
+            Link : '/blogs',
+        },
+        {
+            Name : 'Get Samples',
+            Link : '/samples',
+        },
+    ]
+    const handleMenu = () => {
+        if (isSidebarOpen) {
+            setSidebarOpen(false);
+            setIsOpen(false)
+            document.body.style.overflow = '';
+        } else {
+            setSidebarOpen(true);
+            setIsOpen(true)
+            document.body.style.overflow = 'hidden';
+        }
+    };
 
-		window.addEventListener('cartUpdated', handleCartUpdate);
+    useEffect(() => {
+        const lenis = window.lenis;
+        if (!lenis) return;
 
-		// Close dropdowns on outside click
-		const handleClick = (e: MouseEvent) => {
-			const target = e.target as HTMLElement;
-			if (!target.closest('.navbar-dropdown')) {
-				setOpenDropdown(null);
-			}
-		};
-		document.addEventListener('mousedown', handleClick);
+        if (isOpen) {
+            lenis.stop();
+        } else {
+            lenis.start();
+        }
+    }, [isOpen]);
 
-		return () => {
-			window.removeEventListener('cartUpdated', handleCartUpdate);
-			document.removeEventListener('mousedown', handleClick);
-		};
-	}, []);
+    return (
+        <>
+            <div className={`relative w-full flex items-stretch justify-between xl:p-[1.25vw] sm:p-[2.344vw] p-4 z-10 ${props.customClass && props.customClass}`}>
+                <div className="w-fit xl:p-[0.625vw] xl:pr-[1.25vw] xl:bg-[--white] xl:border xl:border-[--black] xl:rounded-full flex items-center xl:gap-[2.5vw] gap-[48px]">
+                    <a href="">
+                        <img src="/images/logo.png"       className={`xl:w-[8.854vw] sm:w-[170px] w-[170px] ${props.logo === 'dark' ? 'block' : 'xl:block hidden'} `} alt="Logo" />
+                        <img src="/images/logo-light.png" className={`xl:w-[8.854vw] sm:w-[170px] w-[170px] ${props.logo === 'dark' ? 'hidden' : 'xl:hidden block '}`} alt="Logo" />
+                    </a>
+                    <ul className="hidden xl:flex items-center xl:gap-[48px]">
+                        {navigation.map((item, index) => (
+                            <li className="relative group w-fit" key={index}>
+                                {item.dropdown ? (
+                                    <React.Fragment>
+                                        <button className="relative flex items-center gap-1 text-sm text-[--black] transition hover:text-[--primary]">
+                                            {item.Name}
+                                            <ChevronDown className="size-[18px]" />
+                                        </button>
+                                        <div className="w-fit min-w-[10.417vw] absolute left-[calc(-50%-16px)] top-[100%] flex flex-col items-center translate-y-[10px] opacity-0 group-hover:translate-y-[0] group-hover:opacity-100 transition group-hover:visible invisible pointer-events-none group-hover:pointer-events-auto">
+                                            <img src="/images/vector/arrow-up.png" className="sm:w-fit w-[12px] shrink-0 relative z-[10]" alt="arrow-up" />
+                                            <ul className="relative z-[1] flex flex-col gap-2 xl:p-[0.833vw] p-4 bg-white border border-[--black] rounded-[8px]  translate-y-[-1.96px]">
+                                                {item.dropdown.map((list,i)=>(
+                                                    <li className="w-full text-[--black] shrink-0 hover:text-[--primary] transition" key={i}>
+                                                        <a href={list.Link} className="w-full text-sm capitalize shrink-0">
+                                                            {list.Name}
+                                                        </a>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </React.Fragment>
+                                ) : (
+                                    <a  href={item.Link} className="relative flex items-center gap-2 text-sm text-[--black] transition hover:text-[--primary] capitalize">
+                                        {item.Name}
+                                    </a>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+                <div className="w-fit xl:p-[0.208vw] p-1 flex items-center xl:gap-[0.833vw] gap-2 xl:ps-[0.833vw] bg-[--white] border border-[--black] rounded-full">
+                    <Button variant={'light'} size={'xl'} className="border-none rounded-full xl:flex hidden" asChild>
+                        <a href="/login" >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                <path d="M9 7.25C10.5188 7.25 11.75 6.01878 11.75 4.5C11.75 2.98122 10.5188 1.75 9 1.75C7.48122 1.75 6.25 2.98122 6.25 4.5C6.25 6.01878 7.48122 7.25 9 7.25Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M13.7621 15.516C14.6221 15.245 15.0741 14.295 14.7091 13.471C13.7391 11.28 11.5501 9.75 9.00011 9.75C6.45011 9.75 4.26111 11.28 3.29111 13.471C2.92611 14.296 3.37811 15.245 4.23811 15.516C5.46311 15.902 7.08411 16.25 9.00011 16.25C10.9161 16.25 12.5371 15.902 13.7621 15.516Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </a>
+                    </Button>
+                    <Button variant={'light'} size={'xl'} className="open__cartPopup border-none rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                            <path d="M15.75 17.5L18.25 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M24.25 17.5L21.75 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M26 17.5L25.403 24.666C25.317 25.703 24.45 26.5 23.41 26.5H16.59C15.55 26.5 14.683 25.703 14.597 24.666L14 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12.75 17.5H27.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </Button>
+                    <button className={`hamburger ${isSidebarOpen&&'show'}`} onClick={handleMenu}>
+                        <svg viewBox="0 0 32 32">
+                            <path
+                                className="line line-top-bottom"
+                                d="M27 10 13 10C10.8 10 9 8.2 9 6 9 3.5 10.8 2 13 2 15.2 2 17 3.8 17 6L17 26C17 28.2 18.8 30 21 30 23.2 30 25 28.2 25 26 25 23.8 23.2 22 21 22L7 22"
+                            ></path>
+                            <path className="line" d="M7 16 27 16"></path>
+                        </svg>
+                    </button>
+                    <Button variant={'primary'} size={'small'} className="xl:flex hidden" asChild>
+                        <a href="/contact">
+                            Contact Us
+                        </a>
+                    </Button>
+                </div>
+            </div>
+            <div className={`absolute right-4 top-4 z-50 sm:w-[393px] w-[calc(100vw-32px)] max-h-[calc(100vh-32px)] bg-[--white] p-6 xl:hidden flex flex-col gap-6 rounded-48 overflow-hidden transition ${!isSidebarOpen&&'opacity-0 pointer-events-none'}`}>
+                <div className="w-full flex items-center justify-between shrink-0">
+                    <h3 className="text-1xl text-[--black] uppercase">Menu</h3>
+                    <Button variant={'light'} size={'xxl'} className=" rounded-full" onClick={handleMenu}>
+                          <X />
+                    </Button>
+                </div>
+                <div className="w-full flex items-center gap-2 shrink-0">
+                    <Plus className="size-[18px] text-[--Black]" />
+                    <div className="w-full border-b border-[--Black]"></div>
+                    <Plus className="size-[18px] text-[--Black]" />
+                </div>
+                <div className="w-full max-h-[101%] flex flex-col gap-6 overflow-auto line-scroll">
+                    {navigation.map((item, index) => (
+                        item.dropdown?(
+                            <div className="w-full flex flex-col" key={index}>
+                                <button 
+                                    className="relative flex items-end gap-1 text-xxl text-[--black] transition hover:text-[--primary]"
+                                    onClick={() => toggleDropdown(index)}
+                                >
+                                    {item.Name}
+                                    <ChevronDown 
+                                        className={`size-[28px] transition ${openDropdown === index ? 'rotate-180' : ''}`} 
+                                    />
+                                </button>
+                                <div className={`overflow-hidden transition ${openDropdown === index ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                    <ul className="flex flex-col gap-3 list-none pt-3">
+                                        {item.dropdown.map((list,i)=>(
+                                            <li key={i}>
+                                                <a href={list.Link} className="sm:text-[3.516vw] text-[5.581vw] font-bold font-plus leading-tight text-[--black] transition hover:text-[--primary] ps-6">
+                                                    {list.Name}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            </div>
+                        ):(
+                            <a href={item.Link} className="text-xxl text-[--black] transition hover:text-[--primary]" key={index}>{item.Name}</a>
+                        )
+                    ))}
+                </div>
+                <div className="w-full flex flex-col gap-4">
+                    <div className="w-full flex items-center gap-2 shrink-0">
+                        <Plus className="size-[18px] text-[--Black]" />
+                        <div className="w-full border-b border-[--Black]"></div>
+                        <Plus className="size-[18px] text-[--Black]" />
+                    </div>
+                    <div className="flex gap-4">
+                        <Button variant={'light'} size={'large'} className="w-full flex-1 rounded-full" asChild>
+                            <a href="/login">
+                                Login
+                            </a>
+                        </Button>
+                        <Button variant={'light'} size={'large'} className="w-full flex-1 rounded-full" asChild>
+                            <a href="/signup">
+                                Sign up
+                            </a>
+                        </Button>
+                    </div>
+                    <Button variant={'primary'} size={'large'} className="w-full rounded-full" asChild>
+                        <a href="/contact">
+                            Contact Us
+                        </a>
+                    </Button>
+                </div>
+            </div>
+            <div className={`fixed top-0 left-0 z-[10] w-screen h-screen bg-[#00000078] backdrop-blur-[10px] transition ${!isSidebarOpen&&'opacity-0 pointer-events-none'}`}  ref={backDrop}></div>
 
-	const loadCart = async () => {
-		try {
-			// Only access localStorage on client side
-			if (typeof window === 'undefined') return;
-			
-			const userData = localStorage.getItem('user');
-			const user = userData ? JSON.parse(userData) : null;
-			if (!user?.email) {
-				// No user logged in, set empty cart
-				setCart({ id: '', items: [], total: 0, subtotal: 0, tax_total: 0, shipping_total: 0 });
-				setCartCount(0);
-				return;
-			}
-			const cartData = await api.getCart(user.email);
-			setCart(cartData);
-			setCartCount(cartData.items.length);
-		} catch (error) {
-			console.error('Error loading cart:', error);
-			// Set empty cart on error
-			setCart({ id: '', items: [], total: 0, subtotal: 0, tax_total: 0, shipping_total: 0 });
-			setCartCount(0);
-		}
-	};
-
-	return (
-		<div className={`relative w-full flex items-center justify-between mini:p-[1.25vw] xl:p-2 sm:p-[2.344vw] p-2 z-[100] ${props.customClass && props.customClass}`}>
-
-			{/* LEFT SECTION with max width */}
-			<div className="max-w-[1125px] w-full h-full" style={{ maxHeight: '64px' }}>
-				<div className="flex items-center gap-4 p-1 sm:py-4 xl:ps-4 xl:pr-1 pr-4 bg-transparent border-0 sm:bg-white sm:border sm:border-black sm:rounded-full rounded-full h-full" style={{ maxHeight: '64px' }}>
-					{/* Mobile left section */}
-					<div className="sm:hidden flex items-center w-[172px] h-[42px] gap-[11px] p-[1px]">
-						<img src="/favicon2.png" className="w-[33px] h-[40px]" alt="Blindzy icon" />
-						<span className="text-white navbar-blindzy-text align-middle">Blindzy</span>
-					</div>
-					{/* Desktop/tablet left section */}
-					<a href="/" className="hidden sm:flex items-center">
-						<img src="/images/logo.png" className="sm:w-fit w-[100px]" alt=" logo" />
-					</a>
-					<ul className="xl:flex hidden items-center gap-[1.5vw]">
-						<li>
-							<a className="text-sm px-1 py-1 text-black transition uppercase hover:text-[--primary]" href="/">Home</a>
-						</li>
-						<li>
-							<a className="text-sm px-2 py-1 text-black transition uppercase whitespace-nowrap hover:text-[--primary]" href="/about">About Us</a>
-						</li>
-						<li>
-							<a className="text-sm px-1 py-1 text-black transition uppercase hover:text-[--primary]" href="/shop">Shutters</a>
-						</li>
-						<li className="relative navbar-dropdown">
-							<button 
-								className="text-sm px-1 py-1 text-black transition uppercase hover:text-[--primary] flex items-center gap-1"
-								onClick={() => setOpenDropdown(openDropdown === 'curtains' ? null : 'curtains')}
-							>
-								Curtains
-								<svg className={`w-3 h-3 transition-transform ${openDropdown === 'curtains' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-								</svg>
-							</button>
-							{openDropdown === 'curtains' && (
-								<div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-									<a href="/shop" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-[--primary]">Curtains</a>
-									<a href="/shop" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-[--primary]">Double Curtains</a>
-								</div>
-							)}
-						</li>
-						<li className="relative navbar-dropdown">
-							<button 
-								className="text-sm px-1 py-1 text-black transition uppercase hover:text-[--primary] flex items-center gap-1"
-								onClick={() => setOpenDropdown(openDropdown === 'blinds' ? null : 'blinds')}
-							>
-								Blinds
-								<svg className={`w-3 h-3 transition-transform ${openDropdown === 'blinds' ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-								</svg>
-							</button>
-							{openDropdown === 'blinds' && (
-								<div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
-									<a href="/shop" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-[--primary]">Blinds</a>
-									<a href="/shop" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-[--primary]">Vertical Blinds</a>
-									<a href="/shop" className="block px-4 py-2 text-sm text-black hover:bg-gray-100 hover:text-[--primary]">Double Roller Blinds</a>
-								</div>
-							)}
-						</li>
-
-						<li>
-							<a className="text-sm px-1 py-1 text-black transition uppercase hover:text-[--primary]" href="/tutorial">Tutorials</a>
-						</li>
-						<li>
-							<a className="text-sm px-1 py-1 text-black transition uppercase hover:text-[--primary]" href="/showroom">Showroom</a>
-						</li>
-						<li>
-							<a className="text-sm px-1 py-1 text-black transition uppercase hover:text-[--primary]" href="/blog">Blogs</a>
-						</li>
-					</ul>
-
-				</div>
-			</div>
-
-			{/* RIGHT SECTION: icons + contact + menu */}
-			<div className="flex items-center gap-4 p-1 sm:py-2 xl:ps-4 xl:pr-1 pr-4 bg-white xl:rounded-full border-black sm:rounded-full rounded-full border h-full" style={{ maxHeight: '64px' }}>
-				{/* Mobile right section */}
-				<div className="sm:hidden flex items-center justify-center w-[104px] h-[48px] gap-2 p-1" style={{ padding: '4px 8px' }}>
-					<button className="open__cartPopup flex items-center justify-center w-10 h-10">
-						<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-							<path d="M15.75 17.5L18.25 13" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-							<path d="M24.25 17.5L21.75 13" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-							<path d="M26 17.5L25.403 24.666C25.317 25.703 24.45 26.5 23.41 26.5H16.59C15.55 26.5 14.683 25.703 14.597 24.666L14 17.5" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-							<path d="M12.75 17.5H27.25" stroke="#0F0F0F" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-						</svg>
-					</button>
-					<button className="flex items-center justify-center w-10 h-10" onClick={() => setMenuOpen(true)}>
-						<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-							<path d="M0 16C0 7.16344 7.16344 0 16 0H24C32.8366 0 40 7.16344 40 16V24C40 32.8366 32.8366 40 24 40H16C7.16344 40 0 32.8366 0 24V16Z" fill="white" />
-							<path d="M13.25 25.25H26.75" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-							<path d="M13.25 14.75H26.75" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-							<path d="M19.75 20H26.75" stroke="black" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-						</svg>
-					</button>
-				</div>
-				{/* Desktop/tablet right section */}
-				<div className="sm:flex hidden items-center gap-4">
-					<a href="/user" className="group w-[2.083vw] h-[2.083vw] flex items-center justify-center">
-						<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-							<path d="M9 7.25C10.5188 7.25 11.75 6.01878 11.75 4.5C11.75 2.98122 10.5188 1.75 9 1.75C7.48122 1.75 6.25 2.98122 6.25 4.5C6.25 6.01878 7.48122 7.25 9 7.25Z" className="stroke-[--Black] group-hover:stroke-[--primary] group-hover:fill-[--primary]" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-							<path d="M13.7624 15.516C14.6224 15.245 15.0744 14.295 14.7094 13.471C13.7394 11.28 11.5504 9.75 9.00035 9.75C6.45035 9.75 4.26135 11.28 3.29135 13.471C2.92635 14.296 3.37835 15.245 4.23835 15.516C5.46335 15.902 7.08435 16.25 9.00035 16.25C10.9164 16.25 12.5374 15.902 13.7624 15.516Z" className="stroke-[--Black] group-hover:stroke-[--primary] group-hover:fill-[--primary]" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-						</svg>
-					</a>
-					<button className="open__cartPopup group w-[2.083vw] h-[2.083vw] flex items-center justify-center relative">
-						<svg xmlns="http://www.w3.org/2000/svg" className="w-[2.083vw] h-[2.083vw]" viewBox="0 0 40 40" fill="none">
-							<path d="M15.75 17.5L18.25 13" className="stroke-[--Black] group-hover:stroke-[--primary]" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-							<path d="M24.25 17.5L21.75 13" className="stroke-[--Black] group-hover:stroke-[--primary]" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-							<path d="M26 17.5L25.403 24.666C25.317 25.703 24.45 26.5 23.41 26.5H16.59C15.55 26.5 14.683 25.703 14.597 24.666L14 17.5" className="stroke-[--Black] group-hover:fill-[--primary] group-hover:stroke-[--primary]" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-							<path d="M12.75 17.5H27.25" className="stroke-[--Black] group-hover:stroke-[--primary]" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-						</svg>
-						{cartCount > 0 && (
-							<span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-								{cartCount}
-							</span>
-						)}
-					</button>
-				</div>
-				<a
-					className="cus-btn items-center justify-center gap-3 h-[56px]"
-					style={{ width: 155 }}
-					href="/contact"
-				>
-					Contact Us
-				</a>
-
-
-
-			</div>
-
-			<MenuDropdown open={menuOpen} onClose={() => setMenuOpen(false)} />
-		</div>
-	);
+        </>
+    );
 }
 
 export default Navbar;

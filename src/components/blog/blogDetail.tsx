@@ -28,7 +28,7 @@ function BlogDetail(props: BlogDetailProps) {
             
             <div className="w-full flex flex-col xl:gap-[1.25vw] p-6 sm:gap-[2.344vw] gap-4 text-black">
                 <div className="w-full flex items-center justify-between">
-                    <h3 className="text-xxxl uppercase font-black font-rounded">Title Goes Here</h3>
+                    <h3 className="text-xxxl uppercase font-black font-plus">Title Goes Here</h3>
                     <p className="text-sm text-primary">5 Oct, 2023</p>
                 </div>
                 <div className="w-full border border-[--Black] rounded-32 overflow-hidden">
@@ -51,7 +51,7 @@ function BlogDetail(props: BlogDetailProps) {
                 </div>
             </div>
             <div className="w-[592px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48 shrink-0">
-                <h3 className="text-xxl uppercase font-black font-rounded">Other Reads</h3>
+                <h3 className="text-xxl uppercase font-black font-plus">Other Reads</h3>
                 <div className="flex items-center gap-2 shrink-0 text-mediumGrey">
                     <Icon icon="uil:plus" className="text-[18px]" />
                     <div className="w-full h-[1px] bg-mediumGrey"></div>

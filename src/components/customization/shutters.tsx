@@ -167,7 +167,7 @@ function shutters(props: ProductDetailsProps) {
                                 <div className="image-after"></div>
                             </label>
                             <div className="w-full flex mt-2">
-                                <span className="text-base font-bold capitalize font-rounded text-left">{label}</span>
+                                <span className="text-base font-bold capitalize font-plus text-left">{label}</span>
                             </div>
                         </div>
                     ))}
@@ -201,7 +201,7 @@ function shutters(props: ProductDetailsProps) {
                                 <div className="image-after"></div>
                             </label>
                             <div className="w-full flex justify-start">
-                                <span className="text-base font-bold mt-2 capitalize font-rounded">{hinge.label}</span>
+                                <span className="text-base font-bold mt-2 capitalize font-plus">{hinge.label}</span>
                             </div>
                         </div>
                     ))}

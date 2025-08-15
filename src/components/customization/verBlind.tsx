@@ -163,7 +163,7 @@ function verBlind(props: ProductDetailsProps) {
 										/>
 										<div className="image-after"></div>
 									</label>
-									<span className="text-base font-bold mt-2 text-left font-rounded">{label}</span>
+									<span className="text-base font-bold mt-2 text-left font-plus">{label}</span>
 								</div>
 							))}
 						</div>
@@ -195,7 +195,7 @@ function verBlind(props: ProductDetailsProps) {
 										<div className="image-after"></div>
 									</label>
 
-									<span className="text-base font-bold mt-2 text-left font-rounded">{label}</span>
+									<span className="text-base font-bold mt-2 text-left font-plus">{label}</span>
 								</div>
 							))}
 						</div>
@@ -229,7 +229,7 @@ function verBlind(props: ProductDetailsProps) {
 									/>
 									<div className="image-after"></div>
 								</label>
-								<span className="text-base font-bold mt-2 capitalize self-start text-left font-rounded">{id}</span>
+								<span className="text-base font-bold mt-2 capitalize self-start text-left font-plus">{id}</span>
 							</div>
 						))}
 					</div>
@@ -259,7 +259,7 @@ function verBlind(props: ProductDetailsProps) {
 										<div className="image-after"></div>
 									</label>
 
-									<span className="text-base font-bold mt-2 text-left font-rounded">{label}</span>
+									<span className="text-base font-bold mt-2 text-left font-plus">{label}</span>
 								</div>
 							))}
 						</div>
