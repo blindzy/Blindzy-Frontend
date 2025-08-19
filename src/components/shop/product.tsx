@@ -1,9 +1,11 @@
 import React, { useEffect , useState } from "react";
-import type { Product } from '../../services/api';
 import { Button } from "@lib/components/ui/button";
 import { Plus  } from 'lucide-react';
 
 function ProductComponent(props) {
+    
+
+    // Grid view (default)
 	return (
 		<div key={props.data.id} className={`col-span-12 sm:col-span-6 xl:col-span-4 flex flex-col justify-between gap-4 xl:gap-[0.833vw] p-4 xl:p-[0.833vw] border border-[--Black] rounded-48`}>
             <div className="relative rounded-32 overflow-hidden h-[250px] sm:h-[24.414vw] xl:h-[13.021vw]">
@@ -28,7 +30,7 @@ function ProductComponent(props) {
                                 case 'nzd': symbol = 'NZ$'; break;
                                 default: symbol = code ? code.toUpperCase() + ' ' : '';
                             }
-                            return symbol + props.data.price.amount;
+                            return symbol + (props.data.price.amount * props.size);
                         })()}
                     </h5>
                 </div>
@@ -63,7 +65,7 @@ function ProductComponent(props) {
                 </div>
                 <Button variant={'primary'} size={'small'} asChild>
                     {/* <a href={getCustomizationPage(product)} > */}
-                    <a href={`/shop/${props.data.id}`} >
+                    <a href={`/shop/${props.data.type}/detail`}>
                         Customise
                     </a>
                 </Button>

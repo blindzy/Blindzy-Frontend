@@ -55,7 +55,7 @@ function Blog(props: BlogProps) {
 	const handleCategoryChange = (category: string) => {
 		setIsLoading(true);
 		setSelectedCategory(category);
-		setCurrentPage(1);
+		// setCurrentPage(1);
 		
 		// Add a small delay to show loading state and prevent glitching
 		setTimeout(() => {

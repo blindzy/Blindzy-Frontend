@@ -5,6 +5,15 @@ import { ChevronDown , X , Plus  } from 'lucide-react';
 import { Button } from "@lib/components/ui/button";
 import './css/style.css';
 
+declare global {
+  interface Window {
+    lenis?: {
+      stop: () => void;
+      start: () => void;
+    };
+  }
+}
+
 export interface NavbarProps {
   customClass?: string;
   logo?: string;

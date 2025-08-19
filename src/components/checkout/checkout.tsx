@@ -6,7 +6,10 @@ import { useLenis } from '../../hooks/useLenis';
 import { api } from '../../services/api';
 import type { Cart, Address, Card } from '../../services/api';
 import { pricingEngine } from '../../utils/pricingEngine';
+import { Input } from '@lib/components/ui/input';
 import './css/style.css';
+import { Button } from "@lib/components/ui/button";
+import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue,} from "@lib/components/ui/select"
 
 interface CheckoutProps {
 	// Add any props if needed in the future
@@ -16,15 +19,12 @@ function Checkout(props: CheckoutProps) {
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
 	const lenis = isDesktop ? useLenis() : null;
 	const [currentStep, setCurrentStep] = useState<number>(1);
+	const [show, setShow] = useState<boolean>(true);
 	const [expandedProducts, setExpandedProducts] = useState<{ [key: number]: boolean }>({});
 	const productSectionRef = React.useRef<HTMLDivElement>(null);
 
 	// Add cart and checkout related state
 	const [cart, setCart] = useState<Cart | null>(null);
-	const [addresses, setAddresses] = useState<Address[]>([]);
-	const [cards, setCards] = useState<Card[]>([]);
-	const [selectedAddress, setSelectedAddress] = useState<Address | null>(null);
-	const [selectedCard, setSelectedCard] = useState<Card | null>(null);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState('');
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -228,282 +228,282 @@ function Checkout(props: CheckoutProps) {
 	}, [handleProductSectionWheel]);
 
 	// Fetch checkout data
-	React.useEffect(() => {
-		const loadCheckoutData = async () => {
-			try {
-				setLoading(true);
-				setError('');
+	// React.useEffect(() => {
+	// 	const loadCheckoutData = async () => {
+	// 		try {
+	// 			setLoading(true);
+	// 			setError('');
 				
-				// Get customer email from localStorage
-				const customerData = localStorage.getItem('user');
-				const customer = customerData ? JSON.parse(customerData) : null;
+	// 			// Get customer email from localStorage
+	// 			const customerData = localStorage.getItem('user');
+	// 			const customer = customerData ? JSON.parse(customerData) : null;
 				
-				if (!customer?.email) {
-					setError('Please log in to proceed with checkout');
-					setIsLoggedIn(false);
-					return;
-				}
+	// 			if (!customer?.email) {
+	// 				setError('Please log in to proceed with checkout');
+	// 				setIsLoggedIn(false);
+	// 				return;
+	// 			}
 
-				setIsLoggedIn(true);
-				console.log('Loading checkout data for:', customer.email);
+	// 			setIsLoggedIn(true);
+	// 			console.log('Loading checkout data for:', customer.email);
 
-				// Get updated customer profile from API
-				let actualCustomer = customer;
-				try {
-					console.log('Checkout - calling getUserProfile with email:', customer.email);
-					const userProfile = await api.getUserProfile(customer.email);
-					console.log('Checkout - received userProfile:', userProfile);
-					actualCustomer = userProfile;
+	// 			// Get updated customer profile from API
+	// 			let actualCustomer = customer;
+	// 			try {
+	// 				console.log('Checkout - calling getUserProfile with email:', customer.email);
+	// 				const userProfile = await api.getUserProfile(customer.email);
+	// 				console.log('Checkout - received userProfile:', userProfile);
+	// 				actualCustomer = userProfile;
 					
-					// Additional check to see what we received
-					if (userProfile.first_name === 'Sample' && userProfile.last_name === 'User') {
-						console.error('⚠️ Checkout received SAMPLE DATA from getUserProfile!');
-					} else {
-						console.log('✅ Checkout received REAL DATA from getUserProfile');
-					}
+	// 				// Additional check to see what we received
+	// 				if (userProfile.first_name === 'Sample' && userProfile.last_name === 'User') {
+	// 					console.error('⚠️ Checkout received SAMPLE DATA from getUserProfile!');
+	// 				} else {
+	// 					console.log('✅ Checkout received REAL DATA from getUserProfile');
+	// 				}
 					
-				} catch (profileError) {
-					console.error('Error loading user profile, using localStorage data:', profileError);
-					// Continue with localStorage data if API fails
-				}
+	// 			} catch (profileError) {
+	// 				console.error('Error loading user profile, using localStorage data:', profileError);
+	// 				// Continue with localStorage data if API fails
+	// 			}
 
-				// Load cart first (most important)
-				try {
-					const cartData = await api.getCart(actualCustomer.email);
-					console.log('Cart data loaded:', cartData);
-					console.log('Cart items count:', cartData?.items?.length || 0);
+	// 			// Load cart first (most important)
+	// 			try {
+	// 				const cartData = await api.getCart(actualCustomer.email);
+	// 				console.log('Cart data loaded:', cartData);
+	// 				console.log('Cart items count:', cartData?.items?.length || 0);
 					
-					// Handle different cart response formats
-					let actualCart = cartData;
-					if (cartData && (cartData as any).cart) {
-						// Backend response format: {cart: {items: [...]}}
-						actualCart = (cartData as any).cart;
-						console.log('Using cart from nested format:', actualCart);
-					}
+	// 				// Handle different cart response formats
+	// 				let actualCart = cartData;
+	// 				if (cartData && (cartData as any).cart) {
+	// 					// Backend response format: {cart: {items: [...]}}
+	// 					actualCart = (cartData as any).cart;
+	// 					console.log('Using cart from nested format:', actualCart);
+	// 				}
 					
-					if (!actualCart || !actualCart.items || actualCart.items.length === 0) {
-						console.warn('Cart is empty or invalid:', actualCart);
-					}
+	// 				if (!actualCart || !actualCart.items || actualCart.items.length === 0) {
+	// 					console.warn('Cart is empty or invalid:', actualCart);
+	// 				}
 					
-					setCart(actualCart);
-				} catch (cartError) {
-					console.error('Error loading cart:', cartError);
-					setError('Failed to load cart data. Please refresh the page or check your cart.');
-					return;
-				}
+	// 				setCart(actualCart);
+	// 			} catch (cartError) {
+	// 				console.error('Error loading cart:', cartError);
+	// 				setError('Failed to load cart data. Please refresh the page or check your cart.');
+	// 				return;
+	// 			}
 
-				// Load addresses and cards (optional)
-				try {
-					const addressesData = await api.getUserAddresses(actualCustomer.email);
-					console.log('Addresses loaded:', addressesData);
-					setAddresses(addressesData);
+	// 			// Load addresses and cards (optional)
+	// 			try {
+	// 				const addressesData = await api.getUserAddresses(actualCustomer.email);
+	// 				console.log('Addresses loaded:', addressesData);
+	// 				setAddresses(addressesData);
 					
-					// Auto-select first address if available
-					if (addressesData.length > 0) {
-						setSelectedAddress(addressesData[0]);
-					}
-				} catch (addressError) {
-					console.error('Error loading addresses:', addressError);
-					// Continue without addresses
-				}
+	// 				// Auto-select first address if available
+	// 				if (addressesData.length > 0) {
+	// 					setSelectedAddress(addressesData[0]);
+	// 				}
+	// 			} catch (addressError) {
+	// 				console.error('Error loading addresses:', addressError);
+	// 				// Continue without addresses
+	// 			}
 
-				try {
-					const cardsData = await api.getUserCards();
-					console.log('Cards loaded:', cardsData);
-					setCards(cardsData);
+	// 			try {
+	// 				const cardsData = await api.getUserCards();
+	// 				console.log('Cards loaded:', cardsData);
+	// 				setCards(cardsData);
 					
-					// Auto-select first card if available
-					if (cardsData.length > 0) {
-						setSelectedCard(cardsData[0]);
-					}
-				} catch (cardError) {
-					console.error('Error loading cards:', cardError);
-					// Continue without cards
-				}
+	// 				// Auto-select first card if available
+	// 				if (cardsData.length > 0) {
+	// 					setSelectedCard(cardsData[0]);
+	// 				}
+	// 			} catch (cardError) {
+	// 				console.error('Error loading cards:', cardError);
+	// 				// Continue without cards
+	// 			}
 
-				// Pre-fill customer info if available
-				if (actualCustomer) {
-					setCustomerInfo({
-						firstName: actualCustomer.first_name || '',
-						lastName: actualCustomer.last_name || '',
-						email: actualCustomer.email || '',
-						phone: actualCustomer.phone || '',
-						company: ''
-					});
-				}
+	// 			// Pre-fill customer info if available
+	// 			if (actualCustomer) {
+	// 				setCustomerInfo({
+	// 					firstName: actualCustomer.first_name || '',
+	// 					lastName: actualCustomer.last_name || '',
+	// 					email: actualCustomer.email || '',
+	// 					phone: actualCustomer.phone || '',
+	// 					company: ''
+	// 				});
+	// 			}
 
-			} catch (error) {
-				console.error('Error loading checkout data:', error);
-				setError('Failed to load checkout information');
-			} finally {
-				setLoading(false);
-			}
-		};
+	// 		} catch (error) {
+	// 			console.error('Error loading checkout data:', error);
+	// 			setError('Failed to load checkout information');
+	// 		} finally {
+	// 			setLoading(false);
+	// 		}
+	// 	};
 
-		loadCheckoutData();
-	}, []);
+	// 	loadCheckoutData();
+	// }, []);
 
-	const processCheckout = async () => {
-		// Basic validation
-		if (!cart || !cart.items || cart.items.length === 0) {
-			alert('Your cart is empty. Please add items before checkout.');
-			return;
-		}
+	// const processCheckout = async () => {
+	// 	// Basic validation
+	// 	if (!cart || !cart.items || cart.items.length === 0) {
+	// 		alert('Your cart is empty. Please add items before checkout.');
+	// 		return;
+	// 	}
 
-		// Form validation
-		if (!customerInfo.firstName || !customerInfo.lastName || !customerInfo.email || !customerInfo.phone) {
-			alert('Please fill in all required customer information.');
-			setCurrentStep(1);
-			return;
-		}
+	// 	// Form validation
+	// 	if (!customerInfo.firstName || !customerInfo.lastName || !customerInfo.email || !customerInfo.phone) {
+	// 		alert('Please fill in all required customer information.');
+	// 		setCurrentStep(1);
+	// 		return;
+	// 	}
 
-		if (!shippingInfo.state || !shippingInfo.city || !shippingInfo.zipCode || !shippingInfo.address) {
-			alert('Please fill in all required shipping information.');
-			setCurrentStep(2);
-			return;
-		}
+	// 	if (!shippingInfo.state || !shippingInfo.city || !shippingInfo.zipCode || !shippingInfo.address) {
+	// 		alert('Please fill in all required shipping information.');
+	// 		setCurrentStep(2);
+	// 		return;
+	// 	}
 
-		if (!paymentInfo.cardType || !paymentInfo.cardName || !paymentInfo.cardNumber || !paymentInfo.expiryDate || !paymentInfo.securityCode) {
-			alert('Please fill in all required payment information.');
-			setCurrentStep(3);
-			return;
-		}
+	// 	if (!paymentInfo.cardType || !paymentInfo.cardName || !paymentInfo.cardNumber || !paymentInfo.expiryDate || !paymentInfo.securityCode) {
+	// 		alert('Please fill in all required payment information.');
+	// 		setCurrentStep(3);
+	// 		return;
+	// 	}
 
-		try {
-			setLoading(true);
+	// 	try {
+	// 		setLoading(true);
 			
-			// First, save customer information if user is logged in
-			if (isLoggedIn) {
-				try {
-					const customerUpdateData = {
-						first_name: customerInfo.firstName,
-						last_name: customerInfo.lastName,
-						email: customerInfo.email,
-						phone: customerInfo.phone
-					};
+	// 		// First, save customer information if user is logged in
+	// 		if (isLoggedIn) {
+	// 			try {
+	// 				const customerUpdateData = {
+	// 					first_name: customerInfo.firstName,
+	// 					last_name: customerInfo.lastName,
+	// 					email: customerInfo.email,
+	// 					phone: customerInfo.phone
+	// 				};
 					
-					console.log('Updating customer information:', customerUpdateData);
-					// Get user ID from localStorage for the update
-					const customerData = localStorage.getItem('user');
-					const customer = customerData ? JSON.parse(customerData) : null;
-					if (customer?.id) {
-						await api.updateUserProfile(customer.id, customerUpdateData);
-						console.log('Customer information updated successfully');
-					}
-				} catch (customerError) {
-					console.error('Failed to update customer info:', customerError);
-					// Continue with checkout even if customer update fails
-				}
+	// 				console.log('Updating customer information:', customerUpdateData);
+	// 				// Get user ID from localStorage for the update
+	// 				const customerData = localStorage.getItem('user');
+	// 				const customer = customerData ? JSON.parse(customerData) : null;
+	// 				if (customer?.id) {
+	// 					await api.updateUserProfile(customer.id, customerUpdateData);
+	// 					console.log('Customer information updated successfully');
+	// 				}
+	// 			} catch (customerError) {
+	// 				console.error('Failed to update customer info:', customerError);
+	// 				// Continue with checkout even if customer update fails
+	// 			}
 				
-				// Save shipping address
-				try {
-					const addressData = {
-						first_name: customerInfo.firstName,
-						last_name: customerInfo.lastName,
-						address_1: shippingInfo.address,
-						address_2: shippingInfo.apartment || '',
-						city: shippingInfo.city,
-						province: shippingInfo.state,
-						postal_code: shippingInfo.zipCode,
-						country_code: 'AU',
-						phone: customerInfo.phone,
-						company: shippingInfo.company || ''
-					};
+	// 			// Save shipping address
+	// 			try {
+	// 				const addressData = {
+	// 					first_name: customerInfo.firstName,
+	// 					last_name: customerInfo.lastName,
+	// 					address_1: shippingInfo.address,
+	// 					address_2: shippingInfo.apartment || '',
+	// 					city: shippingInfo.city,
+	// 					province: shippingInfo.state,
+	// 					postal_code: shippingInfo.zipCode,
+	// 					country_code: 'AU',
+	// 					phone: customerInfo.phone,
+	// 					company: shippingInfo.company || ''
+	// 				};
 					
-					console.log('Saving shipping address:', addressData);
-					const savedAddress = await api.createUserAddress(addressData);
-					console.log('Shipping address saved successfully:', savedAddress);
-					setSelectedAddress(savedAddress);
-				} catch (addressError) {
-					console.error('Failed to save shipping address:', addressError);
-					// Continue with checkout even if address saving fails
-				}
+	// 				console.log('Saving shipping address:', addressData);
+	// 				const savedAddress = await api.createUserAddress(addressData);
+	// 				console.log('Shipping address saved successfully:', savedAddress);
+	// 				setSelectedAddress(savedAddress);
+	// 			} catch (addressError) {
+	// 				console.error('Failed to save shipping address:', addressError);
+	// 				// Continue with checkout even if address saving fails
+	// 			}
 				
-				// Save payment method (card information)
-				try {
-					const cardData = {
-						card_type: paymentInfo.cardType,
-						card_name: paymentInfo.cardName,
-						card_number: paymentInfo.cardNumber.replace(/\s/g, ''), // Remove spaces
-						expiry_date: paymentInfo.expiryDate,
-						security_code: paymentInfo.securityCode
-					};
+	// 			// Save payment method (card information)
+	// 			try {
+	// 				const cardData = {
+	// 					card_type: paymentInfo.cardType,
+	// 					card_name: paymentInfo.cardName,
+	// 					card_number: paymentInfo.cardNumber.replace(/\s/g, ''), // Remove spaces
+	// 					expiry_date: paymentInfo.expiryDate,
+	// 					security_code: paymentInfo.securityCode
+	// 				};
 					
-					console.log('Saving payment method:', { ...cardData, card_number: '****', security_code: '***' }); // Log without sensitive data
-					const savedCard = await api.createUserCard(cardData);
-					console.log('Payment method saved successfully:', savedCard);
-					setSelectedCard(savedCard);
-				} catch (cardError) {
-					console.error('Failed to save payment method:', cardError);
-					// Continue with checkout even if card saving fails
-				}
-			}
+	// 				console.log('Saving payment method:', { ...cardData, card_number: '****', security_code: '***' }); // Log without sensitive data
+	// 				const savedCard = await api.createUserCard(cardData);
+	// 				console.log('Payment method saved successfully:', savedCard);
+	// 				setSelectedCard(savedCard);
+	// 			} catch (cardError) {
+	// 				console.error('Failed to save payment method:', cardError);
+	// 				// Continue with checkout even if card saving fails
+	// 			}
+	// 		}
 			
-			// Prepare order data from form information
-			const orderData = {
-				email: customerInfo.email,
-				customer_info: {
-					firstName: customerInfo.firstName,
-					lastName: customerInfo.lastName,
-					email: customerInfo.email,
-					phone: customerInfo.phone,
-					company: customerInfo.company
-				},
-				shipping_address: {
-					first_name: customerInfo.firstName,
-					last_name: customerInfo.lastName,
-					address_1: shippingInfo.address,
-					address_2: shippingInfo.apartment || '',
-					city: shippingInfo.city,
-					province: shippingInfo.state,
-					postal_code: shippingInfo.zipCode,
-					country_code: 'AU', // Fixed to Australia
-					phone: customerInfo.phone,
-					company: shippingInfo.company || ''
-				},
-				billing_address: {
-					first_name: customerInfo.firstName,
-					last_name: customerInfo.lastName,
-					address_1: shippingInfo.address,
-					address_2: shippingInfo.apartment || '',
-					city: shippingInfo.city,
-					province: shippingInfo.state,
-					postal_code: shippingInfo.zipCode,
-					country_code: 'AU', // Fixed to Australia
-					phone: customerInfo.phone,
-					company: shippingInfo.company || ''
-				},
-				payment_method: 'card', // Keep it simple as string
-				shipping_method: 'standard'
-			};
+	// 		// Prepare order data from form information
+	// 		const orderData = {
+	// 			email: customerInfo.email,
+	// 			customer_info: {
+	// 				firstName: customerInfo.firstName,
+	// 				lastName: customerInfo.lastName,
+	// 				email: customerInfo.email,
+	// 				phone: customerInfo.phone,
+	// 				company: customerInfo.company
+	// 			},
+	// 			shipping_address: {
+	// 				first_name: customerInfo.firstName,
+	// 				last_name: customerInfo.lastName,
+	// 				address_1: shippingInfo.address,
+	// 				address_2: shippingInfo.apartment || '',
+	// 				city: shippingInfo.city,
+	// 				province: shippingInfo.state,
+	// 				postal_code: shippingInfo.zipCode,
+	// 				country_code: 'AU', // Fixed to Australia
+	// 				phone: customerInfo.phone,
+	// 				company: shippingInfo.company || ''
+	// 			},
+	// 			billing_address: {
+	// 				first_name: customerInfo.firstName,
+	// 				last_name: customerInfo.lastName,
+	// 				address_1: shippingInfo.address,
+	// 				address_2: shippingInfo.apartment || '',
+	// 				city: shippingInfo.city,
+	// 				province: shippingInfo.state,
+	// 				postal_code: shippingInfo.zipCode,
+	// 				country_code: 'AU', // Fixed to Australia
+	// 				phone: customerInfo.phone,
+	// 				company: shippingInfo.company || ''
+	// 			},
+	// 			payment_method: 'card', // Keep it simple as string
+	// 			shipping_method: 'standard'
+	// 		};
 
-			console.log('Processing checkout with data:', orderData);
+	// 		console.log('Processing checkout with data:', orderData);
 
-			// Process the order
-			const order = await api.processCheckout(orderData);
-			console.log('Order processed successfully:', order);
+	// 		// Process the order
+	// 		const order = await api.processCheckout(orderData);
+	// 		console.log('Order processed successfully:', order);
 			
-			alert('Order placed successfully! Your order number is: ' + (order.id || 'ORD-' + Date.now()));
+	// 		alert('Order placed successfully! Your order number is: ' + (order.id || 'ORD-' + Date.now()));
 			
-			// Only clear cart AFTER successful order
-			try {
-				await api.clearCart();
-				console.log('Cart cleared after successful order');
-			} catch (clearError) {
-				console.error('Warning: Failed to clear cart after order:', clearError);
-				// Don't block the success flow if cart clearing fails
-			}
+	// 		// Only clear cart AFTER successful order
+	// 		try {
+	// 			await api.clearCart();
+	// 			console.log('Cart cleared after successful order');
+	// 		} catch (clearError) {
+	// 			console.error('Warning: Failed to clear cart after order:', clearError);
+	// 			// Don't block the success flow if cart clearing fails
+	// 		}
 			
-			// Redirect to success page or user orders
-			window.location.href = '/user';
+	// 		// Redirect to success page or user orders
+	// 		window.location.href = '/user';
 			
-		} catch (error) {
-			console.error('Error processing checkout:', error);
-			alert('Failed to process checkout. Please try again. Error: ' + (error.message || 'Unknown error'));
-		} finally {
-			setLoading(false);
-		}
-	};
+	// 	} catch (error) {
+	// 		console.error('Error processing checkout:', error);
+	// 		alert('Failed to process checkout. Please try again. Error: ' + (error.message || 'Unknown error'));
+	// 	} finally {
+	// 		setLoading(false);
+	// 	}
+	// };
 
 	// Form input handlers
 	const handleCustomerInfoChange = (field: string, value: string) => {
@@ -538,24 +538,31 @@ function Checkout(props: CheckoutProps) {
 		return expandedProducts[productIndex] || false;
 	};
 
-    const nextStep = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        if (currentStep < 3) {
-          setCurrentStep(currentStep + 1);
-        }
+    const nextStep = () => {
+		if (currentStep < 3) {
+			setShow(false);
+			setTimeout(() => {
+				setCurrentStep(currentStep + 1);
+				setShow(true);
+			}, 300);
+		}
     };
     
       // Function to move to the previous step
-    const prevStep = (event: React.MouseEvent<HTMLButtonElement>) => {
-        event.preventDefault();
-        if (currentStep > 1) {
-          setCurrentStep(currentStep - 1);
-        }
+    const prevStep = () => {
+		if (currentStep > 1) {
+			setShow(false);
+			setTimeout(() => {
+				setCurrentStep(currentStep - 1);
+				setShow(true);
+			}, 300);
+		}
     };
+
 	return (
-		<section className="checkout-section w-screen flex flex-col gap-[80px] py-[85px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="checkout">
+		<section className="checkout-section w-screen flex flex-col gap-[80px] pb-[85px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="checkout">
 			<div className="flex xl:flex-row flex-col gap-4 w-full xl:items-start">
-				<div className="xl:w-[35%] w-full xl:h-[824px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black xl:shrink-0 rounded-48">
+				<div className="xl:w-[666px] w-full xl:h-[824px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black xl:shrink-0 rounded-48">
 					<h4 className="text-xl shrink-0">YOUR ORDER</h4>
 					<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
 						<Icon icon="uil:plus" className="text-[18px]" />
@@ -664,7 +671,7 @@ function Checkout(props: CheckoutProps) {
 						<h5 className="text-xl">${calculateTotal().toFixed(2)}</h5>
 					</div>
 				</div>
-				<div className="xl:w-[65%] w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-48 xl:self-start">
+				<div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-48 xl:self-start">
 					<div className="flex items-center gap-4">
 						<div className="flex items-center gap-2 shrink-0">
 							<div className={`w-[24px] h-[24px] flex items-center justify-center border text-sm rounded-[24px] transition ${currentStep === 1 || currentStep === 2 ? 'border-[--primary] text-white bg-primary':'border-[--black] text-black'}`}>1</div>
@@ -681,258 +688,240 @@ function Checkout(props: CheckoutProps) {
 							<p className="text-sm">Payment</p>
 						</div>
 					</div>
-					<form action="">
-						<div className={`flex flex-col gap-[32px] ${currentStep === 1 ? 'flex' : 'hidden'}`}>
-							<div className="flex items-center justify-between">
-								<h3 className="text-xxl">CUSTOMER INFO</h3>
-								{!isLoggedIn && (
-									<div className="flex items-center gap-1 text-sm">
-										<p>Already have an account? </p>
-										<a href="/login" className="text-primary">Login</a>
-									</div>
-								)}
-							</div>
-							<div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 ">
-								<div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-									<input 
-										type="text" 
-										className="formInput" 
-										id="f-name" 
-										placeholder="First Name"
-										value={customerInfo.firstName}
-										onChange={(e) => handleCustomerInfoChange('firstName', e.target.value)}
-									/>
-									<input 
-										type="text" 
-										className="formInput" 
-										id="l-name" 
-										placeholder="Last Name"
-										value={customerInfo.lastName}
-										onChange={(e) => handleCustomerInfoChange('lastName', e.target.value)}
-									/>
+					<div className={`flex flex-col gap-[32px]`}>
+						<div className="flex items-center justify-between">
+							<h3 className="text-xxl">CUSTOMER INFO</h3>
+							{!isLoggedIn && (
+								<div className="flex items-center gap-1 text-md">
+									<p>Already have an account? </p>
+									<a href="/login" className="text-primary">Login</a>
 								</div>
-								<div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-									<input 
-										type="email" 
-										className="formInput" 
-										id="email" 
-										placeholder="Email"
-										value={customerInfo.email}
-										onChange={(e) => handleCustomerInfoChange('email', e.target.value)}
-									/>
-									<input 
-										type="tel" 
-										className="formInput" 
-										id="number" 
-										placeholder="Number"
-										value={customerInfo.phone}
-										onChange={(e) => handleCustomerInfoChange('phone', e.target.value)}
-									/>
-								</div>
-								<input 
-									type="text" 
-									className="formInput" 
-									id="company" 
-									placeholder="Company Name (Optional)"
-									value={customerInfo.company}
-									onChange={(e) => handleCustomerInfoChange('company', e.target.value)}
-								/>
-								<div className="w-fit ml-auto flex items-center gap-2">
-									{/* <button className="w-[200px] cus-btn small shrink-0 stroke-black">
-										Back
-									</button> */}
-									<button className="w-[200px] cus-btn small primary shrink-0" onClick={nextStep}>
-										Next
-									</button>
-								</div>
-							</div>
+							)}
 						</div>
-						<div className={`flex flex-col gap-[32px] ${currentStep === 2 ? 'flex' : 'hidden'}`}>
-							<div className="flex items-center justify-between">
-								<h3 className="text-xxl">SHIPPING INFO</h3>
-								{!isLoggedIn && (
-									<div className="flex items-center gap-1 text-sm">
-										<p>Already have an account? </p>
-										<a href="/login" className="text-primary">Login</a>
-									</div>
-								)}
-							</div>
-							<div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-								<div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-									<div className="formSelect w-full">
-										<select 
-											name="state" 
-											id="state" 
-											className="formInput"
-											value={shippingInfo.state}
-											onChange={(e) => handleShippingInfoChange('state', e.target.value)}
-										>
-											<option value="" disabled>State</option>
-											<option value="NSW">New South Wales</option>
-											<option value="VIC">Victoria</option>
-											<option value="QLD">Queensland</option>
-											<option value="WA">Western Australia</option>
-											<option value="SA">South Australia</option>
-											<option value="TAS">Tasmania</option>
-											<option value="NT">Northern Territory</option>
-											<option value="ACT">Australian Capital Territory</option>
-										</select>
-									</div>
-									<input 
-										type="text" 
-										className="formInput" 
-										id="company-name" 
-										placeholder="Company Name (Optional)"
-										value={shippingInfo.company}
-										onChange={(e) => handleShippingInfoChange('company', e.target.value)}
-									/>
-								</div>
-								<div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-									<input 
-										type="text" 
-										className="formInput" 
-										id="town" 
-										placeholder="Town / City"
-										value={shippingInfo.city}
-										onChange={(e) => handleShippingInfoChange('city', e.target.value)}
-									/>
-									<input 
-										type="text" 
-										className="formInput" 
-										id="zipCode" 
-										placeholder="Zip Code"
-										value={shippingInfo.zipCode}
-										onChange={(e) => handleShippingInfoChange('zipCode', e.target.value)}
-									/>
-								</div>
-								<div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-									<input 
-										type="text" 
-										className="formInput" 
-										id="house" 
-										placeholder="House number and street name"
-										value={shippingInfo.address}
-										onChange={(e) => handleShippingInfoChange('address', e.target.value)}
-									/>
-									<input 
-										type="text" 
-										className="formInput" 
-										id="apartment" 
-										placeholder="Apartment, suit, unit, etc. (Optional)"
-										value={shippingInfo.apartment}
-										onChange={(e) => handleShippingInfoChange('apartment', e.target.value)}
-									/>
-								</div>
-								<div className="w-fit ml-auto flex items-center gap-2">
-									<button className="w-[200px] cus-btn small shrink-0 stroke-black" onClick={prevStep}>
-										Back
-									</button>
-									<button className="w-[200px] cus-btn small primary shrink-0" onClick={nextStep}>
-										Next
-									</button>
-								</div>
-							</div>
-						</div>
-						<div className={`flex flex-col gap-[32px] ${currentStep === 3 ? 'flex' : 'hidden'}`}>
-							<div className="flex items-center justify-between">
-								<h3 className="text-xxl uppercase">PaymenT Method</h3>
-								{!isLoggedIn && (
-									<div className="flex items-center gap-1 text-sm">
-										<p>Already have an account? </p>
-										<a href="/login" className="text-primary">Login</a>
-									</div>
-								)}
-							</div>
-							<div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-								<div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-									<div className="formSelect">
-										<select 
-											name="cardType" 
-											id="cardType" 
-											className="formInput"
-											value={paymentInfo.cardType}
-											onChange={(e) => handlePaymentInfoChange('cardType', e.target.value)}
-										>
-											<option value="" disabled>Credit Card</option>
-											<option value="visa">Visa</option>
-											<option value="mastercard">Mastercard</option>
-											<option value="amex">American Express</option>
-											<option value="discover">Discover</option>
-										</select>
-									</div>
-									<input 
-										type="text" 
-										className="formInput" 
-										id="cardName" 
-										placeholder="Name of Card"
-										value={paymentInfo.cardName}
-										onChange={(e) => handlePaymentInfoChange('cardName', e.target.value)}
-									/>
-								</div>
-								<div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-									<div className="w-full">
-										<input 
+						<div className={`w-full grid grid-cols-12 xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 ${show?'fade-in':'fade-out'}`}>
+							{currentStep === 1 ? (
+								<>
+									<div className="sm:col-span-6 col-span-12">
+										<Input
 											type="text" 
-											className="w-full formInput" 
+											id="f-name" 
+											placeholder="First Name"
+											value={customerInfo.firstName}
+											onChange={(e) => handleCustomerInfoChange('firstName', e.target.value)}
+										/>
+									</div>
+									<div className="sm:col-span-6 col-span-12">
+										<Input
+											type="text"
+											id="l-name" 
+											placeholder="Last Name"
+											value={customerInfo.lastName}
+											onChange={(e) => handleCustomerInfoChange('lastName', e.target.value)}
+										/>
+									</div>
+									<div className="sm:col-span-6 col-span-12">
+										<Input
+											type="email" 
+											id="email" 
+											placeholder="Email"
+											value={customerInfo.email}
+											onChange={(e) => handleCustomerInfoChange('email', e.target.value)}
+										/>
+									</div>
+									<div className="sm:col-span-6 col-span-12">
+										<Input
+											type="tel" 
+											id="number" 
+											placeholder="Number"
+											value={customerInfo.phone}
+											onChange={(e) => handleCustomerInfoChange('phone', e.target.value)}
+										/>
+									</div>
+									<div className="col-span-12">
+										<Input
+											type="text" 
+											id="company" 
+											placeholder="Company Name (Optional)"
+											value={customerInfo.company}
+											onChange={(e) => handleCustomerInfoChange('company', e.target.value)}
+										/>
+									</div>
+									
+								</>
+							):currentStep === 2 ? (
+								<>
+									<div className="sm:col-span-6 col-span-12">
+										<Select onValueChange={(value) => handleShippingInfoChange('state', value)}>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="State" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem value="NSW">New South Wales</SelectItem>
+												<SelectItem value="VIC">Victoria</SelectItem>
+												<SelectItem value="QLD">Queensland</SelectItem>
+												<SelectItem value="WA">Western Australia</SelectItem>
+												<SelectItem value="SA">South Australia</SelectItem>
+												<SelectItem value="TAS">Tasmania</SelectItem>
+												<SelectItem value="NT">Northern Territory</SelectItem>
+												<SelectItem value="ACT">Australian Capital Territory</SelectItem>
+											</SelectContent>
+										</Select>
+									</div>
+									<div className="sm:col-span-6 col-span-12">
+										<Input
+											type="text" 
+											id="town" 
+											placeholder="Town / City"
+											value={shippingInfo.city}
+											onChange={(e) => handleShippingInfoChange('city', e.target.value)}
+										/>
+									</div>
+									<div className="sm:col-span-6 col-span-12">
+										<Input
+											type="text" 
+											id="zipCode" 
+											placeholder="Zip Code"
+											value={shippingInfo.zipCode}
+											onChange={(e) => handleShippingInfoChange('zipCode', e.target.value)}
+										/>
+									</div>
+									<div className="sm:col-span-6 col-span-12">
+										<Input
+											type="text" 
+											id="address" 
+											placeholder="House number and street name"
+											value={shippingInfo.address}
+											onChange={(e) => handleShippingInfoChange('address', e.target.value)}
+										/>
+									</div>
+									<div className="col-span-12">
+										<Input
+											type="text" 
+											id="apartment" 
+											placeholder="Apartment, suit, unit, etc. (Optional)"
+											value={shippingInfo.apartment}
+											onChange={(e) => handleShippingInfoChange('apartment', e.target.value)}
+										/>
+									</div>
+								</>
+							):(
+								<>
+									<div className="sm:col-span-6 col-span-12">
+										<Select onValueChange={(value) => handlePaymentInfoChange('cardType', value)}>
+											<SelectTrigger className="w-full"
+												// onChange={(e) => handleShippingInfoChange('state', e.target.value)}
+											>
+												<SelectValue placeholder="Credit Card" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem value="visa">Visa</SelectItem>
+												<SelectItem value="mastercard">Mastercard</SelectItem>
+												<SelectItem value="amex">American Express</SelectItem>
+												<SelectItem value="discover">Discover</SelectItem>
+											</SelectContent>
+										</Select>
+									</div>
+									<div className="sm:col-span-6 col-span-12">
+										<Input
+											type="text" 
+											id="cardName" 
+											placeholder="Name of Card"
+											value={paymentInfo.cardName}
+											onChange={(e) => handlePaymentInfoChange('cardName', e.target.value)}
+										/>
+									</div>
+									<div className="sm:col-span-6 col-span-12">
+										<Input
+											type="text" 
 											id="cardNumber" 
 											placeholder="Card Number"
 											value={paymentInfo.cardNumber}
 											onChange={(e) => handlePaymentInfoChange('cardNumber', e.target.value)}
 										/>
 									</div>
-									
-									<div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-										<input 
+									<div className="sm:col-span-6 col-span-12">
+										<Input
 											type="text" 
-											className="formInput" 
 											id="expiration-date" 
 											placeholder="Expiration Date (MM / YY)"
 											value={paymentInfo.expiryDate}
 											onChange={(e) => handlePaymentInfoChange('expiryDate', e.target.value)}
 										/>
-										<input 
+									</div>
+									<div className="sm:col-span-6 col-span-12">
+										<Input
 											type="text" 
-											className="formInput" 
 											id="securityCode" 
 											placeholder="Security Code"
 											value={paymentInfo.securityCode}
 											onChange={(e) => handlePaymentInfoChange('securityCode', e.target.value)}
 										/>
 									</div>
+								</>
+							)}
+							<div className="flex justify-end col-span-12 gap-2">
+								{ currentStep > 1 && (
+									<Button variant={'light'} size={'small'} className="w-[200px]" onClick={prevStep}>
+										Back
+									</Button>
+								)}
+								<Button variant={'primary'} size={'small'} className="w-[200px]" onClick={nextStep}>
+									Next
+								</Button>
+							</div>
+						</div>
+					</div>
+					{/* <div className={`flex flex-col gap-[32px] ${currentStep === 3 ? 'flex' : 'hidden'}`}>
+						<div className="flex items-center justify-between">
+							<h3 className="text-xxl uppercase">PaymenT Method</h3>
+							{!isLoggedIn && (
+								<div className="flex items-center gap-1 text-sm">
+									<p>Already have an account? </p>
+									<a href="/login" className="text-primary">Login</a>
 								</div>
-								<div className="flex items-center justify-between">
-									<div className="check-box">
-										<input 
-											type="checkbox" 
-											id="permanent" 
-											name="employment"
-											checked={paymentInfo.differentBilling}
-											onChange={(e) => handlePaymentInfoChange('differentBilling', e.target.checked)}
-										/>
-										<div className="icon">
-											<Icon icon="tabler:check" />
-										</div>
-										<label htmlFor="permanent" className="text-sm">Use a different billing address?</label>
+							)}
+						</div>
+						<div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
+							<div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
+								
+								
+							</div>
+							<div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
+								<div className="w-full">
+									
+								</div>
+								
+								<div className="w-full flex items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
+									
+									
+								</div>
+							</div>
+							<div className="flex items-center justify-between">
+								<div className="check-box">
+									
+									<div className="icon">
+										<Icon icon="tabler:check" />
 									</div>
-									<div className="flex items-center gap-2">
-										<button className="w-[200px] cus-btn small shrink-0 stroke-black" onClick={prevStep}>
-											Back
-										</button>
-										<button 
-											className="w-[200px] cus-btn small primary shrink-0" 
-											onClick={(e) => {
-												e.preventDefault();
-												processCheckout();
-											}}
-											disabled={loading}
-										>
-											{loading ? 'Processing...' : 'Submit'}
-										</button>
-									</div>
+									<label htmlFor="permanent" className="text-sm">Use a different billing address?</label>
+								</div>
+								<div className="flex items-center gap-2">
+									<button className="w-[200px] cus-btn small shrink-0 stroke-black" onClick={prevStep}>
+										Back
+									</button>
+									<button 
+										className="w-[200px] cus-btn small primary shrink-0" 
+										onClick={(e) => {
+											e.preventDefault();
+											processCheckout();
+										}}
+										disabled={loading}
+									>
+										{loading ? 'Processing...' : 'Submit'}
+									</button>
 								</div>
 							</div>
 						</div>
-					</form>
+					</div> */}
 				</div>
 			</div>
 		</section>
