@@ -11,20 +11,21 @@ const buttonVariants = cva(
       variant: {
         default: "bg-primary text-primary-foreground hover:bg-primary/90",
         primary:
-          "bg-[--primary] text-[--white] hover:bg-transparent hover:text-[--black] border border-[--primary] hover:border-[--black]",
+          "bg-[--primary] text-[--white] hover:bg-transparent hover:text-[--Black] border border-[--primary] hover:border-[--Black]",
         outline:
           "border border-[--white] bg-transparent text-[--white] hover:bg-[--primary] hover:border-[--primary]",
         outline_white:
-          "border border-[--white] bg-transparent text-[--white] hover:bg-[--white] hover:border-[--white] hover:text-[--black]",
+          "border border-[--white] bg-transparent text-[--white] hover:bg-[--white] hover:border-[--white] hover:text-[--Black]",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         light:
-          "bg-[--white] text-[--black] hover:text-[--white] hover:bg-[--primary] border border-[--black] hover:border-[--white] rounded-full shrink-0",
+          "bg-[--white] text-[--Black] hover:text-[--white] hover:bg-[--primary] border border-[--Black] hover:border-[--white] rounded-full shrink-0",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
       },
       size: {
         default: "",
+        smallest: "py-3 px-6 text-sm",
         small: "xl:py-[0.625vw] py-3 xl:px-[0.833vw] px-4",
         large: "xl:py-[0.833vw] py-4 xl:px-[1.667vw] px-8",
         lg: "xl:size-[2.083vw] size-[40px] rounded-[10px] text-[18px]",

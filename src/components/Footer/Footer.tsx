@@ -45,7 +45,7 @@ function Footer(props: FooterProps) {
                     <div className="w-full flex flex-col gap-3 text-black">
                         <h6 className="xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal ">SITE MAP</h6>
                         <a href="/about" className="text-sm hover:text-primary">ABOUT US</a>
-                        <a href="/contact" className="w-fit sm:m-0 mx-auto text-left text-sm hover:text-primary">CONTACT US</a>
+                        <a href="/contact" className="text-sm hover:text-primary">CONTACT US</a>
                         <a href="/privacy-policy" className="text-sm hover:text-primary">TERMS & CONDITIONS</a>
                         <a href="/privacy-policy" className="text-sm hover:text-primary">PRIVACY POLICY</a>
                     </div>
@@ -67,8 +67,8 @@ function Footer(props: FooterProps) {
                         <div className="sm:w-[1px] w-full sm:h-full h-[1px] bg-black"></div>
                         <Icon icon="uil:plus" className="text-[18px] text-black" />
                     </div>
-                    <div className="w-full  flex flex-col sm:gap-[80px] gap-2">
-                        <div className="w-full flex flex-col sm:items-start items-center gap-3 text-black">
+                    <div className="w-full  flex flex-col sm:gap-[4.167vw] gap-6">
+                        <div className="w-full flex flex-col xl:items-start items-center gap-3 text-black">
                             <h6 className="xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal">OPENING HOUR</h6>
                             <div className="flex items-center gap-8">
                                 <p className="text-sm">MON-FRI</p>

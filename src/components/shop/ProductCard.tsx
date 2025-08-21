@@ -5,9 +5,9 @@ import { Button } from "@lib/components/ui/button";
 
 function ProductCard({ productData, selectedColor, measurements, selectedOptions, totalPrice }) {
     return (
-        <div className="sticky top-4 max-w-[630px] h-[calc(100vh-32px)] px-2 text-[--Black] bg-[--white] border border-[--Black] shrink-0 rounded-48 overflow-hidden">
-            <div className="size-full flex flex-col gap-6 py-6 px-4 overflow-auto line-scroll" data-lenis-prevent>
-                <div className="w-full h-[450px] shrink-0 rounded-32 overflow-hidden">
+        <div className="sticky top-4 w-full xl:max-w-[32.813vw] h-fit sm:h-[calc(100vh-32px)] px-2 xl:px-[0.417vw] text-[--Black] bg-[--white] border border-[--Black] shrink-0 rounded-48 overflow-hidden">
+            <div className="size-full flex flex-col gap-6 xl:gap-[1.25vw] py-4 sm:py-6 xl:py-[1.25vw] sm:px-4 px-2 xl:px-[0.833vw] overflow-auto line-scroll" data-lenis-prevent>
+                <div className="w-full h-[60.465vw] sm:h-[43.945vw] xl:h-[23.438vw] shrink-0 rounded-32 overflow-hidden">
                     <img src={productData.images[0].url} className="w-full h-full object-cover object-center" alt="" />
                 </div>
                 <h4 className="text-xl">{productData.title}</h4>

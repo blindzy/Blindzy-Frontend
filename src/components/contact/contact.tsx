@@ -4,6 +4,10 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import axios from 'axios';
+import { Input } from "@lib/components/ui/input";
+import { Textarea } from "@lib/components/ui/textarea";
+import { Button } from "@lib/components/ui/button";
+
 
 interface ContactProps {
 	// Add any props if needed in the future
@@ -148,9 +152,8 @@ function Contact(props: ContactProps) {
                     <form onSubmit={handleSubmit}>
                         <div className="grid items-stretch grid-cols-12 xl:gap-[0.833vw] sm:gap-[1.563vw] gap-4">
                             <div className="sm:col-span-6 col-span-12">
-                                <input 
+                                <Input 
                                     type="text" 
-                                    className="formInput" 
                                     id="name" 
                                     placeholder="Your Name"
                                     value={formData.name}
@@ -159,9 +162,8 @@ function Contact(props: ContactProps) {
                                 />
                             </div>
                             <div className="sm:col-span-6 col-span-12">
-                                <input 
+                                <Input 
                                     type="email" 
-                                    className="formInput" 
                                     id="email" 
                                     placeholder="Your Email"
                                     value={formData.email}
@@ -170,9 +172,8 @@ function Contact(props: ContactProps) {
                                 />
                             </div>
                             <div className="sm:col-span-6 col-span-12">
-                                <input 
+                                <Input 
                                     type="text" 
-                                    className="formInput" 
                                     id="phone" 
                                     placeholder="Phone Number"
                                     value={formData.phone}
@@ -181,9 +182,8 @@ function Contact(props: ContactProps) {
                                 />
                             </div>
                             <div className="sm:col-span-6 col-span-12">
-                                <input 
+                                <Input 
                                     type="text" 
-                                    className="formInput" 
                                     id="enquiry" 
                                     placeholder="Enquiry About"
                                     value={formData.enquiry}
@@ -192,9 +192,8 @@ function Contact(props: ContactProps) {
                                 />
                             </div>
                             <div className="col-span-12">
-                                <input 
+                                <Input 
                                     type="text" 
-                                    className="formInput" 
                                     id="number" 
                                     placeholder="Your Number"
                                     value={formData.number}
@@ -203,24 +202,25 @@ function Contact(props: ContactProps) {
                                 />
                             </div>
                             <div className="col-span-12">
-                                <textarea 
+                                <Textarea 
                                     name="message" 
                                     id="message" 
-                                    placeholder="Your Message Here" 
-                                    className="formInput h-[186px]"
+                                    placeholder="Your Message Here"
                                     value={formData.message}
                                     onChange={handleInputChange}
                                     required
-                                ></textarea>
+                                />
                             </div>
                             <div className="col-span-12 flex justify-end">
-                                <button 
+                                <Button 
                                     type="submit" 
-                                    className="w-fit cus-btn small shrink-0"
+                                    variant={"primary"}
+                                    size={'smallest'}
+                                    className="w-fit "
                                     disabled={loading}
                                 >
                                     {loading ? 'Sending...' : 'Send Message'}
-                                </button>
+                                </Button>
                             </div>
                         </div>
                     </form>

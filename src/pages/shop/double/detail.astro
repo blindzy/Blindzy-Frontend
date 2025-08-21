@@ -8,7 +8,7 @@ import Customization from "@components/shop/customization";
 const { slug } = Astro.params;
 const safeSlug = String(slug);
 
-const sampleProducts = [
+const Products = [
   {
     id: '1',
     title: 'Premium Plantation Shutters',
@@ -30,19 +30,125 @@ const sampleProducts = [
     options: [
       {
         id: 'opt1',
-        title: 'Color',
+        title: 'Setup',
+        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
-          { label: 'White', image: '/images/colors/01.png' },
-          { label: 'Grey', image: '/images/colors/02.png' },
-          { label: 'Black', image: '/images/colors/03.png' },
-          { label: 'Oak', image: '/images/colors/04.png' },
-          { label: 'Walnut', image: '/images/colors/05.png' },
-          { label: 'Charcoal', image: '/images/colors/06.png' },
+          { label: 'Blockout in Front', image: '/images/custom/blockout-front.png' },
+          { label: 'Sheer in Front', image: '/images/custom/sheer-front.png' },
         ]
       },
       {
         id: 'opt2',
-        title: 'Choose Your Fitting Type',
+        title: 'Blockout Options',
+        options: [
+            {
+                id: 'opt1',
+                title: 'Blackout Fabric',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: 'White', image: '/images/colors/01.png' },
+                    { label: 'Grey', image: '/images/colors/02.png' },
+                    { label: 'Black', image: '/images/colors/03.png' },
+                    { label: 'Oak', image: '/images/colors/04.png' },
+                    { label: 'Walnut', image: '/images/colors/05.png' },
+                    { label: 'Charcoal', image: '/images/colors/06.png' },
+                ]
+            },  
+            {
+                id: 'opt2',
+                title: 'Blackout Color',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: 'White', image: '/images/colors/01.png' },
+                    { label: 'Grey', image: '/images/colors/02.png' },
+                    { label: 'Black', image: '/images/colors/03.png' },
+                    { label: 'Oak', image: '/images/colors/04.png' },
+                    { label: 'Walnut', image: '/images/colors/05.png' },
+                    { label: 'Charcoal', image: '/images/colors/06.png' },
+                ]
+            },
+            {
+                id: 'opt3',
+                title: 'Blockout Curtain Style',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: 'S Fold', image: '/images/custom/s-fold.jpg' },
+                    { label: 'Triple Pinch Pleat', image: '/images/custom/pinch.jpg' },
+                    { label: 'Pencil Pleat', image: '/images/custom/pencil-pleat.jpg' },
+                ]
+            },
+            {
+                id: 'opt4',
+                title: 'Blockout Hem',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: '70mm Hem', image: '/images/custom/70mm.png' },
+                ]
+            },
+        ],
+        values: [
+          { label: 'Blockout in Front', image: '/images/custom/blockout-front.png' },
+          { label: 'Sheer in Front', image: '/images/custom/sheer-front.png' },
+        ]
+      },
+      {
+        id: 'opt3',
+        title: 'Sheer Options',
+        options: [
+            {
+                id: 'opt1',
+                title: 'Sheer Fabric',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: 'White', image: '/images/colors/01.png' },
+                    { label: 'Grey', image: '/images/colors/02.png' },
+                    { label: 'Black', image: '/images/colors/03.png' },
+                    { label: 'Oak', image: '/images/colors/04.png' },
+                    { label: 'Walnut', image: '/images/colors/05.png' },
+                    { label: 'Charcoal', image: '/images/colors/06.png' },
+                ]
+            },  
+            {
+                id: 'opt2',
+                title: 'Sheer Colour',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: 'White', image: '/images/colors/01.png' },
+                    { label: 'Grey', image: '/images/colors/02.png' },
+                    { label: 'Black', image: '/images/colors/03.png' },
+                    { label: 'Oak', image: '/images/colors/04.png' },
+                    { label: 'Walnut', image: '/images/colors/05.png' },
+                    { label: 'Charcoal', image: '/images/colors/06.png' },
+                ]
+            },
+            {
+                id: 'opt3',
+                title: 'Sheer Curtain Style',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: 'S Fold', image: '/images/custom/s-fold.jpg' },
+                    { label: 'Triple Pinch Pleat', image: '/images/custom/pinch.jpg' },
+                    { label: 'Pencil Pleat', image: '/images/custom/pencil-pleat.jpg' },
+                ]
+            },
+            {
+                id: 'opt4',
+                title: 'Sheer Hem',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: 'Lead Weight', image: '/images/custom/lead-weight.png' },
+                    { label: '70mm Hem', image: '/images/custom/70mm.png' },
+                ]
+            },
+        ],
+        values: [
+          { label: 'Blockout in Front', image: '/images/custom/blockout-front.png' },
+          { label: 'Sheer in Front', image: '/images/custom/sheer-front.png' },
+        ]
+      },
+      {
+        id: 'opt4',
+        title: 'Fitting Type',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
           { label: 'Left', image: '/images/custom/fitting-left.jpg' },
@@ -50,7 +156,7 @@ const sampleProducts = [
         ]
       },
       {
-        id: 'opt3',
+        id: 'opt5',
         title: 'Select Fit',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
@@ -59,8 +165,17 @@ const sampleProducts = [
         ]
       },
       {
-        id: 'opt4',
-        title: 'Choose Your Curtain Stack',
+        id: 'opt6',
+        title: 'Track Type',
+        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        values: [
+          { label: 'Designer', image: '/images/custom/designer.png' },
+          { label: 'Residential', image: '/images/custom/residential.png' },
+        ]
+      },
+      {
+        id: 'opt7',
+        title: 'Curtain Stack',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
           { label: 'Left Stack', image: '/images/custom/left-stack.jpg' },
@@ -69,13 +184,22 @@ const sampleProducts = [
         ]
       },
       {
-        id: 'opt5',
-        title: 'Choose Your Curtain Style',
+        id: 'opt8',
+        title: 'Wand Length',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
-          { label: 'S Fold', image: '/images/custom/s-fold.jpg' },
-          { label: 'Triple Pinch Pleat', image: '/images/custom/pinch.jpg' },
-          { label: 'Pencil Pleat', image: '/images/custom/pencil-pleat.jpg' },
+          { label: '910mm', image: '/images/custom/wand-length.png' },
+          { label: '1220mm', image: '/images/custom/wand-length.png' },
+          { label: '1520mm', image: '/images/custom/wand-length.png' },
+        ]
+      },
+      {
+        id: 'opt9',
+        title: 'Choose Your Track',
+        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        values: [
+          { label: 'White', image: '/images/custom/track-white.png' },
+          { label: 'Black', image: '/images/custom/track-black.png' },
         ]
       },
     ],
@@ -147,6 +271,6 @@ const sampleProducts = [
 
 <Layout>
     <Navbar client:load logo={'dark'} />
-    <Customization client:load data={sampleProducts[0]} />
+    <Customization client:load data={Products[0]} />
     <Footer client:load />
 </Layout>

@@ -46,11 +46,6 @@ function Customization(props) {
         if (lenis) {
             lenis.on('scroll', ScrollTrigger.update);
         }
-
-        const deviceWidth = window.innerWidth;
-        if (deviceWidth > 768) {
-            ScrollTrigger.normalizeScroll(false);
-        }
     }, [lenis]);
 
     // Auto-calculate price when measurements change
@@ -88,8 +83,8 @@ function Customization(props) {
 
 
 	return (
-        <section className="w-screen flex xl:gap-[1.25vw] sm:gap-[2.344vw] gap-[80px] py-[85px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="ProductDetail">
-            <div className="w-full flex flex-col gap-6 pb-[112px]">
+        <section className="w-screen flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-[64px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="ProductDetail">
+            <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-6 xl:pb-[5.833vw]">
                 <div className="w-full flex flex-col gap-2 text-[--Black]">
                     <h2 className="text-xl">Curtain Customisations</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
@@ -103,9 +98,9 @@ function Customization(props) {
                     <h2 className="text-lg">Enter Measurements</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
-                <div className="flex items-stretch gap-4">
-                    <div className="w-full flex items-center gap-2 py-4 px-3 bg-[--white] border border-[--lightGrey] rounded-full">
-                        <Label htmlFor="roomName" className="text-sm normal shrink-0">Room Name </Label>
+                <div className="grid grid-cols-12 sm:gap-4 gap-x-2 gap-y-4">
+                    <div className="sm:col-span-4 col-span-12 flex items-center gap-2 p-2 sm:py-4 xl:py-[0.833vw] px-3 bg-[--white] border border-[--lightGrey] rounded-full">
+                        <Label htmlFor="roomName" className="text-sm normal shrink-0">Room Name:</Label>
                         <input 
                             type="text" 
                             id="roomName" 
@@ -114,7 +109,7 @@ function Customization(props) {
                             className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
                         />
                     </div>
-                    <div className="w-full flex items-center gap-2 py-4 px-3 bg-[--white] border border-[--lightGrey] rounded-full">
+                    <div className="sm:col-span-4 col-span-6 flex items-center gap-2 p-2 sm:py-4 xl:py-[0.833vw] px-3 bg-[--white] border border-[--lightGrey] rounded-full">
                         <Label htmlFor="width" className="text-sm normal shrink-0">Width: <span className="text-xs">(m)</span></Label>
                         <input 
                             type="number" 
@@ -124,7 +119,7 @@ function Customization(props) {
                             className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
                         />
                     </div>
-                    <div className="w-full flex items-center gap-2 py-4 px-3 bg-[--white] border border-[--lightGrey] rounded-full">
+                    <div className="sm:col-span-4 col-span-6 flex items-center gap-2 p-2 sm:py-4 xl:py-[0.833vw] px-3 bg-[--white] border border-[--lightGrey] rounded-full">
                         <Label htmlFor="height" className="text-sm normal shrink-0">Height: <span className="text-xs">(m)</span></Label>
                         <input 
                             type="number" 
@@ -135,27 +130,53 @@ function Customization(props) {
                         />
                     </div>
                 </div>
-                <SelectColor data={productData} onColorSelect={setSelectedColor} selectedColor={selectedColor}/>
-                <div className="flex items-center gap-2 shrink-0 text-[--mediumGrey]">
-                    <Plus className="size-[18px]" />
-                    <div className="w-full border-b border-[--mediumGrey]"></div>
-                    <Plus className="size-[18px]" />
-                </div>
-                
-                {productData?.options?.filter(option => option.title !== 'Color').map((option, index) => (
+                {productData?.options?.map((option) => (
                     <React.Fragment key={option.id}>
-                        <SelectVarient 
-                            data={productData} 
-                            optionType={option.title}
-                            onSelectionChange={(value) => handleOptionChange(option.title, value)} 
-                            selectedValue={selectedOptions[option.title] || ''}
-                        />
-                        {index < productData.options.filter(opt => opt.title !== 'Color').length - 1 && (
-                            <div className="flex items-center gap-2 shrink-0 text-[--mediumGrey]">
-                                <Plus className="size-[18px]" />
-                                <div className="w-full border-b border-[--mediumGrey]"></div>
-                                <Plus className="size-[18px]" />
+                        <div className="flex items-center gap-2 shrink-0 text-[--mediumGrey]">
+                            <Plus className="size-[18px]" />
+                            <div className="w-full border-b border-[--mediumGrey]"></div>
+                            <Plus className="size-[18px]" />
+                        </div>
+                        {option.options ? (
+                            <div className="w-full xl:p-[1.25vw] sm:p-[2.344vw] p-4 flex flex-col xl:gap-[1.25vw] gap-6 border border-[--Black] rounded-48">
+                                <h4 className="text-xl">{option.title}</h4>
+                                {option.options.map((opt, idx) => (
+                                    <React.Fragment key={idx}>
+                                        <div className="flex items-center gap-2 shrink-0 text-[--mediumGrey]">
+                                            <Plus className="size-[18px]" />
+                                            <div className="w-full border-b border-[--mediumGrey]"></div>
+                                            <Plus className="size-[18px]" />
+                                        </div>
+                                        {opt.title.toLowerCase().includes('color') || opt.title.toLowerCase().includes('colour') || opt.title.toLowerCase().includes('fabric') ? (
+                                            <SelectColor 
+                                                data={opt} 
+                                                onColorSelect={setSelectedColor} 
+                                                selectedColor={selectedColor}
+                                            />
+                                        ) : (
+                                            <SelectVarient 
+                                                data={opt}
+                                                optionType={opt.title}
+                                                onSelectionChange={(value) => handleOptionChange(opt.title, value)} 
+                                                selectedValue={selectedOptions[opt.title] || ''}
+                                            />
+                                        )}
+                                    </React.Fragment>
+                                ))}
                             </div>
+                        ) : option.title.toLowerCase().includes('color') ? (
+                            <SelectColor 
+                                data={option} 
+                                onColorSelect={setSelectedColor} 
+                                selectedColor={selectedColor}
+                            />
+                        ) : (
+                            <SelectVarient 
+                                data={option} 
+                                optionType={option.title}
+                                onSelectionChange={(value) => handleOptionChange(option.title, value)} 
+                                selectedValue={selectedOptions[option.title] || ''}
+                            />
                         )}
                     </React.Fragment>
                 ))}
