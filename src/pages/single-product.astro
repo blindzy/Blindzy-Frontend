@@ -1,6 +1,6 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import Navbar from "@components/navbar/navbar-old";
+import Navbar from "@components/navbar/navbar";
 import SingleProductComponent from "@components/product/singleProduct";
 
 import Footer from "@components/Footer/Footer";
@@ -8,11 +8,7 @@ import Footer from "@components/Footer/Footer";
 ---
 
 <Layout>
-	<div class="smooth-wrapper">
-		<div class="smooth-content bg-white">
-            <Navbar client:load/>
-            <SingleProductComponent client:load/>
-            <Footer client:load/>
-		</div>
-	  </div>
+	<Navbar client:load logo={'dark'}/>
+	<SingleProductComponent client:load/>
+	<Footer client:load/>
 </Layout>

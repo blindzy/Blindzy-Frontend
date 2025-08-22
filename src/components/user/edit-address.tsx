@@ -79,7 +79,7 @@ export function EditAddress({ address, onAddressUpdate }) {
                     Edit
                 </Button>
             </DialogTrigger>
-            <DialogContent className="xl:max-w-[1178px] w-full">
+            <DialogContent className="xl:max-w-[61.354vw] w-full">
                 <DialogHeader>
                     <DialogTitle>Edit Address</DialogTitle>
                     <DialogClose asChild>
@@ -145,7 +145,7 @@ export function EditAddress({ address, onAddressUpdate }) {
                 </div>
                 <DialogFooter >
                     <DialogClose asChild>
-                        <Button variant={'light'} size={'smallest'} className="w-full sm:w-[200px]">
+                        <Button variant={'light'} size={'smallest'} className="w-full sm:w-[200px] sm:shrink-0 shrink">
                             Cancel
                         </Button>
                     </DialogClose>
@@ -153,7 +153,7 @@ export function EditAddress({ address, onAddressUpdate }) {
                         <Button 
                             variant={'primary'} 
                             size={'smallest'} 
-                            className="w-full sm:w-[200px]"
+                            className="w-full sm:w-[200px] sm:shrink-0 shrink"
                             onClick={handleSaveAddress}
                         >
                             Update Address

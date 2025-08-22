@@ -108,7 +108,7 @@ export function EditCard({ card, onCardUpdate }: Props) {
                     Edit
                 </Button>
         </DialogTrigger>
-            <DialogContent className="xl:max-w-[1178px] w-full">
+            <DialogContent className="xl:max-w-[61.354vw] w-full">
                 <DialogHeader>
                     <DialogTitle>Payment Details</DialogTitle>
                     <DialogClose asChild>
@@ -170,7 +170,7 @@ export function EditCard({ card, onCardUpdate }: Props) {
                 </div>
                 <DialogFooter >
                     <DialogClose asChild>
-                        <Button variant={'light'} size={'smallest'} className="w-full sm:w-[200px]">
+                        <Button variant={'light'} size={'smallest'} className="w-full sm:w-[200px] sm:shrink-0 shrink">
                             Cancel
                         </Button>
                     </DialogClose>
@@ -178,7 +178,7 @@ export function EditCard({ card, onCardUpdate }: Props) {
                         <Button 
                             variant={'primary'} 
                             size={'smallest'} 
-                            className="w-full sm:w-[200px]"
+                            className="w-full sm:w-[200px] sm:shrink-0 shrink" 
                             onClick={handleSaveCard}
                         >
                             Save

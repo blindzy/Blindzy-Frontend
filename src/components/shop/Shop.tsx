@@ -105,7 +105,7 @@ function Shop(props) {
                             (product.tags && product.tags.includes(selectedCategory))
                         )
                         .map((product) => (
-                            <ProductComponent key={product.id} data={product} size={size} />
+                            <ProductComponent key={product.id} data={product} size={size} customizePage={props.customizePage} />
                         ))
                     }
                 </div>

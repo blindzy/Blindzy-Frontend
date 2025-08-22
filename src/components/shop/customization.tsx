@@ -4,11 +4,9 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { Plus  } from 'lucide-react';
 import { Label } from "@lib/components/ui/label";
-import { Checkbox } from "@lib/components/ui/checkbox";
 import SelectColor from "./selectColor";
 import SelectVarient from "./selectVarient";
 import ProductCard from "./ProductCard";
-import { Button } from "@lib/components/ui/button";
 
 
 function Customization(props) {
@@ -41,7 +39,6 @@ function Customization(props) {
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
-        ScrollTrigger.normalizeScroll(true);
 
         if (lenis) {
             lenis.on('scroll', ScrollTrigger.update);
@@ -164,12 +161,14 @@ function Customization(props) {
                                     </React.Fragment>
                                 ))}
                             </div>
-                        ) : option.title.toLowerCase().includes('color') ? (
-                            <SelectColor 
-                                data={option} 
-                                onColorSelect={setSelectedColor} 
-                                selectedColor={selectedColor}
-                            />
+                        ) : 
+                        // option.title.toLowerCase().includes('color') ? (
+                        option.title.toLowerCase().includes('color') || option.title.toLowerCase().includes('colour') || option.title.toLowerCase().includes('fabric') ? (
+                                <SelectColor 
+                                    data={option} 
+                                    onColorSelect={setSelectedColor} 
+                                    selectedColor={selectedColor}
+                                />
                         ) : (
                             <SelectVarient 
                                 data={option} 

@@ -1,19 +1,13 @@
 ---
 import Layout from "@layouts/Layout.astro";
-import Navbar from "@components/navbar/navbar-old";
+import Navbar from "@components/navbar/navbar";
 import PrivacyPolicyComponent from "@components/policy/privacyPolicy";
 import Footer from "@components/Footer/Footer";
 
 ---
 
 <Layout>
-	<div class="smooth-wrapper">
-		<div class="smooth-content">
-			<div class="relative bg-white">
-				<Navbar client:load/>
-				<PrivacyPolicyComponent client:load/>
-				<Footer client:load/>
-			</div>
-		</div>
-	  </div>
+	<Navbar client:load logo="dark"/>
+	<PrivacyPolicyComponent client:load/>
+	<Footer client:load/>
 </Layout>

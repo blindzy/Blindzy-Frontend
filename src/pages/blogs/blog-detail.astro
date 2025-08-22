@@ -7,13 +7,8 @@ import Footer from "@components/Footer/Footer";
 ---
 
 <Layout>
-	<div class="smooth-wrapper">
-		<div class="smooth-content">
-			<div class="relative">
-				<Navbar client:load/>
-				<BlogDetailComponent client:load/>
-				<Footer client:load/>
-			</div>
-		</div>
+		<Navbar client:load logo="dark"/>
+		<BlogDetailComponent client:load/>
+		<Footer client:load/>
 	  </div>
 </Layout>

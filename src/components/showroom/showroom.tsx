@@ -149,12 +149,12 @@ function Showroom(props: ShowroomProps) {
                 <div className="w-full h-[1px] bg-mediumGrey"></div>
                 <Icon icon="uil:plus" className="text-[18px]" />
             </div>
-            <div className="relative grid items-stretch grid-cols-12 xl:gap-[0.833vw] sm:gap-[1.563vw] gap-4">
+            <div className="relative grid items-stretch grid-cols-12 xl:gap-[0.833vw] sm:gap-[1.563vw] gap-3">
                 {paginationData.currentItems.map((item, index) => (
                     <a 
                         key={`${item.id}-${currentPage}-${selectedCategory}`} 
                         href={item.href} 
-                        className="sm:col-span-4 col-span-12 rounded-48 overflow-hidden transition-transform duration-200 hover:scale-105"
+                        className="sm:col-span-4 col-span-6 rounded-48 overflow-hidden transition-transform duration-200 hover:scale-105"
                     >
                         <img 
                             src={item.image} 

@@ -35,42 +35,42 @@ function User() {
     };
     const [paymentDetail, setPaymentDetail] = useState<PaymentCard[]>([]);
     const [orderList, setOrderList] = useState([
-        // {
-        //     id: 1,
-        //     title: "Product Name",
-        //     thumbnail: '/images/categories/1.png',
-        //     price: { amount: 150, currency_code: 'usd' },
-        //     options: [
-        //         { id: 1, name: "Color:", value: "Ash" },
-        //         { id: 2, name: "Size:", value: "24cm x 56cm" },
-        //         { id: 3, name: "Fit Type:", value: "Recess Fit" },
-        //         { id: 4, name: "Roll Direction:", value: "Front Roll" },
-        //         { id: 5, name: "Chain Colour:", value: "Silver" },
-        //         { id: 6, name: "Bracket Colour:", value: "Sandstone" },
-        //         { id: 7, name: "Base Rail Shape:", value: "Oval" },
-        //         { id: 8, name: "Base Rail Colour:", value: "Bone" },
-        //     ],
-        //     date: "2023-01-01",
-        //     status: "Shipped",
-        // },
-        // {
-        //     id: 2,
-        //     title: "Product 2",
-        //     thumbnail: '/images/categories/2.png',
-        //     price: { amount: 100, currency_code: 'usd' },
-        //     options: [
-        //         { id: 1, name: "Color:", value: "Ash" },
-        //         { id: 2, name: "Size:", value: "24cm x 56cm" },
-        //         { id: 3, name: "Fit Type:", value: "Recess Fit" },
-        //         { id: 4, name: "Roll Direction:", value: "Front Roll" },
-        //         { id: 5, name: "Chain Colour:", value: "Silver" },
-        //         { id: 6, name: "Bracket Colour:", value: "Sandstone" },
-        //         { id: 7, name: "Base Rail Shape:", value: "Oval" },
-        //         { id: 8, name: "Base Rail Colour:", value: "Bone" },
-        //     ],
-        //     date: "2023-01-02",
-        //     status: "Pending"
-        // }
+        {
+            id: 1,
+            title: "Product Name",
+            thumbnail: '/images/categories/1.png',
+            price: { amount: 150, currency_code: 'usd' },
+            options: [
+                { id: 1, name: "Color:", value: "Ash" },
+                { id: 2, name: "Size:", value: "24cm x 56cm" },
+                { id: 3, name: "Fit Type:", value: "Recess Fit" },
+                { id: 4, name: "Roll Direction:", value: "Front Roll" },
+                { id: 5, name: "Chain Colour:", value: "Silver" },
+                { id: 6, name: "Bracket Colour:", value: "Sandstone" },
+                { id: 7, name: "Base Rail Shape:", value: "Oval" },
+                { id: 8, name: "Base Rail Colour:", value: "Bone" },
+            ],
+            date: "2023-01-01",
+            status: "Shipped",
+        },
+        {
+            id: 2,
+            title: "Product 2",
+            thumbnail: '/images/categories/2.png',
+            price: { amount: 100, currency_code: 'usd' },
+            options: [
+                { id: 1, name: "Color:", value: "Ash" },
+                { id: 2, name: "Size:", value: "24cm x 56cm" },
+                { id: 3, name: "Fit Type:", value: "Recess Fit" },
+                { id: 4, name: "Roll Direction:", value: "Front Roll" },
+                { id: 5, name: "Chain Colour:", value: "Silver" },
+                { id: 6, name: "Bracket Colour:", value: "Sandstone" },
+                { id: 7, name: "Base Rail Shape:", value: "Oval" },
+                { id: 8, name: "Base Rail Colour:", value: "Bone" },
+            ],
+            date: "2023-01-02",
+            status: "Pending"
+        }
     ]);
     const [currentTab, setCurrentTab] = useState("payment");
     const [show, setShow] = useState(true);
@@ -118,15 +118,15 @@ function User() {
   return (
         <div className="w-screen flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 overflow-hidden" id="user">
             
-            <div className="sticky top-0 xl:w-[480px] w-full xl:h-[calc(100vh-32px)] h-full flex flex-col justify-between gap-[48px] xl:p-[1.25vw] sm:p-[2.344vw] p-4 xl:pt-[48px] bg-primary rounded-48 text-white xl:shrink-0">
+            <div className="sticky top-0 xl:w-[25vw] w-full xl:h-[calc(100vh-32px)] h-full flex flex-col justify-between gap-[48px] xl:p-[1.25vw] sm:p-[2.344vw] p-4 xl:pt-[48px] bg-primary rounded-48 text-white xl:shrink-0">
                 <div className="w-full flex flex-col gap-[48px]">
                     <div className="w-full flex flex-col items-center gap-4">
-                        <div className="w-[150px] h-[150px] rounded-[100%]">
+                        <div className="xl:size-[7.813vw] sm:size-[150px] size-[88px] rounded-full">
                             <input type="file" className="hidden" id="user-image" accept=".jpg, .jpeg, .png"  />
                             <label htmlFor="user-image" className="relative w-full h-full flex items-center justify-center border border-[--white] rounded-[100%]">
-                                <Camera className="w-[50px] h-[50px] text-[--white]" />
-                                <div className="absolute right-[14px] bottom-[12px] w-[18px] h-[18px] bg-primary flex items-center justify-center">
-                                    <Plus className="size-[18px] text-[--white]" />
+                                <Camera className="xl:size-[2.5vw] sm:size-[48px] size-[26px] text-[--white]" />
+                                <div className="absolute xl:right-[0.729vw] sm:right-[14px] right-[6px] xl:bottom-[0.625vw] sm:bottom-[12px] bottom-[4px] xl:size-[0.938vw] size-[18px] bg-primary flex items-center justify-center">
+                                    <Plus className="sm:size-[18px] size-[14px] text-[--white]" />
                                 </div>
                             </label>
                         </div>
@@ -158,16 +158,16 @@ function User() {
                 </div>
             </div>
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-                <div className="w-full border border-[--Black] rounded-48 p-3 shrink-0">
+                <div className="w-full border border-[--Black] sm:rounded-[48px] rounded-full sm:p-3 p-1 shrink-0">
                     <div className="relative flex items-stretch">
-                        <span className={`absolute w-[33%] h-full top-0 left-0 rounded-full bg-[--primary] transition ${currentTab === 'orders'?'left-0':currentTab === 'address'?'left-[33%]':'left-[66%]'}`}/>
-                        <button className={`relative z-10 w-full p-6 text-center text-lg transition ${currentTab === 'orders'?'text-[--white]':'text-[--Black]'}`} onClick={() => handleTabChange('orders')}>
+                        <span className={`absolute w-[33%] h-full top-0 left-0 rounded-full bg-[--primary] transition ${currentTab === 'orders'?'left-0':currentTab === 'address'?'left-[33%]':'left-[67%]'}`}/>
+                        <button className={`relative z-10 w-full sm:p-6 p-4 text-center xl:text-[1.458vw] sm:text-[2.734vw] text-[12px] sm:font-extrabold font-normal sm:font-plus font-roboto leading-snug transition ${currentTab === 'orders'?'text-[--white]':'text-[--Black]'}`} onClick={() => handleTabChange('orders')}>
                             Order History
                         </button>
-                        <button className={`relative z-10 w-full p-6 text-center text-lg transition ${currentTab === 'address'?'text-[--white]':'text-[--Black]'}`} onClick={() => handleTabChange('address')}>
+                        <button className={`relative z-10 w-full sm:p-6 p-4 text-center xl:text-[1.458vw] sm:text-[2.734vw] text-[12px] sm:font-extrabold font-normal sm:font-plus font-roboto leading-snug transition ${currentTab === 'address'?'text-[--white]':'text-[--Black]'}`} onClick={() => handleTabChange('address')}>
                             Address Book
                         </button>
-                        <button className={`relative z-10 w-full p-6 text-center text-lg transition ${currentTab === 'payment'?'text-[--white]':'text-[--Black]'}`} onClick={() => handleTabChange('payment')}>
+                        <button className={`relative z-10 w-full sm:p-6 p-4 text-center xl:text-[1.458vw] sm:text-[2.734vw] text-[12px] sm:font-extrabold font-normal sm:font-plus font-roboto leading-snug transition ${currentTab === 'payment'?'text-[--white]':'text-[--Black]'}`} onClick={() => handleTabChange('payment')}>
                             Payment Options
                         </button>
                     </div>

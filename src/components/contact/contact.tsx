@@ -89,12 +89,12 @@ function Contact(props: ContactProps) {
 
 	return (
         <div className="relative w-screen flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-2 xl:pt-0 sm:pt-0 pt-0 overflow-hidden" id="contact-us">
-            <div className="w-full border border-[--Black] p-4 text-center rounded-[48px]">
+            <div className="w-full border border-[--Black] p-4 text-center rounded-48">
                 <h1 className="text-1xl text-black">CONTACT US</h1>
             </div>
-            <div className="flex items-stretch xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
-                <div className="w-[575px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-[48px]">
-                    <h4 className="text-xl uppercase">Contact METHODS</h4>
+            <div className="flex xl:flex-row flex-col items-stretch xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
+                <div className="xl:w-[29.948vw] w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-48 shrink-0 ">
+                    <h4 className="text-xl uppercase sm:text-left text-center">Contact METHODS</h4>
                     <div className="flex items-center gap-2 shrink-0 text-mediumGrey">
                         <Icon icon="uil:plus" className="text-[18px]" />
                         <div className="w-full h-[1px] bg-mediumGrey"></div>
@@ -130,8 +130,8 @@ function Contact(props: ContactProps) {
                         </div>
                     </div>
                 </div>
-                <div className="w-full flex flex-col xl:gap-[48px] xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-[48px]">
-                    <div className="flex flex-col gap-4">
+                <div className="w-full flex flex-col xl:gap-[2.5px] gap-6 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-48">
+                    <div className="flex flex-col gap-4 sm:text-left text-center">
                         <h4 className="text-xl uppercase">Fill Out The Form to Contact us</h4>
                         <p className="text-sm">Lorem ipsum dolor sit amet consectetur nunc faucibus ut ornare.</p>
                         
@@ -216,7 +216,7 @@ function Contact(props: ContactProps) {
                                     type="submit" 
                                     variant={"primary"}
                                     size={'smallest'}
-                                    className="w-fit "
+                                    className="sm:w-fit w-full"
                                     disabled={loading}
                                 >
                                     {loading ? 'Sending...' : 'Send Message'}

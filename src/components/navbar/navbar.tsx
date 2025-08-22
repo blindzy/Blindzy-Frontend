@@ -44,11 +44,11 @@ function Navbar(props: NavbarProps) {
             dropdown : [
                 {
                     Name : 'curtains',
-                    Link : '/shop'
+                    Link : '/curtains/single'
                 },
                 {
                     Name : 'Double Curtains',
-                    Link : '/shop'
+                    Link : '/curtains/double'
                 }
             ]
         },
@@ -58,15 +58,15 @@ function Navbar(props: NavbarProps) {
             dropdown: [
                 {
                     Name : 'Blinds',
-                    Link : '/shop'
+                    Link : '/blinds/single'
                 },
                 {
                     Name : 'Vertical Blinds',
-                    Link : '/shop'
+                    Link : '/blinds/vertical'
                 },
                 {
                     Name : 'Double Roller Blinds',
-                    Link : '/shop'
+                    Link : '/blinds/double'
                 }
             ]
         },
@@ -153,17 +153,17 @@ function Navbar(props: NavbarProps) {
                     <Button variant={'light'} size={'xl'} className="border-none rounded-full xl:flex hidden" asChild>
                         <a href="/login" >
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
-                                <path d="M9 7.25C10.5188 7.25 11.75 6.01878 11.75 4.5C11.75 2.98122 10.5188 1.75 9 1.75C7.48122 1.75 6.25 2.98122 6.25 4.5C6.25 6.01878 7.48122 7.25 9 7.25Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M13.7621 15.516C14.6221 15.245 15.0741 14.295 14.7091 13.471C13.7391 11.28 11.5501 9.75 9.00011 9.75C6.45011 9.75 4.26111 11.28 3.29111 13.471C2.92611 14.296 3.37811 15.245 4.23811 15.516C5.46311 15.902 7.08411 16.25 9.00011 16.25C10.9161 16.25 12.5371 15.902 13.7621 15.516Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M9 7.25C10.5188 7.25 11.75 6.01878 11.75 4.5C11.75 2.98122 10.5188 1.75 9 1.75C7.48122 1.75 6.25 2.98122 6.25 4.5C6.25 6.01878 7.48122 7.25 9 7.25Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                                <path d="M13.7621 15.516C14.6221 15.245 15.0741 14.295 14.7091 13.471C13.7391 11.28 11.5501 9.75 9.00011 9.75C6.45011 9.75 4.26111 11.28 3.29111 13.471C2.92611 14.296 3.37811 15.245 4.23811 15.516C5.46311 15.902 7.08411 16.25 9.00011 16.25C10.9161 16.25 12.5371 15.902 13.7621 15.516Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                             </svg>
                         </a>
                     </Button>
                     <Button variant={'light'} size={'xl'} className="open__cartPopup border-none rounded-full">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-                            <path d="M15.75 17.5L18.25 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M24.25 17.5L21.75 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M26 17.5L25.403 24.666C25.317 25.703 24.45 26.5 23.41 26.5H16.59C15.55 26.5 14.683 25.703 14.597 24.666L14 17.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M12.75 17.5H27.25" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M15.75 17.5L18.25 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M24.25 17.5L21.75 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M26 17.5L25.403 24.666C25.317 25.703 24.45 26.5 23.41 26.5H16.59C15.55 26.5 14.683 25.703 14.597 24.666L14 17.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                            <path d="M12.75 17.5H27.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         </svg>
                     </Button>
                     <button className={`hamburger ${isSidebarOpen&&'show'}`} onClick={handleMenu}>

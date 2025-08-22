@@ -40,7 +40,7 @@ function SelectVarient(props) {
                 <h2 className="text-lg">{optionTitle}</h2>
                 <p className="text-sm">{optionDescription}</p>
             </div>
-            <RadioGroup className="w-full flex flex-wrap items-stretch gap-2" value={props.selectedValue || selected} onValueChange={handleSelectionChange}>
+            <RadioGroup className="w-full flex xl:flex-nowrap flex-wrap items-stretch gap-2" value={props.selectedValue || selected} onValueChange={handleSelectionChange}>
                 {options.map((option, index) => (
                     <div key={index} className="w-full max-w-[48%] flex items-center justify-between">
                         <RadioGroupItem value={option.label} id={`${optionTitle}-${option.label}-${index}`} className="hidden" />

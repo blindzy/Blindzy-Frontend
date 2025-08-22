@@ -1,0 +1,275 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Navbar from "@components/navbar/navbar";
+import InnerBanner from "@components/inner-banner/innerBanner";
+import ShopComponent from "@components/shop/Shop";
+import Footer from "@components/Footer/Footer";
+
+const products = [
+  {
+    id: '1',
+    title: 'Premium Plantation Shutters',
+    handle: 'premium-plantation-shutters',
+    description:
+      'High-quality timber plantation shutters with adjustable louvers for perfect light control.',
+    status: 'published',
+    type: "double",
+    thumbnail: '/images/categories/1.png',
+    images: [
+      { id: 'img1', url: '/images/categories/1.png' }
+    ],
+    categories: [
+      { id: 'cat1', name: 'Shutters', handle: 'shutters' }
+    ],
+    price: { amount: 150, currency_code: 'usd' },
+    
+    // ✅ Options array with colors and variants
+    options: [
+      {
+        id: 'opt1',
+        title: 'Setup',
+        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        values: [
+          { label: 'Blockout in Front', image: '/images/custom/blockout-front.png' },
+          { label: 'Sheer in Front', image: '/images/custom/sheer-front.png' },
+        ]
+      },
+      {
+        id: 'opt2',
+        title: 'Blockout Options',
+        options: [
+            {
+                id: 'opt1',
+                title: 'Blackout Fabric',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: 'White', image: '/images/colors/01.png' },
+                    { label: 'Grey', image: '/images/colors/02.png' },
+                    { label: 'Black', image: '/images/colors/03.png' },
+                    { label: 'Oak', image: '/images/colors/04.png' },
+                    { label: 'Walnut', image: '/images/colors/05.png' },
+                    { label: 'Charcoal', image: '/images/colors/06.png' },
+                ]
+            },  
+            {
+                id: 'opt2',
+                title: 'Blackout Color',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: 'White', image: '/images/colors/01.png' },
+                    { label: 'Grey', image: '/images/colors/02.png' },
+                    { label: 'Black', image: '/images/colors/03.png' },
+                    { label: 'Oak', image: '/images/colors/04.png' },
+                    { label: 'Walnut', image: '/images/colors/05.png' },
+                    { label: 'Charcoal', image: '/images/colors/06.png' },
+                ]
+            },
+            {
+                id: 'opt3',
+                title: 'Blockout Curtain Style',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: 'S Fold', image: '/images/custom/s-fold.jpg' },
+                    { label: 'Triple Pinch Pleat', image: '/images/custom/pinch.jpg' },
+                    { label: 'Pencil Pleat', image: '/images/custom/pencil-pleat.jpg' },
+                ]
+            },
+            {
+                id: 'opt4',
+                title: 'Blockout Hem',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: '70mm Hem', image: '/images/custom/70mm.png' },
+                ]
+            },
+        ],
+        values: [
+          { label: 'Blockout in Front', image: '/images/custom/blockout-front.png' },
+          { label: 'Sheer in Front', image: '/images/custom/sheer-front.png' },
+        ]
+      },
+      {
+        id: 'opt3',
+        title: 'Sheer Options',
+        options: [
+            {
+                id: 'opt1',
+                title: 'Sheer Fabric',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: 'White', image: '/images/colors/01.png' },
+                    { label: 'Grey', image: '/images/colors/02.png' },
+                    { label: 'Black', image: '/images/colors/03.png' },
+                    { label: 'Oak', image: '/images/colors/04.png' },
+                    { label: 'Walnut', image: '/images/colors/05.png' },
+                    { label: 'Charcoal', image: '/images/colors/06.png' },
+                ]
+            },  
+            {
+                id: 'opt2',
+                title: 'Sheer Colour',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: 'White', image: '/images/colors/01.png' },
+                    { label: 'Grey', image: '/images/colors/02.png' },
+                    { label: 'Black', image: '/images/colors/03.png' },
+                    { label: 'Oak', image: '/images/colors/04.png' },
+                    { label: 'Walnut', image: '/images/colors/05.png' },
+                    { label: 'Charcoal', image: '/images/colors/06.png' },
+                ]
+            },
+            {
+                id: 'opt3',
+                title: 'Sheer Curtain Style',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: 'S Fold', image: '/images/custom/s-fold.jpg' },
+                    { label: 'Triple Pinch Pleat', image: '/images/custom/pinch.jpg' },
+                    { label: 'Pencil Pleat', image: '/images/custom/pencil-pleat.jpg' },
+                ]
+            },
+            {
+                id: 'opt4',
+                title: 'Sheer Hem',
+                description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+                values: [
+                    { label: 'Lead Weight', image: '/images/custom/lead-weight.png' },
+                    { label: '70mm Hem', image: '/images/custom/70mm.png' },
+                ]
+            },
+        ],
+        values: [
+          { label: 'Blockout in Front', image: '/images/custom/blockout-front.png' },
+          { label: 'Sheer in Front', image: '/images/custom/sheer-front.png' },
+        ]
+      },
+      {
+        id: 'opt4',
+        title: 'Fitting Type',
+        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        values: [
+          { label: 'Left', image: '/images/custom/fitting-left.jpg' },
+          { label: 'Right', image: '/images/custom/fitting-right.jpg' },
+        ]
+      },
+      {
+        id: 'opt5',
+        title: 'Select Fit',
+        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        values: [
+          { label: 'Fit', image: '/images/custom/fit.jpg' },
+          { label: 'Recess', image: '/images/custom/racess.jpg' },
+        ]
+      },
+      {
+        id: 'opt6',
+        title: 'Track Type',
+        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        values: [
+          { label: 'Designer', image: '/images/custom/designer.png' },
+          { label: 'Residential', image: '/images/custom/residential.png' },
+        ]
+      },
+      {
+        id: 'opt7',
+        title: 'Curtain Stack',
+        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        values: [
+          { label: 'Left Stack', image: '/images/custom/left-stack.jpg' },
+          { label: 'Right Stack', image: '/images/custom/right-stack.jpg' },
+          { label: 'Centre Opening', image: '/images/custom/center-opening.jpg' },
+        ]
+      },
+      {
+        id: 'opt8',
+        title: 'Wand Length',
+        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        values: [
+          { label: '910mm', image: '/images/custom/wand-length.png' },
+          { label: '1220mm', image: '/images/custom/wand-length.png' },
+          { label: '1520mm', image: '/images/custom/wand-length.png' },
+        ]
+      },
+      {
+        id: 'opt9',
+        title: 'Choose Your Track',
+        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        values: [
+          { label: 'White', image: '/images/custom/track-white.png' },
+          { label: 'Black', image: '/images/custom/track-black.png' },
+        ]
+      },
+    ],
+
+    // ✅ Variants for each color
+    variants: [
+      {
+        id: 'v1',
+        title: 'White',
+        sku: 'SHUT-001-WHITE',
+        prices: [{ amount: 0, currency_code: 'usd' }],
+        options: { Color: 'White' },
+        inventory_quantity: 10,
+        image: '/images/colors/01.png'
+      },
+      {
+        id: 'v2',
+        title: 'Grey',
+        sku: 'SHUT-001-GREY',
+        prices: [{ amount: 0, currency_code: 'usd' }],
+        options: { Color: 'Grey' },
+        inventory_quantity: 8,
+        image: '/images/colors/02.png'
+      },
+      {
+        id: 'v3',
+        title: 'Black',
+        sku: 'SHUT-001-BLACK',
+        prices: [{ amount: 0, currency_code: 'usd' }],
+        options: { Color: 'Black' },
+        inventory_quantity: 12,
+        image: '/images/colors/03.png'
+      },
+      {
+        id: 'v4',
+        title: 'Oak',
+        sku: 'SHUT-001-OAK',
+        prices: [{ amount: 300, currency_code: 'usd' }],
+        options: { Color: 'Oak' },
+        inventory_quantity: 5,
+        image: '/images/colors/04.png'
+      },
+      {
+        id: 'v5',
+        title: 'Walnut',
+        sku: 'SHUT-001-WALNUT',
+        prices: [{ amount: 300, currency_code: 'usd' }],
+        options: { Color: 'Walnut' },
+        inventory_quantity: 7,
+        image: '/images/colors/05.png'
+      },
+      {
+        id: 'v6',
+        title: 'Charcoal',
+        sku: 'SHUT-001-CHARCOAL',
+        prices: [{ amount: 0, currency_code: 'usd' }],
+        options: { Color: 'Charcoal' },
+        inventory_quantity: 6,
+        image: '/images/colors/06.png'
+      }
+    ],
+
+    tags: 'light-filtering',
+    created_at: '',
+    updated_at: ''
+  },
+];
+
+---
+
+<Layout>
+      <Navbar client:load logo="dark"/>
+      <InnerBanner client:load title="BLINDS SHOP" content="Beautiful Designer Blinds Cou Can Install in 20 Minutes"/>
+      <ShopComponent client:load data={products} customizePage="blinds"/>
+      <Footer client:visible/>
+</Layout>
