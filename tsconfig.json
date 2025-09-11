@@ -14,5 +14,6 @@
       "@styles/*": ["styles/*"],
       "@pages/*": ["pages/*"]
     }
-  }
+  },
+  "exclude": ["strapi-cms/**/*"]
 }
