@@ -7,6 +7,8 @@ import { Label } from "@lib/components/ui/label";
 import SelectColor from "./selectColor";
 import SelectVarient from "./selectVarient";
 import ProductCard from "./ProductCard";
+import { Checkbox } from "@lib/components/ui/checkbox";
+import { Button } from "@lib/components/ui/button";
 
 
 function Customization(props) {
@@ -144,7 +146,7 @@ function Customization(props) {
                                             <div className="w-full border-b border-[--mediumGrey]"></div>
                                             <Plus className="size-[18px]" />
                                         </div>
-                                        {opt.title.toLowerCase().includes('color') || opt.title.toLowerCase().includes('colour') || opt.title.toLowerCase().includes('fabric') ? (
+                                        {opt.type === 'color'? (
                                             <SelectColor 
                                                 data={opt} 
                                                 onColorSelect={setSelectedColor} 
@@ -163,7 +165,7 @@ function Customization(props) {
                             </div>
                         ) : 
                         // option.title.toLowerCase().includes('color') ? (
-                        option.title.toLowerCase().includes('color') || option.title.toLowerCase().includes('colour') || option.title.toLowerCase().includes('fabric') ? (
+                        option.type === 'color' ? (
                                 <SelectColor 
                                     data={option} 
                                     onColorSelect={setSelectedColor} 
@@ -179,6 +181,42 @@ function Customization(props) {
                         )}
                     </React.Fragment>
                 ))}
+                <div className="flex items-center gap-2 shrink-0 text-[--Black]">
+                    <Plus className="size-[18px]" />
+                    <div className="w-full border-b border-[--Black]"></div>
+                    <Plus className="size-[18px]" />
+                </div>
+                <div className="flex items-center justify-between">
+                    <h5 className="text-lg">TOTAL PRICE</h5>
+                    <h5 className="text-lg">
+                        {(() => {
+                        const code = productData.price.currency_code?.toLowerCase();
+                        let symbol = '';
+                        switch (code) {
+                            case 'usd': symbol = '$'; break;
+                            case 'aud': symbol = 'A$'; break;
+                            case 'gbp': symbol = '£'; break;
+                            case 'eur': symbol = '€'; break;
+                            case 'inr': symbol = '₹'; break;
+                            case 'nzd': symbol = 'NZ$'; break;
+                            default: symbol = code ? code.toUpperCase() + ' ' : '';
+                        }
+                        return symbol + totalPrice;
+                    })()}
+                    </h5>
+                </div>
+                <div className="flex items-center gap-2">
+                    <Checkbox id="measurements-checked"/>
+                    <label htmlFor="measurements-checked" className="text-sm normal">I have double checked my measurements and customisations</label>
+                </div>
+                <div className="flex items-center gap-4">
+                    <Button variant={'primary'} size={'large'} className="w-full flex-1">
+                        Add to Cart
+                    </Button>
+                    <Button variant={'light'} size={'large'} className="w-full flex-1">
+                        Buy Now
+                    </Button>
+                </div>
             </div>
             <ProductCard 
                 productData={productData}
