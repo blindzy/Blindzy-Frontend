@@ -3,12 +3,14 @@ import { useEffect, useRef, useState } from "react";
 import { Icon } from '@iconify/react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { useParams } from "react-router"
 import { useLenis } from '../../hooks/useLenis';
-
 interface BlogDetailProps {
+
 	// Add any props if needed in the future
 }
 function BlogDetail(props: BlogDetailProps) {
+    const blogId = useParams().id;
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
 	const lenis = isDesktop ? useLenis() : null;
 

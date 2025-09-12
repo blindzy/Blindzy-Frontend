@@ -1,8 +1,8 @@
 
 import * as React from "react";
 import { useEffect, useRef, useState } from "react";
-import { ChevronDown , X , Plus  } from 'lucide-react';
-import { Button } from "@lib/components/ui/button";
+import { ChevronDown, X, Plus } from 'lucide-react';
+import { Button } from "../../lib/components/ui/button";
 import './css/style.css';
 
 declare global {
