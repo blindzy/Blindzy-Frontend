@@ -1,2 +1,1 @@
-# Astro Starter Kit: Basics
-
+Blinzy
