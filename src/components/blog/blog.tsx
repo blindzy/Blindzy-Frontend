@@ -6,7 +6,7 @@ import { useLenis } from '../../hooks/useLenis';
 import { Plus } from 'lucide-react';
 import { Button } from "@lib/components/ui/button";
 import { fetchBlogs } from "@lib/lib/strapi";
-import ReactMarkdown from 'react-markdown';
+// import ReactMarkdown from 'react-markdown';
 
 
 interface BlogProps {
@@ -169,9 +169,9 @@ function Blog(props: BlogProps) {
                                     <p className="text-sm shrink-0">{item.date}</p>
                                 </div>
                                 <div className="text-sm line-clamp-3">
-                                    <ReactMarkdown components={markdownComponents}>
+                                    {/* <ReactMarkdown components={markdownComponents}>
                                         {item.description}
-                                    </ReactMarkdown>
+                                    </ReactMarkdown> */}
                                 </div>
                             </div>
                             <Button variant="primary" size={'large'} className="hidden xl:flex w-fit">
