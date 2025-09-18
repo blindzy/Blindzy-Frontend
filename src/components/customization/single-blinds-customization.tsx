@@ -9,6 +9,8 @@ import { Checkbox } from "@lib/components/ui/checkbox";
 import { Button } from "@lib/components/ui/button";
 import Separate from "@components/separate";
 import Measurement from "./measurement";
+import { Label } from "@lib/components/ui/label";
+
 
 const productOptions = [
     {
@@ -153,6 +155,17 @@ function Single_blinds_customization(props) {
         );
     }, [selectedColor, chainColour, bracketColour, baseRailColour]);
 
+    // Update size in data array when measurements change
+    useEffect(() => {
+        setData(prev => 
+            prev.map(item => 
+                item.title === 'Size'
+                    ? { ...item, value: measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : '' }
+                    : item
+            )
+        );
+    }, [measurements.width, measurements.height]);
+
     // Helper function to get the right color setter
     const getColorSetter = (optionTitle) => {
         switch(optionTitle) {
@@ -211,7 +224,7 @@ function Single_blinds_customization(props) {
         <section className="w-screen flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-[64px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="ProductDetail">
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-6 xl:pb-[5.833vw]">
                 <div className="w-full flex flex-col gap-2 text-[--Black]">
-                    <h2 className="text-xl">Curtain Customisations</h2>
+                    <h2 className="text-xl">BLINDS Customisations</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
                 <Separate/>
@@ -219,7 +232,38 @@ function Single_blinds_customization(props) {
                     <h2 className="text-lg">Enter Measurements</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
-                <Measurement measurements={measurements} setMeasurements={setMeasurements} />
+                <div className="grid grid-cols-12 sm:gap-4 gap-x-2 gap-y-4">
+                    <div className="sm:col-span-4 col-span-12 flex items-center gap-2 p-2 sm:py-4 xl:py-[0.833vw] px-3 bg-[--white] border border-[--lightGrey] rounded-full">
+                        <Label htmlFor="roomName" className="text-sm normal shrink-0">Room Name:</Label>
+                        <input 
+                            type="text" 
+                            id="roomName" 
+                            value={measurements.roomName}
+                            onChange={(e) => setMeasurements(prev => ({...prev, roomName: e.target.value}))}
+                            className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
+                        />
+                    </div>
+                    <div className="sm:col-span-4 col-span-6 flex items-center gap-2 p-2 sm:py-4 xl:py-[0.833vw] px-3 bg-[--white] border border-[--lightGrey] rounded-full">
+                        <Label htmlFor="width" className="text-sm normal shrink-0">Width: <span className="text-xs">(m)</span></Label>
+                        <input 
+                            type="number" 
+                            id="width" 
+                            value={measurements.width}
+                            onChange={(e) => setMeasurements(prev => ({...prev, width: Number(e.target.value)}))}
+                            className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
+                        />
+                    </div>
+                    <div className="sm:col-span-4 col-span-6 flex items-center gap-2 p-2 sm:py-4 xl:py-[0.833vw] px-3 bg-[--white] border border-[--lightGrey] rounded-full">
+                        <Label htmlFor="height" className="text-sm normal shrink-0">Height: <span className="text-xs">(m)</span></Label>
+                        <input 
+                            type="number" 
+                            id="height" 
+                            value={measurements.height}
+                            onChange={(e) => setMeasurements(prev => ({...prev, height: Number(e.target.value)}))}
+                            className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
+                        />
+                    </div>
+                </div>
                 {productData?.options?.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate/>

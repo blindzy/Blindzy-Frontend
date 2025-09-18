@@ -12,93 +12,30 @@ import Measurement from "./measurement";
 
 
 const productOptions = [
-    {
-        id: 1,
-        title: 'Fitting Type',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
-        values: [
-          { label: 'Left', image: '/images/custom/fitting-left.jpg' },
-          { label: 'Right', image: '/images/custom/fitting-right.jpg' },
-        ]
-    },
+    
     {
         id: 1,
         title: 'Select Fit',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
-          { label: 'Fit', image: '/images/custom/fit.jpg' },
-          { label: 'Recess', image: '/images/custom/racess.jpg' },
+          { label: 'Fit', image: '/images/custom/blind-fit-left.png' },
+          { label: 'Recess', image: '/images/custom/blind-fit-right.png' },
         ]
     },
     {
         id: 1,
-        title: 'Curtain Stack',
+        title: 'Hinge Colour',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
-          { label: 'Left Stack', image: '/images/custom/left-stack.jpg' },
-          { label: 'Right Stack', image: '/images/custom/right-stack.jpg' },
-          { label: 'Centre Opening', image: '/images/custom/center-opening.jpg' },
-        ]
-    },
-    {
-        id: 1,
-        title: 'Curtain Style',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
-        values: [
-          { label: 'S Fold', image: '/images/custom/s-fold.jpg' },
-          { label: 'Triple Pinch Pleat', image: '/images/custom/pinch.jpg' },
-          { label: 'Pencil Pleat', image: '/images/custom/pencil-pleat.jpg' },
-        ]
-    },
-    {
-        id: 1,
-        title: 'Curtain Hem',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
-        values: [
-          { label: 'Lead Weight', image: '/images/custom/lead-weight.png' },
-          { label: '70mm Hem', image: '/images/custom/70mm.png' },
-        ]
-    },
-    {
-        id: 1,
-        title: 'Track Type',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
-        values: [
-          { label: 'Designer', image: '/images/custom/designer.png' },
-          { label: 'Residential', image: '/images/custom/residential.png' },
-        ]
-    },
-    {
-        id: 1,
-        title: 'Wand Length',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
-        values: [
-          { label: '910mm', image: '/images/custom/wand-length.png' },
-          { label: '1220mm', image: '/images/custom/wand-length.png' },
-          { label: '1520mm', image: '/images/custom/wand-length.png' },
-        ]
-    },
-    {
-        id: 1,
-        title: 'Track Colour',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
-        values: [
-          { label: 'White', image: '/images/custom/track-white.png' },
-          { label: 'Black', image: '/images/custom/track-black.png' },
-        ]
-    },
-    {
-        id: 1,
-        title: 'Bracket Style',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
-        values: [
-          { label: 'Standard', image: '/images/custom/standard.png' },
-          { label: 'Extension', image: '/images/custom/extension.png' },
+          { label: 'White', image: '/images/custom/hinge-white.png' },
+          { label: 'Beige', image: '/images/custom/hinge-beige.png' },
+          { label: 'Chrome', image: '/images/custom/hinge-chrome.png' },
+          { label: 'Anodised Silver', image: '/images/custom/hinge-anodised-silver.png' },
         ]
     },
 ]
 
-function Single_curtain_customization(props) {
+function Shutters_customization(props) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
     const [measurements, setMeasurements] = useState({ roomName: '', width: 1, height: 1 });
@@ -106,15 +43,8 @@ function Single_curtain_customization(props) {
     const [data, setData] = useState([
         {'title': 'Colour', 'value': selectedColor},
         {'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : ''},
-        {'title': 'Fitting Type', 'value': ''},
         {'title': 'Select Fit', 'value': ''},
-        {'title': 'Curtain Stack', 'value': ''},
-        {'title': 'Curtain Style', 'value': ''},
-        {'title': 'Curtain Hem', 'value': ''},
-        {'title': 'Track Type', 'value': ''},
-        {'title': 'Wand Length', 'value': ''},
-        {'title': 'Track Colour', 'value': ''},
-        {'title': 'Bracket Style', 'value': ''},
+        {'title': 'Hinge Colour', 'value': ''},
     ]);
     
     const [dynamicPricing, setDynamicPricing] = useState(false);
@@ -157,6 +87,17 @@ function Single_curtain_customization(props) {
         );
     }, [selectedColor]);
 
+    // Update size in data array when measurements change
+    useEffect(() => {
+        setData(prev => 
+            prev.map(item => 
+                item.title === 'Size'
+                    ? { ...item, value: measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : '' }
+                    : item
+            )
+        );
+    }, [measurements.width, measurements.height]);
+
     // Auto-calculate price when measurements change
     useEffect(() => {
         if (measurements.width && measurements.height) {
@@ -195,7 +136,7 @@ function Single_curtain_customization(props) {
         <section className="w-screen flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-[64px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="ProductDetail">
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-6 xl:pb-[5.833vw]">
                 <div className="w-full flex flex-col gap-2 text-[--Black]">
-                    <h2 className="text-xl">{props.type ? props.type : 'Curtain'} Customisations</h2>
+                    <h2 className="text-xl">Shutters Customisations</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
                 <Separate/>
@@ -268,5 +209,5 @@ function Single_curtain_customization(props) {
     );
 }
 
-export default Single_curtain_customization;
+export default Shutters_customization;
 

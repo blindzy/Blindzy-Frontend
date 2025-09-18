@@ -1,10 +1,4 @@
 ﻿import React, { useEffect, useRef } from "react";
-// import gsap from "gsap";
-// import './css/style.css';
-
-interface ProductsProps {
-	// Add any props if needed in the future
-}
 
 const productsData = [
 	{
@@ -13,7 +7,7 @@ const productsData = [
 		description: "Sleek and versatile, offering a simple and stylish way to control light and privacy in any room.",
 		image: "/images/product/blinds.png",
 		backgroundImage: "/images/product/product1.jpg",
-		link: "/shop"
+		link: "/blinds/single"
 	},
 	{
 		id: 2,
@@ -21,7 +15,7 @@ const productsData = [
 		description: "Offering a classic and elegant way to enhance privacy, control light, and add style to any room.",
 		image: "/images/product/curtain.png",
 		backgroundImage: "/images/product/product2.jpg",
-		link: "/shop"
+		link: "/curtains/single"
 	},
 	{
 		id: 3,
@@ -29,11 +23,11 @@ const productsData = [
 		description: "Plantation shutters are durable, louvered window coverings, designed to provide excellent light control, privacy, and a timeless, sophisticated look for any space.",
 		image: "/images/product/shutters.png",
 		backgroundImage: "/images/product/product3.jpg",
-		link: "/shop"
+		link: "/shutters"
 	}
 ];
 
-function Products(props: ProductsProps) {
+function Products() {
 	return (
 		<section className="product-section relative w-screen xl:h-screen flex items-center justify-center z-[10] xl:py-0 sm:py-[6.25vw] py-[64px]" id="product">
             <div className="w-full flex items-center xl:justify-center xl:gap-[1.25vw] sm:gap-[16px] gap-4 xl:px-[1.25vw] sm:px-6 px-2 xl:overflow-hidden overflow-auto scroll-hidden">

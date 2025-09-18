@@ -12,8 +12,6 @@ const products = [
     handle: 'premium-plantation-shutters',
     description:
       'High-quality timber plantation shutters with adjustable louvers for perfect light control.',
-    status: 'published',
-    type: "double",
     thumbnail: '/images/categories/1.png',
     images: [
       { id: 'img1', url: '/images/categories/1.png' }
@@ -27,7 +25,8 @@ const products = [
     options: [
       {
         id: 'opt1',
-        title: 'Color',
+        title: 'Fabric',
+        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
           { label: 'White', image: '/images/colors/01.png' },
           { label: 'Grey', image: '/images/colors/02.png' },
@@ -101,7 +100,7 @@ const products = [
 
 <Layout>
       <Navbar client:load logo="dark"/>
-      <InnerBanner client:load title="Double Curtains SHOP" content="Beautiful Designer Double Curtains You Can Install in 20 Minutes"/>
-      <ShopComponent client:load data={products} customizePage="curtains"/>
+      <InnerBanner client:load title="Shutters SHOP" content="Beautiful Designer shutters You Can Install in 20 Minutes"/>
+      <ShopComponent client:load data={products} customizePage="shutters"/>
       <Footer client:visible/>
-</Layout>
+</Layout> 

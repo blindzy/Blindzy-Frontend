@@ -1,11 +1,14 @@
 ---
+
+
 import Layout from "@layouts/Layout.astro";
 import Navbar from "@components/navbar/navbar";
-import InnerBanner from "@components/inner-banner/innerBanner";
-import ShopComponent from "@components/shop/Shop";
 import Footer from "@components/Footer/Footer";
+import Shutters_customization from "@components/customization/shutters-customization";
+const { slug } = Astro.params;
+const safeSlug = String(slug);
 
-const products = [
+const sampleProducts = [
   {
     id: '1',
     title: 'Premium Plantation Shutters',
@@ -13,7 +16,7 @@ const products = [
     description:
       'High-quality timber plantation shutters with adjustable louvers for perfect light control.',
     status: 'published',
-    type: "double",
+    type: "single",
     thumbnail: '/images/categories/1.png',
     images: [
       { id: 'img1', url: '/images/categories/1.png' }
@@ -96,12 +99,10 @@ const products = [
     updated_at: ''
   },
 ];
-
 ---
 
 <Layout>
-      <Navbar client:load logo="dark"/>
-      <InnerBanner client:load title="Double Curtains SHOP" content="Beautiful Designer Double Curtains You Can Install in 20 Minutes"/>
-      <ShopComponent client:load data={products} customizePage="curtains"/>
-      <Footer client:visible/>
+    <Navbar client:load logo={'dark'} />
+    <Shutters_customization client:load data={sampleProducts[0]} />
+    <Footer client:load />
 </Layout>

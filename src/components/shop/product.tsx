@@ -65,7 +65,7 @@ function ProductComponent(props) {
                 </div>
                 <Button variant={'primary'} size={'small'} asChild>
                     {/* <a href={getCustomizationPage(product)} > */}
-                    <a href={`/${props.customizePage}/${props.data.type}/detail`}>
+                    <a href={`/${props.customizePage}${props.data.type ? `/${props.data.type}` : ''}/detail`}>
                         Customise
                     </a>
                 </Button>

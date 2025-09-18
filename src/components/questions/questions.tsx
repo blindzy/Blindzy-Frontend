@@ -37,7 +37,7 @@ function Questions(props: QuestionsProps) {
                         <img src="/images/questions/1.png" className="w-full xl:h-fit h-full object-cover" alt="" />
                         <div className="absolute left-0 top-0 size-full flex flex-col justify-between items-end xl:p-[1.25vw] sm:p-[2.344vw] p-[5.455vw] ">
                             <Button variant={"light"} size={"small"} asChild className="w-fit h-fit">
-                                <a href="/shop" >
+                                <a href="/shutters" >
                                     Shop Now
                                 </a>
                             </Button>
@@ -50,7 +50,7 @@ function Questions(props: QuestionsProps) {
                         <img src="/images/questions/2.png" className="w-full xl:h-fit h-full object-cover" alt="" />
                         <div className="absolute left-0 top-0 size-full flex flex-col justify-between items-end xl:p-[1.25vw] sm:p-[2.344vw] p-[5.455vw] ">
                             <Button variant={"light"} size={"small"} asChild className="w-fit h-fit">
-                                <a href="/shop" >
+                                <a href="/blinds/single" >
                                     Shop Now
                                 </a>
                             </Button>
@@ -63,7 +63,7 @@ function Questions(props: QuestionsProps) {
                         <img src="/images/questions/3.png" className="w-full xl:h-fit h-full object-cover" alt="" />
                         <div className="absolute left-0 top-0 size-full flex flex-col justify-between items-end xl:p-[1.25vw] sm:p-[2.344vw] p-[5.455vw] ">
                             <Button variant={"light"} size={"small"} asChild className="w-fit h-fit">
-                                <a href="/shop" >
+                                <a href="/curtains/single" >
                                     Shop Now
                                 </a>
                             </Button>

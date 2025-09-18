@@ -71,6 +71,10 @@ function Navbar(props: NavbarProps) {
             ]
         },
         {
+            Name : 'Shutters',
+            Link : '/shutters',
+        },
+        {
             Name : 'Tutorials',
             Link : '/tutorial',
         },
