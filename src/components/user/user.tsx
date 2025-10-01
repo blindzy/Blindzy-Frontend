@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Camera, Package, Plus } from 'lucide-react';
-import { Button } from "@lib/components/ui/button";
-import OrderListComponent from "./order-list";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
@@ -9,76 +6,61 @@ import { AddAddress } from './add-address';
 import { EditAddress } from './edit-address';
 import { AddCard } from './add-card';
 import { EditCard } from './edit-card';
+import OrderList from "./orderList";
+import UserDetail from "./userDetail";
 
-
+type Address = {
+    id: string | number;
+    address: string;
+    apartment?: string;
+    city: string;
+    state: string;
+    zipCode: string;
+};
+type PaymentCard = {
+    id: string | number;
+    cardType: string;
+    cardName: string;
+    cardNumber: string;
+    expiryDate: string;
+    cvvCode: string;
+    createdAt: string;
+};
 function User() {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
     const [user, setUser] = useState({});
-    type Address = {
-        id: string | number;
-        address: string;
-        apartment?: string;
-        city: string;
-        state: string;
-        zipCode: string;
-    };
     const [addressList, setAddressList] = useState<Address[]>([]);
-    type PaymentCard = {
-        id: string | number;
-        cardType: string;
-        cardName: string;
-        cardNumber: string;
-        expiryDate: string;
-        cvvCode: string;
-        createdAt: string;
-    };
     const [paymentDetail, setPaymentDetail] = useState<PaymentCard[]>([]);
-    const [orderList, setOrderList] = useState([
-        {
-            id: 1,
-            title: "Product Name",
-            thumbnail: '/images/categories/1.png',
-            price: { amount: 150, currency_code: 'usd' },
-            options: [
-                { id: 1, name: "Color:", value: "Ash" },
-                { id: 2, name: "Size:", value: "24cm x 56cm" },
-                { id: 3, name: "Fit Type:", value: "Recess Fit" },
-                { id: 4, name: "Roll Direction:", value: "Front Roll" },
-                { id: 5, name: "Chain Colour:", value: "Silver" },
-                { id: 6, name: "Bracket Colour:", value: "Sandstone" },
-                { id: 7, name: "Base Rail Shape:", value: "Oval" },
-                { id: 8, name: "Base Rail Colour:", value: "Bone" },
-            ],
-            date: "2023-01-01",
-            status: "Shipped",
-        },
-        {
-            id: 2,
-            title: "Product 2",
-            thumbnail: '/images/categories/2.png',
-            price: { amount: 100, currency_code: 'usd' },
-            options: [
-                { id: 1, name: "Color:", value: "Ash" },
-                { id: 2, name: "Size:", value: "24cm x 56cm" },
-                { id: 3, name: "Fit Type:", value: "Recess Fit" },
-                { id: 4, name: "Roll Direction:", value: "Front Roll" },
-                { id: 5, name: "Chain Colour:", value: "Silver" },
-                { id: 6, name: "Bracket Colour:", value: "Sandstone" },
-                { id: 7, name: "Base Rail Shape:", value: "Oval" },
-                { id: 8, name: "Base Rail Colour:", value: "Bone" },
-            ],
-            date: "2023-01-02",
-            status: "Pending"
-        }
-    ]);
     const [currentTab, setCurrentTab] = useState("payment");
     const [show, setShow] = useState(true);
 
+//     useEffect(() => {
+//     async function getOrders() {
+//       // Ye code ab sirf client pe chalega
+//       const email = localStorage.getItem("userEmail");
+//       if (!email) {
+//         console.error("Email not found in localStorage");
+//         return;
+//       }
+
+//       const ordersData = await fetchMedusaApi<any>({
+//         endpoint: "/store/customers/order",
+//         query: { email },
+//       });
+
+//       setOrderList(ordersData);
+//       console.log("Orders:", ordersData);
+//     }
+
+//     getOrders();
+//   }, []);
+
+
     const handleAddAddress = (newAddress) => {
+        console.log('New Address:', newAddress);
         setAddressList(prev => [...prev, newAddress]);
     };
-
     const handleUpdateAddress = (updatedAddress) => {
         setAddressList(prev => 
             prev.map(address => 
@@ -86,11 +68,9 @@ function User() {
             )
         );
     };
-
     const handleAddCard = (newCard) => {
         setPaymentDetail(prev => [...prev, newCard]);
     };
-
     const handleUpdateCard = (updatedCard) => {
         setPaymentDetail(prev => 
             prev.map(card => 
@@ -98,7 +78,6 @@ function User() {
             )
         );
     };
-  
     const handleTabChange = (tab: string) => {
         setShow(false);
         setTimeout(() => {
@@ -118,45 +97,7 @@ function User() {
   return (
         <div className="w-screen flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 overflow-hidden" id="user">
             
-            <div className="sticky top-0 xl:w-[25vw] w-full xl:h-[calc(100vh-32px)] h-full flex flex-col justify-between gap-[48px] xl:p-[1.25vw] sm:p-[2.344vw] p-4 xl:pt-[48px] bg-primary rounded-48 text-white xl:shrink-0">
-                <div className="w-full flex flex-col gap-[48px]">
-                    <div className="w-full flex flex-col items-center gap-4">
-                        <div className="xl:size-[7.813vw] sm:size-[150px] size-[88px] rounded-full">
-                            <input type="file" className="hidden" id="user-image" accept=".jpg, .jpeg, .png"  />
-                            <label htmlFor="user-image" className="relative w-full h-full flex items-center justify-center border border-[--white] rounded-[100%]">
-                                <Camera className="xl:size-[2.5vw] sm:size-[48px] size-[26px] text-[--white]" />
-                                <div className="absolute xl:right-[0.729vw] sm:right-[14px] right-[6px] xl:bottom-[0.625vw] sm:bottom-[12px] bottom-[4px] xl:size-[0.938vw] size-[18px] bg-primary flex items-center justify-center">
-                                    <Plus className="sm:size-[18px] size-[14px] text-[--white]" />
-                                </div>
-                            </label>
-                        </div>
-                        <h4 className="text-xl">NAME OF PERSON</h4>
-                    </div>
-                    <div className="flex flex-col gap-2">
-                        <h5 className="text-lg">DETAIL</h5>
-                        <div className="flex items-center gap-2 text-md">
-                            <p>Email:</p>
-                            <a href={`mailto:`} className="transition hover:text-[--Black]">example@gmail.com'</a>
-                        </div>
-                        <div className="flex items-center gap-2 text-md">
-                            <p>Phone:</p>
-                            <a href={`tel:`} className="transition hover:text-[--Black]">+123456789</a>
-                        </div>
-                        <div className="flex items-center gap-2 text-md">
-                            <p>Company Name:</p>
-                            <a href="" className="transition hover:text-[--Black]">AITHUR</a>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                    <Button variant={'light'} size={'large'} className="w-full border-[--white] text-sm">
-                        Edit Profile
-                    </Button>
-                    <Button variant={'outline_white'} size={'large'} className="w-full text-sm  ">
-                        Log Out
-                    </Button>
-                </div>
-            </div>
+            <UserDetail />
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
                 <div className="w-full border border-[--Black] sm:rounded-[48px] rounded-full sm:p-3 p-1 shrink-0">
                     <div className="relative flex items-stretch">
@@ -175,34 +116,7 @@ function User() {
                 <div className={`w-full ${show ? 'fade-in' : 'fade-out'}`}> 
                 {
                     currentTab === 'orders'?(
-                        orderList.length > 0 ? (
-                            <div className="w-full flex flex-col gap-6 overflow-auto line-scroll" data-lenis-prevent>
-                                {orderList.map((order) => (
-                                    <OrderListComponent data={order} />
-                                ))}
-                            </div>
-                        ):(
-                            <div className="size flex flex-col items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-center text-[--Black] xl:overflow-hidden overflow-auto scroll-hidden">
-                                    <div className="flex flex-col items-center gap-4">
-                                        <div className="size-[64px] bg-[--lightestGrey] rounded-full flex items-center justify-center">
-                                            <Package  className="size-[32px] text-gray-400" />
-                                        </div>
-                                    </div>
-                                    <div className="flex flex-col gap-2">
-                                        <h3 className="text-lg font-medium text-[--Black]">No orders yet</h3>
-                                        <p className="text-sm text-[--Black]">Your order history will appear here after you make a purchase</p>
-                                    </div>
-                                    <Button 
-                                        variant={'primary'} size={'small'}
-                                        className="sm:w-[500px] w-full"
-                                        asChild
-                                    >
-                                        <a href="/shop">
-                                            Start Shopping
-                                        </a>
-                                    </Button>
-                            </div>
-                        )
+                        <OrderList />
                     ):currentTab === 'address'?(
                         <div className="w-full grid grid-cols-12 gap-4" >
                             {addressList.length > 0 ? (

@@ -11,22 +11,16 @@ const safeSlug = String(slug);
 const sampleProducts = [
   {
     id: '1',
-    title: 'Premium Plantation Shutters',
-    handle: 'premium-plantation-shutters',
-    description:
-      'High-quality timber plantation shutters with adjustable louvers for perfect light control.',
-    status: 'published',
-    type: "single",
+    title: 'Premium Plantation Curtains',
+    handle: 'premium-plantation-curtains',
+    description: 'High-quality timber plantation curtains with adjustable louvers for perfect light control.',
     thumbnail: '/images/categories/1.png',
     images: [
       { id: 'img1', url: '/images/categories/1.png' }
     ],
-    categories: [
-      { id: 'cat1', name: 'Shutters', handle: 'shutters' }
-    ],
+    category: "curtains",
+    type: "single",
     price: { amount: 150, currency_code: 'usd' },
-    
-    // ✅ Options array with colors and variants
     options: [
       {
         id: 'opt1',

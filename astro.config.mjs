@@ -12,10 +12,12 @@ export default defineConfig({
   vite: {
     server: {
       proxy: {
-        '/api': {
+        // Only proxy specific API routes, not all /api requests
+        '/api/medusa': {
           target: 'http://208.87.135.120:9000',
           changeOrigin: true,
           secure: false,
+          rewrite: (path) => path.replace(/^\/api\/medusa/, '')
         }
       }
     }

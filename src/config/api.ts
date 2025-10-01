@@ -2,7 +2,8 @@
 export const API_CONFIG = {
   // Medusa Backend Configuration
   MEDUSA_BASE_URL: import.meta.env.VITE_API_URL || 'http://208.87.135.120:9000',
-  MEDUSA_PUBLISHABLE_KEY: import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY || 'pk_c5c3a7c4c2f5e1c991a5feec30098bdaad87511c48b8f8a99cac999d528295aa',
+  // MEDUSA_PUBLISHABLE_KEY: import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY || 'pk_c5c3a7c4c2f5e1c991a5feec30098bdaad87511c48b8f8a99cac999d528295aa',
+  MEDUSA_PUBLISHABLE_KEY: import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY || 'pk_35f5ace6ac7d3be739f9edbf5a4ee494f93bf53432f8673a6446da2556e826c7',
   
   // Development - Using proxy server to avoid CORS issues
   BASE_URL: '/api',

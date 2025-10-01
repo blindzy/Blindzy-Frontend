@@ -45,8 +45,7 @@ const categoriesData = [
 	},
 ];
 
-function Categories(props: CategoriesProps) {
-	useEffect(() => {}, []);
+function Categories() {
 
 	return (
 		<section className="categories-section w-screen xl:h-screen xl:p-[1.25vw] sm:p-4 p-2" id="categories">

@@ -15,15 +15,12 @@ const sampleProducts = [
     handle: 'premium-plantation-shutters',
     description:
       'High-quality timber plantation shutters with adjustable louvers for perfect light control.',
-    status: 'published',
-    type: "double",
     thumbnail: '/images/categories/1.png',
     images: [
       { id: 'img1', url: '/images/categories/1.png' }
     ],
-    categories: [
-      { id: 'cat1', name: 'Shutters', handle: 'shutters' }
-    ],
+    category: "curtains",
+    type: "single",
     price: { amount: 150, currency_code: 'usd' },
     
     // ✅ Options array with colors and variants
@@ -63,25 +60,29 @@ const sampleProducts = [
         title: 'Sheer Fabric',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
-          { label: 'Sierra', image: '/images/colors/01.png', colors: [
-            { label: 'White', image: '/images/colors/01.png' },
-            { label: 'Grey', image: '/images/colors/02.png' },
-            { label: 'Black', image: '/images/colors/03.png' },
-            { label: 'Oak', image: '/images/colors/04.png' },
-            { label: 'Walnut', image: '/images/colors/05.png' },
-            { label: 'Charcoal', image: '/images/colors/06.png' },
-          ] },
-          { label: 'catalina', image: '/images/colors/02.png', colors: [
-            { label: 'White', image: '/images/colors/01.png' },
-            { label: 'Grey', image: '/images/colors/02.png' },
-          ] },
-          { label: 'Bora', image: '/images/colors/03.png', colors: [
-            { label: 'White', image: '/images/colors/01.png' },
-            { label: 'Grey', image: '/images/colors/02.png' },
-            { label: 'Black', image: '/images/colors/03.png' },
-            { label: 'Black', image: '/images/colors/04.png' },
-          ] },
-            { label: 'Mojave', image: '/images/colors/04.png', colors: [
+          { label: 'Sierra', image: '/images/colors/01.png', 
+            colors: [
+              { label: 'White', image: '/images/colors/01.png' },
+              { label: 'Grey', image: '/images/colors/02.png' },
+              { label: 'Black', image: '/images/colors/03.png' },
+              { label: 'Oak', image: '/images/colors/04.png' },
+              { label: 'Walnut', image: '/images/colors/05.png' },
+              { label: 'Charcoal', image: '/images/colors/06.png' },
+            ] },
+          { label: 'catalina', image: '/images/colors/02.png', 
+            colors: [
+              { label: 'White', image: '/images/colors/01.png' },
+              { label: 'Grey', image: '/images/colors/02.png' },
+            ] },
+          { label: 'Bora', image: '/images/colors/03.png', 
+            colors: [
+              { label: 'White', image: '/images/colors/01.png' },
+              { label: 'Grey', image: '/images/colors/02.png' },
+              { label: 'Black', image: '/images/colors/03.png' },
+              { label: 'Black', image: '/images/colors/04.png' },
+            ] },
+            { label: 'Mojave', image: '/images/colors/04.png', 
+            colors: [
                 { label: 'White', image: '/images/colors/01.png' },
                 { label: 'Grey', image: '/images/colors/02.png' },
                 { label: 'Black', image: '/images/colors/03.png' },
@@ -89,14 +90,15 @@ const sampleProducts = [
                 { label: 'Black', image: '/images/colors/05.png' },
               ]
            },
-          { label: 'Oakbank Linen', image: '/images/colors/05.png', colors: [
-            { label: 'White', image: '/images/colors/01.png' },
-            { label: 'Grey', image: '/images/colors/02.png' },
-            { label: 'Black', image: '/images/colors/03.png' },
-            { label: 'Oak', image: '/images/colors/04.png' },
-            { label: 'Walnut', image: '/images/colors/05.png' },
-            { label: 'Charcoal', image: '/images/colors/06.png' },
-          ]
+          { label: 'Oakbank Linen', image: '/images/colors/05.png', 
+            colors: [
+              { label: 'White', image: '/images/colors/01.png' },
+              { label: 'Grey', image: '/images/colors/02.png' },
+              { label: 'Black', image: '/images/colors/03.png' },
+              { label: 'Oak', image: '/images/colors/04.png' },
+              { label: 'Walnut', image: '/images/colors/05.png' },
+              { label: 'Charcoal', image: '/images/colors/06.png' },
+            ]
           }
         ]
       },

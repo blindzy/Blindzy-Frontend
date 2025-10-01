@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { EyeClosed , Eye } from 'lucide-react';
 import { Icon } from '@iconify/react';
-import { api } from '../../services/api';
-import ForgetPasswordPopup from '@components/popup/forget-password';
+// import ForgetPasswordPopup from '@components/popup/forget-password';
+import {ForgetPasswordPopup} from './forget-password';
+import Separate from '@components/separate';
 import { Input } from '@lib/components/ui/input';
 import { Button } from '@lib/components/ui/button';
 import { Checkbox } from "@lib/components/ui/checkbox";
-
+import { login } from '../../services/auth/login';
+import { forgotPassword } from "../../services/auth/forgot";
 
 interface LoginProps { }
 
@@ -16,59 +19,58 @@ function Login(props: LoginProps) {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [showForgot, setShowForgot] = useState(false);
+    const [forgotError, setForgotError] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        setError('');
-        setSuccess('');
+        setError("");
+        setSuccess("");
 
         try {
-            const response = await api.login(email, password);
+        const response = await login.login(email, password);
+        console.log("Login success:", response);
 
-            console.log("Login success:", response);
-            console.log("Saving user data to localStorage:", response.customer);
-            setSuccess("Login successful!");
+        setSuccess("Login successful!");
 
-            // ✅ Save complete user data to localStorage
-            localStorage.setItem("user", JSON.stringify(response.customer));
-
-            // Also save email separately for backwards compatibility
-            localStorage.setItem("userEmail", response.customer.email);
-
-            // Verify data was saved
-            const savedData = localStorage.getItem("user");
-            console.log("Verified saved user data:", savedData);
-
-            // ✅ Redirect after short delay
-            setTimeout(() => {
-                console.log("Redirecting to /user page...");
-                window.location.href = '/user';
-            }, 1000);
-
+        // Redirect after success
+        window.location.href = "/user"; 
         } catch (err: any) {
             console.error("Login error:", err);
-            if (err.response && err.response.data && err.response.data.message) {
-                setError(err.response.data.message);
-            } else if (err.message) {
-                setError(err.message);
-            } else {
-                setError("Something went wrong. Please try again.");
-            }
+            setError(err.message || "Something went wrong, please try again.");
         } finally {
             setLoading(false);
         }
     };
+
+    const handleForgotPassword = async () => {
+        if(!email) {
+            setForgotError("Please input email");
+            return;
+        }
+        setForgotError("");
+
+        try {
+            const response = await forgotPassword.sendResetEmail(email);
+            console.log("Reset email sent:", response);
+
+            setShowForgot(true); // OTP UI ya popup dikhao
+            // setSuccess("OTP / reset email sent successfully!");
+        } catch (error: any) {
+            console.error("Forgot password failed:", error);
+            setForgotError("Something went wrong. Please try again.");
+        }
+    };
+
 
     return (
         <>
             <div className="relative w-screen h-screen flex items-center justify-center xl:p-[1.25vw] sm:p-[2.344vw] p-2 overflow-hidden" id="signUp">
                 <div className="w-full max-w-[750px] flex flex-col items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-black shrink-0 p-4">
                     <img src="/images/blindzy-logo.png" className="w-fit" alt="blindzy-logo" />
-                    <div className="w-full flex items-center gap-2 shrink-0 text-mediumGrey">
-                        <Icon icon="uil:plus" className="text-[18px]" />
-                        <div className="w-full h-[1px] bg-mediumGrey"></div>
-                        <Icon icon="uil:plus" className="text-[18px]" />
+                    <div className="w-full">
+                        <Separate />
                     </div>
                     <h3 className="text-xxl">Login</h3>
                     {error && (
@@ -85,26 +87,40 @@ function Login(props: LoginProps) {
                         <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
                             <Input
                                 type="email"
-                                id="email"
+                                name="email"
                                 placeholder="Email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
                                 required
                             />
-                            <Input
-                                type="password"
-                                id="password"
-                                placeholder="Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                            <button
-                                className="w-fit text-[--primary] text-sm transition hover:underline focus:outline-none"
-                                onClick={() => setShowForgot(true)}
-                            >
-                                Forgot password?
-                            </button>
+                            <div className="relative w-full">
+                                <Input
+                                    type={`${showPassword ? 'text' : 'password'}`}
+                                    name="password"
+                                    placeholder="Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    required
+                                />
+                                <span onClick={() => setShowPassword(!showPassword)} className="cursor-pointer absolute top-0 right-0 w-fit h-full flex items-center pr-6 transition text-[16px] text-[--black] hover:text-[--primary]">
+                                    {showPassword ? <Eye className="size-[18px]"/> : <EyeClosed className="size-[18px]"/>}
+                                </span>
+                            </div>
+                            <div className="w-full flex flex-col gap-2">
+                                <button
+                                    type="button"
+                                    className="text-[--primary] hover:underline focus:outline-none w-fit text-sm transition"
+                                    onClick={handleForgotPassword}
+                                >
+                                    Forgot Password?
+                                </button>
+                                {forgotError && (
+                                    <div className="w-full p-2 bg-red-100 border border-red-400 text-red-700 rounded text-xs mb-2">
+                                        {forgotError}
+                                    </div>
+                                )}
+                                {showForgot && <ForgetPasswordPopup email={email} onClose={() => setShowForgot(false)} />}
+                            </div>
                             <Button
                                 variant={'primary'}
                                 size={'large'}
@@ -137,14 +153,14 @@ function Login(props: LoginProps) {
                         </div>
                         <div className="flex items-center gap-1 text-sm">
                             Don't have an account?
-                            <a href="/signUp" className="text-[--primary] transition hover:underline focus:outline-none">Signup</a>
+                            <a href="/signup" className="text-[--primary] transition hover:underline focus:outline-none">Signup</a>
                         </div>
                     </div>
                 </div>
             </div>
-            {showForgot && (
+            {/* {showForgot && (
                 <ForgetPasswordPopup email={email} onClose={() => setShowForgot(false)} />
-            )}
+            )} */}
         </>
     );
 }

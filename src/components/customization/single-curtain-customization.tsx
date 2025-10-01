@@ -103,6 +103,7 @@ function Single_curtain_customization(props) {
     const lenis = isDesktop ? useLenis() : null;
     const [measurements, setMeasurements] = useState({ roomName: '', width: 1, height: 1 });
     const [selectedColor, setSelectedColor] = useState('');
+    const [totalPrice, setTotalPrice] = useState(0);
     const [data, setData] = useState([
         {'title': 'Colour', 'value': selectedColor},
         {'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : ''},
@@ -117,10 +118,16 @@ function Single_curtain_customization(props) {
         {'title': 'Bracket Style', 'value': ''},
     ]);
     
-    const [dynamicPricing, setDynamicPricing] = useState(false);
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        if (lenis) {
+            lenis.on('scroll', ScrollTrigger.update);
+        }
+    }, [lenis]);
+    
     const [productData, setProductData] = useState(props.data);
     
-    // Handle option selection updates
     const handleOptionChange = (optionTitle, value) => {
         setData(prev => 
             prev.map(item => 
@@ -130,21 +137,6 @@ function Single_curtain_customization(props) {
             )
         );
     };
-    
-    const selectedColorVariant = productData?.variants?.find(variant => variant.options?.Color === selectedColor);
-    
-    // Calculate total price (base price + variant price difference)
-    const basePrice = productData?.price?.amount || 0;
-    const variantPrice = selectedColorVariant?.prices?.[0]?.amount || basePrice;
-    const totalPrice = variantPrice;
-
-    useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-
-        if (lenis) {
-            lenis.on('scroll', ScrollTrigger.update);
-        }
-    }, [lenis]);
 
     // Update color in data array when selectedColor changes
     useEffect(() => {
@@ -156,39 +148,39 @@ function Single_curtain_customization(props) {
             )
         );
     }, [selectedColor]);
+    
+    const basePrice = productData?.price?.amount || 0;
+    setTotalPrice(basePrice);
+    // useEffect(() => {
+    //     if (measurements.width && measurements.height) {
+    //         const widthInMeters = measurements.width;
+    //         const heightInMeters = measurements.height;
 
-    // Auto-calculate price when measurements change
-    useEffect(() => {
-        if (measurements.width && measurements.height) {
-            const widthInMeters = measurements.width;
-            const heightInMeters = measurements.height;
-
-            if (widthInMeters > 0 && heightInMeters > 0) {
-                const area = widthInMeters * heightInMeters;
-                const pricePerSqM = basePrice;
-                const newAmount = Math.round(area * pricePerSqM);
+    //         if (widthInMeters > 0 && heightInMeters > 0) {
+    //             const area = widthInMeters * heightInMeters;
+    //             const pricePerSqM = basePrice;
+    //             const newAmount = Math.round(area * pricePerSqM);
                 
-                // Update product data with new pricing
-                const updatedProductData = {
-                    ...productData,
-                    price: {
-                        ...productData.price,
-                        amount: newAmount
-                    },
-                    variants: productData.variants.map(variant => ({
-                        ...variant,
-                        prices: [{
-                            amount: newAmount,
-                            currency_code: productData.price.currency_code
-                        }]
-                    }))
-                };
+    //             // Update product data with new pricing
+    //             const updatedProductData = {
+    //                 ...productData,
+    //                 price: {
+    //                     ...productData.price,
+    //                     amount: newAmount
+    //                 },
+    //                 variants: productData.variants.map(variant => ({
+    //                     ...variant,
+    //                     prices: [{
+    //                         amount: newAmount,
+    //                         currency_code: productData.price.currency_code
+    //                     }]
+    //                 }))
+    //             };
 
-                setProductData(updatedProductData);
-                setDynamicPricing(true);
-            }
-        }
-    }, [measurements.width, measurements.height]);
+    //             setProductData(updatedProductData);
+    //         }
+    //     }
+    // }, [measurements.width, measurements.height]);
 
 
     return (
@@ -259,11 +251,11 @@ function Single_curtain_customization(props) {
                     </Button>
                 </div>
             </div>
-            <ProductCard 
+            {/* <ProductCard 
                 productData={productData}
                 customizationData={data}
                 totalPrice={totalPrice}
-            />
+            /> */}
         </section>
     );
 }

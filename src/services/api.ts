@@ -37,7 +37,7 @@ const getDynamicCart = (): Cart => {
     shipping_total: 0
   };
   
-  console.log('Returning new empty cart:', emptyCart);
+  // console.log('Returning new empty cart:', emptyCart);
   return emptyCart;
 };
 
@@ -150,7 +150,7 @@ const debugUtils = {
 let dynamicCart: Cart = (() => {
   // Always initialize cart from localStorage for better persistence
   const cart = getDynamicCart();
-  console.log('Initialized dynamic cart:', cart);
+  // console.log('Initialized dynamic cart:', cart);
   return cart;
 })();
 
@@ -1005,7 +1005,7 @@ class ApiService {
   }
 
   // Authentication APIs
-  async login(email: string, password: string): Promise<AuthResponse> {
+  async login(email: string, password: string): Promise<LocalAuthResponse> {
     // Always try to use real authentication, not sample data
     console.log('Login attempt for:', email);
     
@@ -1131,111 +1131,7 @@ class ApiService {
     }
   }
 
-  async register(userData: RegisterData): Promise<AuthResponse> {
-    // Always save real user data from registration
-    console.log('Registration attempt for:', userData.email);
-    
-    // Create user data from registration input
-    const registeredUser = {
-      id: 'user_' + Date.now(),
-      email: userData.email,
-      first_name: userData.first_name,
-      last_name: userData.last_name,
-      phone: userData.phone || '+123456789',
-    };
-    
-    const userResponse = {
-      customer: registeredUser,
-      session: { 
-        id: 'sess_' + Date.now(), 
-        token: 'localtoken_' + Date.now() 
-      },
-    };
-    
-    console.log('Registration successful, saving real user data:', registeredUser);
-    
-    // Save to localStorage for persistence
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('user', JSON.stringify(userResponse.customer));
-      localStorage.setItem('userEmail', userData.email);
-      console.log('Real user registration saved to localStorage');
-    }
-    
-    return Promise.resolve(userResponse);
-    
-    // NOTE: Backend registration code below is currently unreachable due to early return above
-    // Use Medusa API for registration
-    try {
-      const medusaResponse = await this.medusaRequest<any>('/store/customers/register', {
-        method: 'POST',
-        body: JSON.stringify({
-          first_name: userData.first_name,
-          last_name: userData.last_name,
-          email: userData.email,
-          phone: userData.phone || '',
-          username: userData.username || userData.email,
-          password: userData.password,
-        }),
-      });
-
-      // Transform Medusa response to match our AuthResponse interface
-      const authResponse = {
-        customer: {
-          id: medusaResponse.customer.id,
-          email: medusaResponse.customer.email,
-          first_name: medusaResponse.customer.first_name,
-          last_name: medusaResponse.customer.last_name,
-          phone: medusaResponse.customer.phone,
-        },
-        session: {
-          id: medusaResponse.session?.id || '',
-          token: medusaResponse.session?.access_token || '',
-        },
-      };
-      
-      // Save to localStorage for persistence
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('user', JSON.stringify(authResponse.customer));
-        localStorage.setItem('userEmail', userData.email);
-        console.log('Backend user registration saved to localStorage');
-      }
-      
-      return authResponse;
-    } catch (error) {
-      console.error('Backend registration failed:', error);
-      
-      // Fallback to sample mode if backend fails
-      if (USE_FALLBACK_ON_ERROR) {
-        console.log('Falling back to sample registration mode');
-        BACKEND_AVAILABLE = false;
-        
-        const fallbackUserResponse = {
-          customer: {
-            id: 'user_' + Date.now(),
-            email: userData.email,
-            first_name: userData.first_name,
-            last_name: userData.last_name,
-            phone: userData.phone || '+123456789',
-          },
-          session: { 
-            id: 'sess_' + Date.now(), 
-            token: 'fallbacktoken_' + Date.now() 
-          },
-        };
-        
-        // Save to localStorage for persistence
-        if (typeof window !== 'undefined') {
-          localStorage.setItem('user', JSON.stringify(fallbackUserResponse.customer));
-          localStorage.setItem('userEmail', userData.email);
-          console.log('Fallback user registration saved to localStorage');
-        }
-        
-        return fallbackUserResponse;
-      }
-      
-      throw error;
-    }
-  }
+  // Registration moved to separate signup service
 
   async logout(): Promise<void> {
     // Just clear localStorage for now, no sample data mode
@@ -1830,7 +1726,7 @@ class ApiService {
   // =================== Additional API Methods ===================
 
   // Alternative Authentication APIs
-  async authLogin(email: string, password: string): Promise<AuthResponse> {
+  async authLogin(email: string, password: string): Promise<LocalAuthResponse> {
     if (USE_SAMPLE_DATA_FOR_USER_AUTH) {
       return Promise.resolve(sampleAuthResponse);
     }
@@ -1840,7 +1736,7 @@ class ApiService {
     });
   }
 
-  async authRegister(userData: RegisterData): Promise<AuthResponse> {
+  async authRegister(userData: LocalRegisterData): Promise<LocalAuthResponse> {
     if (USE_SAMPLE_DATA_FOR_USER_AUTH) {
       return Promise.resolve(sampleAuthResponse);
     }
@@ -2328,12 +2224,23 @@ export interface OrderItem {
   }>;
 }
 
-export interface AuthResponse {
+// Auth-related interfaces moved to services/auth/signup.ts
+// Local interfaces for remaining auth methods
+interface LocalAuthResponse {
   customer: User;
   session: {
     id: string;
     token: string;
   };
+}
+
+interface LocalRegisterData {
+  email: string;
+  password: string;
+  first_name: string;
+  last_name: string;
+  phone?: string;
+  username?: string;
 }
 
 export interface User {
@@ -2342,15 +2249,6 @@ export interface User {
   first_name: string;
   last_name: string;
   phone?: string;
-}
-
-export interface RegisterData {
-  email: string;
-  password: string;
-  first_name: string;
-  last_name: string;
-  phone?: string;
-  username?: string;
 }
 
 export interface Sample {
