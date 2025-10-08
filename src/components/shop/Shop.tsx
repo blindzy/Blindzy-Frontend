@@ -96,7 +96,7 @@ function Shop(props) {
                 </div>
                 <div className="grid items-stretch grid-cols-12 gap-4 sm:gap-6 xl:gap-[1.25vw]">
                     {/*PRODUCT CARDS  */}
-                    {loading && <div className="col-span-12 text-center py-8">Loading products...</div>}
+                    {/* {loading && <div className="col-span-12 text-center py-8">Loading products...</div>}
                     {error && <div className="col-span-12 text-center py-8 text-red-500">{error}</div>}
                     {!loading && !error && products
                         .filter(product => 
@@ -106,7 +106,7 @@ function Shop(props) {
                         .map((product) => (
                             <ProductComponent key={product.id} data={product} size={size} customizePage={props.customizePage} />
                         ))
-                    }
+                    } */}
                 </div>
                 <div className="xl:hidden flex flex-col gap-2">
                     <Instruction />
