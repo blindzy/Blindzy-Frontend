@@ -11,13 +11,13 @@ import { Checkbox } from "@lib/components/ui/checkbox";
 function SignUp() {
 	const [viaEmail, setViaEmail] = useState(false);
 	const [formData, setFormData] = useState({
-		first_name: 'usama',
-		last_name: 'baloch',
-		email: 'usamabaloch0005@gmail.com',
-		phone: '123456',
-		username: 'Usama Baloch',
-		password: '123456',
-		confirmPassword: '123456'
+		first_name: '',
+		last_name: '',
+		email: '',
+		phone: '',
+		username: '',
+		password: '',
+		confirmPassword: '6'
 	});
 	const [agreedToTerms, setAgreedToTerms] = useState(false);
 	const [rememberMe, setRememberMe] = useState(false);

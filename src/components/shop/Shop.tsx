@@ -19,7 +19,6 @@ function Shop(props) {
     const [calculating, setCalculating] = useState(false);
     const [size, setSize] = useState(1);
 
-
     const handleCalculate = () => {
         const sqMeter = parseFloat(dimensions.width) * parseFloat(dimensions.height);
         console.log(sqMeter)
@@ -102,7 +101,7 @@ function Shop(props) {
                     {!loading && !error && products
                         .filter(product => 
                             selectedCategory === 'all' || 
-                            (product.tags && product.tags.includes(selectedCategory))
+                            (product.tags && product.tags.some(tag => tag.value.toLowerCase() === selectedCategory))
                         )
                         .map((product) => (
                             <ProductComponent key={product.id} data={product} size={size} customizePage={props.customizePage} />

@@ -130,7 +130,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
   useEffect(() => {
     const checkBackendStatus = async () => {
       try {
-        const response = await fetch('http://208.87.135.120:9000/health', { 
+        const response = await fetch('http://api.blindzy.com//health', { 
           method: 'GET'
         });
         if (response.ok) {

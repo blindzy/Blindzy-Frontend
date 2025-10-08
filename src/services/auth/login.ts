@@ -1,6 +1,6 @@
 // src/services/auth/login.ts
 
-const API_BASE = "http://208.87.135.120:9000"; // Medusa backend URL
+const API_BASE = import.meta.env.VITE_API_URL; // Medusa backend URL
 
 export interface LocalAuthResponse {
   customer: {
@@ -18,10 +18,10 @@ export interface LocalAuthResponse {
 
 // reusable request wrapper
 async function medusaRequest<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
-  const res = await fetch(`${API_BASE}${endpoint}`, {
+  const res = await fetch(`http://api.blindzy.com/${endpoint}`, {
     headers: {
       "Content-Type": "application/json",
-      "x-publishable-api-key": "pk_35f5ace6ac7d3be739f9edbf5a4ee494f93bf53432f8673a6446da2556e826c7",
+      "x-publishable-api-key": import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY,
       ...(options.headers || {}),
     },
     credentials: "include", // needed for cookies/session

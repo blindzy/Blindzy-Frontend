@@ -1,0 +1,34 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Navbar from "@components/navbar/navbar";
+import Footer from "@components/Footer/Footer";
+import Single_blinds_customization from "@components/customization/single-blinds-customization";
+import fetchMedusaApi from "@lib/lib/fetchMedusaApi"; 
+
+export async function getStaticPaths() {
+  // First get list of all products to get their IDs
+  const allProducts = await fetchMedusaApi<any>({
+    endpoint: "/store/products/custom",
+  });
+  // Return array of objects with id params for all products
+  return (allProducts?.products || []).map((product) => ({
+    params: { id: product.id },
+  }));
+}
+
+const { id } = Astro.params;
+
+// Fetch full product data at render time
+const productData = await fetchMedusaApi<any>({
+  endpoint: `/store/products/custom/${id}`,
+});
+
+---
+
+<Layout>
+  <Navbar client:load logo="dark" />
+  {productData?.product && (
+    <Single_blinds_customization client:load data={productData.product} />
+  )}
+  <Footer client:load />
+</Layout>

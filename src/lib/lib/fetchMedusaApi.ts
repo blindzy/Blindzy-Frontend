@@ -28,7 +28,7 @@ export default async function fetchMedusaApi<T>({
   const res = await fetch(url.toString(), {
     headers: {
       "Content-Type": "application/json",
-      "x-publishable-api-key": "pk_35f5ace6ac7d3be739f9edbf5a4ee494f93bf53432f8673a6446da2556e826c7",
+      "x-publishable-api-key": 'pk_618e1efe2b7d74576d7e072b76bd3c56d46ef94ede9463774e1c2b09c50f6bda',
     },
   });
 

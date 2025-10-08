@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "@lib/components/ui/button";
 import {
     Dialog,
@@ -17,10 +17,12 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@lib/components/ui/select";
-import { X } from 'lucide-react';
+import { Loader2, X } from 'lucide-react';
+import { storeCardDetails } from '../../services/store-cardDetail';
 
 
-export function AddCard({ onCardAdd }) {
+export function AddCard(props) {
+    const closeButtonRef = useRef<HTMLButtonElement>(null);
     const [formData, setFormData] = useState({
         cardType: '',
         cardName: '',
@@ -28,6 +30,9 @@ export function AddCard({ onCardAdd }) {
         expiryDate: '',
         cvvCode: ''
     });
+    const [success, setSuccess] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     const handlePaymentInfoChange = (field, value) => {
         setFormData(prev => ({
@@ -36,7 +41,7 @@ export function AddCard({ onCardAdd }) {
         }));
     };
 
-    const handleSaveCard = () => {
+    const handleSaveCard = async () => {
         // Validate required fields
         if (!formData.cardType || !formData.cardName || !formData.cardNumber || !formData.expiryDate || !formData.cvvCode) {
             alert('Please fill in all required fields');
@@ -48,22 +53,37 @@ export function AddCard({ onCardAdd }) {
             alert('Please enter a valid card number');
             return;
         }
+        setLoading(true);
+        setError(null);
+        setSuccess(null);
 
-        // Create new card object
-        const newCard = {
-            id: Date.now(), // Simple ID generation
-            cardType: formData.cardType,
-            cardName: formData.cardName,
-            cardNumber: formData.cardNumber,
-            expiryDate: formData.expiryDate,
-            cvvCode: formData.cvvCode,
-            createdAt: new Date().toISOString()
-        };
-
-        // Pass data back to parent
-        if (onCardAdd) {
-            onCardAdd(newCard);
+        if (!props.userData) {
+            console.error("User data is not available.");
+            return;
         }
+
+        try {
+            const response = await storeCardDetails.storeCard({
+                    email: props.userData.email,
+                    card_type: formData.cardType,
+                    card_number: formData.cardNumber,
+                    card_name: formData.cardName,
+                    expiry_date: formData.expiryDate,
+                    security_code: formData.cvvCode
+                });
+    
+                setSuccess("Card detail store successfully!");
+                // Call the onSuccess callback to update parent component
+                props.onSuccess?.();
+                // Close the dialog immediately on success
+                closeButtonRef.current?.click();
+    
+            } catch (err: any) {
+                console.error("store error:", err);
+                setError(err.message || "Something went wrong during Card detail store.");
+            } finally {
+                setLoading(false);
+            }
 
         // Reset form
         setFormData({
@@ -146,22 +166,42 @@ export function AddCard({ onCardAdd }) {
                         />
                     </div>
                 </div>
+                {/* Status Messages */}
+                <div className="w-full flex flex-col gap-2">
+                    {success && (
+                        <div className="p-3 rounded-lg bg-green-50 text-green-600 text-sm">
+                            {success}
+                        </div>
+                    )}
+                    {error && (
+                        <div className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">
+                            {error}
+                        </div>
+                    )}
+                </div>
                 <DialogFooter >
                     <DialogClose asChild>
-                        <Button variant={'light'} size={'smallest'} className="w-full sm:w-[200px] sm:shrink-0 shrink ">
+                        <Button ref={closeButtonRef} variant={'light'} size={'smallest'} className="w-full sm:w-[200px] sm:shrink-0 shrink ">
                             Cancel
                         </Button>
                     </DialogClose>
-                    <DialogClose asChild>
                         <Button 
                             variant={'primary'} 
                             size={'smallest'} 
                             className="w-full sm:w-[200px] sm:shrink-0 shrink "
                             onClick={handleSaveCard}
+                            disabled={loading}
+
                         >
-                            Save
+                            {loading ? (
+                            <div className="flex items-center gap-2">
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                Saving...
+                                </div>
+                            ) : (
+                                "Save"
+                            )}
                         </Button>
-                    </DialogClose>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

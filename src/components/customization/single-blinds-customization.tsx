@@ -52,39 +52,40 @@ const productOptions = [
 ]
 const colorOptions = [
     {
-        id: 1,
+        id: 'optgrp_01K6Z6D5B6166KXE3RQNVDQ5EN',
         title: 'Chain Colour',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
+
         values: [
-          { label: 'White', color : '#FBFBFB' },
-          { label: 'Grey', color : '#0F0F0F' },
-          { label: 'Black', color : '#817F7E' },
-          { label: 'Oak', color : '#CDCCCB' },
-          { label: 'Walnut', color : '#FAF1C5' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EA', name: 'White', color : '#FBFBFB' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EB', name: 'Grey', color : '#0F0F0F' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EC', name: 'Black', color : '#817F7E' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ED', name: 'Oak', color : '#CDCCCB' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EE', name: 'Walnut', color : '#FAF1C5' },
         ]
     },
     {
-        id: 1,
+        id: 'optgrp_01K6Z6D5B6166KXE3RQNVDQ5EF',
         title: 'Bracket Colour',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: 'White', color : '#FBFBFB' },
-          { label: 'Grey', color : '#0F0F0F' },
-          { label: 'Black', color : '#817F7E' },
-          { label: 'Oak', color : '#CDCCCB' },
-          { label: 'Walnut', color : '#FAF1C5' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EG', name: 'White', color : '#FBFBFB' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EH', name: 'Grey', color : '#0F0F0F' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EI', name: 'Black', color : '#817F7E' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EJ', name: 'Oak', color : '#CDCCCB' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EK', name: 'Walnut', color : '#FAF1C5' },
         ]
     },
     {
-        id: 1,
+        id: 'optgrp_01K6Z6D5B6166KXE3RQNVDQ5EL',
         title: 'Base Rail Colour',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: 'White', color : '#FBFBFB' },
-          { label: 'Grey', color : '#0F0F0F' },
-          { label: 'Black', color : '#817F7E' },
-          { label: 'Oak', color : '#CDCCCB' },
-          { label: 'Walnut', color : '#FAF1C5' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EM', name: 'White', color : '#FBFBFB' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EN', name: 'Grey', color : '#0F0F0F' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EO', name: 'Black', color : '#817F7E' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EP', name: 'Oak', color : '#CDCCCB' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EQ', name: 'Walnut', color : '#FAF1C5' },
         ]
     },
 ]
@@ -187,37 +188,37 @@ function Single_blinds_customization(props) {
     };
 
     // Auto-calculate price when measurements change
-    useEffect(() => {
-        if (measurements.width && measurements.height) {
-            const widthInMeters = measurements.width;
-            const heightInMeters = measurements.height;
+    // useEffect(() => {
+    //     if (measurements.width && measurements.height) {
+    //         const widthInMeters = measurements.width;
+    //         const heightInMeters = measurements.height;
 
-            if (widthInMeters > 0 && heightInMeters > 0) {
-                const area = widthInMeters * heightInMeters;
-                const pricePerSqM = basePrice;
-                const newAmount = Math.round(area * pricePerSqM);
+    //         if (widthInMeters > 0 && heightInMeters > 0) {
+    //             const area = widthInMeters * heightInMeters;
+    //             const pricePerSqM = basePrice;
+    //             const newAmount = Math.round(area * pricePerSqM);
                 
-                // Update product data with new pricing
-                const updatedProductData = {
-                    ...productData,
-                    price: {
-                        ...productData.price,
-                        amount: newAmount
-                    },
-                    variants: productData.variants.map(variant => ({
-                        ...variant,
-                        prices: [{
-                            amount: newAmount,
-                            currency_code: productData.price.currency_code
-                        }]
-                    }))
-                };
+    //             // Update product data with new pricing
+    //             const updatedProductData = {
+    //                 ...productData,
+    //                 price: {
+    //                     ...productData.price,
+    //                     amount: newAmount
+    //                 },
+    //                 variants: productData.variants.map(variant => ({
+    //                     ...variant,
+    //                     prices: [{
+    //                         amount: newAmount,
+    //                         currency_code: productData.price.currency_code
+    //                     }]
+    //                 }))
+    //             };
 
-                setProductData(updatedProductData);
-                setDynamicPricing(true);
-            }
-        }
-    }, [measurements.width, measurements.height]);
+    //             setProductData(updatedProductData);
+    //             setDynamicPricing(true);
+    //         }
+    //     }
+    // }, [measurements.width, measurements.height]);
 
 
     return (
@@ -301,7 +302,7 @@ function Single_blinds_customization(props) {
                 <Separate/>
                 <div className="flex items-center justify-between">
                     <h5 className="text-lg">TOTAL PRICE</h5>
-                    <h5 className="text-lg">
+                    {/* <h5 className="text-lg">
                         {(() => {
                         const code = productData.price.currency_code?.toLowerCase();
                         let symbol = '';
@@ -316,7 +317,7 @@ function Single_blinds_customization(props) {
                         }
                         return symbol + totalPrice;
                     })()}
-                    </h5>
+                    </h5> */}
                 </div>
                 <div className="flex items-center gap-2">
                     <Checkbox id="measurements-checked"/>

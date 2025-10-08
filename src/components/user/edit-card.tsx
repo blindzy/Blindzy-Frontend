@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@lib/components/ui/button";
 import {
     Dialog,
@@ -17,7 +17,10 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@lib/components/ui/select";
-import { X } from 'lucide-react';
+import { X, Loader2 } from 'lucide-react';
+import { updateCard } from "../../services/update-cardDetail";
+
+
 
 interface PaymentCard {
     id: string | number;
@@ -34,7 +37,8 @@ interface Props {
     onCardUpdate?: (card: PaymentCard) => void;
 }
 
-export function EditCard({ card, onCardUpdate }: Props) {
+export function EditCard(props) {
+    const closeButtonRef = useRef<HTMLButtonElement>(null);
     const [formData, setFormData] = useState({
         cardType: '',
         cardName: '',
@@ -42,19 +46,22 @@ export function EditCard({ card, onCardUpdate }: Props) {
         expiryDate: '',
         cvvCode: ''
     });
+    const [success, setSuccess] = useState<string | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     // Pre-populate form with existing card data
     useEffect(() => {
-        if (card) {
+        if (props.card) {
             setFormData({
-                cardType: card.cardType,
-                cardName: card.cardName,
-                cardNumber: card.cardNumber,
-                expiryDate: card.expiryDate,
-                cvvCode: card.cvvCode
+                cardType: props.card.cardType,
+                cardName: props.card.cardName,
+                cardNumber: props.card.cardNumber,
+                expiryDate: props.card.expiryDate,
+                cvvCode: props.card.cvvCode
             });
         }
-    }, [card]);
+    }, [props.card]);
 
     const handlePaymentInfoChange = (field, value) => {
         setFormData(prev => ({
@@ -63,7 +70,7 @@ export function EditCard({ card, onCardUpdate }: Props) {
         }));
     };
 
-    const handleSaveCard = () => {
+    const handleSaveCard = async () => {
         // Validate required fields
         if (!formData.cardType || !formData.cardName || !formData.cardNumber || !formData.expiryDate || !formData.cvvCode) {
             alert('Please fill in all required fields');
@@ -76,29 +83,39 @@ export function EditCard({ card, onCardUpdate }: Props) {
             return;
         }
 
-        // Update existing card object
-        const updatedCard = {
-            ...card, // Keep original id and createdAt
-            cardType: formData.cardType,
-            cardName: formData.cardName,
-            cardNumber: formData.cardNumber,
-            expiryDate: formData.expiryDate,
-            cvvCode: formData.cvvCode
-        };
-
-        // Pass updated data back to parent
-        if (onCardUpdate) {
-            onCardUpdate(updatedCard);
-        }
-
-        // Reset form
-        setFormData({
-            cardType: '',
-            cardName: '',
-            cardNumber: '',
-            expiryDate: '',
-            cvvCode: ''
-        });
+        if (!props.userData || !props.address?.id) {
+                    setLoading(false);
+                    setError("User data or address ID is not available.");
+                    console.error("User data or address ID is not available.");
+                    return;
+                }
+        
+                try {
+                    // 👇 CardId pass kar rahe hain update method me
+                    const response = await updateCard.updateCard(
+                        String(props.card.id),
+                        {
+                            customer_id: String(props.userData.id),
+                            email: props.userData.email,
+                            card_type: formData.cardType,
+                            card_number: formData.cardNumber,
+                            card_name: formData.cardName,
+                            expiry_date: formData.expiryDate,
+                            security_code: formData.cvvCode
+                        }
+                    );
+        
+                    setSuccess("Card Detail updated successfully!");
+                    // Call the onSuccess callback to update parent component
+                    props.onSuccess?.();
+                    closeButtonRef.current?.click();
+        
+                } catch (err: any) {
+                    console.error("Card Detail update error:", err);
+                    setError(err.message || "Something went wrong during Card Detail update.");
+                } finally {
+                    setLoading(false);
+                }
     };
 
     return (
@@ -168,22 +185,42 @@ export function EditCard({ card, onCardUpdate }: Props) {
                         />
                     </div>
                 </div>
+                <div className="w-full flex flex-col gap-2">
+                    {success && (
+                        <div className="p-3 rounded-lg bg-green-50 text-green-600 text-sm">
+                            {success}
+                        </div>
+                    )}
+                    {error && (
+                        <div className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">
+                            {error}
+                        </div>
+                    )}
+                </div>
                 <DialogFooter >
                     <DialogClose asChild>
-                        <Button variant={'light'} size={'smallest'} className="w-full sm:w-[200px] sm:shrink-0 shrink">
+                        <Button ref={closeButtonRef} variant={'light'} size={'smallest'} className="w-full sm:w-[200px] sm:shrink-0 shrink">
                             Cancel
                         </Button>
                     </DialogClose>
-                    <DialogClose asChild>
-                        <Button 
-                            variant={'primary'} 
-                            size={'smallest'} 
-                            className="w-full sm:w-[200px] sm:shrink-0 shrink" 
-                            onClick={handleSaveCard}
-                        >
-                            Save
-                        </Button>
-                    </DialogClose>
+                    <Button
+                        variant={'primary'}
+                        size={'smallest'}
+                        className="w-full sm:w-[200px] sm:shrink-0 shrink"
+                        onClick={handleSaveCard}
+                        disabled={loading}
+
+                    >
+
+                        {loading ? (
+                            <div className="flex items-center gap-2">
+                                <Loader2 className="h-4 w-4 animate-spin" />
+                                Update...
+                            </div>
+                        ) : (
+                            "Update Card"
+                        )}
+                    </Button>
                 </DialogFooter>
             </DialogContent>
         </Dialog>

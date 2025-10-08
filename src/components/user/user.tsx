@@ -2,21 +2,22 @@ import React, { useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
-import { AddAddress } from './add-address';
-import { EditAddress } from './edit-address';
-import { AddCard } from './add-card';
-import { EditCard } from './edit-card';
+import Address from './address';
+
 import OrderList from "./orderList";
 import UserDetail from "./userDetail";
+import Payment from "./payment";
+import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 
-type Address = {
-    id: string | number;
-    address: string;
-    apartment?: string;
-    city: string;
-    state: string;
-    zipCode: string;
-};
+
+// type Address = {
+//     id: string | number;
+//     address: string;
+//     apartment?: string;
+//     city: string;
+//     state: string;
+//     zipCode: string;
+// };
 type PaymentCard = {
     id: string | number;
     cardType: string;
@@ -29,54 +30,102 @@ type PaymentCard = {
 function User() {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
-    const [user, setUser] = useState({});
-    const [addressList, setAddressList] = useState<Address[]>([]);
     const [paymentDetail, setPaymentDetail] = useState<PaymentCard[]>([]);
     const [currentTab, setCurrentTab] = useState("payment");
     const [show, setShow] = useState(true);
-
-//     useEffect(() => {
-//     async function getOrders() {
-//       // Ye code ab sirf client pe chalega
-//       const email = localStorage.getItem("userEmail");
-//       if (!email) {
-//         console.error("Email not found in localStorage");
-//         return;
-//       }
-
-//       const ordersData = await fetchMedusaApi<any>({
-//         endpoint: "/store/customers/order",
-//         query: { email },
-//       });
-
-//       setOrderList(ordersData);
-//       console.log("Orders:", ordersData);
-//     }
-
-//     getOrders();
-//   }, []);
-
-
-    const handleAddAddress = (newAddress) => {
-        console.log('New Address:', newAddress);
-        setAddressList(prev => [...prev, newAddress]);
+    const [addressList, setAddressList] = useState<Address[]>([]);
+        type UserData = {
+            id: string | number;
+            email: string;
+            first_name: string;
+            last_name: string;
+            // add other fields as needed
     };
-    const handleUpdateAddress = (updatedAddress) => {
-        setAddressList(prev => 
-            prev.map(address => 
-                address.id === updatedAddress.id ? updatedAddress : address
-            )
-        );
+    const [userData, setUserData] = useState<UserData | null>(null);
+    const [orderList, setOrderList] = useState<any[]>([]);
+    
+   useEffect(() => {
+        const userDataString = localStorage.getItem("user");
+        if (!userDataString) {
+            console.error("User Data not found in localStorage");
+            return;
+        }
+        const userDataObj = JSON.parse(userDataString);
+        setUserData(userDataObj);
+    }, []);
+
+    useEffect(() => {
+        async function getAddress() {
+            const userDataString = localStorage.getItem("user");
+            if (!userDataString) {
+                console.error("User Data not found in localStorage");
+                return;
+            }
+            const userDataObj = JSON.parse(userDataString);
+            setUserData(userDataObj);
+
+            const data = await fetchMedusaApi<any>({
+                endpoint: "/store/customers/addresses",
+                query: { email: userDataObj.email },
+            });
+
+            setAddressList(data.addresses);
+            // console.log("Addresses:", data.addresses);
+        }
+        async function getOrders() {
+            // Ye code ab sirf client pe chalega
+            const email = localStorage.getItem("userEmail");
+            if (!email) {
+                console.error("Email not found in localStorage");
+                return;
+            }
+
+            const ordersData = await fetchMedusaApi<any>({
+                endpoint: "/store/customers/order",
+                query: { email },
+            });
+
+            setOrderList(ordersData);
+            // console.log("Orders:", ordersData);
+        }
+        async function getCards() {
+            // Ye code ab sirf client pe chalega
+            const email = localStorage.getItem("userEmail");
+            if (!email) {
+                console.error("Email not found in localStorage");
+                return;
+            }
+
+            const cardsData = await fetchMedusaApi<any>({
+                endpoint: "/store/customers/card",
+                query: { email },
+            });
+
+            setPaymentDetail(cardsData);
+        }
+        getAddress();
+        getCards();
+        getOrders();
+    }, []);
+
+
+    
+
+    const handleAddressChange = async () => {
+        // Fetch updated address list
+        const data = await fetchMedusaApi<any>({
+            endpoint: "/store/customers/addresses",
+            query: { email: userData?.email ?? "" },
+        });
+        setAddressList(data.addresses);
     };
-    const handleAddCard = (newCard) => {
-        setPaymentDetail(prev => [...prev, newCard]);
-    };
-    const handleUpdateCard = (updatedCard) => {
-        setPaymentDetail(prev => 
-            prev.map(card => 
-                card.id === updatedCard.id ? updatedCard : card
-            )
-        );
+    const handleCardChange = async () => {
+        // Fetch updated card list
+        const data = await fetchMedusaApi<any>({
+            endpoint: "/store/customers/cards",
+            query: { email: userData?.email ?? "" },
+        });
+        setPaymentDetail(data.cards);
     };
     const handleTabChange = (tab: string) => {
         setShow(false);
@@ -96,7 +145,6 @@ function User() {
 
   return (
         <div className="w-screen flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 overflow-hidden" id="user">
-            
             <UserDetail />
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
                 <div className="w-full border border-[--Black] sm:rounded-[48px] rounded-full sm:p-3 p-1 shrink-0">
@@ -116,82 +164,11 @@ function User() {
                 <div className={`w-full ${show ? 'fade-in' : 'fade-out'}`}> 
                 {
                     currentTab === 'orders'?(
-                        <OrderList />
+                        <OrderList list={orderList} />
                     ):currentTab === 'address'?(
-                        <div className="w-full grid grid-cols-12 gap-4" >
-                            {addressList.length > 0 ? (
-                                <React.Fragment>
-                                    {addressList.map((address) => (
-                                        <div key={address.id} className="sm:col-span-6 col-span-12 flex flex-col gap-6 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48">
-                                            <div className="w-full flex items-center justify-between">
-                                                <h5 className="text-lg">ADDRESS</h5>
-                                                <EditAddress 
-                                                    address={address} 
-                                                    onAddressUpdate={handleUpdateAddress} 
-                                                />
-                                            </div>
-                                            <p>{address.address} , {address.state}, {address.city}</p>
-                                            <div className="flex items-center gap-2 justify-between">
-                                                <p className="text-md text-[--Black]">Postal Code: {address.zipCode}</p>
-                                                <div className="flex items-center gap-1">
-                                                    {address.apartment && <span className="text-md text-[--Black]">Apartment: {address.apartment}</span>}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                    <div className="sm:col-span-6 col-span-12 flex flex-col items-center justify-center gap-2 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48">
-                                        <h5 className="text-lg text-center">WANT TO ADD A NEW ADDRESS?</h5>
-                                        <AddAddress onAddressAdd={handleAddAddress}/>
-                                    </div>
-                                </React.Fragment>
-                            ):(
-                                <React.Fragment>
-                                    <div className="sm:col-span-6 col-span-12 flex flex-col items-center justify-center gap-2 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48">
-                                        <h5 className="text-lg text-center">No address found</h5>
-                                        <p className="text-sm text-center text-gray-600">Add your first address to get started</p>
-                                    </div>
-                                    <div className="sm:col-span-6 col-span-12 flex flex-col items-center justify-center gap-2 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48">
-                                        <h5 className="text-lg text-center">ADD New ADDRESS</h5>
-                                        <AddAddress onAddressAdd={handleAddAddress}/>
-                                    </div>
-                                </React.Fragment>
-                            )}
-                        </div>
+                        <Address list={addressList} userData={userData} onAddressChange={handleAddressChange} />
                     ):currentTab === 'payment'&&(
-                        <div className="w-full grid grid-cols-12 gap-4">
-                            {paymentDetail.length > 0 ? (
-                                <React.Fragment>
-                                    {paymentDetail.map((card) => (
-                                        <div key={card.id} className="sm:col-span-6 col-span-12 flex flex-col gap-6 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48">
-                                            <div className="w-full flex items-center justify-between">
-                                                <h5 className="text-lg">{card.cardName}</h5>
-                                                <EditCard card={card} onCardUpdate={handleUpdateCard} />
-                                            </div>
-                                            <p className="text-md text-[--Black]">Credit Card Number: ****{card.cardNumber.slice(-4)}</p>
-                                            <div className="flex items-center gap-2 justify-between">
-                                                <p className="text-md text-[--Black]">Expires: {card.expiryDate}</p>
-                                                <p className="text-md text-[--Black]">CVV: {card.cvvCode}</p>
-                                            </div>
-                                        </div>
-                                    ))}
-                                    <div className="sm:col-span-6 col-span-12 flex flex-col items-center justify-center gap-2 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48">
-                                        <h5 className="text-lg text-center">WANT TO ADD A NEW CARD?</h5>
-                                        <AddCard onCardAdd={handleAddCard} />
-                                    </div>
-                                </React.Fragment>
-                            ):(
-                                <React.Fragment>
-                                    <div className="sm:col-span-6 col-span-12 flex flex-col items-center justify-center gap-2 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48">
-                                        <h5 className="text-lg text-center">No cards found</h5>
-                                        <p className="text-sm text-center text-gray-600">Add your first card to get started</p>
-                                    </div>
-                                    <div className="sm:col-span-6 col-span-12 flex flex-col items-center justify-center gap-2 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48">
-                                        <h5 className="text-lg text-center">ADD NEW CARD</h5>
-                                        <AddCard onCardAdd={handleAddCard} />
-                                    </div>
-                                </React.Fragment>
-                            )}
-                        </div>
+                        <Payment list={paymentDetail} userData={userData} onCardChange={handleCardChange}/>
                     )
                 }
                 </div>

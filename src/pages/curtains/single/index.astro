@@ -4,98 +4,27 @@ import Navbar from "@components/navbar/navbar";
 import InnerBanner from "@components/inner-banner/innerBanner";
 import ShopComponent from "@components/shop/Shop";
 import Footer from "@components/Footer/Footer";
+import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 
-const products = [
-  {
-    id: '1',
-    title: 'Premium Plantation Curtains',
-    handle: 'premium-plantation-curtains',
-    description: 'High-quality timber plantation curtains with adjustable louvers for perfect light control.',
-    thumbnail: '/images/categories/1.png',
-    images: [
-      { id: 'img1', url: '/images/categories/1.png' }
-    ],
-    category: "curtains",
-    type: "single",
-    price: { amount: 150, currency_code: 'usd' },
-    options: [
-      {
-        id: 'opt1',
-        title: 'Color',
-        values: [
-          { label: 'White', image: '/images/colors/01.png' },
-          { label: 'Grey', image: '/images/colors/02.png' },
-          { label: 'Black', image: '/images/colors/03.png' },
-          { label: 'Oak', image: '/images/colors/04.png' },
-          { label: 'Walnut', image: '/images/colors/05.png' },
-          { label: 'Charcoal', image: '/images/colors/06.png' },
-        ]
-      },
-    ],
+const productsData = await fetchMedusaApi<any>({
+  endpoint: "/store/products/custom",
+});
 
-    // ✅ Variants for each color
-    variants: [
-      {
-        id: 'v1',
-        title: 'White',
-        sku: 'SHUT-001-WHITE',
-        prices: [{ amount: 0, currency_code: 'usd' }],
-        options: { Color: 'White' },
-        inventory_quantity: 10,
-      },
-      {
-        id: 'v2',
-        title: 'Grey',
-        sku: 'SHUT-001-GREY',
-        prices: [{ amount: 0, currency_code: 'usd' }],
-        options: { Color: 'Grey' },
-        inventory_quantity: 8,
-      },
-      {
-        id: 'v3',
-        title: 'Black',
-        sku: 'SHUT-001-BLACK',
-        prices: [{ amount: 0, currency_code: 'usd' }],
-        options: { Color: 'Black' },
-        inventory_quantity: 12
-      },
-      {
-        id: 'v4',
-        title: 'Oak',
-        sku: 'SHUT-001-OAK',
-        prices: [{ amount: 300, currency_code: 'usd' }],
-        options: { Color: 'Oak' },
-        inventory_quantity: 5,
-      },
-      {
-        id: 'v5',
-        title: 'Walnut',
-        sku: 'SHUT-001-WALNUT',
-        prices: [{ amount: 300, currency_code: 'usd' }],
-        options: { Color: 'Walnut' },
-        inventory_quantity: 7,
-      },
-      {
-        id: 'v6',
-        title: 'Charcoal',
-        sku: 'SHUT-001-CHARCOAL',
-        prices: [{ amount: 0, currency_code: 'usd' }],
-        options: { Color: 'Charcoal' },
-        inventory_quantity: 6
-      }
-    ],
+const filteredProducts = (productsData?.products || []).filter((product) => {
+  const isSingleType = product.type?.value === "single";
+  const hasBlindsCategory = product.categories?.some(
+    (cat) => cat.name?.toLowerCase() === "curtains"
+  );
 
-    tags: 'light-filtering',
-    created_at: '',
-    updated_at: ''
-  },
-];
+  return isSingleType && hasBlindsCategory;
+});
+console.log("Filtered Products:", filteredProducts);
 
 ---
 
 <Layout>
       <Navbar client:load logo="dark"/>
       <InnerBanner client:load title={`Curtains SHOP`} content="Beautiful Designer Curtains You Can Install in 20 Minutes"/>
-      <ShopComponent client:load data={products} customizePage="curtains"/>
+      <ShopComponent client:load data={filteredProducts} customizePage="/curtains/single"/>
       <Footer client:visible/>
 </Layout>

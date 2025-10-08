@@ -2,9 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Package } from 'lucide-react';
 import { Button } from "@lib/components/ui/button";
 import OrderListComponent from "./order-list";
-import fetchMedusaApi from "../../lib/lib/fetchMedusaApi";
-function OrderList() {
-    const [orderList, setOrderList] = useState<any[]>([]);
+function OrderList(props) {
     // Dummy data for orders until API is integrated
     // [{
     //         id: 1,
@@ -44,31 +42,11 @@ function OrderList() {
     //     }
     // ]
 
-    useEffect(() => {
-        async function getOrders() {
-            // Ye code ab sirf client pe chalega
-            const email = localStorage.getItem("userEmail");
-            if (!email) {
-                console.error("Email not found in localStorage");
-                return;
-            }
-
-            const ordersData = await fetchMedusaApi<any>({
-                endpoint: "/store/customers/order",
-                query: { email },
-            });
-
-            setOrderList(ordersData);
-            console.log("Orders:", ordersData);
-        }
-
-        getOrders();
-    }, []);
 
     return (
-        orderList.length > 0 ? (
+        props.list.length > 0 ? (
             <div className="w-full flex flex-col gap-6 overflow-auto line-scroll" data-lenis-prevent>
-                {orderList.map((order) => (
+                {props.list.map((order) => (
                     <OrderListComponent data={order} />
                 ))}
             </div>

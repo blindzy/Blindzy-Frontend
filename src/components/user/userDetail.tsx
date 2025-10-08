@@ -30,7 +30,7 @@ function UserDetail() {
             });
 
             setUserData(data);
-            console.log("user data:", data);
+            // console.log("user data:", data);
         }
 
         getUserData();
