@@ -36,6 +36,18 @@ function UserDetail() {
         getUserData();
     }, []);
 
+    const handleLogout = () => {
+        localStorage.removeItem("user");
+        localStorage.removeItem("userEmail");
+        localStorage.removeItem("access_token");
+
+        // Expire the cookie
+        document.cookie = "access_token=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
+
+        // Redirect to login page (optional)
+        window.location.href = "/login";
+    }
+
 
     return (
         <div className="sticky top-0 xl:w-[25vw] w-full xl:h-[calc(100vh-32px)] h-full flex flex-col justify-between gap-[48px] xl:p-[1.25vw] sm:p-[2.344vw] p-4 xl:pt-[48px] bg-primary rounded-48 text-white xl:shrink-0">
@@ -87,7 +99,7 @@ function UserDetail() {
                 <Button variant={'light'} size={'large'} className="w-full border-[--white] text-sm">
                     Edit Profile
                 </Button>
-                <Button variant={'outline_white'} size={'large'} className="w-full text-sm  ">
+                <Button variant={'outline_white'} size={'large'} onClick={handleLogout} className="w-full text-sm  ">
                     Log Out
                 </Button>
             </div>

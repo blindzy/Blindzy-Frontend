@@ -1,12 +1,7 @@
 ﻿import React, { useEffect } from "react";
 import { Button } from "@lib/components/ui/button";
 
-// import './css/style.css';
-
-interface QuestionsProps {
-	// Add any props if needed in the future
-}
-function Questions(props: QuestionsProps) {
+function Questions() {
 
 	useEffect(() => {
 	}, []);

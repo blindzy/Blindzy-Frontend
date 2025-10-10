@@ -9,7 +9,8 @@ import { Checkbox } from "@lib/components/ui/checkbox";
 import { Button } from "@lib/components/ui/button";
 import Separate from "@components/separate";
 import Measurement from "./measurement";
-import { Label } from "@lib/components/ui/label";
+import { createAddToCart } from '../../services/add-to-cart';
+
 
 
 const productOptions = [
@@ -98,6 +99,20 @@ function Single_blinds_customization(props) {
     const [chainColour, setChainColour] = useState('');
     const [bracketColour, setBracketColour] = useState('');
     const [baseRailColour, setBaseRailColour] = useState('');
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [currencySymbol, setCurrencySymbol] = useState('');
+    const [measurementsChecked, setMeasurementsChecked] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(''); 
+    const [success, setSuccess] = useState(''); 
+    type UserData = {
+        id: string | number;
+        email: string;
+        first_name: string;
+        last_name: string;
+    };
+    const [userData, setUserData] = useState<UserData | null>(null);
+    const [productData, setProductData] = useState(props.data);
     const [data, setData] = useState([
         {'title': 'Colour', 'value': selectedColor},
         {'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : ''},
@@ -110,9 +125,33 @@ function Single_blinds_customization(props) {
         {'title': 'Base Rail Colour', 'value': baseRailColour}, 
     ]);
     
-    const [dynamicPricing, setDynamicPricing] = useState(false);
-    const [productData, setProductData] = useState(props.data);
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+
+        if (lenis) {
+            lenis.on('scroll', ScrollTrigger.update);
+        }
+    }, [lenis]);
     
+    // Set default color and price when component mounts
+    useEffect(() => {
+        if (productData?.options?.[0]?.values?.[0]?.value && !selectedColor) {
+            const defaultColor = productData.options[0].values[0].value;
+            setSelectedColor(defaultColor);
+            
+            // Find the variant with the default color and set its price
+            const defaultVariant = productData?.variants?.find(
+                variant => variant.title === defaultColor || 
+                            variant.options.some(opt => opt.value === defaultColor)
+            );
+            
+            if (defaultVariant?.price_sets?.[0]?.prices?.[0]?.amount) {
+                setTotalPrice(defaultVariant.price_sets[0].prices[0].amount);
+                
+            }
+        }
+    }, [productData]);
+
     // Handle option selection updates
     const handleOptionChange = (optionTitle, value) => {
         setData(prev => 
@@ -124,20 +163,29 @@ function Single_blinds_customization(props) {
         );
     };
     
-    const selectedColorVariant = productData?.variants?.find(variant => variant.options?.Color === selectedColor);
-    
-    // Calculate total price (base price + variant price difference)
-    const basePrice = productData?.price?.amount || 0;
-    const variantPrice = selectedColorVariant?.prices?.[0]?.amount || basePrice;
-    const totalPrice = variantPrice;
-
-    useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-
-        if (lenis) {
-            lenis.on('scroll', ScrollTrigger.update);
+    const calculateBasePrice = () => {
+        if (selectedColor && productData?.variants) {
+            const selectedVariant = productData.variants.find(
+                variant => variant.title === selectedColor || 
+                        variant.options.some(opt => opt.value === selectedColor)
+            );
+            const code = selectedVariant?.price_sets?.[0]?.prices?.[0]?.currency_code || 'USD';
+            let symbol = '';
+            switch (code) {
+                case 'usd': symbol = '$'; break;
+                case 'aud': symbol = 'A$'; break;
+                case 'gbp': symbol = '£'; break;
+                case 'eur': symbol = '€'; break;
+                case 'inr': symbol = '₹'; break;
+                case 'nzd': symbol = 'NZ$'; break;
+                default: symbol = code ? code.toUpperCase() + ' ' : '';
+            }
+            setCurrencySymbol(symbol);
+            return selectedVariant?.price_sets?.[0]?.prices?.[0]?.amount || 0;
         }
-    }, [lenis]);
+        return 0;
+    };
+    
 
     // Update color in data array when selectedColor changes
     useEffect(() => {
@@ -154,18 +202,24 @@ function Single_blinds_customization(props) {
                     : item
             )
         );
-    }, [selectedColor, chainColour, bracketColour, baseRailColour]);
+        // Calculate total price based on area
+        const basePrice = calculateBasePrice();
+        const area = measurements.width * measurements.height;
+        const newTotalPrice = Math.round(basePrice * area);
+        setTotalPrice(newTotalPrice);
 
-    // Update size in data array when measurements change
+    }, [selectedColor, chainColour, bracketColour, baseRailColour, productData?.variants, measurements.width, measurements.height]);
+
     useEffect(() => {
-        setData(prev => 
-            prev.map(item => 
-                item.title === 'Size'
-                    ? { ...item, value: measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : '' }
-                    : item
-            )
-        );
-    }, [measurements.width, measurements.height]);
+        const userDataString = localStorage.getItem("user");
+        if (!userDataString) {
+            console.error("User Data not found in localStorage");
+            return;
+        }
+        const userDataObj = JSON.parse(userDataString);
+        setUserData(userDataObj);
+    }, [userData]);
+
 
     // Helper function to get the right color setter
     const getColorSetter = (optionTitle) => {
@@ -187,45 +241,93 @@ function Single_blinds_customization(props) {
         }
     };
 
-    // Auto-calculate price when measurements change
-    // useEffect(() => {
-    //     if (measurements.width && measurements.height) {
-    //         const widthInMeters = measurements.width;
-    //         const heightInMeters = measurements.height;
+    const handleAddToCart = async () => {
+        setLoading(true);
+        setError('');
+        setSuccess('');
+        if (!measurementsChecked) {
+            setError('Please confirm that you have checked your measurements');
+            setSuccess('');
+            setLoading(false);
+            return;
+        }else{
+            setError('');
+            setSuccess('');
+        }
+        // if (!measurements.roomName) {
+        //     setError('Please enter room name');
+        //     return;
+        // }
+        if (data.some(item => !item.value)) {
+            setError('Please select all customization options');
+           setSuccess('');
+            setLoading(false);
+            return;
+        }else{
+            setError('');
+            setSuccess('');
+        }
+        if (!userData) {
+            setError('Customer not found. Please register first.');
+            setSuccess('');
+            setLoading(false);
+            return;
+        }else{
+            setError('');
+            setSuccess('');
+        }
 
-    //         if (widthInMeters > 0 && heightInMeters > 0) {
-    //             const area = widthInMeters * heightInMeters;
-    //             const pricePerSqM = basePrice;
-    //             const newAmount = Math.round(area * pricePerSqM);
-                
-    //             // Update product data with new pricing
-    //             const updatedProductData = {
-    //                 ...productData,
-    //                 price: {
-    //                     ...productData.price,
-    //                     amount: newAmount
-    //                 },
-    //                 variants: productData.variants.map(variant => ({
-    //                     ...variant,
-    //                     prices: [{
-    //                         amount: newAmount,
-    //                         currency_code: productData.price.currency_code
-    //                     }]
-    //                 }))
-    //             };
+        try {
+            const response = await createAddToCart.addToCart({
+                email: userData.email,
+                product_id: productData.id,
+                quantity: 1,
+                customizations: {
+                    title: productData.title,
+                    amount: totalPrice,
+                    currency: currencySymbol,
+                    thumbnail: productData.thumbnail,
+                    customizationData: data,
+                    // colour : selectedColor,
+                    // size : data.find(item => item.title === 'Size')?.value || '',
+                    // fitting : data.find(item => item.title === 'Fitting Type')?.value || '',
+                    // select_fit : data.find(item => item.title === 'Select Fit')?.value || '',
+                    // curtain_stack : data.find(item => item.title === 'Curtain Stack')?.value || '',
+                    // curtain_style : data.find(item => item.title === 'Curtain Style')?.value || '',
+                    // curtain_hem : data.find(item => item.title === 'Curtain Hem')?.value || '',
+                    // track_type : data.find(item => item.title === 'Track Type')?.value || '',
+                    // wand_length : data.find(item => item.title === 'Wand Length')?.value || '',
+                    // track_colour : data.find(item => item.title === 'Track Colour')?.value || '',
+                    // bracket_style : data.find(item => item.title === 'Bracket Style')?.value || '',
+                },
+            });
 
-    //             setProductData(updatedProductData);
-    //             setDynamicPricing(true);
-    //         }
-    //     }
-    // }, [measurements.width, measurements.height]);
+            setSuccess("Add to Cart created successfully!");
+
+        } catch (err: any) {
+            console.error("Add to Cart error:", err);
+            setError(err.message || "Something went wrong during Add to Cart.");
+        } finally {
+            setLoading(false);
+        }
+
+        // setError('');
+        // // Add your add to cart logic here
+    }
+    const addCommaToNumber = (num) => {
+        return num.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        });
+    }
+
 
 
     return (
         <section className="w-screen flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-[64px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="ProductDetail">
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-6 xl:pb-[5.833vw]">
                 <div className="w-full flex flex-col gap-2 text-[--Black]">
-                    <h2 className="text-xl">BLINDS Customisations</h2>
+                    <h2 className="text-xl">Blinds Customisations</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
                 <Separate/>
@@ -233,38 +335,7 @@ function Single_blinds_customization(props) {
                     <h2 className="text-lg">Enter Measurements</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
-                <div className="grid grid-cols-12 sm:gap-4 gap-x-2 gap-y-4">
-                    <div className="sm:col-span-4 col-span-12 flex items-center gap-2 p-2 sm:py-4 xl:py-[0.833vw] px-3 bg-[--white] border border-[--lightGrey] rounded-full">
-                        <Label htmlFor="roomName" className="text-sm normal shrink-0">Room Name:</Label>
-                        <input 
-                            type="text" 
-                            id="roomName" 
-                            value={measurements.roomName}
-                            onChange={(e) => setMeasurements(prev => ({...prev, roomName: e.target.value}))}
-                            className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
-                        />
-                    </div>
-                    <div className="sm:col-span-4 col-span-6 flex items-center gap-2 p-2 sm:py-4 xl:py-[0.833vw] px-3 bg-[--white] border border-[--lightGrey] rounded-full">
-                        <Label htmlFor="width" className="text-sm normal shrink-0">Width: <span className="text-xs">(m)</span></Label>
-                        <input 
-                            type="number" 
-                            id="width" 
-                            value={measurements.width}
-                            onChange={(e) => setMeasurements(prev => ({...prev, width: Number(e.target.value)}))}
-                            className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
-                        />
-                    </div>
-                    <div className="sm:col-span-4 col-span-6 flex items-center gap-2 p-2 sm:py-4 xl:py-[0.833vw] px-3 bg-[--white] border border-[--lightGrey] rounded-full">
-                        <Label htmlFor="height" className="text-sm normal shrink-0">Height: <span className="text-xs">(m)</span></Label>
-                        <input 
-                            type="number" 
-                            id="height" 
-                            value={measurements.height}
-                            onChange={(e) => setMeasurements(prev => ({...prev, height: Number(e.target.value)}))}
-                            className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
-                        />
-                    </div>
-                </div>
+                <Measurement measurements={measurements} setMeasurements={setMeasurements} />
                 {productData?.options?.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate/>
@@ -302,40 +373,43 @@ function Single_blinds_customization(props) {
                 <Separate/>
                 <div className="flex items-center justify-between">
                     <h5 className="text-lg">TOTAL PRICE</h5>
-                    {/* <h5 className="text-lg">
-                        {(() => {
-                        const code = productData.price.currency_code?.toLowerCase();
-                        let symbol = '';
-                        switch (code) {
-                            case 'usd': symbol = '$'; break;
-                            case 'aud': symbol = 'A$'; break;
-                            case 'gbp': symbol = '£'; break;
-                            case 'eur': symbol = '€'; break;
-                            case 'inr': symbol = '₹'; break;
-                            case 'nzd': symbol = 'NZ$'; break;
-                            default: symbol = code ? code.toUpperCase() + ' ' : '';
-                        }
-                        return symbol + totalPrice;
-                    })()}
-                    </h5> */}
+                    <h5 className="text-lg">
+                        {currencySymbol}{addCommaToNumber(totalPrice)}
+                    </h5>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="measurements-checked"/>
-                    <label htmlFor="measurements-checked" className="text-sm normal">I have double checked my measurements and customisations</label>
+                    <Checkbox
+                        id="measurements-checked"
+                        checked={measurementsChecked}
+                        onCheckedChange={(checked) => setMeasurementsChecked(checked === true)}
+                    />
+                    <label htmlFor="measurements-checked" className="text-sm normal cursor-pointer">I have double checked my measurements and customisations</label>
                 </div>
+                {error && (
+                    <p className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">{error}</p>
+                )}
+                {success && (
+                    <p className="p-3 rounded-lg bg-green-50 text-green-600 text-sm">{success}</p>
+                )}
                 <div className="flex items-center gap-4">
-                    <Button variant={'primary'} size={'large'} className="w-full flex-1">
-                        Add to Cart
+                    <Button 
+                        variant={'primary'} 
+                        size={'large'} 
+                        className="w-full flex-1"
+                        disabled={!measurementsChecked}
+                        onClick={handleAddToCart}
+                    >
+                        {loading ? 'Adding...' : 'Add to Cart'}
                     </Button>
-                    <Button variant={'light'} size={'large'} className="w-full flex-1">
+                    {/* <Button variant={'light'} size={'large'} className="w-full flex-1">
                         Buy Now
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
             <ProductCard 
                 productData={productData}
                 customizationData={data}
-                totalPrice={totalPrice}
+                totalPrice={`${currencySymbol}${addCommaToNumber(totalPrice)}`}
             />
         </section>
     );

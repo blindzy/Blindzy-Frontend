@@ -4,11 +4,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import 'swiper/css/free-mode';
 
-
-interface WhyChooseProps {
-	// Add any props if needed in the future
-}
-function WhyChoose(props: WhyChooseProps) {
+function WhyChoose() {
 
 	useEffect(() => {
 		// Only run on client side

@@ -1,15 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Button } from "@lib/components/ui/button";
 import './css/style.css';
 
-interface AboutProps {
-	// Add any props if needed in the future
-}
 
-function About(props: AboutProps) {
+function About() {
 
-	useEffect(() => {
-	}, []);
 
 	return (
 		<section className="about-section w-screen h-screen mbl:h-auto flex items-center justify-center xl:p-[1.25vw] sm:p-4 p-2 mbl:px-7 mbl:py-[11.977vw]" id="about-section">

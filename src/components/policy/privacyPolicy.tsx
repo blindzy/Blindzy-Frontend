@@ -1,13 +1,9 @@
 ﻿import React, { useEffect , useState} from "react";
-import { Icon } from '@iconify/react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 
-interface PrivacyPolicyProps {
-	// Add any props if needed in the future
-}
-function PrivacyPolicy(props: PrivacyPolicyProps) {
+function PrivacyPolicy() {
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
 	const lenis = isDesktop ? useLenis() : null;
 

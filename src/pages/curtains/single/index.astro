@@ -18,13 +18,13 @@ const filteredProducts = (productsData?.products || []).filter((product) => {
 
   return isSingleType && hasBlindsCategory;
 });
-console.log("Filtered Products:", filteredProducts);
+const tags = ["Sheer","Blockout"];
 
 ---
 
 <Layout>
-      <Navbar client:load logo="dark"/>
-      <InnerBanner client:load title={`Curtains SHOP`} content="Beautiful Designer Curtains You Can Install in 20 Minutes"/>
-      <ShopComponent client:load data={filteredProducts} customizePage="/curtains/single"/>
-      <Footer client:visible/>
+  <Navbar client:load logo="dark"/>
+  <InnerBanner client:load title={`Curtains SHOP`} content="Beautiful Designer Curtains You Can Install in 20 Minutes"/>
+  <ShopComponent client:load data={filteredProducts} customizePage="curtains/single" tags={tags}/>
+  <Footer client:visible/>
 </Layout>

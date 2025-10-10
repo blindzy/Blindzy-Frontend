@@ -1,14 +1,8 @@
 ﻿import * as React from "react";
-import { useEffect } from "react";
 
 
-interface AboutDetailProps {
-	// Add any props if needed in the future
-}
-function AboutDetail(props: AboutDetailProps) {
+function AboutDetail() {
 
-	useEffect(() => {
-	}, []);
 
 	return (
 		<section className="w-screen flex flex-col xl:gap-[4.167vw] sm:gap-[9.375vw] gap-[22.326vw] xl:py-[4.427vw] sm:py-[7.813vw] py-[11.163vw] xl:px-[1.25vw] sm:px-[2.344vw] px-6" id="aboutDetail">

@@ -1,5 +1,4 @@
 import React from "react";
-import { Plus } from 'lucide-react';
 import { Label } from "@lib/components/ui/label";
 function Measurement({ measurements, setMeasurements }) {
     return (
@@ -20,7 +19,14 @@ function Measurement({ measurements, setMeasurements }) {
                     type="number" 
                     id="width" 
                     value={measurements.width}
-                    onChange={(e) => setMeasurements(prev => ({...prev, width: Number(e.target.value)}))}
+                    onChange={(e) => {
+                        const newValue = Number(e.target.value);
+                        if (newValue === 0 || e.target.value === '') {
+                            setMeasurements(prev => ({...prev, width: 1}));
+                        } else {
+                            setMeasurements(prev => ({...prev, width: newValue}));
+                        }
+                    }}
                     className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
                 />
             </div>
@@ -30,7 +36,14 @@ function Measurement({ measurements, setMeasurements }) {
                     type="number" 
                     id="height" 
                     value={measurements.height}
-                    onChange={(e) => setMeasurements(prev => ({...prev, height: Number(e.target.value)}))}
+                    onChange={(e) => {
+                        const newValue = Number(e.target.value);
+                        if (newValue === 0 || e.target.value === '') {
+                            setMeasurements(prev => ({...prev, height: 1}));
+                        } else {
+                            setMeasurements(prev => ({...prev, height: newValue}));
+                        }
+                    }}
                     className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
                 />
             </div>

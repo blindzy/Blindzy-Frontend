@@ -1,0 +1,174 @@
+import React, { useEffect, useRef, useState } from "react";
+import { Button } from "@lib/components/ui/button";
+import Separate from "@components/separate";
+import { CartProduct } from "./cart-product";
+import {Dialog,DialogClose,DialogContent,DialogFooter,DialogHeader,DialogTitle,DialogTrigger,} from "@lib/components/ui/dialog";
+import { X, Loader2 } from 'lucide-react';
+import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
+
+
+export function CartPopup() {
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
+    const [userData, setUserData] = useState(null);
+    const [cartItems, setCartItems] = useState<any[]>([]);
+    const [totalAmount, setTotalAmount] = useState(0);
+    const [currencySymbol, setCurrencySymbol] = useState('');
+
+    // Calculate total amount from all cart items
+    const calculateTotalAmount = (items) => {
+        let total = 0;
+        let symbol = '';
+        
+        items.forEach(item => {
+            const itemAmount = (item.customizations?.amount || 0) * (item.quantity || 1);
+            total += itemAmount;
+            // Get currency symbol from first item (assuming all items have same currency)
+            if (!symbol && item.customizations?.currency) {
+                symbol = item.customizations.currency;
+            }
+        });
+
+        setCurrencySymbol(symbol);
+        setTotalAmount(total);
+    };
+    
+
+    // Function to fetch cart data
+    const getCart = async () => {
+        setLoading(true);
+        try {
+            const userDataString = localStorage.getItem("user");
+            if (!userDataString) {
+                console.error("User Data not found in localStorage");
+                return;
+            }
+            const userDataObj = JSON.parse(userDataString);
+            setUserData(userDataObj);
+
+            const data = await fetchMedusaApi<any>({
+                endpoint: "store/customers/cart",
+                query: { email: userDataObj.email },
+            });
+            setCartItems(data.cart.items);
+            calculateTotalAmount(data.cart.items);
+        } catch (error) {
+            console.error("Error fetching cart:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    // Fetch cart data when dialog opens
+    useEffect(() => {
+        if (open) {
+            getCart();
+        }
+    }, [open]);
+
+    // Recalculate total when cart items change
+    useEffect(() => {
+        calculateTotalAmount(cartItems);
+    }, [cartItems]);
+    
+    return (
+        <Dialog open={open} onOpenChange={setOpen}>
+            <DialogTrigger asChild>
+                <Button variant={'light'} size={'xl'} className="border-none rounded-full">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+                        <path d="M15.75 17.5L18.25 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M24.25 17.5L21.75 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M26 17.5L25.403 24.666C25.317 25.703 24.45 26.5 23.41 26.5H16.59C15.55 26.5 14.683 25.703 14.597 24.666L14 17.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M12.75 17.5H27.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[394px] w-full h-[calc(100vh-32px)] flex flex-col gap-6">
+                <div className="w-full flex flex-col gap-6">
+                    <DialogHeader>
+                        <DialogTitle className="text-xxl uppercase">Cart</DialogTitle>
+                        <DialogClose asChild>
+                            <Button type="button" variant="light" size={'lg'}>
+                                <X className="size-6" />
+                            </Button>
+                        </DialogClose>
+                    </DialogHeader>
+                    <Separate/>
+                </div>
+                <div className="w-full h-full flex flex-col gap-6 py-2 overflow-auto line-scroll" data-lenis-prevent>
+                    {loading ? (
+                        <div className="flex justify-center w-full h-full">
+                            <Loader2 className="h-8 w-8 animate-spin text-[--primary]" />
+                        </div>
+                    ) : cartItems && cartItems.length > 0 ? (
+                        cartItems.map((item, index) => (
+                            // <CartProduct 
+                            //     key={index} 
+                            //     item={item}
+                            //     onQuantityChange={(item, newQuantity) => {
+                            //         const updatedItems = cartItems.map(cartItem => 
+                            //             cartItem.id === item.id 
+                            //                 ? {...cartItem, quantity: newQuantity}
+                            //                 : cartItem
+                            //         );
+                            //         setCartItems(updatedItems);
+                            //         calculateTotalAmount(updatedItems);
+                            //     }}
+                            // />
+                            <CartProduct 
+                                key={index} 
+                                item={item}
+                                onQuantityChange={(item, newQuantity) => {
+                                    const updatedItems = cartItems.map(cartItem => 
+                                        cartItem.id === item.id 
+                                            ? { ...cartItem, quantity: newQuantity }
+                                            : cartItem
+                                    );
+                                    setCartItems(updatedItems);
+                                    calculateTotalAmount(updatedItems);
+                                }}
+                                onDeleteSuccess={(deletedItemId) => {
+                                    // ✅ Option 1: Remove from state directly
+                                    const updatedItems = cartItems.filter(cartItem => cartItem.id !== deletedItemId);
+                                    setCartItems(updatedItems);
+                                    calculateTotalAmount(updatedItems);
+
+                                    // ✅ Option 2 (alternative): Refetch entire cart instead
+                                    // getCart();
+                                }}
+                            />
+
+                        ))
+                    ) : (
+                        <div className="text-center text-[--white]">No items in cart</div>
+                    )}
+                </div>
+                <div className="w-full flex flex-col gap-4">
+                    <Separate/>
+                    <div className="w-full flex items-center justify-between">
+                        <h5 className="text-lg">TOTAL</h5>
+                        <h5 className="text-lg">
+                            {currencySymbol}
+                            {totalAmount.toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            })}
+                        </h5>
+                    </div>
+                    <DialogFooter >
+                        <Button 
+                            variant={'primary'} 
+                            size={'smallest'} 
+                            className="w-full"
+                            asChild
+                        >
+                            <a href="/checkout">
+                                Proceed to Checkout
+                            </a>
+                        </Button>
+                    </DialogFooter>
+                </div>
+            </DialogContent>
+        </Dialog>
+    )
+}

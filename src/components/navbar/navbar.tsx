@@ -3,6 +3,7 @@ import * as React from "react";
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, X, Plus } from 'lucide-react';
 import { Button } from "../../lib/components/ui/button";
+import { CartPopup } from "@components/popup/cartPopup";
 import './css/style.css';
 
 declare global {
@@ -46,10 +47,10 @@ function Navbar(props: NavbarProps) {
                     Name : 'curtains',
                     Link : '/curtains/single'
                 },
-                {
-                    Name : 'Double Curtains',
-                    Link : '/curtains/double'
-                }
+                // {
+                //     Name : 'Double Curtains',
+                //     Link : '/curtains/double'
+                // }
             ]
         },
         {
@@ -64,10 +65,10 @@ function Navbar(props: NavbarProps) {
                     Name : 'Vertical Blinds',
                     Link : '/blinds/vertical'
                 },
-                {
-                    Name : 'Double Roller Blinds',
-                    Link : '/blinds/double'
-                }
+                // {
+                //     Name : 'Double Roller Blinds',
+                //     Link : '/blinds/double'
+                // }
             ]
         },
         {
@@ -153,7 +154,7 @@ function Navbar(props: NavbarProps) {
                         ))}
                     </ul>
                 </div>
-                <div className="w-fit xl:p-[0.208vw] p-1 flex items-center xl:gap-[0.833vw] gap-2 xl:ps-[0.833vw] bg-[--white] border border-[--black] rounded-full">
+                <div className="w-fit xl:p-[0.208vw] p-1 flex items-center xl:gap-[0.833vw] gap-2 bg-[--white] border border-[--black] rounded-full">
                     <Button variant={'light'} size={'xl'} className="border-none rounded-full xl:flex hidden" asChild>
                         <a href="/login" >
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -162,14 +163,7 @@ function Navbar(props: NavbarProps) {
                             </svg>
                         </a>
                     </Button>
-                    <Button variant={'light'} size={'xl'} className="open__cartPopup border-none rounded-full">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-                            <path d="M15.75 17.5L18.25 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M24.25 17.5L21.75 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M26 17.5L25.403 24.666C25.317 25.703 24.45 26.5 23.41 26.5H16.59C15.55 26.5 14.683 25.703 14.597 24.666L14 17.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                            <path d="M12.75 17.5H27.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        </svg>
-                    </Button>
+                    <CartPopup />
                     <button className={`hamburger ${isSidebarOpen&&'show'}`} onClick={handleMenu}>
                         <svg viewBox="0 0 32 32">
                             <path

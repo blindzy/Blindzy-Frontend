@@ -4,9 +4,7 @@ import $ from 'jquery';
 
 import './css/style.css';
 
-interface ContactProps {}
-
-function Contact(props: ContactProps) {
+function Contact() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',

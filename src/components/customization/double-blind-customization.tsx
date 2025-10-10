@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
-import { Plus  } from 'lucide-react';
 import SelectColor from "./selectColor";
 import SelectVarient from "./selectVarient";
 import ProductCard from "./ProductCard";

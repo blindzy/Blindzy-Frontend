@@ -5,31 +5,10 @@ import DrawSVGPlugin from "gsap/dist/DrawSVGPlugin";
 import { Button } from "@lib/components/ui/button";
 import './css/style.css'; // Ensure this path is correct relative to quality.tsx
 
-interface QualityProps {
-    // Add any props if needed in the future
-}
 
-function Quality(props: QualityProps) {
+function Quality() {
 
     useEffect(() => {
-        // Only run on client side
-        // if (typeof window === 'undefined') return;
-        
-        // Check for mobile screen size
-        // if (window.innerWidth < 1150) {
-        //     // On mobile, show all steps immediately, no animation
-        //     for (let i = 1; i <= 4; i++) {
-        //         const step = document.getElementById(`step-${i}`);
-        //         if (step) {
-        //             step.style.opacity = '1';
-        //             step.style.transform = 'none';
-        //         }
-        //     }
-        //     // Return early to prevent GSAP animations from running on mobile
-        //     return;
-        // }
-
-        // Register GSAP plugins for desktop animations
         if(window.innerWidth > 1150){
             gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
     

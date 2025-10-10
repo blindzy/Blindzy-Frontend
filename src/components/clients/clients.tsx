@@ -7,12 +7,8 @@ import 'swiper/css/navigation';
 import { Navigation} from 'swiper/modules';
 import { Button } from "@lib/components/ui/button";
 
-interface ClientsProps {
-	// Add any props if needed in the future
-}
-function Clients(props: ClientsProps) {
+function Clients() {
 
-	// Testimonial data array
 	const testimonials = [
 		{
 			name: "CUSTOMER'S NAME",

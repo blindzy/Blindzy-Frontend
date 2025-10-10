@@ -8,7 +8,7 @@ import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 export async function getStaticPaths() {
   // First get list of all products to get their IDs
   const allProducts = await fetchMedusaApi<any>({
-    endpoint: "/store/products/custom",
+    endpoint: "store/products/custom",
   });
   // Return array of objects with id params for all products
   return (allProducts?.products || []).map((product) => ({
@@ -20,7 +20,7 @@ const { id } = Astro.params;
 
 // Fetch full product data at render time
 const productData = await fetchMedusaApi<any>({
-  endpoint: `/store/products/custom/${id}`,
+  endpoint: `store/products/custom/${id}`,
 });
 
 ---

@@ -7,12 +7,7 @@ import 'swiper/css/navigation';
 import { Navigation} from 'swiper/modules';
 import { Button } from "@lib/components/ui/button";
 
-
-
-interface InspirationProps {
-	// Add any props if needed in the future
-}
-function Inspiration(props: InspirationProps) {
+function Inspiration() {
     const [screen, setScreen] = useState<boolean>(true);
     const prevRef = useRef(null);
     const nextRef = useRef(null);

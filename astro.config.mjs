@@ -1,28 +1,28 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
+import vercel from "@astrojs/vercel/serverless"; // 👈 Add this
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
-import vercel from "@astrojs/vercel/serverless";
 
 export default defineConfig({
-  output: 'server',
-  adapter: vercel(),
+  output: "server", // 👈 Required for middleware
+  adapter: vercel(), // 👈 Add adapter here
+  middleware: true,
   integrations: [
     react({
-      include: ['**/react/*'],
+      include: ["**/react/*"],
     }),
-    tailwind()
+    tailwind(),
   ],
   vite: {
     server: {
       proxy: {
-        // Only proxy specific API routes, not all /api requests
-        '/api/medusa': {
-          target: 'http://208.87.135.120:9000',
+        "/api/medusa": {
+          target: "http://208.87.135.120:9000",
           changeOrigin: true,
           secure: false,
-          rewrite: (path) => path.replace(/^\/api\/medusa/, '')
-        }
-      }
-    }
-  }
+          rewrite: (path) => path.replace(/^\/api\/medusa/, ""),
+        },
+      },
+    },
+  },
 });

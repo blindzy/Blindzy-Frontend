@@ -5,10 +5,7 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { Plus } from 'lucide-react';
 
-interface TutorialsProps {
-	// Add any props if needed in the future
-}
-function Tutorials(props: TutorialsProps) {
+function Tutorials() {
 	const [selectedCategory, setSelectedCategory] = useState<string>('all');
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1150;
 	const lenis = isDesktop ? useLenis() : null;

@@ -9,11 +9,7 @@ import { Textarea } from "@lib/components/ui/textarea";
 import { Button } from "@lib/components/ui/button";
 
 
-interface ContactProps {
-	// Add any props if needed in the future
-}
-
-function Contact(props: ContactProps) {
+function Contact() {
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
 	const lenis = isDesktop ? useLenis() : null;
 

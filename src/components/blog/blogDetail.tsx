@@ -1,16 +1,11 @@
 ﻿import * as React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, } from "react";
 import { Icon } from '@iconify/react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-// import { useParams } from "react-router"
 import { useLenis } from '../../hooks/useLenis';
-interface BlogDetailProps {
 
-	// Add any props if needed in the future
-}
-function BlogDetail(props: BlogDetailProps) {
-    // const blogId = useParams().id;
+function BlogDetail() {
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
 	const lenis = isDesktop ? useLenis() : null;
 
@@ -19,7 +14,6 @@ function BlogDetail(props: BlogDetailProps) {
         gsap.registerPlugin(ScrollTrigger);
 		ScrollTrigger.normalizeScroll(true);
 
-		// If using Lenis, connect it with GSAP
 		if (lenis) {
 			lenis.on('scroll', ScrollTrigger.update);
 		}

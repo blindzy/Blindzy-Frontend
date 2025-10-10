@@ -1,4 +1,4 @@
-﻿import React, { useEffect } from "react";
+﻿import React from "react";
 import './css/style.css';
 import { Icon } from '@iconify/react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -6,11 +6,6 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { Navigation } from 'swiper/modules';
 import { Button } from "@lib/components/ui/button";
-
-
-interface CategoriesProps {
-	// Add any props if needed in the future
-}
 
 const categoriesData = [
 	{

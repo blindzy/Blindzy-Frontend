@@ -18,12 +18,16 @@ const filteredProducts = (productsData?.products || []).filter((product) => {
 
   return isSingleType && hasBlindsCategory;
 });
-console.log("Filtered Products:", filteredProducts);
+const tags = [
+  'Blockout',
+  'Light Filtering',
+  'Sunscreen',
+];
 ---
 
 <Layout>
       <Navbar client:load logo="dark"/>
       <InnerBanner client:load title="Vertical BLINDS SHOP" content="Beautiful Designer Vertical Blinds You Can Install in 20 Minutes"/>
-      <ShopComponent client:load data={filteredProducts} customizePage="/blinds/vertical"/>
+      <ShopComponent client:load data={filteredProducts} customizePage="blinds/vertical" tags={tags}/>
       <Footer client:visible/>
 </Layout>

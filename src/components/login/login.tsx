@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { EyeClosed , Eye } from 'lucide-react';
-import { Icon } from '@iconify/react';
-// import ForgetPasswordPopup from '@components/popup/forget-password';
 import {ForgetPasswordPopup} from './forget-password';
 import Separate from '@components/separate';
 import { Input } from '@lib/components/ui/input';
@@ -10,9 +8,7 @@ import { Checkbox } from "@lib/components/ui/checkbox";
 import { login } from '../../services/auth/login';
 import { forgotPassword } from "../../services/auth/forgot";
 
-interface LoginProps { }
-
-function Login(props: LoginProps) {
+function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -109,7 +105,7 @@ function Login(props: LoginProps) {
                             <div className="w-full flex flex-col gap-2">
                                 <button
                                     type="button"
-                                    className="text-[--primary] hover:underline focus:outline-none w-fit text-sm transition"
+                                    className="text-[--primary] hover:underline outline-none w-fit text-sm transition"
                                     onClick={handleForgotPassword}
                                 >
                                     Forgot Password?
@@ -136,14 +132,14 @@ function Login(props: LoginProps) {
                         <p className="text-sm shrink-0">or</p>
                         <div className="w-full h-[1px] bg-mediumGrey"></div>
                     </div>
-                    <Button 
+                    {/* <Button 
                         variant={'light'}
                         size={'large'}
                         className="w-full"
                     >
                         <Icon icon="flat-color-icons:google" className="text-[28px] shrink-0" />
                         <span className="text-sm">Continue as Google</span>
-                    </Button>
+                    </Button> */}
                     <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0">
                         <div className="flex items-center gap-2 shrink-0">
                             <Checkbox id="measurements-checked"/>
@@ -158,9 +154,6 @@ function Login(props: LoginProps) {
                     </div>
                 </div>
             </div>
-            {/* {showForgot && (
-                <ForgetPasswordPopup email={email} onClose={() => setShowForgot(false)} />
-            )} */}
         </>
     );
 }

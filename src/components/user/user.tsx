@@ -3,21 +3,11 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import Address from './address';
-
 import OrderList from "./orderList";
 import UserDetail from "./userDetail";
 import Payment from "./payment";
 import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 
-
-// type Address = {
-//     id: string | number;
-//     address: string;
-//     apartment?: string;
-//     city: string;
-//     state: string;
-//     zipCode: string;
-// };
 type PaymentCard = {
     id: string | number;
     cardType: string;
@@ -31,15 +21,15 @@ function User() {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
     const [paymentDetail, setPaymentDetail] = useState<PaymentCard[]>([]);
-    const [currentTab, setCurrentTab] = useState("payment");
+    const [currentTab, setCurrentTab] = useState("orders");
     const [show, setShow] = useState(true);
     const [addressList, setAddressList] = useState<Address[]>([]);
-        type UserData = {
-            id: string | number;
-            email: string;
-            first_name: string;
-            last_name: string;
-            // add other fields as needed
+    type UserData = {
+        id: string | number;
+        email: string;
+        first_name: string;
+        last_name: string;
+        // add other fields as needed
     };
     const [userData, setUserData] = useState<UserData | null>(null);
     const [orderList, setOrderList] = useState<any[]>([]);

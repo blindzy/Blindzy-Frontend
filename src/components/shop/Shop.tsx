@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import type { Product } from '../../services/api';
 import { Button } from "@lib/components/ui/button";
 import { Label } from "@lib/components/ui/label";
 import ProductComponent from './product';
@@ -72,31 +71,42 @@ function Shop(props) {
             <div className="w-full flex flex-col gap-4 sm:gap-6 xl:gap-[1.25vw]">
                 <div className="w-full p-4 sm:py-[1.563vw] xl:py-[0.833vw] sm:px-[2.344vw] xl:p-[1.25vw] flex flex-col md:flex-row items-center justify-between gap-4 border border-[--Black] sm:rounded-full rounded-[32px]">
                     <h6 className="text-md sm:block hidden text-black"></h6>
-                    <div className="relative flex sm:w-fit w-full shrink-0 ">
-                        <span className={`absolute left-0 top-0 transition w-[25%] sm:w-[14.648vw] xl:w-[9vw] h-full bg-[--primary] rounded-full
-							${selectedCategory === 'all' ? 'left-0' : selectedCategory === 'blockout' ? 'left-[25%]' : selectedCategory === 'light-filtering' ? 'left-[50%]' : selectedCategory === 'sunscreen' ? 'left-[75%]' : ''}
-						`} />
-                        <button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'all' ? 'text-[--white]' : ''}`}
-                            onClick={() => setSelectedCategory('all')}>
-                            All Products
-                        </button>
-                        <button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'blockout' ? 'text-[--white]' : ''}`}
-                            onClick={() => setSelectedCategory('blockout')}>
-                            Blockout
-                        </button>
-                        <button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'light-filtering' ? 'text-[--white]' : ''}`}
-                            onClick={() => setSelectedCategory('light-filtering')}>
-                            Light Filtering
-                        </button>
-                        <button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'sunscreen' ? 'text-[--white]' : ''}`}
-                            onClick={() => setSelectedCategory('sunscreen')}>
-                            Sunscreen
-                        </button>
-                    </div>
+                    {props.tags&&(
+                        <div className="relative flex sm:w-fit w-full shrink-0 ">
+                            <span className={`absolute top-0 transition w-[${100/(props.tags.length + 1)}%] sm:w-[14.648vw] xl:w-[9vw] h-full bg-[--primary] rounded-full`} style={{
+                                left: selectedCategory === 'all' 
+                                    ? '0' 
+                                    : `${(props.tags.findIndex(tag => tag.toLowerCase() === selectedCategory) + 1) * (100/(props.tags.length + 1))}%`
+                            }} />
+                            <button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'all' ? 'text-[--white]' : ''}`}
+                                onClick={() => setSelectedCategory('all')}>
+                                All Products
+                            </button>
+                            {props.tags.map((tag)=>(
+                                <button key={tag} className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === tag.toLowerCase() ? 'text-[--white]' : ''}`}
+                                    onClick={() => setSelectedCategory(tag.toLowerCase())}>
+                                    {tag}
+                                </button>
+                            ))}
+                            {/* <button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'blockout' ? 'text-[--white]' : ''}`}
+                                onClick={() => setSelectedCategory('blockout')}>
+                                Blockout
+                            </button>
+                            <button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'light-filtering' ? 'text-[--white]' : ''}`}
+                                onClick={() => setSelectedCategory('light-filtering')}>
+                                Light Filtering
+                            </button>
+                            <button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'sunscreen' ? 'text-[--white]' : ''}`}
+                                onClick={() => setSelectedCategory('sunscreen')}>
+                                Sunscreen
+                            </button> */}
+                            
+                        </div>
+                    )}
                 </div>
                 <div className="grid items-stretch grid-cols-12 gap-4 sm:gap-6 xl:gap-[1.25vw]">
                     {/*PRODUCT CARDS  */}
-                    {/* {loading && <div className="col-span-12 text-center py-8">Loading products...</div>}
+                    {loading && <div className="col-span-12 text-center py-8">Loading products...</div>}
                     {error && <div className="col-span-12 text-center py-8 text-red-500">{error}</div>}
                     {!loading && !error && products
                         .filter(product => 
@@ -106,7 +116,7 @@ function Shop(props) {
                         .map((product) => (
                             <ProductComponent key={product.id} data={product} size={size} customizePage={props.customizePage} />
                         ))
-                    } */}
+                    }
                 </div>
                 <div className="xl:hidden flex flex-col gap-2">
                     <Instruction />

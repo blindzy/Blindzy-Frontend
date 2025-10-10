@@ -77,7 +77,7 @@ export function AddAddress(props) {
                 closeButtonRef.current?.click();
     
             } catch (err: any) {
-                console.error("Signup error:", err);
+                console.error("Address create error:", err);
                 setError(err.message || "Something went wrong during Address creation.");
             } finally {
                 setLoading(false);

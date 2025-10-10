@@ -4,19 +4,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 
-interface ShowroomProps {
-	// Add any props if needed in the future
-}
 
-// Define the showroom item interface
-interface ShowroomItem {
-    id: number;
-    image: string;
-    category: string;
-    href: string;
-}
-
-function Showroom(props: ShowroomProps) {
+function Showroom() {
 	const [selectedCategory, setSelectedCategory] = useState<string>('all');
 	const [currentPage, setCurrentPage] = useState<number>(1);
 	const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -25,7 +14,7 @@ function Showroom(props: ShowroomProps) {
 	const itemsPerPage = 6; // Show 6 items per page
 
 	// Define showroom data
-	const showroomData: ShowroomItem[] = [
+	const showroomData = [
 		{ id: 1, image: "/images/showroom/01.png", category: "all", href: "/single-product" },
 		{ id: 2, image: "/images/showroom/02.png", category: "all", href: "/single-product" },
 		{ id: 3, image: "/images/showroom/03.png", category: "blinds", href: "/single-product" },

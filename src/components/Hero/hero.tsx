@@ -5,13 +5,9 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { Button } from "@lib/components/ui/button";
 import Navbar from "@components/navbar/navbar";
-
 import './css/style.css';
 
-interface HeroProps {
-	// Add any props if needed in the future
-}
-function Hero(props: HeroProps) {
+function Hero() {
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1150;
 	const lenis = isDesktop ? useLenis() : null;
 

@@ -1,35 +1,45 @@
 ---
+
+
 import Layout from "@layouts/Layout.astro";
 import Navbar from "@components/navbar/navbar";
-import InnerBanner from "@components/inner-banner/innerBanner";
-import ShopComponent from "@components/shop/Shop";
 import Footer from "@components/Footer/Footer";
-import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
+import Vertical_blinds_customization from "@components/customization/vertical-blinds-customization";
+import fetchMedusaApi from "@lib/lib/fetchMedusaApi"; 
 
-const productsData = await fetchMedusaApi<any>({
-  endpoint: "/store/products/custom",
+export async function getStaticPaths() {
+  // First get list of all products to get their IDs
+  const allProducts = await fetchMedusaApi<any>({
+    endpoint: "store/products/custom",
+  });
+  // Return array of objects with id params for all products
+  return (allProducts?.products || []).map((product) => ({
+    params: { id: product.id },
+  }));
+}
+
+const { id } = Astro.params;
+
+// Fetch full product data at render time
+const productData = await fetchMedusaApi<any>({
+  endpoint: `store/products/custom/${id}`,
 });
 
-const filteredProducts = (productsData?.products || []).filter((product) => {
-  const hasBlindsCategory = product.categories?.some(
-    (cat) => cat.name?.toLowerCase() === "shutters"
-  );
-
-  return hasBlindsCategory;
-});
-// const products = [
+// const sampleProducts = [
 //   {
 //     id: '1',
 //     title: 'Premium Plantation Shutters',
 //     handle: 'premium-plantation-shutters',
 //     description:
 //       'High-quality timber plantation shutters with adjustable louvers for perfect light control.',
+//     status: 'published',
+//     type: "vertical",
 //     thumbnail: '/images/categories/1.png',
 //     images: [
 //       { id: 'img1', url: '/images/categories/1.png' }
 //     ],
 //     categories: [
-//       { id: 'cat1', name: 'shutters', handle: 'shutters' }
+//       { id: 'cat1', name: 'Shutters', handle: 'shutters' }
 //     ],
 //     price: { amount: 150, currency_code: 'usd' },
     
@@ -37,7 +47,7 @@ const filteredProducts = (productsData?.products || []).filter((product) => {
 //     options: [
 //       {
 //         id: 'opt1',
-//         title: 'Fabric',
+//         title: 'Colour',
 //         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
 //         values: [
 //           { label: 'White', image: '/images/colors/01.png' },
@@ -107,16 +117,12 @@ const filteredProducts = (productsData?.products || []).filter((product) => {
 //     updated_at: ''
 //   },
 // ];
-const tags = [
-  'Blockout',
-  'Light Filtering',
-  'Sunscreen',
-];
 ---
 
 <Layout>
-      <Navbar client:load logo="dark"/>
-      <InnerBanner client:load title="Shutters SHOP" content="Beautiful Designer shutters You Can Install in 20 Minutes"/>
-      <ShopComponent client:load data={filteredProducts} customizePage="shutters" tags={tags}/>
-      <Footer client:visible/>
-</Layout> 
+    <Navbar client:load logo={'dark'} />
+    {productData?.product && (
+      <Vertical_blinds_customization client:load data={productData.product} />
+    )}
+    <Footer client:load />
+</Layout>

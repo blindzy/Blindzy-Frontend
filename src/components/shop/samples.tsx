@@ -1,16 +1,18 @@
-﻿import React, { useEffect, useState } from "react";
-import { Icon } from '@iconify/react';
-import { api, type Sample } from '../../services/api';
+﻿import React, { useState } from "react";
 import { Button } from "@lib/components/ui/button";
 import { Label } from "@lib/components/ui/label";
 import { Plus  } from 'lucide-react';
 
 function Samples() {
-	const [samples, setSamples] = useState<Sample[]>([]);
+	const [samples, setSamples] = useState([
+		{id: 1, name: "Sample A", material: "Cotton", price: 0, image_url: "/images/product/01.png"},
+		{id: 2, name: "Sample B", material: "Linen", price: 0, image_url: "/images/product/02.png"},
+		{id: 3, name: "Sample C", material: "Silk", price: 0, image_url: "/images/product/03.png"},
+		{id: 4, name: "Sample D", material: "Wool", price: 0, image_url: "/images/product/04.png"},
+		{id: 5, name: "Sample E", material: "Polyester", price: 0, image_url: "/images/product/05.png"},
+		{id: 6, name: "Sample F", material: "Nylon", price: 0, image_url: "/images/product/06.png"},
+	]);
 
-	useEffect(() => {
-		api.getSamples().then(setSamples);
-	}, []);
 
 	return (
 		<section className="shop-section w-screen min-h-screen flex xl:flex-row flex-col items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-2" id="blindsShop">

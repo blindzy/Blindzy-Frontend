@@ -1,14 +1,8 @@
-﻿import React, { useEffect } from "react";
+﻿import React, {  } from "react";
 import './css/style.css';
 import { Icon } from '@iconify/react';
 
-interface FooterProps {
-	// Add any props if needed in the future
-}
-function Footer(props: FooterProps) {
-
-	useEffect(() => {
-	}, []);
+function Footer() {
 
 	return (
 		<section className="footer-section w-screen flex xl:flex-row flex-col items-stretch xl:gap-[1.25vw] sm:gap-4 gap-4 xl:pt-[17.4603vh] sm:pt-[10vh] pt-[6vh] xl:p-[1.25vw] sm:p-4 p-2 overflow-hidden" id="footer">

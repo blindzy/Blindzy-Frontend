@@ -1,5 +1,4 @@
 ﻿import React, { useEffect , useState } from "react";
-import { Icon } from '@iconify/react';
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
@@ -8,26 +7,22 @@ import './css/style.css';
 import { Button } from "@lib/components/ui/button";
 import OrderListComponent from "./order-list";
 import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue,} from "@lib/components/ui/select";
+import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
+import { Loader2, Plus } from 'lucide-react';
+import Separate from "@components/separate";
 
-interface CheckoutProps {
-	// Add any props if needed in the future
-}
 
-function Checkout(props: CheckoutProps) {
+
+function Checkout() {
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
 	const lenis = isDesktop ? useLenis() : null;
 	const [currentStep, setCurrentStep] = useState<number>(1);
 	const [show, setShow] = useState<boolean>(true);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [customerInfo, setCustomerInfo] = useState({
-		firstName: '',
-		lastName: '',
-		email: '',
-		phone: '',
-		company: ''
-	});
+	
 	const [shippingInfo, setShippingInfo] = useState({
-		state: '',
+		// state: '',
+		country: '',
 		city: '',
 		zipCode: '',
 		address: '',
@@ -42,45 +37,146 @@ function Checkout(props: CheckoutProps) {
 		securityCode: '',
 		differentBilling: false
 	});
+	type UserData = {
+		firstName?: string;
+		lastName?: string;
+		email?: string;
+		phone?: string;
+		// company?: string;
+	};
 
+	const [userData, setUserData] = useState<UserData | null>(null);
+	const [customerInfo, setCustomerInfo] = useState({
+		firstName: '',
+		lastName: '',
+		email: '',
+		phone: '',
+		// company: ''
+	});
+	const [totalAmount, setTotalAmount] = useState(0);
+	const [shippingAmount, setShippingAmount] = useState(20);
+	const [currencySymbol, setCurrencySymbol] = useState('');
+	const [error, setError] = useState('');
 	const [orderList, setOrderList] = useState([
-			{
-			    id: 1,
-			    title: "Product Name",
-			    thumbnail: '/images/categories/1.png',
-			    price: { amount: 150, currency_code: 'usd' },
-			    options: [
-			        { id: 1, name: "Color:", value: "Ash" },
-			        { id: 2, name: "Size:", value: "24cm x 56cm" },
-			        { id: 3, name: "Fit Type:", value: "Recess Fit" },
-			        { id: 4, name: "Roll Direction:", value: "Front Roll" },
-			        { id: 5, name: "Chain Colour:", value: "Silver" },
-			        { id: 6, name: "Bracket Colour:", value: "Sandstone" },
-			        { id: 7, name: "Base Rail Shape:", value: "Oval" },
-			        { id: 8, name: "Base Rail Colour:", value: "Bone" },
-			    ],
-			    date: "2023-01-01",
-			    status: "Shipped",
-			},
-			{
-			    id: 2,
-			    title: "Product 2",
-			    thumbnail: '/images/categories/2.png',
-			    price: { amount: 100, currency_code: 'usd' },
-			    options: [
-			        { id: 1, name: "Color:", value: "Ash" },
-			        { id: 2, name: "Size:", value: "24cm x 56cm" },
-			        { id: 3, name: "Fit Type:", value: "Recess Fit" },
-			        { id: 4, name: "Roll Direction:", value: "Front Roll" },
-			        { id: 5, name: "Chain Colour:", value: "Silver" },
-			        { id: 6, name: "Bracket Colour:", value: "Sandstone" },
-			        { id: 7, name: "Base Rail Shape:", value: "Oval" },
-			        { id: 8, name: "Base Rail Colour:", value: "Bone" },
-			    ],
-			    date: "2023-01-02",
-			    status: "Pending"
+			// {
+			//     id: 1,
+			//     title: "Product Name",
+			//     thumbnail: '/images/categories/1.png',
+			//     price: { amount: 150, currency_code: 'usd' },
+			//     options: [
+			//         { id: 1, name: "Color:", value: "Ash" },
+			//         { id: 2, name: "Size:", value: "24cm x 56cm" },
+			//         { id: 3, name: "Fit Type:", value: "Recess Fit" },
+			//         { id: 4, name: "Roll Direction:", value: "Front Roll" },
+			//         { id: 5, name: "Chain Colour:", value: "Silver" },
+			//         { id: 6, name: "Bracket Colour:", value: "Sandstone" },
+			//         { id: 7, name: "Base Rail Shape:", value: "Oval" },
+			//         { id: 8, name: "Base Rail Colour:", value: "Bone" },
+			//     ],
+			//     date: "2023-01-01",
+			//     status: "Shipped",
+			// },
+			// {
+			//     id: 2,
+			//     title: "Product 2",
+			//     thumbnail: '/images/categories/2.png',
+			//     price: { amount: 100, currency_code: 'usd' },
+			//     options: [
+			//         { id: 1, name: "Color:", value: "Ash" },
+			//         { id: 2, name: "Size:", value: "24cm x 56cm" },
+			//         { id: 3, name: "Fit Type:", value: "Recess Fit" },
+			//         { id: 4, name: "Roll Direction:", value: "Front Roll" },
+			//         { id: 5, name: "Chain Colour:", value: "Silver" },
+			//         { id: 6, name: "Bracket Colour:", value: "Sandstone" },
+			//         { id: 7, name: "Base Rail Shape:", value: "Oval" },
+			//         { id: 8, name: "Base Rail Colour:", value: "Bone" },
+			//     ],
+			//     date: "2023-01-02",
+			//     status: "Pending"
+			// }
+	]);
+	const calculateTotalAmount = (items) => {
+        let total = 0;
+        let symbol = '';
+        
+        items.forEach(item => {
+            const itemAmount = (item.customizations?.amount || 0) * (item.quantity || 1);
+            total += itemAmount;
+            // Get currency symbol from first item (assuming all items have same currency)
+            if (!symbol && item.customizations?.currency) {
+                symbol = item.customizations.currency;
+            }
+        });
+
+        setCurrencySymbol(symbol);
+        setTotalAmount(total);
+    };
+	
+	useEffect(() => {
+		const userDataString = localStorage.getItem("user");
+		if (!userDataString) {
+			console.error("User Data not found in localStorage");
+			return;
+		}
+		const userDataObj = JSON.parse(userDataString);
+		setUserData(userDataObj);
+		setCustomerInfo(prev => ({
+			...prev,
+			firstName: userDataObj.first_name || '',
+			lastName: userDataObj.last_name || '',
+			email: userDataObj.email || '',
+			phone: userDataObj.phone || '',
+			// company: userDataObj.company || ''
+		}));
+		setIsLoggedIn(!!userDataObj);
+	}, []);
+	
+	useEffect(() => {
+		const getCart = async () => {
+				try {
+					if (!userData || !userData.email) {
+						console.error("User Data not found in localStorage");
+						return;
+					}
+					const data = await fetchMedusaApi<any>({
+						endpoint: "store/customers/cart",
+						query: { email: userData.email },
+					});
+					setOrderList(data.cart.items);
+					calculateTotalAmount(data.cart.items);
+				} catch (error) {
+					console.error("Error fetching cart:", error);
+				}
+		};
+		const getAddress = async () => {
+			try {
+				if (!userData || !userData.email) {
+					console.error("User Data not found in localStorage");
+					return;
+				}
+				const data = await fetchMedusaApi<any>({
+					endpoint: "/store/customers/addresses",
+					query: { email: userData.email },
+				});
+				setShippingInfo(prev => ({
+					...prev,
+					// state: data.addresses[0]?.state || '',
+					country: data.addresses[0]?.country_code || '',
+					city: data.addresses[0]?.city || '',
+					zipCode: data.addresses[0]?.postal_code || '',
+					address: data.addresses[0]?.address_1 || '',
+				}));
+			} catch (error) {
+				console.error("Error fetching addresses:", error);
 			}
-		]);
+		}
+		getCart();
+		getAddress();
+	}, [userData]);
+
+	useEffect(() => {
+			calculateTotalAmount(orderList);
+	}, [orderList]);
 
 	useEffect(() => {
 		gsap.registerPlugin(ScrollTrigger);
@@ -89,6 +185,7 @@ function Checkout(props: CheckoutProps) {
 			lenis.on('scroll', ScrollTrigger.update);
 		}
 	}, [lenis]);
+
 	const handleCustomerInfoChange = (field: string, value: string) => {
 		setCustomerInfo(prev => ({
 			...prev,
@@ -108,6 +205,28 @@ function Checkout(props: CheckoutProps) {
 		}));
 	};
     const nextStep = () => {
+		if(currentStep === 1){
+			if(!customerInfo.firstName || !customerInfo.lastName || !customerInfo.email || !customerInfo.phone){
+				setError("Please fill in all required personal information.");
+				return;
+			}else{
+				setError("");
+			}
+		}else if(currentStep === 2){
+			if(!shippingInfo.country || !shippingInfo.city || !shippingInfo.zipCode || !shippingInfo.address){
+				setError("Please fill in all required shipping information.");
+				return;
+			}else{
+				setError("");
+			}
+		}else if(currentStep === 3){
+			if(!paymentInfo.cardType || !paymentInfo.cardName || !paymentInfo.cardNumber || !paymentInfo.expiryDate || !paymentInfo.securityCode){
+				setError("Please fill in all required payment information.");
+				return;
+			}else{
+				setError("");
+			}
+		}
 		if (currentStep < 3) {
 			setShow(false);
 			setTimeout(() => {
@@ -129,44 +248,52 @@ function Checkout(props: CheckoutProps) {
 	return (
 		<section className="checkout-section w-screen flex flex-col gap-[80px] pb-[85px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="checkout">
 			<div className="flex xl:flex-row flex-col gap-4 w-full xl:items-start">
-				<div className="xl:w-[666px] w-full xl:h-[824px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black xl:shrink-0 rounded-48">
+				<div className="xl:w-[666px] w-full xl:h-[824px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black xl:shrink-0 rounded-48 overflow-hidden">
 					<h4 className="text-xl shrink-0">YOUR ORDER</h4>
-					<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
-						<Icon icon="uil:plus" className="text-[18px]" />
-						<div className="w-full h-[1px] bg-mediumGrey"></div>
-						<Icon icon="uil:plus" className="text-[18px]" />
-					</div>
-						{orderList.length > 0 ? (
-							<div className="w-full max-h-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 overflow-auto line-scroll" data-lenis-prevent>
-                                {orderList.map((order,key) => (
-                                    <OrderListComponent data={order} key={key}/>
-                                ))}
+					<Separate />
+					{orderList.length > 0 ? (
+						<div className="w-full max-h-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 overflow-auto line-scroll" data-lenis-prevent>
+							{orderList.map((order, key) => (
+								<OrderListComponent item={order} key={key} />
+							))}
                             </div>
-                        ):(
-							<div className=""></div>
-						)}
-					{/* </div> */}
-					<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
-						<Icon icon="uil:plus" className="text-[18px]" />
-						<div className="w-full h-[1px] bg-mediumGrey"></div>
-						<Icon icon="uil:plus" className="text-[18px]" />
-					</div>
+					):(
+						<div className="w-full min-h-full max-h-full flex justify-center py-10">
+							<Loader2 className="h-8 w-8 animate-spin text-[--primary]" />
+						</div>
+					)}
+					<Separate />
 					<div className="flex items-center justify-between shrink-0">
 						<h5 className="text-lg">SUBTOTAL</h5>
-						<h5 className="text-lg">$14000</h5>
+						<h5 className="text-lg">
+							{currencySymbol}
+                            {totalAmount.toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            })}
+						</h5>
 					</div>
 					<div className="flex items-center justify-between shrink-0">
 						<h5 className="text-lg">SHIPPING</h5>
-						<h5 className="text-lg">$20.00</h5>
+						<h5 className="text-lg">{currencySymbol}{shippingAmount.toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            })}</h5>
 					</div>
 					<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
-						<Icon icon="uil:plus" className="text-[18px]" />
+						<Plus className="size-[18px]" />
 						<div className="w-full h-[1px] bg-mediumGrey"></div>
-						<Icon icon="uil:plus" className="text-[18px]" />
+						<Plus className="size-[18px]" />
 					</div>
 					<div className="flex items-center justify-between shrink-0">
 						<h5 className="text-xl">TOTAL</h5>
-						<h5 className="text-xl">$14000</h5>
+						<h5 className="text-xl">
+							{currencySymbol}
+                            {(totalAmount + shippingAmount).toLocaleString('en-US', {
+                                minimumFractionDigits: 2,
+                                maximumFractionDigits: 2
+                            })}
+						</h5>
 					</div>
 				</div>
 				<div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-48 xl:self-start">
@@ -196,6 +323,9 @@ function Checkout(props: CheckoutProps) {
 								</div>
 							)}
 						</div>
+						{error && (
+							<p className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">{error}</p>
+						)}
 						<div className={`w-full grid grid-cols-12 xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 ${show?'fade-in':'fade-out'}`}>
 							{currentStep === 1 ? (
 								<>
@@ -235,7 +365,7 @@ function Checkout(props: CheckoutProps) {
 											onChange={(e) => handleCustomerInfoChange('phone', e.target.value)}
 										/>
 									</div>
-									<div className="col-span-12">
+									{/* <div className="col-span-12">
 										<Input
 											type="text" 
 											id="company" 
@@ -243,27 +373,27 @@ function Checkout(props: CheckoutProps) {
 											value={customerInfo.company}
 											onChange={(e) => handleCustomerInfoChange('company', e.target.value)}
 										/>
-									</div>
+									</div> */}
 									
 								</>
 							):currentStep === 2 ? (
 								<>
 									<div className="sm:col-span-6 col-span-12">
-										<Select onValueChange={(value) => handleShippingInfoChange('state', value)}>
-											<SelectTrigger className="w-full">
-												<SelectValue placeholder="State" />
-											</SelectTrigger>
-											<SelectContent>
-												<SelectItem value="NSW">New South Wales</SelectItem>
-												<SelectItem value="VIC">Victoria</SelectItem>
-												<SelectItem value="QLD">Queensland</SelectItem>
-												<SelectItem value="WA">Western Australia</SelectItem>
-												<SelectItem value="SA">South Australia</SelectItem>
-												<SelectItem value="TAS">Tasmania</SelectItem>
-												<SelectItem value="NT">Northern Territory</SelectItem>
-												<SelectItem value="ACT">Australian Capital Territory</SelectItem>
-											</SelectContent>
-										</Select>
+										<Select value={shippingInfo.country} onValueChange={(value) => handleShippingInfoChange('country', value)}>
+												<SelectTrigger className="w-full">
+													<SelectValue placeholder="Country / Region" />
+												</SelectTrigger>
+												<SelectContent>
+													<SelectItem value="AUS">Australia</SelectItem>
+													<SelectItem value="USA">United States</SelectItem>
+													<SelectItem value="CAN">Canada</SelectItem>
+													<SelectItem value="GBR">United Kingdom</SelectItem>
+													<SelectItem value="NZL">New Zealand</SelectItem>
+													<SelectItem value="DEU">Germany</SelectItem>
+													<SelectItem value="FRA">France</SelectItem>
+													<SelectItem value="JPN">Japan</SelectItem>
+												</SelectContent>
+											</Select>
 									</div>
 									<div className="sm:col-span-6 col-span-12">
 										<Input
@@ -292,7 +422,7 @@ function Checkout(props: CheckoutProps) {
 											onChange={(e) => handleShippingInfoChange('address', e.target.value)}
 										/>
 									</div>
-									<div className="col-span-12">
+									{/* <div className="col-span-12">
 										<Input
 											type="text" 
 											id="apartment" 
@@ -300,7 +430,7 @@ function Checkout(props: CheckoutProps) {
 											value={shippingInfo.apartment}
 											onChange={(e) => handleShippingInfoChange('apartment', e.target.value)}
 										/>
-									</div>
+									</div> */}
 								</>
 							):(
 								<>
@@ -363,7 +493,7 @@ function Checkout(props: CheckoutProps) {
 									</Button>
 								)}
 								<Button variant={'primary'} size={'small'} className="sm:w-[200px] w-full sm:shrink-0 shrink " onClick={nextStep}>
-									Next
+									{currentStep === 3 ? 'Place Order' : 'Next'}
 								</Button>
 							</div>
 						</div>

@@ -6,11 +6,7 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import Navbar from "@components/navbar/navbar";
 
-
-interface AboutProps {
-	// Add any props if needed in the future
-}
-function About(props: AboutProps) {
+function About() {
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1150;
 		const lenis = isDesktop ? useLenis() : null;
 	
