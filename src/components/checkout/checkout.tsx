@@ -133,20 +133,20 @@ function Checkout() {
 	
 	useEffect(() => {
 		const getCart = async () => {
-				try {
-					if (!userData || !userData.email) {
-						console.error("User Data not found in localStorage");
-						return;
-					}
-					const data = await fetchMedusaApi<any>({
-						endpoint: "store/customers/cart",
-						query: { email: userData.email },
-					});
-					setOrderList(data.cart.items);
-					calculateTotalAmount(data.cart.items);
-				} catch (error) {
-					console.error("Error fetching cart:", error);
+			try {
+				if (!userData || !userData.email) {
+					console.error("User Data not found in localStorage");
+					return;
 				}
+				const data = await fetchMedusaApi<any>({
+					endpoint: "store/customers/cart",
+					query: { email: userData.email },
+				});
+				setOrderList(data.cart.items);
+				calculateTotalAmount(data.cart.items);
+			} catch (error) {
+				console.error("Error fetching cart:", error);
+			}
 		};
 		const getAddress = async () => {
 			try {

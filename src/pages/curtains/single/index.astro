@@ -25,6 +25,6 @@ const tags = ["Sheer","Blockout"];
 <Layout>
   <Navbar client:load logo="dark"/>
   <InnerBanner client:load title={`Curtains SHOP`} content="Beautiful Designer Curtains You Can Install in 20 Minutes"/>
-  <ShopComponent client:load data={filteredProducts} customizePage="curtains/single" tags={tags}/>
+  <ShopComponent client:load data={filteredProducts} customizePage="curtains/single" tags={tags} type="single"/>
   <Footer client:visible/>
 </Layout>

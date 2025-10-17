@@ -1,19 +1,80 @@
-﻿import React, { useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import { Button } from "@lib/components/ui/button";
 import { Label } from "@lib/components/ui/label";
-import { Plus  } from 'lucide-react';
-
-function Samples() {
-	const [samples, setSamples] = useState([
-		{id: 1, name: "Sample A", material: "Cotton", price: 0, image_url: "/images/product/01.png"},
-		{id: 2, name: "Sample B", material: "Linen", price: 0, image_url: "/images/product/02.png"},
-		{id: 3, name: "Sample C", material: "Silk", price: 0, image_url: "/images/product/03.png"},
-		{id: 4, name: "Sample D", material: "Wool", price: 0, image_url: "/images/product/04.png"},
-		{id: 5, name: "Sample E", material: "Polyester", price: 0, image_url: "/images/product/05.png"},
-		{id: 6, name: "Sample F", material: "Nylon", price: 0, image_url: "/images/product/06.png"},
-	]);
+import { Plus } from 'lucide-react';
+import { createAddToCart } from '../../services/add-to-cart';
 
 
+function Samples(props) {
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState('');
+	type UserData = {
+		id: string | number;
+		email: string;
+		first_name: string;
+		last_name: string;
+	};
+	const [userData, setUserData] = useState<UserData | null>(null);
+
+	useEffect(() => {
+		console.log(props.data);
+		const userDataString = localStorage.getItem("user");
+		if (!userDataString) {
+			console.error("User Data not found in localStorage");
+			return;
+		}
+		const userDataObj = JSON.parse(userDataString);
+		setUserData(userDataObj);
+	}, []);
+	const getCurrencySymbol = (currency_code) => {
+		// const code = selectedVariant?.price_sets?.[0]?.prices?.[0]?.currency_code || 'USD';
+		const code = currency_code || 'USD';
+		let symbol = '';
+		switch (code) {
+			case 'usd': symbol = '$'; break;
+			case 'aud': symbol = 'A$'; break;
+			case 'gbp': symbol = '£'; break;
+			case 'eur': symbol = '€'; break;
+			case 'inr': symbol = '₹'; break;
+			case 'nzd': symbol = 'NZ$'; break;
+			default: symbol = code ? code.toUpperCase() + ' ' : '';
+		}
+        return symbol;
+    };
+
+	const handleAddToCart = async (id: string | number, title: string, thumbnail: string, amount: number, currency_code: string) => {
+		setLoading(true);
+		if (!userData) {
+			setError('Customer not found. Please register first.');
+			setLoading(false);
+			return;
+		} else {
+			setError('');
+		}
+		console.log(getCurrencySymbol(currency_code))
+		try {
+			const response = await createAddToCart.addToCart({
+				email: userData.email,
+				product_id: String(id),
+				quantity: 1,
+				customizations: {
+					title: title,
+					amount: amount,
+					thumbnail: thumbnail,
+					currency_code: getCurrencySymbol(currency_code),
+				},
+			});
+
+		} catch (err: any) {
+			console.error("Add to Cart error:", err);
+			setError(err.message || "Something went wrong during Add to Cart.");
+		} finally {
+			setLoading(false);
+		}
+
+		// setError('');
+		// // Add your add to cart logic here
+	}
 	return (
 		<section className="shop-section w-screen min-h-screen flex xl:flex-row flex-col items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-2" id="blindsShop">
 			<div className="w-full xl:w-[23.438vw] flex flex-col xl:gap-6 text-[--Black] shrink-0">
@@ -26,29 +87,29 @@ function Samples() {
 					</div>
 					<div className="w-full flex items-center gap-2 py-2 px-3 border border-[--Black] rounded-full">
 						<Label htmlFor="product" className="shrink-0">Product:</Label>
-						<input 
-							type="number" 
-							id="product" 
+						<input
+							type="number"
+							id="product"
 							className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
 						/>
 					</div>
 					<div className="w-full flex items-center gap-2 py-2 px-3 border border-[--Black] rounded-full">
 						<Label htmlFor="material" className="shrink-0">Material:</Label>
-						<input 
-							type="number" 
-							id="material" 
+						<input
+							type="number"
+							id="material"
 							className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
 						/>
 					</div>
 					<div className="w-full flex items-center gap-2 py-2 px-3 border border-[--Black] rounded-full">
 						<Label htmlFor="fabric" className="shrink-0">Fabric:</Label>
-						<input 
-							type="number" 
-							id="fabric" 
+						<input
+							type="number"
+							id="fabric"
 							className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
 						/>
 					</div>
-					<Button 
+					<Button
 						variant={'primary'}
 						size={'small'}
 						className="w-full"
@@ -57,37 +118,63 @@ function Samples() {
 					</Button>
 				</div>
 			</div>
-			<div className="w-full grid items-stretch grid-cols-12 gap-4 sm:gap-6 xl:gap-[1.25vw]">
-				{samples.map((sample, idx) => (
-					<div className="col-span-12 sm:col-span-6 xl:col-span-4 flex flex-col justify-between gap-4 xl:gap-[0.833vw] p-4 xl:p-[0.833vw] border border-[--Black] rounded-48" key={sample.id}>
-						<div className="relative rounded-32 overflow-hidden h-[250px] sm:h-[24.414vw] xl:h-[19.271vw]">
-							<img src={sample.image_url} className="w-full h-full object-cover" alt={sample.name} />
+			<div className="w-full flex flex-col gap-4">
+				<div className="w-full grid items-stretch grid-cols-12 gap-4 sm:gap-6 xl:gap-[1.25vw]">
+					{error && (
+						<p className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">{error}</p>
+					)}
+					{props.data && props.data.map((sample, idx) => (
+						<div key={idx} className="col-span-12 sm:col-span-6 xl:col-span-4 flex flex-col justify-between gap-4 xl:gap-[0.833vw] p-4 xl:p-[0.833vw] border border-[--Black] rounded-48">
+							<div className="relative rounded-32 overflow-hidden h-[250px] sm:h-[24.414vw] xl:h-[19.271vw]">
+								<img
+									src={sample.thumbnail?.replace("http://localhost:9000", "https://api.blindzy.com")}
+									className="w-full h-full object-cover" alt={sample.title} />
+							</div>
+							<div className="flex flex-col gap-4 xl:gap-[0.833vw]">
+								<div className="flex items-center justify-between gap-2">
+									<h5 className="text-lg line-clamp-1">{sample.title}</h5>
+									<h5 className="text-lg text-primary shrink-0">
+										{sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.amount === 0
+											? 'Free'
+											: `$${sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.amount ?? 0}`}
+									</h5>
+								</div>
+								<div className="flex items-center gap-1">
+									<h6 className="text-md">Colour:</h6>
+									<h6 className="text-md ">
+										{sample.options.map((option, i) => (
+											<React.Fragment key={i}>
+												{option.values.map((opt, x) => (
+													<span key={x}>
+														{opt.value}
+													</span>
+												))}
+											</React.Fragment>
+										))}
+									</h6>
+								</div>
+								<div className="flex items-center gap-2 shrink-0 text-[--mediumGrey]">
+									<Plus className="size-[18px]" />
+									<div className="w-full border-b border-[--mediumGrey]"></div>
+									<Plus className="size-[18px]" />
+								</div>
+								<div className="flex items-center gap-4">
+									{/* <Button variant={'primary'} size={'small'} className="w-full flex-1">
+										Get Samples
+									</Button>
+									<Button variant={'light'} size={'small'} className="w-full flex-1">
+										{loading ? 'Adding...' : 'Add to Cart'}
+									</Button> */}
+									<Button variant={'primary'} size={'small'} className="w-full flex-1"
+										onClick={() => handleAddToCart(sample.id, sample.title, sample.thumbnail, sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.amount,sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.currency_code)}
+									>
+										{loading ? 'Adding...' : 'Add to Cart'}
+									</Button>
+								</div>
+							</div>
 						</div>
-						<div className="flex flex-col gap-4 xl:gap-[0.833vw]">
-							<div className="flex items-center justify-between gap-2">
-								<h5 className="text-lg line-clamp-1">{sample.name}</h5>
-								<h5 className="text-lg text-primary shrink-0">{sample.price === 0 ? 'Free' : `$${sample.price}`}</h5>
-							</div>
-							<div className="flex items-center gap-1">
-								<h6 className="text-md">Colour:</h6>
-								<h6 className="text-md ">{sample.material}</h6>
-							</div>
-							<div className="flex items-center gap-2 shrink-0 text-[--mediumGrey]">
-								<Plus className="size-[18px]" />
-								<div className="w-full border-b border-[--mediumGrey]"></div>
-								<Plus className="size-[18px]" />
-							</div>
-							<div className="flex items-center gap-4">
-								<Button variant={'primary'} size={'small'} className="w-full flex-1">
-									Get Samples
-								</Button>
-								<Button variant={'light'} size={'small'} className="w-full flex-1">
-									Add to Cart
-								</Button>
-							</div>
-						</div>
-					</div>
-				))}
+					))}
+				</div>
 			</div>
 		</section>
 	);

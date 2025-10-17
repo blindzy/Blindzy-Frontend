@@ -5,6 +5,8 @@ import { CartProduct } from "./cart-product";
 import {Dialog,DialogClose,DialogContent,DialogFooter,DialogHeader,DialogTitle,DialogTrigger,} from "@lib/components/ui/dialog";
 import { X, Loader2 } from 'lucide-react';
 import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
+import './css/style.css';
+
 
 
 export function CartPopup() {
@@ -83,90 +85,92 @@ export function CartPopup() {
                     </svg>
                 </Button>
             </DialogTrigger>
-            <DialogContent className="sm:max-w-[394px] w-full h-[calc(100vh-32px)] flex flex-col gap-6">
-                <div className="w-full flex flex-col gap-6">
-                    <DialogHeader>
-                        <DialogTitle className="text-xxl uppercase">Cart</DialogTitle>
-                        <DialogClose asChild>
-                            <Button type="button" variant="light" size={'lg'}>
-                                <X className="size-6" />
-                            </Button>
-                        </DialogClose>
-                    </DialogHeader>
-                    <Separate/>
-                </div>
-                <div className="w-full h-full flex flex-col gap-6 py-2 overflow-auto line-scroll" data-lenis-prevent>
-                    {loading ? (
-                        <div className="flex justify-center w-full h-full">
-                            <Loader2 className="h-8 w-8 animate-spin text-[--primary]" />
-                        </div>
-                    ) : cartItems && cartItems.length > 0 ? (
-                        cartItems.map((item, index) => (
-                            // <CartProduct 
-                            //     key={index} 
-                            //     item={item}
-                            //     onQuantityChange={(item, newQuantity) => {
-                            //         const updatedItems = cartItems.map(cartItem => 
-                            //             cartItem.id === item.id 
-                            //                 ? {...cartItem, quantity: newQuantity}
-                            //                 : cartItem
-                            //         );
-                            //         setCartItems(updatedItems);
-                            //         calculateTotalAmount(updatedItems);
-                            //     }}
-                            // />
-                            <CartProduct 
-                                key={index} 
-                                item={item}
-                                onQuantityChange={(item, newQuantity) => {
-                                    const updatedItems = cartItems.map(cartItem => 
-                                        cartItem.id === item.id 
-                                            ? { ...cartItem, quantity: newQuantity }
-                                            : cartItem
-                                    );
-                                    setCartItems(updatedItems);
-                                    calculateTotalAmount(updatedItems);
-                                }}
-                                onDeleteSuccess={(deletedItemId) => {
-                                    // ✅ Option 1: Remove from state directly
-                                    const updatedItems = cartItems.filter(cartItem => cartItem.id !== deletedItemId);
-                                    setCartItems(updatedItems);
-                                    calculateTotalAmount(updatedItems);
-
-                                    // ✅ Option 2 (alternative): Refetch entire cart instead
-                                    // getCart();
-                                }}
-                            />
-
-                        ))
-                    ) : (
-                        <div className="text-center text-[--white]">No items in cart</div>
-                    )}
-                </div>
-                <div className="w-full flex flex-col gap-4">
-                    <Separate/>
-                    <div className="w-full flex items-center justify-between">
-                        <h5 className="text-lg">TOTAL</h5>
-                        <h5 className="text-lg">
-                            {currencySymbol}
-                            {totalAmount.toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            })}
-                        </h5>
+            <DialogContent className="sm:max-w-[100vw] w-full h-[100vh] p-0 bg-transparent">
+                <div className="sm:max-w-[400px] w-full sm:h-[calc(100vh-32px)] sm:mt-4 mt-2 sm:mr-4 mr-2 ml-auto h-[calc(100vh-16px)] flex flex-col gap-6 p-6 bg-[--white] rounded-48 overflow-hidden">
+                    <div className="w-full flex flex-col gap-6">
+                        <DialogHeader>
+                            <DialogTitle className="text-xxl uppercase">Cart</DialogTitle>
+                            <DialogClose asChild>
+                                <Button type="button" variant="light" size={'lg'}>
+                                    <X className="size-6" />
+                                </Button>
+                            </DialogClose>
+                        </DialogHeader>
+                        <Separate/>
                     </div>
-                    <DialogFooter >
-                        <Button 
-                            variant={'primary'} 
-                            size={'smallest'} 
-                            className="w-full"
-                            asChild
-                        >
-                            <a href="/checkout">
-                                Proceed to Checkout
-                            </a>
-                        </Button>
-                    </DialogFooter>
+                    <div className="w-full h-full flex flex-col gap-6 py-2 overflow-auto line-scroll" data-lenis-prevent>
+                        {loading ? (
+                            <div className="flex justify-center w-full h-full">
+                                <Loader2 className="h-8 w-8 animate-spin text-[--primary]" />
+                            </div>
+                        ) : cartItems && cartItems.length > 0 ? (
+                            cartItems.map((item, index) => (
+                                // <CartProduct 
+                                //     key={index} 
+                                //     item={item}
+                                //     onQuantityChange={(item, newQuantity) => {
+                                //         const updatedItems = cartItems.map(cartItem => 
+                                //             cartItem.id === item.id 
+                                //                 ? {...cartItem, quantity: newQuantity}
+                                //                 : cartItem
+                                //         );
+                                //         setCartItems(updatedItems);
+                                //         calculateTotalAmount(updatedItems);
+                                //     }}
+                                // />
+                                <CartProduct 
+                                    key={index} 
+                                    item={item}
+                                    onQuantityChange={(item, newQuantity) => {
+                                        const updatedItems = cartItems.map(cartItem => 
+                                            cartItem.id === item.id 
+                                                ? { ...cartItem, quantity: newQuantity }
+                                                : cartItem
+                                        );
+                                        setCartItems(updatedItems);
+                                        calculateTotalAmount(updatedItems);
+                                    }}
+                                    onDeleteSuccess={(deletedItemId) => {
+                                        // ✅ Option 1: Remove from state directly
+                                        const updatedItems = cartItems.filter(cartItem => cartItem.id !== deletedItemId);
+                                        setCartItems(updatedItems);
+                                        calculateTotalAmount(updatedItems);
+
+                                        // ✅ Option 2 (alternative): Refetch entire cart instead
+                                        // getCart();
+                                    }}
+                                />
+
+                            ))
+                        ) : (
+                            <div className="text-center text-[--white]">No items in cart</div>
+                        )}
+                    </div>
+                    <div className="w-full flex flex-col gap-4">
+                        <Separate/>
+                        <div className="w-full flex items-center justify-between">
+                            <h5 className="text-lg">TOTAL</h5>
+                            <h5 className="text-lg">
+                                {currencySymbol}
+                                {totalAmount.toLocaleString('en-US', {
+                                    minimumFractionDigits: 2,
+                                    maximumFractionDigits: 2
+                                })}
+                            </h5>
+                        </div>
+                        <DialogFooter >
+                            <Button 
+                                variant={'primary'} 
+                                size={'smallest'} 
+                                className="w-full"
+                                asChild
+                            >
+                                <a href="/checkout">
+                                    Proceed to Checkout
+                                </a>
+                            </Button>
+                        </DialogFooter>
+                    </div>
                 </div>
             </DialogContent>
         </Dialog>

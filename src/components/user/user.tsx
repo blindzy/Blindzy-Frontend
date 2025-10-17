@@ -78,23 +78,23 @@ function User() {
             setOrderList(ordersData);
             // console.log("Orders:", ordersData);
         }
-        async function getCards() {
-            // Ye code ab sirf client pe chalega
-            const email = localStorage.getItem("userEmail");
-            if (!email) {
-                console.error("Email not found in localStorage");
-                return;
-            }
+        // async function getCards() {
+        //     // Ye code ab sirf client pe chalega
+        //     const email = localStorage.getItem("userEmail");
+        //     if (!email) {
+        //         console.error("Email not found in localStorage");
+        //         return;
+        //     }
 
-            const cardsData = await fetchMedusaApi<any>({
-                endpoint: "/store/customers/card",
-                query: { email },
-            });
+        //     const cardsData = await fetchMedusaApi<any>({
+        //         endpoint: "/store/customers/card",
+        //         query: { email },
+        //     });
 
-            setPaymentDetail(cardsData);
-        }
+        //     setPaymentDetail(cardsData);
+        // }
         getAddress();
-        getCards();
+        // getCards();
         getOrders();
     }, []);
 
@@ -139,27 +139,28 @@ function User() {
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
                 <div className="w-full border border-[--Black] sm:rounded-[48px] rounded-full sm:p-3 p-1 shrink-0">
                     <div className="relative flex items-stretch">
-                        <span className={`absolute w-[33%] h-full top-0 left-0 rounded-full bg-[--primary] transition ${currentTab === 'orders'?'left-0':currentTab === 'address'?'left-[33%]':'left-[67%]'}`}/>
+                        <span className={`absolute w-[50%] h-full top-0 left-0 rounded-full bg-[--primary] transition ${currentTab === 'orders'?'left-0':currentTab === 'address'?'left-[50%]':'left-[67%]'}`}/>
                         <button className={`relative z-10 w-full sm:p-6 p-4 text-center xl:text-[1.458vw] sm:text-[2.734vw] text-[12px] sm:font-extrabold font-normal sm:font-plus font-roboto leading-snug transition ${currentTab === 'orders'?'text-[--white]':'text-[--Black]'}`} onClick={() => handleTabChange('orders')}>
                             Order History
                         </button>
                         <button className={`relative z-10 w-full sm:p-6 p-4 text-center xl:text-[1.458vw] sm:text-[2.734vw] text-[12px] sm:font-extrabold font-normal sm:font-plus font-roboto leading-snug transition ${currentTab === 'address'?'text-[--white]':'text-[--Black]'}`} onClick={() => handleTabChange('address')}>
                             Address Book
                         </button>
-                        <button className={`relative z-10 w-full sm:p-6 p-4 text-center xl:text-[1.458vw] sm:text-[2.734vw] text-[12px] sm:font-extrabold font-normal sm:font-plus font-roboto leading-snug transition ${currentTab === 'payment'?'text-[--white]':'text-[--Black]'}`} onClick={() => handleTabChange('payment')}>
+                        {/* <button className={`relative z-10 w-full sm:p-6 p-4 text-center xl:text-[1.458vw] sm:text-[2.734vw] text-[12px] sm:font-extrabold font-normal sm:font-plus font-roboto leading-snug transition ${currentTab === 'payment'?'text-[--white]':'text-[--Black]'}`} onClick={() => handleTabChange('payment')}>
                             Payment Options
-                        </button>
+                        </button> */}
                     </div>
                 </div>
                 <div className={`w-full ${show ? 'fade-in' : 'fade-out'}`}> 
                 {
                     currentTab === 'orders'?(
                         <OrderList list={orderList} />
-                    ):currentTab === 'address'?(
+                    ):currentTab === 'address'&&(
                         <Address list={addressList} userData={userData} onAddressChange={handleAddressChange} />
-                    ):currentTab === 'payment'&&(
-                        <Payment list={paymentDetail} userData={userData} onCardChange={handleCardChange}/>
                     )
+                    // :currentTab === 'payment'&&(
+                    //     <Payment list={paymentDetail} userData={userData} onCardChange={handleCardChange}/>
+                    // )
                 }
                 </div>
             </div>

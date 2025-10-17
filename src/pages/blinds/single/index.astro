@@ -28,6 +28,6 @@ const tags = [
 <Layout>
       <Navbar client:load logo="dark"/>
       <InnerBanner client:load title="BLINDS SHOP" content="Beautiful Designer Blinds you Can Install in 20 Minutes"/>
-      <ShopComponent client:load data={filteredProducts} customizePage="blinds/single" tags={tags}/>
+      <ShopComponent client:load data={filteredProducts} customizePage="blinds/single" tags={tags} type="single"/>
       <Footer client:visible/>
 </Layout>

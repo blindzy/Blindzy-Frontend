@@ -4,12 +4,24 @@ import Navbar from "@components/navbar/navbar";
 import InnerBanner from "@components/inner-banner/innerBanner";
 import SamplesComponent from "@components/shop/samples";
 import Footer from "@components/Footer/Footer";
+import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 
+const productsData = await fetchMedusaApi<any>({
+  endpoint: "/store/products/custom",
+});
+
+const filteredProducts = (productsData?.products || []).filter((product) => {
+  const hasSamplesCategory = product.categories?.some(
+    (cat) => cat.name?.toLowerCase() === "samples"
+  );
+
+  return hasSamplesCategory;
+});
 ---
 
 <Layout>
       <Navbar client:load logo="dark"/>
       <InnerBanner client:load title="GET FREE SAMPLES" content="Beautiful Designer Blinds Cou Can Install in 20 Minutes"/>
-      <SamplesComponent client:load/>
+      <SamplesComponent client:load data={filteredProducts}/>
       <Footer client:visible/>
 </Layout>

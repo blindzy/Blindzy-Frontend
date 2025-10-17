@@ -9,7 +9,7 @@ import { Checkbox } from "@lib/components/ui/checkbox";
 import { Button } from "@lib/components/ui/button";
 import Separate from "@components/separate";
 import Measurement from "./measurement";
-
+import { createAddToCart } from '../../services/add-to-cart';
 
 
 const setupOptions = [
@@ -18,49 +18,33 @@ const setupOptions = [
         title: 'Setup',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: 'Blockout in Front', image: '/images/custom/blind-blockout-front.png' },
-          { label: 'Sunscreen or Light Filtering in Front', image: '/images/custom/sunscreen-front.png' },
+            { label: 'Blockout in Front', image: '/images/custom/blind-blockout-front.png' },
+            { label: 'Sunscreen or Light Filtering in Front', image: '/images/custom/sunscreen-front.png' },
         ]
     },
 ]
-const blockoutOptions = [
-    {
-        id: 1,
-        title: 'Blackout Colour',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
-        values: [
-          { label: 'White', image: '/images/colors/01.png' },
-          { label: 'Grey', image: '/images/colors/02.png' },
-          { label: 'Black', image: '/images/colors/03.png' },
-          { label: 'Oak', image: '/images/colors/04.png' },
-          { label: 'Walnut', image: '/images/colors/05.png' },
-          { label: 'Charcoal', image: '/images/colors/06.png' },
-        ]
-    },
-]
-const sheerOptions = [
-    {
-        id: 1,
-        title: 'Choose your Sunscreen or Light Filtering Colour',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
-        values: [
-          { label: 'White', image: '/images/colors/01.png' },
-          { label: 'Grey', image: '/images/colors/02.png' },
-          { label: 'Black', image: '/images/colors/03.png' },
-          { label: 'Oak', image: '/images/colors/04.png' },
-          { label: 'Walnut', image: '/images/colors/05.png' },
-          { label: 'Charcoal', image: '/images/colors/06.png' },
-        ]
-    },
-]
+const fabric = {
+    haven: "/images/product-colors-image/fabric/haven.jpg",
+    ora: "/images/product-colors-image/fabric/ora.jpg",
+    seclusion: "/images/product-colors-image/fabric/seclusion.jpg",
+    tranquil: "/images/product-colors-image/fabric/tranquil.jpg",
+};
+const LightFilteringFabric = {
+    breeze: "/images/product-colors-image/sunscreen/breeze.jpg",
+    haven: "/images/product-colors-image/sunscreen/haven.jpg",
+    shadow: "/images/product-colors-image/sunscreen/shadow.jpg",
+    twilight: "/images/product-colors-image/sunscreen/twilight.jpg",
+    seclusion: "/images/product-colors-image/sunscreen/seclusion.jpg",
+    ora: "/images/product-colors-image/sunscreen/ora.jpg",
+};
 const productOptions = [
     {
         id: 1,
         title: 'Controls',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: 'Left', image: '/images/custom/controls-left.png' },
-          { label: 'Right', image: '/images/custom/controls-right.png' },
+            { label: 'Left', image: '/images/custom/controls-left.png' },
+            { label: 'Right', image: '/images/custom/controls-right.png' },
         ]
     },
     {
@@ -68,8 +52,8 @@ const productOptions = [
         title: 'Select Fit',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
-          { label: 'Fit', image: '/images/custom/blind-fit-left.png' },
-          { label: 'Recess', image: '/images/custom/blind-fit-right.png' },
+            { label: 'Fit', image: '/images/custom/blind-fit-left.png' },
+            { label: 'Recess', image: '/images/custom/blind-fit-right.png' },
         ]
     },
     {
@@ -77,10 +61,10 @@ const productOptions = [
         title: 'Roll Direction',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
-          { label: 'Front & Back Roll', image: '/images/custom/front-back-roll.png' },
-          { label: 'Both Front Roll', image: '/images/custom/both-front-roll.png' },
-          { label: 'Back & Front Roll', image: '/images/custom/back-front-roll.png' },
-          { label: 'Both Back Roll', image: '/images/custom/both-back-roll.png' },
+            { label: 'Front & Back Roll', image: '/images/custom/front-back-roll.png' },
+            { label: 'Both Front Roll', image: '/images/custom/both-front-roll.png' },
+            { label: 'Back & Front Roll', image: '/images/custom/back-front-roll.png' },
+            { label: 'Both Back Roll', image: '/images/custom/both-back-roll.png' },
         ]
     },
     {
@@ -88,49 +72,176 @@ const productOptions = [
         title: 'Base Rail Shape',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
-          { label: 'Oval', image: '/images/custom/rail-1.png' },
-          { label: 'Square', image: '/images/custom/rail-2.png' },
+            { label: 'Oval', image: '/images/custom/rail-1.png' },
+            { label: 'Square', image: '/images/custom/rail-2.png' },
         ]
     },
 ]
 const colorOptions = [
     {
-        id: 1,
+        id: 'optgrp_01K6Z6D5B6166KXE3RQNVDQ5EN',
         title: 'Chain Colour',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
+
         values: [
-          { label: 'White', color : '#FBFBFB' },
-          { label: 'Grey', color : '#0F0F0F' },
-          { label: 'Black', color : '#817F7E' },
-          { label: 'Oak', color : '#CDCCCB' },
-          { label: 'Walnut', color : '#FAF1C5' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EA', name: 'White', color : '#FBFBFB' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EB', name: 'Grey', color : '#0F0F0F' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EC', name: 'Black', color : '#817F7E' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ED', name: 'Oak', color : '#CDCCCB' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EE', name: 'Walnut', color : '#FAF1C5' },
         ]
     },
     {
-        id: 1,
+        id: 'optgrp_01K6Z6D5B6166KXE3RQNVDQ5EF',
         title: 'Bracket Colour',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: 'White', color : '#FBFBFB' },
-          { label: 'Grey', color : '#0F0F0F' },
-          { label: 'Black', color : '#817F7E' },
-          { label: 'Oak', color : '#CDCCCB' },
-          { label: 'Walnut', color : '#FAF1C5' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EG', name: 'White', color : '#FBFBFB' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EH', name: 'Grey', color : '#0F0F0F' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EI', name: 'Black', color : '#817F7E' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EJ', name: 'Oak', color : '#CDCCCB' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EK', name: 'Walnut', color : '#FAF1C5' },
         ]
     },
     {
-        id: 1,
+        id: 'optgrp_01K6Z6D5B6166KXE3RQNVDQ5EL',
         title: 'Base Rail Colour',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: 'White', color : '#FBFBFB' },
-          { label: 'Grey', color : '#0F0F0F' },
-          { label: 'Black', color : '#817F7E' },
-          { label: 'Oak', color : '#CDCCCB' },
-          { label: 'Walnut', color : '#FAF1C5' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EM', name: 'White', color : '#FBFBFB' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EN', name: 'Grey', color : '#0F0F0F' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EO', name: 'Black', color : '#817F7E' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EP', name: 'Oak', color : '#CDCCCB' },
+          { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EQ', name: 'Walnut', color : '#FAF1C5' },
         ]
     },
 ]
+const blackoutColours = {
+    Tranquil : [
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EA', value: 'Ash', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EB', value: 'Chalk', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EC', value: 'Cloud', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5ED', value: 'Coal', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EE', value: 'Dove', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EF', value: 'Ebony', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EG', value: 'Espresso', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EH', value: 'Oyster', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EI', value: 'Shell', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EJ', value: 'Tempest', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EK', value: 'white', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EL', value: 'Bay', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EM', value: 'Carbon', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EN', value: 'Drift', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EO', value: 'Feather', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EP', value: 'Magnetic', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EQ', value: 'Mist', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5ER', value: 'Polar', },   
+    ],
+    Seclusion : [
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EA', value: 'Baltic', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EB', value: 'Ceramic', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EC', value: 'Fossil', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5ED', value: 'Leva', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EE', value: 'Limestone', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EF', value: 'Marble', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EG', value: 'Mineral', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EH', value: 'Plaster', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EI', value: 'Slate', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EJ', value: 'Suede', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EK', value: 'Truffle', }, 
+    ],
+    Haven : [
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EC', value: 'Cloud', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5ED', value: 'Grey Gum', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EE', value: 'Rattan', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EF', value: 'Opal', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EG', value: 'Nougat', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EH', value: 'Slate', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EI', value: 'Willow', },   
+    ],
+    Ora : [
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EC', value: 'Armour', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5ED', value: 'Brich', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EE', value: 'Bourneville', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EF', value: 'Chrome', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EG', value: 'Concrete', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EH', value: 'Dove', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EI', value: 'Jet', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EK', value: 'Pearl', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EL', value: 'Platinum', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EM', value: 'Putty', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EN', value: 'Pyrite', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EO', value: 'Steel', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EP', value: 'White', },   
+    ],
+}
+const sheerColours = {
+    Twilight : [
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSA', value: 'Dove White', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSB', value: 'Ecru', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSC', value: 'Ice Grey', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSD', value: 'Moon Stone', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSE', value: 'Nougat', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSF', value: 'Quill', },
+    ],
+    Seclusion : [
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSA', value: 'Mineral', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSB', value: 'Plaster', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSC', value: 'Slate', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSD', value: 'Suede', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSE', value: 'Truffle', }, 
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSF', value: 'Marble', }, 
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSG', value: 'Limestone', }, 
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSH', value: 'Leva', }, 
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSI', value: 'Fossil', }, 
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSJ', value: 'Ceramic', }, 
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSK', value: 'Baltic', }, 
+    ],
+    Haven : [
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSA', value: 'Cloud', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSB', value: 'Grey Gum', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSC', value: 'Rattan', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSD', value: 'Opal', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSE', value: 'Nougat', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSF', value: 'Slate', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSG', value: 'Willow', },   
+    ],
+    Ora : [
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSA', value: 'Armour', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSB', value: 'Brich', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSC', value: 'Bourneville', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSD', value: 'Chrome', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSE', value: 'Concrete', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSF', value: 'Dove', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSG', value: 'Jet', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSH', value: 'Pearl', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSI', value: 'Platinum', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSJ', value: 'Putty', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSK', value: 'Pyrite', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSL', value: 'Steel', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSM', value: 'White', },   
+    ],
+    Breeze : [
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSA', value: 'Pure White', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSB', value: 'Graphite', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSC', value: 'Pewter', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSD', value: 'Charcoal', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSE', value: 'Ivory', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSF', value: 'Black Pearl', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSG', value: 'Barley', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSH', value: 'Black', },
+    ],
+    Shadow : [
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSA', value: 'Black', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSB', value: 'White', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSC', value: 'Black Belge', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSD', value: 'White Silver', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSE', value: 'White Stone', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSF', value: 'Charcoal', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSG', value: 'White Grey', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSH', value: 'Charcoal Grey', }
+    ],
+}
 
 function Double_blind_customization(props) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
@@ -140,57 +251,55 @@ function Double_blind_customization(props) {
     const [blackoutColour, setBlackoutColour] = useState('');
     const [sheerFabric, setSheerFabric] = useState('');
     const [sheerColour, setSheerColour] = useState('');
-    const [dynamicPricing, setDynamicPricing] = useState(false);
     const [productData, setProductData] = useState(props.data);
     const [selectedColor, setSelectedColor] = useState('');
     const [chainColour, setChainColour] = useState('');
     const [bracketColour, setBracketColour] = useState('');
     const [baseRailColour, setBaseRailColour] = useState('');
-    
-    // Get available colors for selected fabric
-    const selectedBlackoutFabric = productData?.options?.[0]?.values?.find(fabric => fabric.label === blackoutFabric);
-    const blackoutColorOptions = selectedBlackoutFabric?.colors || blockoutOptions[0].values;
-    
-    const selectedSheerFabric = productData?.options?.[1]?.values?.find(fabric => fabric.label === sheerFabric);
-    const sheerColorOptions = selectedSheerFabric?.colors || sheerOptions[0].values;
-    
-    const [data, setData] = useState([
-        {'title': 'Setup', 'value': ''},
-        {'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : ''},
-        {'title': 'Blackout Fabric', 'value': blackoutFabric},
-        {'title': 'Blackout Colour', 'value': blackoutColour},
-        {'title': 'Blockout Curtain Style', 'value': ''},
-        {'title': 'Blockout Hem', 'value': ''},
-        {'title': 'Sheer Fabric', 'value': sheerFabric},
-        {'title': 'Sheer Colour', 'value': sheerColour},
-        {'title': 'Controls', 'value': ''},
-        {'title': 'Select Fit', 'value': ''},
-        {'title': 'Roll Direction', 'value': ''},
-        {'title': 'Base Rail Shape', 'value': ''},
-        {'title': 'Chain Colour', 'value': chainColour},
-        {'title': 'Bracket Colour', 'value': bracketColour},
-        {'title': 'Base Rail Colour', 'value': baseRailColour}, 
-    ]);
-    
-    
-    
-    // Handle option selection updates
-    const handleOptionChange = (optionTitle, value) => {
-        setData(prev => 
-            prev.map(item => 
-                item.title === optionTitle 
-                    ? { ...item, value: value }
-                    : item
-            )
-        );
+    const [totalPrice, setTotalPrice] = useState(0);
+    const [currencySymbol, setCurrencySymbol] = useState('');
+    const [measurementsChecked, setMeasurementsChecked] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
+    type UserData = {
+        id: string | number;
+        email: string;
+        first_name: string;
+        last_name: string;
     };
-    
-    const selectedColorVariant = productData?.variants?.find(variant => variant.options?.Color === blackoutFabric);
-    
-    // Calculate total price (base price + variant price difference)
-    const basePrice = productData?.price?.amount || 0;
-    const variantPrice = selectedColorVariant?.prices?.[0]?.amount || basePrice;
-    const totalPrice = variantPrice;
+    const [userData, setUserData] = useState<UserData | null>(null);
+    const selectedBlackoutFabric = productData?.options?.[0]?.values?.find(fabric => fabric.label === blackoutFabric);
+    const selectedSheerFabric = productData?.options?.[1]?.values?.find(fabric => fabric.label === sheerFabric);
+    const [data, setData] = useState([
+        { 'title': 'Setup', 'value': '' },
+        { 'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : '' },
+        { 'title': 'Blackout Fabric', 'value': blackoutFabric },
+        { 'title': 'Blackout Colour', 'value': blackoutColour },
+        // { 'title': 'Blockout Curtain Style', 'value': '' },
+        // { 'title': 'Blockout Hem', 'value': '' },
+        { 'title': 'Sheer Fabric', 'value': sheerFabric },
+        { 'title': 'Sheer Colour', 'value': sheerColour },
+        { 'title': 'Controls', 'value': '' },
+        { 'title': 'Select Fit', 'value': '' },
+        { 'title': 'Roll Direction', 'value': '' },
+        { 'title': 'Base Rail Shape', 'value': '' },
+        { 'title': 'Chain Colour', 'value': chainColour },
+        { 'title': 'Bracket Colour', 'value': bracketColour },
+        { 'title': 'Base Rail Colour', 'value': baseRailColour },
+    ]);
+    const [blockoutColourData, setBlockoutColourData] = useState([{
+        id: 'optgrp_01K6Z6D5B6166KXE3RGNVDQ5EN',
+        title: 'Blockout Colour',
+        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
+        values: []
+    }]);
+    const [sheerColourData, setSheerColourData] = useState([{
+        id: 'optgrp_01K6Z6D5B6166KXE3RGNVDQ5EN',
+        title: 'Sunscreen or Light Filtering Colour',
+        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
+        values: []
+    }]);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -200,85 +309,132 @@ function Double_blind_customization(props) {
         // }
     }, [lenis]);
 
-    // Update color in data array when selectedColor changes
+    // Set default color and price when component mounts
     useEffect(() => {
-        setData(prev => 
-            prev.map(item => 
-                item.title === 'Blackout Fabric'
-                    ? { ...item, value: blackoutFabric }
-                    : item.title === 'Blackout Colour'
-                    ? { ...item, value: blackoutColour }
-                    : item.title === 'Sheer Fabric'
-                    ? { ...item, value: sheerFabric }
-                    : item.title === 'Sheer Colour'
-                    ? { ...item, value: sheerColour }
-                    : item.title === 'Chain Colour'
-                    ? { ...item, value: chainColour }
-                    : item.title === 'Bracket Colour'
-                    ? { ...item, value: bracketColour }
-                    : item.title === 'Base Rail Colour'
-                    ? { ...item, value: baseRailColour }
+        if (productData?.options?.[0]?.values?.[0]?.value && !selectedColor) {
+            const defaultColor = productData.options[0].values[0].value;
+            setSelectedColor(defaultColor);
+
+            // Find the variant with the default color and set its price
+            const defaultVariant = productData?.variants?.find(
+                variant => variant.title === defaultColor ||
+                    variant.options.some(opt => opt.value === defaultColor)
+            );
+
+            if (defaultVariant?.price_sets?.[0]?.prices?.[0]?.amount) {
+                setTotalPrice(defaultVariant.price_sets[0].prices[0].amount);
+
+            }
+        }
+    }, [productData]);
+
+    // Handle option selection updates
+    const handleOptionChange = (optionTitle, value) => {
+        setData(prev =>
+            prev.map(item =>
+                item.title === optionTitle
+                    ? { ...item, value: value }
                     : item
             )
         );
-    }, [blackoutFabric,blackoutColour,sheerFabric,sheerColour,chainColour,bracketColour,baseRailColour]);
+    };
 
-    // Reset color selection when fabric changes
-    useEffect(() => {
-        if (blackoutFabric && blackoutColour) {
-            const availableColors = selectedBlackoutFabric?.colors || [];
-            const isColorAvailable = availableColors.some(color => color.label === blackoutColour);
-            if (!isColorAvailable) {
-                setBlackoutColour('');
+    const calculateBasePrice = () => {
+        if (selectedColor && productData?.variants) {
+            const selectedVariant = productData.variants.find(
+                variant => variant.title === selectedColor ||
+                    variant.options.some(opt => opt.value === selectedColor)
+            );
+            const code = selectedVariant?.price_sets?.[0]?.prices?.[0]?.currency_code || 'USD';
+            let symbol = '';
+            switch (code) {
+                case 'usd': symbol = '$'; break;
+                case 'aud': symbol = 'A$'; break;
+                case 'gbp': symbol = '£'; break;
+                case 'eur': symbol = '€'; break;
+                case 'inr': symbol = '₹'; break;
+                case 'nzd': symbol = 'NZ$'; break;
+                default: symbol = code ? code.toUpperCase() + ' ' : '';
             }
+            setCurrencySymbol(symbol);
+            return selectedVariant?.price_sets?.[0]?.prices?.[0]?.amount || 0;
         }
-    }, [blackoutFabric, selectedBlackoutFabric]);
+        return 0;
+    };
 
     useEffect(() => {
-        if (sheerFabric && sheerColour) {
-            const availableColors = selectedSheerFabric?.colors || [];
-            const isColorAvailable = availableColors.some(color => color.label === sheerColour);
-            if (!isColorAvailable) {
-                setSheerColour('');
+        if (blackoutFabric) {
+            if (blackoutColours[blackoutFabric]) {
+                setBlockoutColourData([{
+                    ...blockoutColourData[0],
+                    values: blackoutColours[blackoutFabric]
+                }]);
+            } else {
+                setBlockoutColourData([{
+                    ...blockoutColourData[0],
+                    values: []
+                }]);
             }
+            setBlackoutColour('');
         }
-    }, [sheerFabric, selectedSheerFabric]);
-
-    // Auto-calculate price when measurements change
+    }, [blackoutFabric]);
     useEffect(() => {
-        if (measurements.width && measurements.height) {
-            const widthInMeters = measurements.width;
-            const heightInMeters = measurements.height;
-
-            if (widthInMeters > 0 && heightInMeters > 0) {
-                const area = widthInMeters * heightInMeters;
-                const pricePerSqM = basePrice;
-                const newAmount = Math.round(area * pricePerSqM);
-                
-                // Update product data with new pricing
-                const updatedProductData = {
-                    ...productData,
-                    price: {
-                        ...productData.price,
-                        amount: newAmount
-                    },
-                    variants: productData.variants.map(variant => ({
-                        ...variant,
-                        prices: [{
-                            amount: newAmount,
-                            currency_code: productData.price.currency_code
-                        }]
-                    }))
-                };
-
-                setProductData(updatedProductData);
-                setDynamicPricing(true);
+        if (sheerFabric) {
+            if (sheerColours[sheerFabric]) {
+                setSheerColourData([{
+                    ...sheerColourData[0],
+                    values: sheerColours[sheerFabric]
+                }]);
+            } else {
+                setSheerColourData([{
+                    ...sheerColourData[0],
+                    values: []
+                }]);
             }
+            setSheerColour('');
         }
-    }, [measurements.width, measurements.height]);
+    }, [sheerFabric]);
+
+    useEffect(() => {
+        setData(prev =>
+            prev.map(item =>
+                item.title === 'Blackout Fabric'
+                ? { ...item, value: blackoutFabric }
+                : item.title === 'Blackout Colour'
+                ? { ...item, value: blackoutColour }
+                : item.title === 'Sheer Fabric'
+                ? { ...item, value: sheerFabric }
+                : item.title === 'Sheer Colour'
+                ? { ...item, value: sheerColour }
+                : item.title === 'Chain Colour'
+                ? { ...item, value: chainColour }
+                : item.title === 'Bracket Colour'
+                ? { ...item, value: bracketColour }
+                : item.title === 'Base Rail Colour'
+                ? { ...item, value: baseRailColour }
+                : item
+            )
+        );
+        // Calculate total price based on area
+        const basePrice = calculateBasePrice();
+        const area = measurements.width * measurements.height;
+        const newTotalPrice = Math.round(basePrice * area);
+        setTotalPrice(newTotalPrice);
+
+    }, [blackoutFabric, blackoutColour, sheerFabric, sheerColour, chainColour, bracketColour, baseRailColour, productData?.variants, measurements.width, measurements.height]);
+
+    useEffect(() => {
+        const userDataString = localStorage.getItem("user");
+        if (!userDataString) {
+            console.error("User Data not found in localStorage");
+            return;
+        }
+        const userDataObj = JSON.parse(userDataString);
+        setUserData(userDataObj);
+    }, [userData]);
 
     const getColorSetter = (optionTitle) => {
-        switch(optionTitle) {
+        switch (optionTitle) {
             case 'Chain Colour': return setChainColour;
             case 'Bracket Colour': return setBracketColour;
             case 'Base Rail Colour': return setBaseRailColour;
@@ -288,13 +444,82 @@ function Double_blind_customization(props) {
 
     // Helper function to get the selected color value
     const getSelectedColor = (optionTitle) => {
-        switch(optionTitle) {
+        switch (optionTitle) {
             case 'Chain Colour': return chainColour;
             case 'Bracket Colour': return bracketColour;
             case 'Base Rail Colour': return baseRailColour;
             default: return selectedColor;
         }
     };
+
+    const handleAddToCart = async () => {
+        setLoading(true);
+        setError('');
+        setSuccess('');
+        if (!measurementsChecked) {
+            setError('Please confirm that you have checked your measurements');
+            setSuccess('');
+            setLoading(false);
+            return;
+        } else {
+            setError('');
+            setSuccess('');
+        }
+        // if (!measurements.roomName) {
+        //     setError('Please enter room name');
+        //     return;
+        // }
+        if (data.some(item => !item.value)) {
+            setError('Please select all customization options');
+            setSuccess('');
+            setLoading(false);
+            return;
+        } else {
+            setError('');
+            setSuccess('');
+        }
+        if (!userData) {
+            setError('Customer not found. Please register first.');
+            setSuccess('');
+            setLoading(false);
+            return;
+        } else {
+            setError('');
+            setSuccess('');
+        }
+
+        try {
+            const response = await createAddToCart.addToCart({
+                email: userData.email,
+                product_id: productData.id,
+                quantity: 1,
+                customizations: {
+                    title: productData.title,
+                    amount: totalPrice,
+                    currency: currencySymbol,
+                    thumbnail: productData.thumbnail,
+                    customizationData: data,
+                },
+            });
+
+            setSuccess("Add to Cart created successfully!");
+
+        } catch (err: any) {
+            console.error("Add to Cart error:", err);
+            setError(err.message || "Something went wrong during Add to Cart.");
+        } finally {
+            setLoading(false);
+        }
+
+        // setError('');
+        // // Add your add to cart logic here
+    }
+    const addCommaToNumber = (num) => {
+        return num.toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        });
+    }
 
     return (
         <section className="w-screen flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-[64px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="ProductDetail">
@@ -303,7 +528,7 @@ function Double_blind_customization(props) {
                     <h2 className="text-xl">Double Roller BLINDS Customisations</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
-                <Separate/>
+                <Separate />
                 <div className="w-full flex flex-col gap-2">
                     <h2 className="text-lg">Enter Measurements</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
@@ -311,10 +536,11 @@ function Double_blind_customization(props) {
                 <Measurement measurements={measurements} setMeasurements={setMeasurements} />
                 {setupOptions.map((option, index) => (
                     <React.Fragment key={`option-${index}`}>
-                        <Separate/>
-                        <SelectVarient 
+                        <Separate />
+                        <SelectVarient
                             variantData={option}
-                            onSelectionChange={(value) => handleOptionChange(option.title, value)} 
+
+                            onSelectionChange={(value) => handleOptionChange(option.title, value)}
                             selectedValue={data.find(item => item.title === option.title)?.value}
                         />
                     </React.Fragment>
@@ -325,35 +551,23 @@ function Double_blind_customization(props) {
                     </h4>
                     {productData?.options?.slice(0, 1).map((option, index) => (
                         <React.Fragment key={`color-${index}`}>
-                            <Separate/>
-                            <SelectColor 
+                            <Separate />
+                            <SelectColor
                                 data={option}
-                                onColorSelect={setBlackoutFabric} 
+                                colorsImage={fabric}
+                                onColorSelect={setBlackoutFabric}
                                 selectedColor={blackoutFabric}
                             />
                         </React.Fragment>
                     ))}
-                    {blockoutOptions.map((option, index) => (
-                        <React.Fragment key={`option-${index}`}>
-                            <Separate/>
-                            {index === 0 ? (
-                                <SelectColor 
-                                    data={{
-                                        title: option.title,
-                                        description: option.description,
-                                        values: blackoutColorOptions
-                                    }}
-                                    onColorSelect={setBlackoutColour} 
-                                    selectedColor={blackoutColour}
-                                />
-                            ):(
-
-                                <SelectVarient 
-                                    variantData={option}
-                                    onSelectionChange={(value) => handleOptionChange(option.title, value)} 
-                                    selectedValue={data.find(item => item.title === option.title)?.value}
-                                />
-                            )}
+                    {blackoutFabric !== '' &&blockoutColourData.map((option, index) => (
+                        <React.Fragment key={`color-${index}`}>
+                            <Separate />
+                            <SelectColor
+                                data={option}
+                                onColorSelect={setBlackoutColour}
+                                selectedColor={blackoutColour}
+                            />
                         </React.Fragment>
                     ))}
                 </div>
@@ -363,53 +577,41 @@ function Double_blind_customization(props) {
                     </h4>
                     {productData?.options?.slice(1, 2).map((option, index) => (
                         <React.Fragment key={`color-${index}`}>
-                            <Separate/>
-                            <SelectColor 
+                            <Separate />
+                            <SelectColor
                                 data={option}
-                                onColorSelect={setSheerFabric} 
+                                colorsImage={LightFilteringFabric}
+                                onColorSelect={setSheerFabric}
                                 selectedColor={sheerFabric}
                             />
                         </React.Fragment>
                     ))}
-                    {sheerOptions.map((option, index) => (
-                        <React.Fragment key={`option-${index}`}>
-                            <Separate/>
-                            {index === 0 ? (
-                                <SelectColor 
-                                    data={{
-                                        title: option.title,
-                                        description: option.description,
-                                        values: sheerColorOptions
-                                    }}
-                                    onColorSelect={setSheerColour} 
-                                    selectedColor={sheerColour}
-                                />
-                            ):(
-
-                                <SelectVarient 
-                                    variantData={option}
-                                    onSelectionChange={(value) => handleOptionChange(option.title, value)} 
-                                    selectedValue={data.find(item => item.title === option.title)?.value}
-                                />
-                            )}
+                    {sheerFabric !== '' && sheerColourData.map((option, index) => (
+                        <React.Fragment key={`color-${index}`}>
+                            <Separate />
+                            <SelectColor
+                                data={option}
+                                onColorSelect={setSheerColour}
+                                selectedColor={sheerColour}
+                            />
                         </React.Fragment>
                     ))}
                 </div>
                 {productOptions.map((option, index) => (
                     <React.Fragment key={`option-${index}`}>
-                        <Separate/>
-                        <SelectVarient 
+                        <Separate />
+                        <SelectVarient
                             variantData={option}
-                            onSelectionChange={(value) => handleOptionChange(option.title, value)} 
+                            onSelectionChange={(value) => handleOptionChange(option.title, value)}
                             selectedValue={data.find(item => item.title === option.title)?.value}
                         />
                     </React.Fragment>
                 ))}
                 {colorOptions.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
-                        <Separate/>
-                        <SelectColor 
-                            data={option} 
+                        <Separate />
+                        <SelectColor
+                            data={option}
                             title={'Colour'}
                             description={'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.'}
                             onColorSelect={getColorSetter(option.title)} 
@@ -417,43 +619,46 @@ function Double_blind_customization(props) {
                         />
                     </React.Fragment>
                 ))}
-                <Separate/>
+                <Separate />
                 <div className="flex items-center justify-between">
                     <h5 className="text-lg">TOTAL PRICE</h5>
                     <h5 className="text-lg">
-                        {(() => {
-                        const code = productData.price.currency_code?.toLowerCase();
-                        let symbol = '';
-                        switch (code) {
-                            case 'usd': symbol = '$'; break;
-                            case 'aud': symbol = 'A$'; break;
-                            case 'gbp': symbol = '£'; break;
-                            case 'eur': symbol = '€'; break;
-                            case 'inr': symbol = '₹'; break;
-                            case 'nzd': symbol = 'NZ$'; break;
-                            default: symbol = code ? code.toUpperCase() + ' ' : '';
-                        }
-                        return symbol + totalPrice;
-                    })()}
+                        {currencySymbol}{addCommaToNumber(totalPrice)}
                     </h5>
                 </div>
                 <div className="flex items-center gap-2">
-                    <Checkbox id="measurements-checked"/>
-                    <label htmlFor="measurements-checked" className="text-sm normal">I have double checked my measurements and customisations</label>
+                    <Checkbox
+                        id="measurements-checked"
+                        checked={measurementsChecked}
+                        onCheckedChange={(checked) => setMeasurementsChecked(checked === true)}
+                    />
+                    <label htmlFor="measurements-checked" className="text-sm normal cursor-pointer">I have double checked my measurements and customisations</label>
                 </div>
+                {error && (
+                    <p className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">{error}</p>
+                )}
+                {success && (
+                    <p className="p-3 rounded-lg bg-green-50 text-green-600 text-sm">{success}</p>
+                )}
                 <div className="flex items-center gap-4">
-                    <Button variant={'primary'} size={'large'} className="w-full flex-1">
-                        Add to Cart
+                    <Button 
+                        variant={'primary'} 
+                        size={'large'} 
+                        className="w-full flex-1"
+                        disabled={!measurementsChecked}
+                        onClick={handleAddToCart}
+                    >
+                        {loading ? 'Adding...' : 'Add to Cart'}
                     </Button>
-                    <Button variant={'light'} size={'large'} className="w-full flex-1">
+                    {/* <Button variant={'light'} size={'large'} className="w-full flex-1">
                         Buy Now
-                    </Button>
+                    </Button> */}
                 </div>
             </div>
-            <ProductCard 
+            <ProductCard
                 productData={productData}
                 customizationData={data}
-                totalPrice={totalPrice}
+                totalPrice={`${currencySymbol}${addCommaToNumber(totalPrice)}`}
             />
         </section>
     );

@@ -85,7 +85,7 @@ export function CartProduct(props) {
             </div>
             <div className="w-full flex flex-col gap-2">
                 <div className="w-full flex items-center justify-between gap-2 text-[--black]">
-                    <h4 className="text-sm bold">{props.item.customizations?.title}</h4>
+                    <h4 className="text-sm bold line-clamp-1">{props.item.customizations?.title}</h4>
                     <span className="text-sm bold">{price}</span>
                 </div>
                 <div className="w-full flex items-center justify-between gap-2 shrink-0">

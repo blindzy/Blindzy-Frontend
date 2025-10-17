@@ -24,7 +24,7 @@ function SelectColor(props) {
                 <h2 className="text-lg">Choose Your {props.data.title}</h2>
                 <p className="text-sm">{props.data.description}</p>
             </div>
-            <RadioGroup className="flex items-stretch gap-2" value={selected} onValueChange={handleColorChange}>
+            <RadioGroup className="flex flex-wrap items-stretch gap-2" value={selected} onValueChange={handleColorChange}>
                 {props.data?.values.map((color, index) => (
                     <div key={index} className="flex items-center">
                         <RadioGroupItem value={color.color ? color.name : color.value} id={color.id} className="hidden" />
@@ -41,9 +41,13 @@ function SelectColor(props) {
                             ) : (
                                 <img
                                     src={
-                                        color.value && colorsImage[color.value.toLowerCase()]
-                                        ? colorsImage[color.value.toLowerCase()]
-                                        : '/images/product-colors-image/default-color.jpg'
+                                        color.value && (
+                                            props.colorsImage ? (
+                                                props.colorsImage[(color.value.replace(/\s+/g, '')).toLowerCase()] && props.colorsImage[(color.value.replace(/\s+/g, '')).toLowerCase()]
+                                            ) : (
+                                                colorsImage[(color.value.replace(/\s+/g, '')).toLowerCase()] && colorsImage[(color.value.replace(/\s+/g, '')).toLowerCase()]
+                                            )
+                                        )
                                     }
                                     className="size-full object-cover rounded-[12px] sm:rounded-[14px] xl:rounded-[16px] overflow-hidden"
                                     alt={color.value}
