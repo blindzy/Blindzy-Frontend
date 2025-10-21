@@ -17,7 +17,7 @@ function SignUp() {
 		phone: '',
 		username: '',
 		password: '',
-		confirmPassword: '6'
+		confirmPassword: ''
 	});
 	const [agreedToTerms, setAgreedToTerms] = useState(false);
 	const [rememberMe, setRememberMe] = useState(false);
@@ -142,14 +142,14 @@ function SignUp() {
 
 				{!viaEmail ? (
 					<>
-						<Button
+						{/* <Button
 							variant={'light'}
 							size={'large'}
 							className="w-full"
 						>
 							<Icon icon="flat-color-icons:google" className="text-[28px] shrink-0" />
 							<span className="text-sm">Continue as Google</span>
-						</Button>
+						</Button> */}
 						<Button onClick={() => setViaEmail(true)}
 							variant={'light'}
 							size={'large'}
