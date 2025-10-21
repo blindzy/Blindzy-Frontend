@@ -10,6 +10,8 @@ import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue,} from "@lib/c
 import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 import { Loader2, Plus } from 'lucide-react';
 import Separate from "@components/separate";
+import PaymentPage from "./payment";
+import { idText } from "typescript";
 
 
 
@@ -18,6 +20,7 @@ function Checkout() {
 	const lenis = isDesktop ? useLenis() : null;
 	const [currentStep, setCurrentStep] = useState<number>(1);
 	const [show, setShow] = useState<boolean>(true);
+	const [loader, setLoader] = useState<boolean>(true);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	
 	const [shippingInfo, setShippingInfo] = useState({
@@ -30,6 +33,7 @@ function Checkout() {
 		company: ''
 	});
 	const [paymentInfo, setPaymentInfo] = useState({
+		id: '',
 		cardType: '',
 		cardName: '',
 		cardNumber: '',
@@ -47,6 +51,7 @@ function Checkout() {
 
 	const [userData, setUserData] = useState<UserData | null>(null);
 	const [customerInfo, setCustomerInfo] = useState({
+		id: '',
 		firstName: '',
 		lastName: '',
 		email: '',
@@ -54,7 +59,7 @@ function Checkout() {
 		// company: ''
 	});
 	const [totalAmount, setTotalAmount] = useState(0);
-	const [shippingAmount, setShippingAmount] = useState(20);
+	const [shippingAmount, setShippingAmount] = useState(0);
 	const [currencySymbol, setCurrencySymbol] = useState('');
 	const [error, setError] = useState('');
 	const [orderList, setOrderList] = useState([
@@ -122,6 +127,7 @@ function Checkout() {
 		setUserData(userDataObj);
 		setCustomerInfo(prev => ({
 			...prev,
+			id: userDataObj.id || '',
 			firstName: userDataObj.first_name || '',
 			lastName: userDataObj.last_name || '',
 			email: userDataObj.email || '',
@@ -135,7 +141,7 @@ function Checkout() {
 		const getCart = async () => {
 			try {
 				if (!userData || !userData.email) {
-					console.error("User Data not found in localStorage");
+						console.error("User Data not found in localStorage");
 					return;
 				}
 				const data = await fetchMedusaApi<any>({
@@ -144,6 +150,7 @@ function Checkout() {
 				});
 				setOrderList(data.cart.items);
 				calculateTotalAmount(data.cart.items);
+				setLoader(false);
 			} catch (error) {
 				console.error("Error fetching cart:", error);
 			}
@@ -161,6 +168,7 @@ function Checkout() {
 				setShippingInfo(prev => ({
 					...prev,
 					// state: data.addresses[0]?.state || '',
+					id: data.addresses[0]?.id || '',
 					country: data.addresses[0]?.country_code || '',
 					city: data.addresses[0]?.city || '',
 					zipCode: data.addresses[0]?.postal_code || '',
@@ -248,7 +256,7 @@ function Checkout() {
 	return (
 		<section className="checkout-section w-screen flex flex-col gap-[80px] pb-[85px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="checkout">
 			<div className="flex xl:flex-row flex-col gap-4 w-full xl:items-start">
-				<div className="xl:w-[666px] w-full xl:h-[824px] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black xl:shrink-0 rounded-48 overflow-hidden">
+				<div className="xl:w-[34.688vw] w-full xl:h-[42.917vw] flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black xl:shrink-0 rounded-48 overflow-hidden">
 					<h4 className="text-xl shrink-0">YOUR ORDER</h4>
 					<Separate />
 					{orderList.length > 0 ? (
@@ -258,8 +266,13 @@ function Checkout() {
 							))}
                             </div>
 					):(
+
 						<div className="w-full min-h-full max-h-full flex justify-center py-10">
-							<Loader2 className="h-8 w-8 animate-spin text-[--primary]" />
+							{loader ? (
+								<Loader2 className="h-8 w-8 animate-spin text-[--primary]" />
+							) : (
+								<div>No items in your order</div>
+							)}
 						</div>
 					)}
 					<Separate />
@@ -434,7 +447,7 @@ function Checkout() {
 								</>
 							):(
 								<>
-									<div className="sm:col-span-6 col-span-12">
+									{/* <div className="sm:col-span-6 col-span-12">
 										<Select onValueChange={(value) => handlePaymentInfoChange('cardType', value)}>
 											<SelectTrigger className="w-full"
 											>
@@ -483,18 +496,23 @@ function Checkout() {
 											value={paymentInfo.securityCode}
 											onChange={(e) => handlePaymentInfoChange('securityCode', e.target.value)}
 										/>
-									</div>
+									</div> */}
+									<PaymentPage amount={(totalAmount + shippingAmount)} customer={customerInfo} shippingInfo={shippingInfo} back={prevStep}/>
 								</>
 							)}
 							<div className="flex justify-end col-span-12 gap-2">
-								{ currentStep > 1 && (
-									<Button variant={'light'} size={'small'} className="sm:w-[200px] w-full sm:shrink-0 shrink " onClick={prevStep}>
-										Back
-									</Button>
+								{ currentStep < 3 && (
+									<React.Fragment>
+										{currentStep > 1 && (
+											<Button variant={'light'} size={'small'} className="sm:w-[200px] w-full sm:shrink-0 shrink " onClick={prevStep}>
+												Back
+											</Button>
+										)}
+										<Button variant={'primary'} size={'small'} className="sm:w-[200px] w-full sm:shrink-0 shrink " onClick={nextStep}>
+											{currentStep === 3 ? 'Place Order' : 'Next'}
+										</Button>
+									</React.Fragment>
 								)}
-								<Button variant={'primary'} size={'small'} className="sm:w-[200px] w-full sm:shrink-0 shrink " onClick={nextStep}>
-									{currentStep === 3 ? 'Place Order' : 'Next'}
-								</Button>
 							</div>
 						</div>
 					</div>

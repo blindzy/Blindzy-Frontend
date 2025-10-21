@@ -8,13 +8,13 @@ function OrderList(props) {
     const toggleDetails = () => {
         setShowDetails(!showDetails);
     };
-
+    // console.log(props.item);
   return (
         <div className="w-full p-4 flex flex-col items-center gap-2.5 border border-[--Black] rounded-24" >
             <div className="w-full flex items-center justify-between">
                 <div className="flex items-center gap-2">
                     <div className="size-[64px] bg-[--primary] rounded-[16px] overflow-hidden">
-                        <img src={props.item.customizations?.thumbnail} className="w-full object-cover" alt={props.item.customizations?.title} />
+                        <img src={props.item.customizations?.thumbnail?.replace("http://localhost:9000", "https://api.blindzy.com")} className="w-full object-cover" alt={props.item.customizations?.title} />
                     </div>
                     <h6 className="hidden sm:block text-md text-[--Black]">{props.item.customizations?.title}</h6>
                     <div className="w-fit sm:hidden flex flex-col gap-1">

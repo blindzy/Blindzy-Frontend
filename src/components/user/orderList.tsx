@@ -42,36 +42,36 @@ function OrderList(props) {
     //     }
     // ]
 
-
+    console.log("Order List Props:", props);
     return (
-        props.list.length > 0 ? (
             <div className="w-full flex flex-col gap-6 overflow-auto line-scroll" data-lenis-prevent>
-                {props.list.map((order) => (
+                {props.list.orders.map((order) => (
                     <OrderListComponent data={order} />
                 ))}
             </div>
-        ) : (
-            <div className="size flex flex-col items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-center text-[--Black] xl:overflow-hidden overflow-auto scroll-hidden">
-                <div className="flex flex-col items-center gap-4">
-                    <div className="size-[64px] bg-[--lightestGrey] rounded-full flex items-center justify-center">
-                        <Package className="size-[32px] text-gray-400" />
-                    </div>
-                </div>
-                <div className="flex flex-col gap-2">
-                    <h3 className="text-lg font-medium text-[--Black]">No orders yet</h3>
-                    <p className="text-sm text-[--Black]">Your order history will appear here after you make a purchase</p>
-                </div>
-                <Button
-                    variant={'primary'} size={'small'}
-                    className="sm:w-[500px] w-full"
-                    asChild
-                >
-                    <a href="/blinds/single">
-                        Start Shopping
-                    </a>
-                </Button>
-            </div>
-        )
+        // props.list.orders > 0 ? (
+        // ) : (
+        //     <div className="size flex flex-col items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-center text-[--Black] xl:overflow-hidden overflow-auto scroll-hidden">
+        //         <div className="flex flex-col items-center gap-4">
+        //             <div className="size-[64px] bg-[--lightestGrey] rounded-full flex items-center justify-center">
+        //                 <Package className="size-[32px] text-gray-400" />
+        //             </div>
+        //         </div>
+        //         <div className="flex flex-col gap-2">
+        //             <h3 className="text-lg font-medium text-[--Black]">No orders yet</h3>
+        //             <p className="text-sm text-[--Black]">Your order history will appear here after you make a purchase</p>
+        //         </div>
+        //         <Button
+        //             variant={'primary'} size={'small'}
+        //             className="sm:w-[500px] w-full"
+        //             asChild
+        //         >
+        //             <a href="/blinds/single">
+        //                 Start Shopping
+        //             </a>
+        //         </Button>
+        //     </div>
+        // )
     );
 };
 

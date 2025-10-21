@@ -3,10 +3,13 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import Address from './address';
-import OrderList from "./orderList";
+// import OrderList from "./orderList";
 import UserDetail from "./userDetail";
 import Payment from "./payment";
 import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
+import OrderListComponent from "./order-list";
+import { Package } from 'lucide-react';
+import { Button } from "@lib/components/ui/button";
 
 type PaymentCard = {
     id: string | number;
@@ -23,7 +26,7 @@ function User() {
     const [paymentDetail, setPaymentDetail] = useState<PaymentCard[]>([]);
     const [currentTab, setCurrentTab] = useState("orders");
     const [show, setShow] = useState(true);
-    const [addressList, setAddressList] = useState<Address[]>([]);
+    
     type UserData = {
         id: string | number;
         email: string;
@@ -45,23 +48,23 @@ function User() {
     }, []);
 
     useEffect(() => {
-        async function getAddress() {
-            const userDataString = localStorage.getItem("user");
-            if (!userDataString) {
-                console.error("User Data not found in localStorage");
-                return;
-            }
-            const userDataObj = JSON.parse(userDataString);
-            setUserData(userDataObj);
+        // async function getAddress() {
+        //     const userDataString = localStorage.getItem("user");
+        //     if (!userDataString) {
+        //         console.error("User Data not found in localStorage");
+        //         return;
+        //     }
+        //     const userDataObj = JSON.parse(userDataString);
+        //     setUserData(userDataObj);
 
-            const data = await fetchMedusaApi<any>({
-                endpoint: "/store/customers/addresses",
-                query: { email: userDataObj.email },
-            });
+        //     const data = await fetchMedusaApi<any>({
+        //         endpoint: "/store/customers/addresses",
+        //         query: { email: userDataObj.email },
+        //     });
 
-            setAddressList(data.addresses);
-            // console.log("Addresses:", data.addresses);
-        }
+        //     setAddressList(data.addresses);
+        //     // console.log("Addresses:", data.addresses);
+        // }
         async function getOrders() {
             // Ye code ab sirf client pe chalega
             const email = localStorage.getItem("userEmail");
@@ -74,8 +77,11 @@ function User() {
                 endpoint: "/store/customers/order",
                 query: { email },
             });
+            if(ordersData.orders.items){
 
-            setOrderList(ordersData);
+                console.log(ordersData.orders.items)
+                setOrderList(ordersData.orders.items);
+            }
             // console.log("Orders:", ordersData);
         }
         // async function getCards() {
@@ -93,22 +99,13 @@ function User() {
 
         //     setPaymentDetail(cardsData);
         // }
-        getAddress();
+        // getAddress();
         // getCards();
         getOrders();
-    }, []);
+    }, [userData]);
 
 
     
-
-    const handleAddressChange = async () => {
-        // Fetch updated address list
-        const data = await fetchMedusaApi<any>({
-            endpoint: "/store/customers/addresses",
-            query: { email: userData?.email ?? "" },
-        });
-        setAddressList(data.addresses);
-    };
     const handleCardChange = async () => {
         // Fetch updated card list
         const data = await fetchMedusaApi<any>({
@@ -154,9 +151,38 @@ function User() {
                 <div className={`w-full ${show ? 'fade-in' : 'fade-out'}`}> 
                 {
                     currentTab === 'orders'?(
-                        <OrderList list={orderList} />
+                        // <OrderList list={orderList} />
+                        orderList.length > 0 ? (
+                            <div className="w-full flex flex-col gap-6 overflow-auto line-scroll" data-lenis-prevent>
+                                {/* {orderList.map((order,key) => (
+                                    <OrderListComponent key={key} data={order} />
+                                ))} */}
+                            </div>
+                        ):(
+                        <div className="size flex flex-col items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-center text-[--Black] xl:overflow-hidden overflow-auto scroll-hidden">
+                            <div className="flex flex-col items-center gap-4">
+                                <div className="size-[64px] bg-[--lightestGrey] rounded-full flex items-center justify-center">
+                                    <Package className="size-[32px] text-gray-400" />
+                                </div>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <h3 className="text-lg font-medium text-[--Black]">No orders yet</h3>
+                                <p className="text-sm text-[--Black]">Your order history will appear here after you make a purchase</p>
+                            </div>
+                            <Button
+                                variant={'primary'} size={'small'}
+                                className="sm:w-[500px] w-full"
+                                asChild
+                            >
+                                <a href="/blinds/single">
+                                    Start Shopping
+                                </a>
+                            </Button>
+                        </div>
+                        )
                     ):currentTab === 'address'&&(
-                        <Address list={addressList} userData={userData} onAddressChange={handleAddressChange} />
+                        // <Address list={addressList} userData={userData} onAddressChange={handleAddressChange} />
+                        <Address />
                     )
                     // :currentTab === 'payment'&&(
                     //     <Payment list={paymentDetail} userData={userData} onCardChange={handleCardChange}/>

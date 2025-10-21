@@ -16,7 +16,7 @@ export default async function fetchMedusaApi<T>({
   }
 
   // const url = new URL(`${import.meta.env.VITE_API_URL}/${endpoint}`);
-  const url = new URL(`http://208.87.135.120:9000/${endpoint}`);
+  const url = new URL(`https://api.blindzy.com/${endpoint}`);
 
   if (query) {
     Object.entries(query).forEach(([key, value]) => {

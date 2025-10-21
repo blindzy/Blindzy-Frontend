@@ -123,7 +123,7 @@ function Navbar(props: NavbarProps) {
                         <img src="/images/logo.png"       className={`xl:w-[8.854vw] sm:w-[170px] w-[170px] ${props.logo === 'dark' ? 'block' : 'xl:block hidden'} `} alt="Logo" />
                         <img src="/images/logo-light.png" className={`xl:w-[8.854vw] sm:w-[170px] w-[170px] ${props.logo === 'dark' ? 'hidden' : 'xl:hidden block '}`} alt="Logo" />
                     </a>
-                    <ul className="hidden xl:flex items-center xl:gap-[48px]">
+                    <ul className="hidden xl:flex items-center xl:gap-[2.5vw]">
                         {navigation.map((item, index) => (
                             <li className="relative group w-fit" key={index}>
                                 {item.dropdown ? (
