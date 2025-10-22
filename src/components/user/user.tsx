@@ -3,13 +3,13 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import Address from './address';
-// import OrderList from "./orderList";
+import OrderList from "./orderList";
 import UserDetail from "./userDetail";
 import Payment from "./payment";
 import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
-import OrderListComponent from "./order-list";
-import { Package } from 'lucide-react';
-import { Button } from "@lib/components/ui/button";
+// import OrderListComponent from "./order-list";
+// import { Package } from 'lucide-react';
+// import { Button } from "@lib/components/ui/button";
 
 type PaymentCard = {
     id: string | number;
@@ -24,7 +24,7 @@ function User() {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
     const [paymentDetail, setPaymentDetail] = useState<PaymentCard[]>([]);
-    const [currentTab, setCurrentTab] = useState("orders");
+    const [currentTab, setCurrentTab] = useState("");
     const [show, setShow] = useState(true);
     
     type UserData = {
@@ -45,64 +45,28 @@ function User() {
         }
         const userDataObj = JSON.parse(userDataString);
         setUserData(userDataObj);
+        setCurrentTab("orders");
     }, []);
 
-    useEffect(() => {
-        // async function getAddress() {
-        //     const userDataString = localStorage.getItem("user");
-        //     if (!userDataString) {
-        //         console.error("User Data not found in localStorage");
-        //         return;
-        //     }
-        //     const userDataObj = JSON.parse(userDataString);
-        //     setUserData(userDataObj);
+    // useEffect(() => {
+    //     // async function getCards() {
+    //     //     // Ye code ab sirf client pe chalega
+    //     //     const email = localStorage.getItem("userEmail");
+    //     //     if (!email) {
+    //     //         console.error("Email not found in localStorage");
+    //     //         return;
+    //     //     }
 
-        //     const data = await fetchMedusaApi<any>({
-        //         endpoint: "/store/customers/addresses",
-        //         query: { email: userDataObj.email },
-        //     });
+    //     //     const cardsData = await fetchMedusaApi<any>({
+    //     //         endpoint: "/store/customers/card",
+    //     //         query: { email },
+    //     //     });
 
-        //     setAddressList(data.addresses);
-        //     // console.log("Addresses:", data.addresses);
-        // }
-        async function getOrders() {
-            // Ye code ab sirf client pe chalega
-            const email = localStorage.getItem("userEmail");
-            if (!email) {
-                console.error("Email not found in localStorage");
-                return;
-            }
-
-            const ordersData = await fetchMedusaApi<any>({
-                endpoint: "/store/customers/order",
-                query: { email },
-            });
-            if(ordersData.orders.items){
-
-                console.log(ordersData.orders.items)
-                setOrderList(ordersData.orders.items);
-            }
-            // console.log("Orders:", ordersData);
-        }
-        // async function getCards() {
-        //     // Ye code ab sirf client pe chalega
-        //     const email = localStorage.getItem("userEmail");
-        //     if (!email) {
-        //         console.error("Email not found in localStorage");
-        //         return;
-        //     }
-
-        //     const cardsData = await fetchMedusaApi<any>({
-        //         endpoint: "/store/customers/card",
-        //         query: { email },
-        //     });
-
-        //     setPaymentDetail(cardsData);
-        // }
-        // getAddress();
-        // getCards();
-        getOrders();
-    }, [userData]);
+    //     //     setPaymentDetail(cardsData);
+    //     // }
+    //     // getAddress();
+    //     // getCards();
+    // }, [userData]);
 
 
     
@@ -136,7 +100,7 @@ function User() {
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
                 <div className="w-full border border-[--Black] sm:rounded-[48px] rounded-full sm:p-3 p-1 shrink-0">
                     <div className="relative flex items-stretch">
-                        <span className={`absolute w-[50%] h-full top-0 left-0 rounded-full bg-[--primary] transition ${currentTab === 'orders'?'left-0':currentTab === 'address'?'left-[50%]':'left-[67%]'}`}/>
+                        <span className={`absolute w-[50%] h-full top-0 left-0 rounded-full bg-[--primary] transition ${currentTab === 'orders'?'left-0':currentTab === 'address'?'left-[50%]':'left-0'}`}/>
                         <button className={`relative z-10 w-full sm:p-6 p-4 text-center xl:text-[1.458vw] sm:text-[2.734vw] text-[12px] sm:font-extrabold font-normal sm:font-plus font-roboto leading-snug transition ${currentTab === 'orders'?'text-[--white]':'text-[--Black]'}`} onClick={() => handleTabChange('orders')}>
                             Order History
                         </button>
@@ -151,38 +115,13 @@ function User() {
                 <div className={`w-full ${show ? 'fade-in' : 'fade-out'}`}> 
                 {
                     currentTab === 'orders'?(
-                        // <OrderList list={orderList} />
-                        orderList.length > 0 ? (
-                            <div className="w-full flex flex-col gap-6 overflow-auto line-scroll" data-lenis-prevent>
-                                {/* {orderList.map((order,key) => (
-                                    <OrderListComponent key={key} data={order} />
-                                ))} */}
-                            </div>
-                        ):(
-                        <div className="size flex flex-col items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 text-center text-[--Black] xl:overflow-hidden overflow-auto scroll-hidden">
-                            <div className="flex flex-col items-center gap-4">
-                                <div className="size-[64px] bg-[--lightestGrey] rounded-full flex items-center justify-center">
-                                    <Package className="size-[32px] text-gray-400" />
-                                </div>
-                            </div>
-                            <div className="flex flex-col gap-2">
-                                <h3 className="text-lg font-medium text-[--Black]">No orders yet</h3>
-                                <p className="text-sm text-[--Black]">Your order history will appear here after you make a purchase</p>
-                            </div>
-                            <Button
-                                variant={'primary'} size={'small'}
-                                className="sm:w-[500px] w-full"
-                                asChild
-                            >
-                                <a href="/blinds/single">
-                                    Start Shopping
-                                </a>
-                            </Button>
-                        </div>
-                        )
+                        <OrderList 
+                        // userData={userData} 
+                        />
+                        
                     ):currentTab === 'address'&&(
                         // <Address list={addressList} userData={userData} onAddressChange={handleAddressChange} />
-                        <Address />
+                        <Address userData={userData}/>
                     )
                     // :currentTab === 'payment'&&(
                     //     <Payment list={paymentDetail} userData={userData} onCardChange={handleCardChange}/>

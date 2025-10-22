@@ -42,29 +42,30 @@ function Address(props) {
     // };
      useEffect(() => {
         async function getAddress() {
-            const userDataString = localStorage.getItem("user");
-            if (!userDataString) {
+            // const userDataString = localStorage.getItem("user");
+            if (!props.userData) {
                 console.error("User Data not found in localStorage");
                 return;
             }
-            const userDataObj = JSON.parse(userDataString);
-            setUserData(userDataObj);
+            // const userDataObj = JSON.parse(userDataString);
+            // setUserData(userDataObj);
 
             const data = await fetchMedusaApi<any>({
                 endpoint: "/store/customers/addresses",
-                query: { email: userDataObj.email },
+                query: { email: props.userData.email },
             });
 
             setAddressList(data.addresses);
             // console.log("Addresses:", data.addresses);
         }
         getAddress();
-    }, [addressList]);
+    }, [props.userData]);
+
     const handleAddressChange = async () => {
         // Fetch updated address list
         const data = await fetchMedusaApi<any>({
             endpoint: "/store/customers/addresses",
-            query: { email: userData?.email ?? "" },
+            query: { email: props.userData?.email ?? "" },
         });
         setAddressList(data.addresses);
     };

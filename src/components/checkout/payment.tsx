@@ -106,6 +106,7 @@ const CheckoutForm = ({ amount, customer, shippingInfo, back }: { amount: any; c
       setError(error?.message ?? 'An error occurred while processing payment.');
       SetLoader(false);
     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+      console.log(customer.id, shippingInfo.id);
       try {
         const response = await fetch('https://api.blindzy.com/store/customers/checkout', {
           method: 'POST',

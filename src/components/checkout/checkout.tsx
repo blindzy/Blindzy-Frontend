@@ -11,7 +11,7 @@ import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 import { Loader2, Plus } from 'lucide-react';
 import Separate from "@components/separate";
 import PaymentPage from "./payment";
-import { idText } from "typescript";
+import { createAddresses } from "services/create-address";
 
 
 
@@ -42,6 +42,9 @@ function Checkout() {
 		differentBilling: false
 	});
 	type UserData = {
+		id: string | number;
+        first_name: string;
+        last_name: string;
 		firstName?: string;
 		lastName?: string;
 		email?: string;
@@ -61,6 +64,7 @@ function Checkout() {
 	const [totalAmount, setTotalAmount] = useState(0);
 	const [shippingAmount, setShippingAmount] = useState(0);
 	const [currencySymbol, setCurrencySymbol] = useState('');
+	const [addressList, setAddressList] = useState('');
 	const [error, setError] = useState('');
 	const [orderList, setOrderList] = useState([
 			// {
@@ -136,6 +140,33 @@ function Checkout() {
 		}));
 		setIsLoggedIn(!!userDataObj);
 	}, []);
+
+	const getAddress = async () => {
+		try {
+			if (!userData || !userData.email) {
+				console.error("User Data not found in localStorage");
+				return;
+			}
+			const data = await fetchMedusaApi<any>({
+				endpoint: "/store/customers/addresses",
+				query: { email: userData.email },
+			});
+			if(data.addresses.length == 0){
+				setAddressList("No addresses found");
+			}
+			setShippingInfo(prev => ({
+				...prev,
+				// state: data.addresses[0]?.state || '',
+				id: data.addresses[0]?.id || '',
+				country: data.addresses[0]?.country_code || '',
+				city: data.addresses[0]?.city || '',
+				zipCode: data.addresses[0]?.postal_code || '',
+				address: data.addresses[0]?.address_1 || '',
+			}));
+		} catch (error) {
+			console.error("Error fetching addresses:", error);
+		}
+	}
 	
 	useEffect(() => {
 		const getCart = async () => {
@@ -155,29 +186,7 @@ function Checkout() {
 				console.error("Error fetching cart:", error);
 			}
 		};
-		const getAddress = async () => {
-			try {
-				if (!userData || !userData.email) {
-					console.error("User Data not found in localStorage");
-					return;
-				}
-				const data = await fetchMedusaApi<any>({
-					endpoint: "/store/customers/addresses",
-					query: { email: userData.email },
-				});
-				setShippingInfo(prev => ({
-					...prev,
-					// state: data.addresses[0]?.state || '',
-					id: data.addresses[0]?.id || '',
-					country: data.addresses[0]?.country_code || '',
-					city: data.addresses[0]?.city || '',
-					zipCode: data.addresses[0]?.postal_code || '',
-					address: data.addresses[0]?.address_1 || '',
-				}));
-			} catch (error) {
-				console.error("Error fetching addresses:", error);
-			}
-		}
+		
 		getCart();
 		getAddress();
 	}, [userData]);
@@ -212,7 +221,7 @@ function Checkout() {
 			[field]: value
 		}));
 	};
-    const nextStep = () => {
+	const nextStep = async () => {
 		if(currentStep === 1){
 			if(!customerInfo.firstName || !customerInfo.lastName || !customerInfo.email || !customerInfo.phone){
 				setError("Please fill in all required personal information.");
@@ -226,6 +235,32 @@ function Checkout() {
 				return;
 			}else{
 				setError("");
+				if(addressList === "No addresses found"){
+					console.log(addressList);
+					// Guard userData to avoid calling properties on null
+					if (!userData || !userData.id || !userData.email) {
+						console.error("Cannot create address: missing user data");
+					} else {
+						try {
+							const response = await createAddresses.storeAddress({
+								customer_id: String(userData.id),
+								email: userData.email,
+								first_name: userData.first_name,
+								last_name: userData.last_name,
+								address_1: shippingInfo.address,
+								city: shippingInfo.city,
+								postal_code: shippingInfo.zipCode,
+								country_code: shippingInfo.country
+							});
+							if(response.message === "Address created successfully"){
+								console.log("Address created successfully:", response);
+								getAddress();
+							}
+						} catch (err) {
+							console.error("Error creating address:", err);
+						}
+					}
+				}
 			}
 		}else if(currentStep === 3){
 			if(!paymentInfo.cardType || !paymentInfo.cardName || !paymentInfo.cardNumber || !paymentInfo.expiryDate || !paymentInfo.securityCode){
@@ -242,7 +277,7 @@ function Checkout() {
 				setShow(true);
 			}, 300);
 		}
-    };
+	};
     const prevStep = () => {
 		if (currentStep > 1) {
 			setShow(false);

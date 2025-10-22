@@ -29,9 +29,9 @@ function Contact() {
 	// API configuration
 	const headers = {
 		"Content-Type": "application/json",
-		"x-publishable-api-key": "pk_c1345b52039702b7035e1cf270b942de49b7b14d0ac24fe91cca9a32a1ec4546",
+		"x-publishable-api-key": "pk_618e1efe2b7d74576d7e072b76bd3c56d46ef94ede9463774e1c2b09c50f6bda",
 	};
-	const baseUrl = "http://api.blindzy.com/";
+	const baseUrl = "https://api.blindzy.com";
 
 	// Handle form input changes
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -126,7 +126,7 @@ function Contact() {
                         </div>
                     </div>
                 </div>
-                <div className="w-full flex flex-col xl:gap-[2.5px] gap-6 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-48">
+                <div className="w-full flex flex-col xl:gap-[2.5vw] gap-6 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-48">
                     <div className="flex flex-col gap-4 sm:text-left text-center">
                         <h4 className="text-xl uppercase">Fill Out The Form to Contact us</h4>
                         <p className="text-sm">Lorem ipsum dolor sit amet consectetur nunc faucibus ut ornare.</p>

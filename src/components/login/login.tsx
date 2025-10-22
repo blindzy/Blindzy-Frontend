@@ -149,7 +149,7 @@ function Login() {
                         </div>
                         <div className="flex items-center gap-1 text-sm">
                             Don't have an account?
-                            <a href="/signup" className="text-[--primary] transition hover:underline focus:outline-none">Signup</a>
+                            <a href="/signUp" className="text-[--primary] transition hover:underline focus:outline-none">Signup</a>
                         </div>
                     </div>
                 </div>
