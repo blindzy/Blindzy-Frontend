@@ -3,11 +3,21 @@ import Layout from "@layouts/Layout.astro";
 import Navbar from "@components/navbar/navbar";
 import Showrooms from "@components/showroom/showroom";
 import Footer from "@components/Footer/Footer";
+import fetchApi from '../lib/strapi'
+import type {TutorialsData} from '../interfaces/interfaces';
 
+async function getData() {
+	const tutorialsData = await fetchApi<TutorialsData>({
+		endpoint: 'showrooms?populate=*&pagination[pageSize]=1000',
+		wrappedByKey: 'data',
+	});
+	return { tutorialsData };
+}
+const { tutorialsData } = await getData();
 ---
 
 <Layout>
 	<Navbar client:load logo="dark"/>
-	<Showrooms client:load/>
+	<Showrooms client:load data={tutorialsData}/>
 	<Footer client:visible/>
 </Layout>

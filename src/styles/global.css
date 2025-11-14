@@ -461,3 +461,53 @@ input[type="number"] {
     transition: opacity 300ms ease-out, transform 300ms ease-out;
   }
   
+
+  
+  .blog-content {
+    @apply text-[--Black];
+  }
+  .blog-content img{
+    @apply w-fit rounded-24 overflow-hidden;
+  }
+
+  .blog-content p {
+    @apply text-sm;
+  }
+
+  .blog-content a {
+    @apply text-sm transition text-black hover:text-[--primary];
+  }
+
+  .blog-content h1,
+  .blog-content h1 b,
+  .blog-content h1 strong {
+    @apply text-black;
+  }
+
+  .blog-content h2,
+  .blog-content h2 b,
+  .blog-content h2 strong {
+    @apply text-xl text-black;
+  }
+
+  .blog-content h3,
+  .blog-content h3 b,
+  .blog-content h3 strong,
+  .blog-content h4,
+  .blog-content h4 b,
+  .blog-content h4 strong,
+  .blog-content h5,
+  .blog-content h5 b,
+  .blog-content h5 strong {
+    @apply text-lg text-black;
+  }
+
+  .blog-content h6,
+  .blog-content h6 b,
+  .blog-content h6 strong {
+    @apply text-md text-black;
+  }
+
+  .blog-content ul {
+    @apply flex flex-col gap-2 list-disc list-inside text-sm;
+  }

@@ -7,40 +7,40 @@ import 'swiper/css/navigation';
 import { Navigation} from 'swiper/modules';
 import { Button } from "@lib/components/ui/button";
 
-function Clients() {
+function Clients(props) {
 
-	const testimonials = [
-		{
-			name: "CUSTOMER'S NAME",
-			text: "Lorem ipsum dolor sit amet consectetur. Felis nibh nullam massa ac quis malesuada proin non. Rhoncus nisl consectetur leo morbi. Dictum commodo hac penatibus arcu pellentesque dolor. Sollicitudin in non venenatis enim sit.",
-			image: "/images/blindzy-icon.png",
-			stars: 5,
-		},
-		{
-			name: "CUSTOMER'S NAME",
-			text: "Lorem ipsum dolor sit amet consectetur. Felis nibh nullam massa ac quis malesuada proin non. Rhoncus nisl consectetur leo morbi. Dictum commodo hac penatibus arcu pellentesque dolor. Sollicitudin in non venenatis enim sit.",
-			image: "/images/blindzy-icon.png",
-			stars: 5,
-		},
-		{
-			name: "CUSTOMER'S NAME",
-			text: "Lorem ipsum dolor sit amet consectetur. Felis nibh nullam massa ac quis malesuada proin non. Rhoncus nisl consectetur leo morbi. Dictum commodo hac penatibus arcu pellentesque dolor. Sollicitudin in non venenatis enim sit.",
-			image: "/images/blindzy-icon.png",
-			stars: 5,
-		},
-		{
-			name: "CUSTOMER'S NAME",
-			text: "Lorem ipsum dolor sit amet consectetur. Felis nibh nullam massa ac quis malesuada proin non. Rhoncus nisl consectetur leo morbi. Dictum commodo hac penatibus arcu pellentesque dolor. Sollicitudin in non venenatis enim sit.",
-			image: "/images/blindzy-icon.png",
-			stars: 5,
-		},
-		{
-			name: "CUSTOMER'S NAME",
-			text: "Lorem ipsum dolor sit amet consectetur. Felis nibh nullam massa ac quis malesuada proin non. Rhoncus nisl consectetur leo morbi. Dictum commodo hac penatibus arcu pellentesque dolor. Sollicitudin in non venenatis enim sit.",
-			image: "/images/blindzy-icon.png",
-			stars: 5,
-		},
-	];
+	// const testimonials = [
+	// 	{
+	// 		name: "CUSTOMER'S NAME",
+	// 		text: "Lorem ipsum dolor sit amet consectetur. Felis nibh nullam massa ac quis malesuada proin non. Rhoncus nisl consectetur leo morbi. Dictum commodo hac penatibus arcu pellentesque dolor. Sollicitudin in non venenatis enim sit.",
+	// 		image: "/images/blindzy-icon.png",
+	// 		stars: 5,
+	// 	},
+	// 	{
+	// 		name: "CUSTOMER'S NAME",
+	// 		text: "Lorem ipsum dolor sit amet consectetur. Felis nibh nullam massa ac quis malesuada proin non. Rhoncus nisl consectetur leo morbi. Dictum commodo hac penatibus arcu pellentesque dolor. Sollicitudin in non venenatis enim sit.",
+	// 		image: "/images/blindzy-icon.png",
+	// 		stars: 5,
+	// 	},
+	// 	{
+	// 		name: "CUSTOMER'S NAME",
+	// 		text: "Lorem ipsum dolor sit amet consectetur. Felis nibh nullam massa ac quis malesuada proin non. Rhoncus nisl consectetur leo morbi. Dictum commodo hac penatibus arcu pellentesque dolor. Sollicitudin in non venenatis enim sit.",
+	// 		image: "/images/blindzy-icon.png",
+	// 		stars: 5,
+	// 	},
+	// 	{
+	// 		name: "CUSTOMER'S NAME",
+	// 		text: "Lorem ipsum dolor sit amet consectetur. Felis nibh nullam massa ac quis malesuada proin non. Rhoncus nisl consectetur leo morbi. Dictum commodo hac penatibus arcu pellentesque dolor. Sollicitudin in non venenatis enim sit.",
+	// 		image: "/images/blindzy-icon.png",
+	// 		stars: 5,
+	// 	},
+	// 	{
+	// 		name: "CUSTOMER'S NAME",
+	// 		text: "Lorem ipsum dolor sit amet consectetur. Felis nibh nullam massa ac quis malesuada proin non. Rhoncus nisl consectetur leo morbi. Dictum commodo hac penatibus arcu pellentesque dolor. Sollicitudin in non venenatis enim sit.",
+	// 		image: "/images/blindzy-icon.png",
+	// 		stars: 5,
+	// 	},
+	// ];
 
 	useEffect(() => {
 	}, []);
@@ -77,20 +77,20 @@ function Clients() {
                             },
                         }}
                     >
-                        {testimonials.map((testimonial, idx) => (
+                        {props.data && props.data.map((testimonial, idx) => (
                             <SwiperSlide className="cards-item rounded-48" key={idx}>
                                     <div className="flex items-center gap-4">
-                                        <img src={testimonial.image} className="w-fit mbl:w-[9.542vw]" alt="blindzy-icon" />
+                                        <img src='/images/blindzy-icon.png' className="w-fit mbl:w-[9.542vw]" alt="blindzy-icon" />
                                         <div className="flex flex-col gap-2">
                                             <h5 className="text-lg mbl:text-base mbl:font-extrabold text-black">{testimonial.name}</h5>
                                             <div className="flex items-center gap-2">
-                                                {Array.from({ length: testimonial.stars }).map((_, i) => (
+                                                {Array.from({ length: 5 }).map((_, i) => (
                                                     <Icon icon="ic:round-star" className="text-[24px] text-primary" key={i} />
                                                 ))}
                                             </div>
                                         </div>
                                     </div>
-                                    <p className="text-md text-black">{testimonial.text}</p>
+                                    <p className="text-md text-black">{testimonial.description}</p>
                             </SwiperSlide>
                         ))}
                     </Swiper>

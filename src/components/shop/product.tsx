@@ -4,10 +4,20 @@ import { Plus  } from 'lucide-react';
 
 function ProductComponent(props) {
     const [colorsImage, setColorsImage] = useState({
-        ash: "/images/product-colors-image/ash.jpg",
-        chalk: "/images/product-colors-image/chalk.jpg",
+        white: "/images/product-colors-image/ash.jpg",
+        stone: "/images/product-colors-image/ash.jpg",
+        powder: "/images/product-colors-image/ash.jpg",
+        sand: "/images/product-colors-image/ash.jpg",
+        cream: "/images/product-colors-image/ash.jpg",
+        moon: "/images/product-colors-image/ash.jpg",
+        grey: "/images/product-colors-image/ash.jpg",
+        darkgrey: "/images/product-colors-image/ash.jpg",
+        black: "/images/product-colors-image/ash.jpg",
     });
-	return (
+
+    const colorOption = props.data.options?.find(opt => typeof opt.title === 'string' && ['color', 'colour', 'fabric'].includes(opt.title.toLowerCase().trim()));
+
+        return (
 		<div key={props.data.id} className={`col-span-12 sm:col-span-6 xl:col-span-4 flex flex-col justify-between gap-4 xl:gap-[0.833vw] p-4 xl:p-[0.833vw] border border-[--Black] rounded-48`}>
             <div className="relative rounded-32 overflow-hidden h-[250px] sm:h-[24.414vw] xl:h-[13.021vw]">
                 {/* <img src={props.data.thumbnail} className="w-full h-full object-cover" alt={props.data.title} /> */}
@@ -38,25 +48,29 @@ function ProductComponent(props) {
                     <Plus className="size-[18px]" />
                 </div>
                 <h6 className="text-md">Available Colors</h6>
-                <div className="flex flex-wrap items-stretch gap-2">
-                    {props.data.options
-                        ?.find(opt => opt.title.toLowerCase() === 'color' || opt.title.toLowerCase() === 'colour')
-                        ?.values?.map((color, index) => (
+                <div className="flex  items-stretch gap-2 overflow-hidden">
+                    {colorOption?.values?.slice(0, 4).map((color, index) => {
+                        const raw = color && color.value ? String(color.value) : '';
+                        const key = raw.toLowerCase().replace(/\s+/g, '').replace(/-/g, '');
+                        const src = key && colorsImage[key] ? colorsImage[key] : '/images/product-colors-image/default-color.jpg';
+                        return (
                             <div
                                 key={index}
-                                className="size-[55px] sm:size-[5.371vw] xl:size-[2.865vw] shrink-0 border transition border-[--lightGrey] cursor-pointer p-[6px] sm:p-[0.586vw] xl:p-[0.313vw] rounded-[18px] sm:rounded-[1.758vw] xl:rounded-[0.938vw]"
+                                className="size-[55px] sm:size-[5.371vw] xl:size-[2.865vw] shrink-0 border transition border-[--lightGrey] cursor-pointer p-[6px] sm:p-[0.586vw] xl:p-[0.313vw] rounded-[18px] sm:rounded-[1.758vw] xl:rounded-[0.938vw] shrink-0"
                             >
                                 <img
-                                    src={
-                                        color.value && colorsImage[color.value.toLowerCase()]
-                                        ? colorsImage[color.value.toLowerCase()]
-                                        : '/images/product-colors-image/default-color.jpg'
-                                    }
+                                    src={src}
                                     className="size-full object-cover rounded-[12px] sm:rounded-[1.172vw] xl:rounded-[0.625vw] overflow-hidden"
                                     alt={color.value || 'Color option'}
                                 />
                             </div>
-                        ))}
+                        );
+                    })}
+                    {colorOption && colorOption.values && colorOption.values.length > 4 && (
+                        <span className="text-sm text-[--black] self-center">
+                            {`+${colorOption.values.length - 4} More`}
+                        </span>
+                    )}
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0 text-[--mediumGrey]">

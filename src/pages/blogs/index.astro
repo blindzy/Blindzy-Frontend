@@ -3,11 +3,21 @@ import Layout from "@layouts/Layout.astro";
 import Navbar from "@components/navbar/navbar";
 import Blog from "@components/blog/blog";
 import Footer from "@components/Footer/Footer";
+import fetchApi from '../../lib/strapi';
+import type {BlogData} from '../../interfaces/interfaces';
 
+async function getData() {
+	const blogData = await fetchApi<BlogData>({
+		endpoint: 'blogs?populate=*&pagination[pageSize]=1000',
+		wrappedByKey: 'data',
+	});
+	return { blogData };
+}
+const { blogData } = await getData();
 ---
 
 <Layout>
 	<Navbar client:load logo="dark"/>
-	<Blog client:load/>
+	<Blog client:load data={blogData}/>
 	<Footer client:visible/>
 </Layout>

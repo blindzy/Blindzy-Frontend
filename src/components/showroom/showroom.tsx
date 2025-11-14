@@ -5,101 +5,58 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 
 
-function Showroom() {
-	const [selectedCategory, setSelectedCategory] = useState<string>('all');
-	const [currentPage, setCurrentPage] = useState<number>(1);
-	const [isLoading, setIsLoading] = useState<boolean>(false);
-	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
+function Showroom(props) {
+	const [type, setType] = useState(1);
+    const [show, setShow] = useState(true);
+    const [filteredData, setFilteredData] = useState(props.data || []);
+    const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1150;
 	const lenis = isDesktop ? useLenis() : null;
-	const itemsPerPage = 6; // Show 6 items per page
-
-	// Define showroom data
-	const showroomData = [
-		{ id: 1, image: "/images/showroom/01.png", category: "all", href: "/single-product" },
-		{ id: 2, image: "/images/showroom/02.png", category: "all", href: "/single-product" },
-		{ id: 3, image: "/images/showroom/03.png", category: "blinds", href: "/single-product" },
-		{ id: 4, image: "/images/showroom/04.png", category: "all", href: "/single-product" },
-		{ id: 5, image: "/images/showroom/05.png", category: "blinds", href: "/single-product" },
-		{ id: 6, image: "/images/showroom/06.png", category: "curatins", href: "/single-product" },
-		// Add more items for pagination testing
-		{ id: 7, image: "/images/showroom/01.png", category: "blinds", href: "/single-product" },
-		{ id: 8, image: "/images/showroom/02.png", category: "curatins", href: "/single-product" },
-		{ id: 9, image: "/images/showroom/03.png", category: "all", href: "/single-product" },
-		{ id: 10, image: "/images/showroom/04.png", category: "blinds", href: "/single-product" },
-		{ id: 11, image: "/images/showroom/05.png", category: "curatins", href: "/single-product" },
-		{ id: 12, image: "/images/showroom/06.png", category: "all", href: "/single-product" },
-	];
-
-	// Memoize filtered items to prevent unnecessary re-renders
-	const filteredItems = useMemo(() => {
-		return showroomData.filter(item => 
-			selectedCategory === 'all' || item.category === selectedCategory
-		);
-	}, [selectedCategory]);
-
-	// Memoize pagination calculations
-	const paginationData = useMemo(() => {
-		const totalPages = Math.ceil(filteredItems.length / itemsPerPage);
-		const startIndex = (currentPage - 1) * itemsPerPage;
-		const endIndex = startIndex + itemsPerPage;
-		const currentItems = filteredItems.slice(startIndex, endIndex);
-		
-		return {
-			totalPages,
-			currentItems,
-			startIndex,
-			endIndex
-		};
-	}, [filteredItems, currentPage, itemsPerPage]);
-
-	// Handle category change with loading state
-	const handleCategoryChange = (category: string) => {
-		setIsLoading(true);
-		setSelectedCategory(category);
-		setCurrentPage(1);
-		
-		// Add a small delay to show loading state and prevent glitching
-		setTimeout(() => {
-			setIsLoading(false);
-		}, 150);
-	};
-
-	// Handle page change with loading state
-	const handlePageChange = (page: number) => {
-		if (page >= 1 && page <= paginationData.totalPages && page !== currentPage) {
-			setIsLoading(true);
-			setCurrentPage(page);
-			
-			// Add a small delay to show loading state
-			setTimeout(() => {
-				setIsLoading(false);
-			}, 100);
-		}
-	};
-
-	// Handle previous page
-	const handlePreviousPage = () => {
-		if (currentPage > 1) {
-			handlePageChange(currentPage - 1);
-		}
-	};
-
-	// Handle next page
-	const handleNextPage = () => {
-		if (currentPage < paginationData.totalPages) {
-			handlePageChange(currentPage + 1);
-		}
-	};
 
 	useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-		ScrollTrigger.normalizeScroll(true);
+		gsap.registerPlugin(ScrollTrigger);
+		if(window.innerWidth  > 1150){
+			ScrollTrigger.normalizeScroll(true);
+		}
 
-		// If using Lenis, connect it with GSAP
 		if (lenis) {
 			lenis.on('scroll', ScrollTrigger.update);
 		}
+
 	}, [lenis]);
+
+    const changeCategory = (newStep) => {
+        setShow(false);
+        setTimeout(() => {
+            setShow(true);
+            setType(newStep);
+        }, 300);
+    };
+     
+    useEffect(() => {
+        filterData();
+    }, [type, props.data]);
+
+
+    const filterData = () => {
+        let filtered = props.data || [];
+
+        switch (type) {
+            case 2: // Blinds
+            filtered = filtered.filter(item => item.category?.toLowerCase() === "blinds");
+            break;
+            case 3: // Curtains
+            filtered = filtered.filter(item => item.category?.toLowerCase() === "curtains");
+            break;
+            case 4: // Shutters
+            filtered = filtered.filter(item => item.category?.toLowerCase() === "shutters");
+            break;
+            default: // all
+            break;
+        }
+
+        filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        setFilteredData(filtered);
+    };
     
 
 	return (
@@ -107,30 +64,30 @@ function Showroom() {
             <div className="w-full border border-[--Black] p-4 text-center xl:rounded-[2.5vw] sm:rounded-[4.688vw] rounded-[15px]">
                 <h1 className="text-1xl text-black uppercase">Showroom</h1>
             </div>
-            <div className="flex items-center justify-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4">
+            <div className="flex items-center justify-center xl:gap-[1.25vw] sm:gap-[2.344vw gap-4">
                 <button
-                    className={`w-fit cus-btn small`}
-                    style={selectedCategory === 'all' ? {} : { background: 'transparent', color: 'inherit', border: '1px solid transparent' }}
-                    onClick={() => handleCategoryChange('all')}
-                    disabled={isLoading}
+                    className={`w-fit py-4 px-6 text-sm transition rounded-full ${type === 1 ? 'text-[--white] bg-[--primary]' : 'text-[--black] bg-transparent'}`}
+                    onClick={() => changeCategory(1)}
                 >
                     All
                 </button>
                 <button
-                    className={`w-fit cus-btn small`}
-                    style={selectedCategory === 'blinds' ? {} : { background: 'transparent', color: 'inherit', border: '1px solid transparent' }}
-                    onClick={() => handleCategoryChange('blinds')}
-                    disabled={isLoading}
+                    className={`w-fit py-4 px-6 text-sm transition rounded-full ${type === 2 ? 'text-[--white] bg-[--primary]' : 'text-[--black] bg-transparent'}`}
+                    onClick={() => changeCategory(2)}
                 >
                     Blinds
                 </button>
                 <button
-                    className={`w-fit cus-btn small`}
-                    style={selectedCategory === 'curatins' ? {} : { background: 'transparent', color: 'inherit', border: '1px solid transparent' }}
-                    onClick={() => handleCategoryChange('curatins')}
-                    disabled={isLoading}
+                    className={`w-fit py-4 px-6 text-sm transition rounded-full ${type === 3 ? 'text-[--white] bg-[--primary]' : 'text-[--black] bg-transparent'}`}
+                    onClick={() => changeCategory(3)}
                 >
-                    Curatins
+                    Curtains
+                </button>
+                <button
+                    className={`w-fit py-4 px-6 text-sm transition rounded-full ${type === 4 ? 'text-[--white] bg-[--primary]' : 'text-[--black] bg-transparent'}`}
+                    onClick={() => changeCategory(4)}
+                >
+                    Shutters
                 </button>
             </div>
             <div className="flex items-center gap-2 shrink-0 text-mediumGrey">
@@ -138,32 +95,31 @@ function Showroom() {
                 <div className="w-full h-[1px] bg-mediumGrey"></div>
                 <Icon icon="uil:plus" className="text-[18px]" />
             </div>
-            <div className="relative grid items-stretch grid-cols-12 xl:gap-[0.833vw] sm:gap-[1.563vw] gap-3">
-                {paginationData.currentItems.map((item, index) => (
-                    <a 
-                        key={`${item.id}-${currentPage}-${selectedCategory}`} 
-                        href={item.href} 
-                        className="sm:col-span-4 col-span-6 rounded-48 overflow-hidden transition-transform duration-200 hover:scale-105"
+            <div className={`relative grid items-stretch grid-cols-12 xl:gap-[0.833vw] sm:gap-[1.563vw] gap-3 ${show ? 'fade-in' : 'fade-out'}`}>
+                {filteredData.map((item, index) => (
+                    <div
+                        key={item.id}
+                        className="sm:col-span-4 col-span-6 rounded-48 overflow-hidden"
                     >
                         <img 
-                            src={item.image} 
+                            src={item.image && `https://strapi.blindzy.com${item.image.url}`} 
                             className="w-full object-cover" 
                             alt={`showroom-${item.id}`}
                             loading="lazy"
                         />
-                    </a>
+                    </div>
                 ))}
                 {/* Loading overlay */}
-                {isLoading && (
+                {/* {isLoading && (
                     <div className="absolute inset-0 bg-white bg-opacity-80 flex items-center justify-center z-10">
                         <div className="flex items-center gap-2">
                             <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
                             <span className="text-primary">Loading...</span>
                         </div>
                     </div>
-                )}
+                )} */}
             </div>
-            {paginationData.totalPages > 1 && (
+            {/* {paginationData.totalPages > 1 && (
                 <ul className="navigation">
                     <li 
                         onClick={handlePreviousPage} 
@@ -196,7 +152,7 @@ function Showroom() {
                         <Icon icon="majesticons:arrow-right-line" />
                     </li>
                 </ul>
-            )}
+            )} */}
         </div>
 	);
 }
