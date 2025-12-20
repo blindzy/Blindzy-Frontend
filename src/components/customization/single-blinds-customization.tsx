@@ -10,7 +10,7 @@ import { Button } from "@lib/components/ui/button";
 import Separate from "@components/separate";
 import Measurement from "./measurement";
 import { createAddToCart } from '../../services/add-to-cart';
-import { interpolate2D, widthValues, dropValues, priceMatrix } from "./blind_interpolate"
+import { interpolate2D, widthValues, dropValues, priceMatrix } from "./blind_interpolate";
 
 
 
@@ -134,10 +134,10 @@ function Single_blinds_customization(props) {
         return
         }
 
-    // Measurements are provided in millimetres (MM) from the Measurement inputs.
-    // Use values directly as mm for interpolation/validation.
-    const widthMm = Math.round(Number(measurements.width));
-    const dropMm = Math.round(Number(measurements.height));
+        // Measurements are provided in millimetres (MM) from the Measurement inputs.
+        // Use values directly as mm for interpolation/validation.
+        const widthMm = Math.round(Number(measurements.width));
+        const dropMm = Math.round(Number(measurements.height));
 
         // Check ranges (in mm)
         const minWidth = Math.min(...widthValues);
@@ -196,7 +196,6 @@ function Single_blinds_customization(props) {
             
             if (defaultVariant?.price_sets?.[0]?.prices?.[0]?.amount) {
                 // setTotalPrice(defaultVariant.price_sets[0].prices[0].amount);
-                
             }
         }
     }, [productData]);
@@ -218,7 +217,7 @@ function Single_blinds_customization(props) {
                 variant => variant.title === selectedColor || 
                         variant.options.some(opt => opt.value === selectedColor)
             );
-            const code = selectedVariant?.price_sets?.[0]?.prices?.[0]?.currency_code || 'USD';
+            const code = selectedVariant?.price_sets?.[0]?.prices?.[0]?.currency_code || 'aud';
             let symbol = '';
             switch (code) {
                 case 'usd': symbol = '$'; break;
@@ -384,13 +383,14 @@ function Single_blinds_customization(props) {
                     <h2 className="text-lg">Enter Measurements</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
-                <Measurement measurements={measurements} setMeasurements={setMeasurements} />
+                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} />
                 {productData?.options?.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate/>
                         <SelectColor 
                             data={option} 
                             title={'Colour'}
+                            colorsType={'blind'}
                             description={'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.'}
                             onColorSelect={setSelectedColor} 
                             selectedColor={selectedColor}
@@ -413,6 +413,7 @@ function Single_blinds_customization(props) {
                         <SelectColor 
                             data={option} 
                             title={'Colour'}
+                            colorsType={'blind'}
                             description={'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.'}
                             onColorSelect={getColorSetter(option.title)} 
                             selectedColor={getSelectedColor(option.title)}

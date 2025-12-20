@@ -41,24 +41,24 @@ function Navbar(props: NavbarProps) {
         },
         {
             Name : 'Curtains',
-            Link : '',
-            dropdown : [
-                {
-                    Name : 'curtains',
-                    Link : '/curtains/single'
-                },
-                {
-                    Name : 'Double Curtains',
-                    Link : '/curtains/double'
-                }
-            ]
+            Link : '/curtains/single',
+            // dropdown : [
+            //     {
+            //         Name : 'curtains',
+            //         Link : '/curtains/single'
+            //     },
+            //     {
+            //         Name : 'Double Curtains',
+            //         Link : '/curtains/double'
+            //     }
+            // ]
         },
         {
             Name : 'Blinds',
             Link : '',
             dropdown: [
                 {
-                    Name : 'Blinds',
+                    Name : 'Roller Blinds',
                     Link : '/blinds/single'
                 },
                 {

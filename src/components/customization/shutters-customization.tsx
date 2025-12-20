@@ -10,6 +10,8 @@ import { Button } from "@lib/components/ui/button";
 import Separate from "@components/separate";
 import Measurement from "./measurement";
 import { createAddToCart } from '../../services/add-to-cart';
+import { interpolate2D, widthValues, dropValues, priceMatrix } from "./curtain-interpolate";
+
 
 
 const productOptions = [
@@ -39,7 +41,7 @@ const productOptions = [
 function Shutters_customization(props) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
-    const [measurements, setMeasurements] = useState({ roomName: '', width: 1, height: 1 });
+    const [measurements, setMeasurements] = useState({ roomName: '', width: 600, height: 1800 });
     const [selectedColor, setSelectedColor] = useState('');
     const [totalPrice, setTotalPrice] = useState(0);
     const [currencySymbol, setCurrencySymbol] = useState('');
@@ -61,6 +63,47 @@ function Shutters_customization(props) {
         {'title': 'Select Fit', 'value': ''},
         {'title': 'Hinge Colour', 'value': ''},
     ]);
+    const calculatePrice = () => {
+            // Validate inputs
+            if (!measurements.width || !measurements.height) {
+            setError("Please enter both width and drop values")
+            //   setCalculatedPrice(null)
+            return
+            }
+    
+            // Measurements are provided in millimetres (MM) from the Measurement inputs.
+            // Use values directly as mm for interpolation/validation.
+            const widthMm = Math.round(Number(measurements.width));
+            const dropMm = Math.round(Number(measurements.height));
+    
+            // Check ranges (in mm)
+            const minWidth = Math.min(...widthValues);
+            const maxWidth = Math.max(...widthValues);
+            const minDrop = Math.min(...dropValues);
+            const maxDrop = Math.max(...dropValues);
+    
+            if (widthMm < minWidth || widthMm > maxWidth) {
+            setError(`Width must be between ${minWidth} mm and ${maxWidth} mm`)
+            setTotalPrice(0)
+            return
+            }
+    
+            if (dropMm < minDrop || dropMm > maxDrop) {
+            setError(`Drop must be between ${minDrop} mm and ${maxDrop} mm`)
+            setTotalPrice(0)
+            return
+            }
+    
+            const price = interpolate2D(widthMm, dropMm, widthValues, dropValues, priceMatrix)
+            console.log("Calculated Price:", price);
+            if (price === null) {
+            setError("Unable to calculate price for these dimensions")
+            setTotalPrice(0)
+            } else {
+            setError("")
+            setTotalPrice(price)
+            }
+    }
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -83,11 +126,17 @@ function Shutters_customization(props) {
             );
             
             if (defaultVariant?.price_sets?.[0]?.prices?.[0]?.amount) {
-                setTotalPrice(defaultVariant.price_sets[0].prices[0].amount);
+                // setTotalPrice(defaultVariant.price_sets[0].prices[0].amount);
                 
             }
         }
     }, [productData]);
+
+    // Recalculate price whenever measurements change
+    useEffect(() => {
+        // debounce if needed, but call immediately for now
+        calculatePrice();
+    }, [measurements.width, measurements.height]);
 
     // Handle option selection updates
     const handleOptionChange = (optionTitle, value) => {
@@ -106,7 +155,7 @@ function Shutters_customization(props) {
                 variant => variant.title === selectedColor || 
                         variant.options.some(opt => opt.value === selectedColor)
             );
-            const code = selectedVariant?.price_sets?.[0]?.prices?.[0]?.currency_code || 'USD';
+            const code = selectedVariant?.price_sets?.[0]?.prices?.[0]?.currency_code || 'aud';
             let symbol = '';
             switch (code) {
                 case 'usd': symbol = '$'; break;
@@ -137,7 +186,7 @@ function Shutters_customization(props) {
         const basePrice = calculateBasePrice();
         const area = measurements.width * measurements.height;
         const newTotalPrice = Math.round(basePrice * area);
-        setTotalPrice(newTotalPrice);
+        // setTotalPrice(newTotalPrice);
         
     }, [selectedColor, productData?.variants, measurements.width, measurements.height]);
 
@@ -233,13 +282,14 @@ function Shutters_customization(props) {
                     <h2 className="text-lg">Enter Measurements</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
-                <Measurement measurements={measurements} setMeasurements={setMeasurements} />
+                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} />
                 {productData?.options?.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate/>
                         <SelectColor 
                             data={option} 
                             title={'Colour'}
+                            colorsType={'shutter'}
                             description={'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.'}
                             onColorSelect={setSelectedColor} 
                             selectedColor={selectedColor}

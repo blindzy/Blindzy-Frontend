@@ -102,7 +102,7 @@ const productOptions = [
 function Single_curtain_customization(props) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
-    const [measurements, setMeasurements] = useState({ roomName: '', width: 2, height: 1 });
+    const [measurements, setMeasurements] = useState({ roomName: '', width: 1000, height: 3000 });
     const [selectedColor, setSelectedColor] = useState('');
     const [totalPrice, setTotalPrice] = useState(0);
     const [currencySymbol, setCurrencySymbol] = useState('');
@@ -175,7 +175,7 @@ function Single_curtain_customization(props) {
                 variant => variant.title === selectedColor || 
                         variant.options.some(opt => opt.value === selectedColor)
             );
-            const code = selectedVariant?.price_sets?.[0]?.prices?.[0]?.currency_code || 'USD';
+            const code = selectedVariant?.price_sets?.[0]?.prices?.[0]?.currency_code || 'aud';
             let symbol = '';
             switch (code) {
                 case 'usd': symbol = '$'; break;
@@ -192,23 +192,60 @@ function Single_curtain_customization(props) {
         return 0;
     };
 
+    // useEffect(() => {
+    //     // Update color in data array
+    //     setData(prev => 
+    //         prev.map(item => 
+    //             item.title === 'Colour' 
+    //                 ? { ...item, value: selectedColor }
+    //                 : item
+    //         )
+    //     );
+        
+    //     // Calculate total price based on area
+    //     const basePrice = calculateBasePrice();
+    //     console.log('Base Price:', basePrice);
+    //     const area = measurements.width * measurements.height;
+    //     const newTotalPrice = Math.round(basePrice * area);
+    //     setTotalPrice(newTotalPrice);
+        
+    // }, [selectedColor, productData?.variants, measurements.width, measurements.height]);
+
     useEffect(() => {
         // Update color in data array
-        setData(prev => 
-            prev.map(item => 
-                item.title === 'Colour' 
+        setData(prev =>
+            prev.map(item =>
+                item.title === 'Colour'
                     ? { ...item, value: selectedColor }
                     : item
             )
         );
-        
-        // Calculate total price based on area
-        const basePrice = calculateBasePrice();
-        const area = measurements.width * measurements.height;
-        const newTotalPrice = Math.round(basePrice * area);
+
+        const basePrice = calculateBasePrice(); 
+        // basePrice = price per metre width (up to 3m drop)
+
+        // Convert mm → metres
+        const widthM = measurements.width / 1000;   // e.g. 600 → 0.6m
+        const heightM = measurements.height / 1000; // e.g. 1200 → 1.2m
+
+        // Height blocks of 3 metres
+        const heightBlocks = Math.ceil(heightM / 3);
+
+        // Client pricing formula
+        const newTotalPrice = Math.round(
+            basePrice * widthM * heightBlocks
+        );
+
         setTotalPrice(newTotalPrice);
-        
-    }, [selectedColor, productData?.variants, measurements.width, measurements.height]);
+
+    }, [
+        selectedColor,
+        productData?.variants,
+        measurements.width,
+        measurements.height
+    ]);
+
+
     
     useEffect(() => {
         const userDataString = localStorage.getItem("user");
@@ -301,7 +338,7 @@ function Single_curtain_customization(props) {
                     <h2 className="text-lg">Enter Measurements</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
-                <Measurement measurements={measurements} setMeasurements={setMeasurements} />
+                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={1000} widthMax={3000} heightMin={3000} heightMax={15000} />
                 {productData?.options?.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate/>

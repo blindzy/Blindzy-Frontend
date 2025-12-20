@@ -3,10 +3,7 @@ import { RadioGroup, RadioGroupItem } from "@lib/components/ui/radio-group";
 
 
 function SelectColor(props) {
-    const [colorsImage, setColorsImage] = useState({
-        ash: "/images/product-colors-image/ash.jpg",
-        chalk: "/images/product-colors-image/chalk.jpg",
-    });
+    
     const [selected, setSelected] = useState(props.selectedColor || '');
 
     const handleColorChange = (value) => {
@@ -39,19 +36,51 @@ function SelectColor(props) {
                                     style={{ backgroundColor: color.color ? color.color : 'transparent' }}
                                 />
                             ) : (
-                                <img
-                                    src={
-                                        color.value && (
-                                            props.colorsImage ? (
-                                                props.colorsImage[(color.value.replace(/\s+/g, '')).toLowerCase()] && props.colorsImage[(color.value.replace(/\s+/g, '')).toLowerCase()]
-                                            ) : (
-                                                colorsImage[(color.value.replace(/\s+/g, '')).toLowerCase()] && colorsImage[(color.value.replace(/\s+/g, '')).toLowerCase()]
+                                props.colorsType === 'shutter' ?(
+                                    <div className=" size-full rounded-[12px] sm:rounded-[14px] xl:rounded-[16px] border border-[--lightGrey] overflow-hidden"
+                                        style={{ backgroundColor: color.value ? color.value : 'transparent' }}
+                                    />
+                                ) : props.colorsImage ? (
+                                    <img
+                                        src={
+                                            color.value && (
+                                                props.colorsImage[color.value.toLowerCase()]
                                             )
-                                        )
-                                    }
-                                    className="size-full object-cover rounded-[12px] sm:rounded-[14px] xl:rounded-[16px] overflow-hidden"
-                                    alt={color.value}
-                                />
+                                        }
+                                        className="size-full object-cover rounded-[12px] sm:rounded-[14px] xl:rounded-[16px] overflow-hidden"
+                                        alt={color.value}
+                                    />
+                                    
+                                ) : props.colorsType === 'blind' ? (
+
+                                    <img
+                                        src={
+                                            color.value && (
+                                                `/images/product-colors-image/blinds-fabric/${color.value.split('-')[0].toLowerCase()}/${(color.value.toLowerCase())}.jpg`
+                                                // props.colorsType === 'blind' ? (
+                                                // ) : (
+                                                //     `/images/product-colors-image/blinds-fabric/screen-blind/${(color.value.toLowerCase())}.jpg`
+                                                // )
+                                            )
+                                        }
+                                        className="size-full object-cover rounded-[12px] sm:rounded-[14px] xl:rounded-[16px] overflow-hidden"
+                                        alt={color.value}
+                                    />
+                                ):(
+                                    <img
+                                        src={
+                                            color.value && (
+                                                // props.colorsType === 'blind' ? (
+                                                //     `/images/product-colors-image/blinds-fabric/${color.value.split('-')[0].toLowerCase()}/${(color.value.toLowerCase())}.jpg`
+                                                // ) : (
+                                                // )
+                                                `/images/product-colors-image/blinds-fabric/screen-blind/${(color.value.toLowerCase())}.jpg`
+                                            )
+                                        }
+                                        className="size-full object-cover rounded-[12px] sm:rounded-[14px] xl:rounded-[16px] overflow-hidden"
+                                        alt={color.value}
+                                    />
+                                )
                             )}
                         </label>
                     </div>

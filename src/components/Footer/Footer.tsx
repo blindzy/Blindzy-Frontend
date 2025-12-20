@@ -50,11 +50,10 @@ function Footer() {
                     </div>
                     <div className="w-full flex flex-col gap-3 text-black">
                         <h6 className="xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal ">CATEGORIES</h6>
-                        <a href="/shop" className="text-sm hover:text-primary">CHAIRS</a>
-                        <a href="/shop" className="text-sm hover:text-primary">WORKSTATION DESKS</a>
-                        <a href="/shop" className="text-sm hover:text-primary">TABLES</a>
-                        <a href="/shop" className="text-sm hover:text-primary">ACCESSORIES</a>
-                        <a href="/shop" className="text-sm hover:text-primary">OTHERS</a>
+                        <a href="/curtains/single" className="text-sm hover:text-primary">curtains</a>
+                        <a href="/blinds/single" className="text-sm hover:text-primary">Roller Blinds</a>
+                        <a href="/blinds/vertical" className="text-sm hover:text-primary">Vertical Blinds</a>
+                        <a href="/blinds/double" className="text-sm hover:text-primary">Double Roller Blinds</a>
                     </div>
                     <div className="flex sm:flex-col items-center gap-2 shrink-0">
                         <Icon icon="uil:plus" className="text-[18px] text-black" />
