@@ -408,13 +408,7 @@ function Double_blind_customization(props) {
                     <h2 className="text-xl">Double Roller BLINDS Customisations</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
-                <Separate />
-                <div className="w-full flex flex-col gap-2">
-                    <h2 className="text-lg">Enter Measurements</h2>
-                    <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
-                </div>
-                {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
-                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={Math.min(...widthValues)} widthMax={Math.max(...widthValues)} heightMin={Math.min(...dropValues)} heightMax={Math.max(...dropValues)} />
+
                 {setupOptions.map((option, index) => (
                     <React.Fragment key={`option-${index}`}>
                         <Separate />
@@ -429,6 +423,13 @@ function Double_blind_customization(props) {
                     <h4 className="text-xl text-[--Black]">
                         Blockout Options
                     </h4>
+                    <Separate />
+                    <div className="w-full flex flex-col gap-2">
+                        <h2 className="text-lg">Enter Measurements</h2>
+                        <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
+                    </div>
+                    {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
+                    <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={Math.min(...widthValues)} widthMax={Math.max(...widthValues)} heightMin={Math.min(...dropValues)} heightMax={Math.max(...dropValues)} />
                     {productData?.options?.map((option, index) => {
                         const filteredOption = {
                             ...option,
@@ -465,6 +466,13 @@ function Double_blind_customization(props) {
                     <h4 className="text-xl text-[--Black]">
                         Sheer Options
                     </h4>
+                    <Separate />
+                    <div className="w-full flex flex-col gap-2">
+                        <h2 className="text-lg">Enter Measurements</h2>
+                        <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
+                    </div>
+                    {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
+                    <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={Math.min(...widthValues)} widthMax={Math.max(...widthValues)} heightMin={Math.min(...dropValues)} heightMax={Math.max(...dropValues)} />
                     {productData?.options?.map((option, index) => {
                         const lastValue = option.values?.[option.values.length - 1];
 
