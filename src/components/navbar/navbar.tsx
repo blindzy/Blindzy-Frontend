@@ -61,10 +61,10 @@ function Navbar(props: NavbarProps) {
                     Name : 'Roller Blinds',
                     Link : '/blinds/single'
                 },
-                {
-                    Name : 'Vertical Blinds',
-                    Link : '/blinds/vertical'
-                },
+                // {
+                //     Name : 'Vertical Blinds',
+                //     Link : '/blinds/vertical'
+                // },
                 {
                     Name : 'Double Roller Blinds',
                     Link : '/blinds/double'

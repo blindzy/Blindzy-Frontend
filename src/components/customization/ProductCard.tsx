@@ -31,7 +31,7 @@ function ProductCard({productData, customizationData, totalPrice}) {
                         option.value ? (
                             <div className="w-full flex items-center justify-between" key={index}>
                                 <p className="text-sm">{option.title}</p>
-                                <p className="text-sm">{(option.value).replace(/-/g, ' ')}</p>
+                                <p className="text-sm">{(option.value)}</p>
                             </div>
                         ) : null
                     ))}

@@ -74,7 +74,7 @@ function ProductComponent(props) {
                     )}
                 </div> */}
                 <div className="flex items-stretch gap-2 overflow-hidden">
-                    {colorOption?.values?.slice(0, 4).map((color, index) => {
+                    {/* {colorOption?.values?.slice(0, 4).map((color, index) => {
 
                         if (props.customizePage === "shutters") {
                             return (
@@ -130,7 +130,7 @@ function ProductComponent(props) {
                         <span className="text-sm text-[--black] self-center">
                         +{colorOption.values.length - 4} More
                         </span>
-                    )}
+                    )} */}
                 </div>
 
 

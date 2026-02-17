@@ -1,10 +1,10 @@
 import React from "react";
 import { Label } from "@lib/components/ui/label";
 function Measurement({ measurements, setMeasurements,widthMin,widthMax,heightMin,heightMax }) {
-    const WIDTH_MIN = widthMin || 600;
-    const WIDTH_MAX = widthMax || 3000;
-    const HEIGHT_MIN = heightMin || 1200;
-    const HEIGHT_MAX = heightMax || 3000;
+    const WIDTH_MIN = widthMin;
+    const WIDTH_MAX = widthMax;
+    const HEIGHT_MIN = heightMin;
+    const HEIGHT_MAX = heightMax;
 
     const widthNum = measurements.width === '' ? NaN : Number(measurements.width);
     const heightNum = measurements.height === '' ? NaN : Number(measurements.height);

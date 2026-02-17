@@ -8,7 +8,7 @@ function SelectVarient(props) {
     const optionData = props.variantData;
     const options = optionData?.title || [];
     const optionTitle = optionData?.title || 'Select Option';
-    const optionDescription = optionData?.description || 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.';
+    const optionDescription = optionData?.description || '';
     
     const [selected, setSelected] = useState(props.selectedValue || options[0]?.label || 'option-one');
 
@@ -38,7 +38,7 @@ function SelectVarient(props) {
         <div className="w-full flex flex-col gap-6 xl:gap-[1.25vw]">
             <div className="w-full flex flex-col gap-2">
                 <h2 className="text-lg">Choose Your {optionTitle}</h2>
-                <p className="text-sm">{optionDescription}</p>
+                {optionDescription === '' ? null : <p className="text-sm">{optionDescription}</p>}
             </div>
             <RadioGroup className="w-full flex xl:flex-nowrap flex-wrap items-stretch gap-2" value={props.selectedValue || selected} onValueChange={handleSelectionChange}>
                 {optionData.values.map((option, index) => (
