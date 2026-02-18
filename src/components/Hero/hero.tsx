@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import { useEffect } from "react";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { Button } from "@lib/components/ui/button";
 import Navbar from "@components/navbar/navbar";
@@ -11,29 +11,29 @@ function Hero() {
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1150;
 	const lenis = isDesktop ? useLenis() : null;
 
-	// useEffect(() => {
-	// 	gsap.registerPlugin(ScrollTrigger);
-	// 	if(window.innerWidth  > 1150){
-	// 		ScrollTrigger.normalizeScroll(true);
-	// 	}
+	useEffect(() => {
+		gsap.registerPlugin(ScrollTrigger);
+		if (window.innerWidth > 1150) {
+			ScrollTrigger.normalizeScroll(true);
+		}
 
-	// 	// If using Lenis, connect it with GSAP
-	// 	if (lenis) {
-	// 		lenis.on('scroll', ScrollTrigger.update);
-	// 	}
+		// If using Lenis, connect it with GSAP
+		if (lenis) {
+			lenis.on('scroll', ScrollTrigger.update);
+		}
 
-	// 	gsap.to("#hero", {
-	// 	    scrollTrigger: {
-	// 	        trigger: ".hero-content",
-	// 	        start: "top top",
-	// 	        end: "center top",
-	// 	        scrub: 1,
-	// 	    },
-	// 	    scale: 0.95,
-	// 	    borderRadius: "60px",
-	// 	    duration: 0.1,
-	// 	});
-	// }, [lenis]);
+		gsap.to("#hero", {
+			scrollTrigger: {
+				trigger: ".hero-content",
+				start: "top top",
+				end: "center top",
+				scrub: 1,
+			},
+			scale: 0.95,
+			borderRadius: "60px",
+			duration: 0.1,
+		});
+	}, [lenis]);
 
 	return (
 		<section className="hero-section w-screen h-screen overflow-hidden" id="hero">
