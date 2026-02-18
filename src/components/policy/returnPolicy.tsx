@@ -1,24 +1,24 @@
 ﻿import React, { useEffect } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 
 function ReturnPolicy() {
-	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
-	const lenis = isDesktop ? useLenis() : null;
+    const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
+    const lenis = isDesktop ? useLenis() : null;
 
-	useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-		ScrollTrigger.normalizeScroll(true);
+    // useEffect(() => {
+    //     gsap.registerPlugin(ScrollTrigger);
+    // 	ScrollTrigger.normalizeScroll(true);
 
-		// If using Lenis, connect it with GSAP
-		if (lenis) {
-			lenis.on('scroll', ScrollTrigger.update);
-		}
-	}, [lenis]);
-    
+    // 	// If using Lenis, connect it with GSAP
+    // 	if (lenis) {
+    // 		lenis.on('scroll', ScrollTrigger.update);
+    // 	}
+    // }, [lenis]);
 
-	return (
+
+    return (
         <div className="relative w-screen flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-2 xl:pt-0 sm:pt-0 pt-0 overflow-hidden" id="returnPolicy">
             <div className="w-full border border-[--Black] p-4 text-center rounded-[48px]">
                 <h1 className="text-1xl text-black uppercase">RETURN POLICY</h1>
@@ -35,7 +35,7 @@ function ReturnPolicy() {
                         <ul className="list">
                             <li>Contact Information: Name, email address, phone number, and mailing address.</li>
                             <li>Service Information: Details about the products and services you request, including specifications, installation details, and any preferences you may have.
-                            Payment Information: Credit card numbers and billing information when you make a purchase or pay for services.</li>
+                                Payment Information: Credit card numbers and billing information when you make a purchase or pay for services.</li>
                         </ul>
                     </div>
                     <div className="flex flex-col gap-2">
@@ -93,7 +93,7 @@ function ReturnPolicy() {
                 </div>
             </div>
         </div>
-	);
+    );
 }
 
 export default ReturnPolicy;

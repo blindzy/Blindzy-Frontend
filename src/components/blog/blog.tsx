@@ -1,11 +1,10 @@
 import * as React from "react";
-import { useEffect,  useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { useEffect, useState } from "react";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { Plus } from 'lucide-react';
 import { Button } from "@lib/components/ui/button";
-import { set } from "astro/zod";
 // import ReactMarkdown from 'react-markdown';
 
 // Define the blog item interface
@@ -27,18 +26,18 @@ function Blog(props) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1150;
     const lenis = isDesktop ? useLenis() : null;
 
-    useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-        if (window.innerWidth > 1150) {
-            ScrollTrigger.normalizeScroll(true);
-        }
+    // useEffect(() => {
+    //     gsap.registerPlugin(ScrollTrigger);
+    //     if (window.innerWidth > 1150) {
+    //         ScrollTrigger.normalizeScroll(true);
+    //     }
 
-        // If using Lenis, connect it with GSAP
-        if (lenis) {
-            lenis.on('scroll', ScrollTrigger.update);
-        }
+    //     // If using Lenis, connect it with GSAP
+    //     if (lenis) {
+    //         lenis.on('scroll', ScrollTrigger.update);
+    //     }
 
-    }, [lenis]);
+    // }, [lenis]);
 
     useEffect(() => {
         filterData();
@@ -51,7 +50,7 @@ function Blog(props) {
             setType(newStep);
         }, 300);
     };
-    
+
     function toShortDate(date) {
         if (!(date instanceof Date)) {
             date = new Date(date);
@@ -67,34 +66,34 @@ function Blog(props) {
 
         return `${day} ${month}, ${year}`;
     }
-    
+
     const filterData = () => {
         let filtered = props.data || [];
 
         if (searchTerm) {
             filtered = filtered.filter(item =>
-            item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            item.description.toLowerCase().includes(searchTerm.toLowerCase())
+                item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                item.description.toLowerCase().includes(searchTerm.toLowerCase())
             );
         }
 
         switch (type) {
             case 2: // Blinds
-            filtered = filtered.filter(item => item.category?.toLowerCase() === "blinds");
-            break;
+                filtered = filtered.filter(item => item.category?.toLowerCase() === "blinds");
+                break;
             case 3: // Curtains
-            filtered = filtered.filter(item => item.category?.toLowerCase() === "curtains");
-            break;
+                filtered = filtered.filter(item => item.category?.toLowerCase() === "curtains");
+                break;
             case 4: // Shutters
-            filtered = filtered.filter(item => item.category?.toLowerCase() === "shutters");
-            break;
+                filtered = filtered.filter(item => item.category?.toLowerCase() === "shutters");
+                break;
             default: // all
-            break;
+                break;
         }
 
-  filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
-  setFilteredData(filtered);
-};
+        filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+        setFilteredData(filtered);
+    };
 
 
     return (

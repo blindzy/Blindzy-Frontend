@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import SelectColor from "./selectColor";
 import SelectGroupColor from "./selectgroupColor";
@@ -228,13 +228,13 @@ function Double_blind_customization(props) {
         setTotalPrice(price);
     }, [measurements.width, measurements.height, blackoutGroup, screenGroup]);
 
-    useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
+    // useEffect(() => {
+    //     gsap.registerPlugin(ScrollTrigger);
 
-        if (lenis) {
-            lenis.on('scroll', ScrollTrigger.update);
-        }
-    }, [lenis]);
+    //     if (lenis) {
+    //         lenis.on('scroll', ScrollTrigger.update);
+    //     }
+    // }, [lenis]);
 
     // Handle option selection updates
     const handleOptionChange = (optionTitle, value) => {

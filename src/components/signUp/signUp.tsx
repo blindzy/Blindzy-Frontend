@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Icon } from '@iconify/react';
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { signup } from '../../services/auth/signup';
 import { Input } from '@lib/components/ui/input';
@@ -29,14 +29,14 @@ function SignUp() {
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
 	const lenis = isDesktop ? useLenis() : null;
 
-	useEffect(() => {
-		gsap.registerPlugin(ScrollTrigger);
-		ScrollTrigger.normalizeScroll(true);
-		if (lenis) {
-			lenis.on('scroll', ScrollTrigger.update);
-		}
+	// useEffect(() => {
+	// 	gsap.registerPlugin(ScrollTrigger);
+	// 	ScrollTrigger.normalizeScroll(true);
+	// 	if (lenis) {
+	// 		lenis.on('scroll', ScrollTrigger.update);
+	// 	}
 
-	}, [lenis]);
+	// }, [lenis]);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const fieldName = e.target.name;

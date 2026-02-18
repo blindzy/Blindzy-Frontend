@@ -1,26 +1,26 @@
 ﻿import * as React from "react";
 import { useEffect, } from "react";
 import { Icon } from '@iconify/react';
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import BlogContent from "./blog-content";
 
 function BlogDetail(props) {
-	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
-	const lenis = isDesktop ? useLenis() : null;
+    const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
+    const lenis = isDesktop ? useLenis() : null;
 
-	useEffect(() => {
-        if (!isDesktop) return;
-        gsap.registerPlugin(ScrollTrigger);
-		ScrollTrigger.normalizeScroll(true);
+    // useEffect(() => {
+    //     if (!isDesktop) return;
+    //     gsap.registerPlugin(ScrollTrigger);
+    // 	ScrollTrigger.normalizeScroll(true);
 
-		if (lenis) {
-			lenis.on('scroll', ScrollTrigger.update);
-		}
-	}, [lenis, isDesktop]);
-    
-    
+    // 	if (lenis) {
+    // 		lenis.on('scroll', ScrollTrigger.update);
+    // 	}
+    // }, [lenis, isDesktop]);
+
+
     function toShortDate(date) {
         if (!(date instanceof Date)) {
             date = new Date(date);
@@ -37,9 +37,9 @@ function BlogDetail(props) {
         return `${day} ${month}, ${year}`;
     }
 
-	return (
+    return (
         <div className="relative w-screen min-h-screen flex xl:flex-row flex-col items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 xl:pt-0 sm:pt-0 pt-0 overflow-hidden" id="blogDetail">
-            
+
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:p-6 sm:gap-[2.344vw] gap-4 text-black">
                 <div className="w-full flex items-center justify-between">
                     <h3 className="text-xxxl uppercase font-black font-plus">{props.data.title}</h3>
@@ -72,7 +72,7 @@ function BlogDetail(props) {
                 </div>
             )}
         </div>
-	);
+    );
 }
 
 export default BlogDetail;

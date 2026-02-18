@@ -1,28 +1,28 @@
-﻿import React, { useEffect , useState, useMemo} from "react";
+﻿import React, { useEffect, useState, useMemo } from "react";
 import { Icon } from '@iconify/react';
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 
 
 function Showroom(props) {
-	const [type, setType] = useState(1);
+    const [type, setType] = useState(1);
     const [show, setShow] = useState(true);
     const [filteredData, setFilteredData] = useState(props.data || []);
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1150;
-	const lenis = isDesktop ? useLenis() : null;
+    const lenis = isDesktop ? useLenis() : null;
 
-	useEffect(() => {
-		gsap.registerPlugin(ScrollTrigger);
-		if(window.innerWidth  > 1150){
-			ScrollTrigger.normalizeScroll(true);
-		}
+    // useEffect(() => {
+    // 	gsap.registerPlugin(ScrollTrigger);
+    // 	if(window.innerWidth  > 1150){
+    // 		ScrollTrigger.normalizeScroll(true);
+    // 	}
 
-		if (lenis) {
-			lenis.on('scroll', ScrollTrigger.update);
-		}
+    // 	if (lenis) {
+    // 		lenis.on('scroll', ScrollTrigger.update);
+    // 	}
 
-	}, [lenis]);
+    // }, [lenis]);
 
     const changeCategory = (newStep) => {
         setShow(false);
@@ -31,7 +31,7 @@ function Showroom(props) {
             setType(newStep);
         }, 300);
     };
-     
+
     useEffect(() => {
         filterData();
     }, [type, props.data]);
@@ -42,24 +42,24 @@ function Showroom(props) {
 
         switch (type) {
             case 2: // Blinds
-            filtered = filtered.filter(item => item.category?.toLowerCase() === "blinds");
-            break;
+                filtered = filtered.filter(item => item.category?.toLowerCase() === "blinds");
+                break;
             case 3: // Curtains
-            filtered = filtered.filter(item => item.category?.toLowerCase() === "curtains");
-            break;
+                filtered = filtered.filter(item => item.category?.toLowerCase() === "curtains");
+                break;
             case 4: // Shutters
-            filtered = filtered.filter(item => item.category?.toLowerCase() === "shutters");
-            break;
+                filtered = filtered.filter(item => item.category?.toLowerCase() === "shutters");
+                break;
             default: // all
-            break;
+                break;
         }
 
         filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         setFilteredData(filtered);
     };
-    
 
-	return (
+
+    return (
         <div className="relative w-screen flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-2 xl:pt-0 sm:pt-0 pt-0 overflow-hidden" id="showroom">
             <div className="w-full border border-[--Black] p-4 text-center xl:rounded-[2.5vw] sm:rounded-[4.688vw] rounded-[15px]">
                 <h1 className="text-1xl text-black uppercase">Showroom</h1>
@@ -101,9 +101,9 @@ function Showroom(props) {
                         key={item.id}
                         className="sm:col-span-4 col-span-6 rounded-48 overflow-hidden"
                     >
-                        <img 
-                            src={item.image && `https://strapi.blindzy.com${item.image.url}`} 
-                            className="w-full object-cover" 
+                        <img
+                            src={item.image && `https://strapi.blindzy.com${item.image.url}`}
+                            className="w-full object-cover"
                             alt={`showroom-${item.id}`}
                             loading="lazy"
                         />
@@ -154,7 +154,7 @@ function Showroom(props) {
                 </ul>
             )} */}
         </div>
-	);
+    );
 }
 
 export default Showroom;

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import SelectColor from "./selectColor";
 import SelectVarient from "./selectVarient";
@@ -19,8 +19,8 @@ const setupOptions = [
         title: 'Setup',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: 'Blockout in Front', image: '/images/custom/blockout-front.png' },
-          { label: 'Sheer in Front', image: '/images/custom/sheer-front.png' },
+            { label: 'Blockout in Front', image: '/images/custom/blockout-front.png' },
+            { label: 'Sheer in Front', image: '/images/custom/sheer-front.png' },
         ]
     },
 ]
@@ -45,9 +45,9 @@ const blockoutOptions = [
         title: 'Blockout Curtain Style',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: 'S Fold', image: '/images/custom/s-fold.jpg' },
-          { label: 'Triple Pinch Pleat', image: '/images/custom/pinch.jpg' },
-          { label: 'Pencil Pleat', image: '/images/custom/pencil-pleat.jpg' },
+            { label: 'S Fold', image: '/images/custom/s-fold.jpg' },
+            { label: 'Triple Pinch Pleat', image: '/images/custom/pinch.jpg' },
+            { label: 'Pencil Pleat', image: '/images/custom/pencil-pleat.jpg' },
         ]
     },
     {
@@ -55,20 +55,20 @@ const blockoutOptions = [
         title: 'Blockout Hem',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: '70mm Hem', image: '/images/custom/70mm.png' },
+            { label: '70mm Hem', image: '/images/custom/70mm.png' },
         ]
     },
 ]
 const sheerOptions = [
-    
+
     {
         id: 1,
         title: 'Sheer Curtain Style',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: 'S Fold', image: '/images/custom/s-fold.jpg' },
-          { label: 'Triple Pinch Pleat', image: '/images/custom/pinch.jpg' },
-          { label: 'Pencil Pleat', image: '/images/custom/pencil-pleat.jpg' },
+            { label: 'S Fold', image: '/images/custom/s-fold.jpg' },
+            { label: 'Triple Pinch Pleat', image: '/images/custom/pinch.jpg' },
+            { label: 'Pencil Pleat', image: '/images/custom/pencil-pleat.jpg' },
         ]
     },
     {
@@ -76,8 +76,8 @@ const sheerOptions = [
         title: 'Sheer Hem',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: 'Lead Weight', image: '/images/custom/lead-weight.png' },
-          { label: '70mm Hem', image: '/images/custom/70mm.png' },
+            { label: 'Lead Weight', image: '/images/custom/lead-weight.png' },
+            { label: '70mm Hem', image: '/images/custom/70mm.png' },
         ]
     },
 ]
@@ -87,8 +87,8 @@ const productOptions = [
         title: 'Fitting Type',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: 'Left', image: '/images/custom/fitting-left.jpg' },
-          { label: 'Right', image: '/images/custom/fitting-right.jpg' },
+            { label: 'Left', image: '/images/custom/fitting-left.jpg' },
+            { label: 'Right', image: '/images/custom/fitting-right.jpg' },
         ]
     },
     {
@@ -96,8 +96,8 @@ const productOptions = [
         title: 'Select Fit',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
-          { label: 'Fit', image: '/images/custom/fit.jpg' },
-          { label: 'Recess', image: '/images/custom/racess.jpg' },
+            { label: 'Fit', image: '/images/custom/fit.jpg' },
+            { label: 'Recess', image: '/images/custom/racess.jpg' },
         ]
     },
     {
@@ -105,8 +105,8 @@ const productOptions = [
         title: 'Track Type',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: 'Designer', image: '/images/custom/designer.png' },
-          { label: 'Residential', image: '/images/custom/residential.png' },
+            { label: 'Designer', image: '/images/custom/designer.png' },
+            { label: 'Residential', image: '/images/custom/residential.png' },
         ]
     },
     {
@@ -114,9 +114,9 @@ const productOptions = [
         title: 'Curtain Stack',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
-          { label: 'Left Stack', image: '/images/custom/left-stack.jpg' },
-          { label: 'Right Stack', image: '/images/custom/right-stack.jpg' },
-          { label: 'Centre Opening', image: '/images/custom/center-opening.jpg' },
+            { label: 'Left Stack', image: '/images/custom/left-stack.jpg' },
+            { label: 'Right Stack', image: '/images/custom/right-stack.jpg' },
+            { label: 'Centre Opening', image: '/images/custom/center-opening.jpg' },
         ]
     },
     {
@@ -124,9 +124,9 @@ const productOptions = [
         title: 'Wand Length',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: '910mm', image: '/images/custom/wand-length.png' },
-          { label: '1220mm', image: '/images/custom/wand-length.png' },
-          { label: '1520mm', image: '/images/custom/wand-length.png' },
+            { label: '910mm', image: '/images/custom/wand-length.png' },
+            { label: '1220mm', image: '/images/custom/wand-length.png' },
+            { label: '1520mm', image: '/images/custom/wand-length.png' },
         ]
     },
     {
@@ -134,18 +134,18 @@ const productOptions = [
         title: 'Track Colour',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
-          { label: 'White', image: '/images/custom/track-white.png' },
-          { label: 'Black', image: '/images/custom/track-black.png' },
+            { label: 'White', image: '/images/custom/track-white.png' },
+            { label: 'Black', image: '/images/custom/track-black.png' },
         ]
     },
 ]
 const blackoutColours = {
-    Calm : [
+    Calm: [
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EA', value: 'White', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EB', value: 'Ivory', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EF', value: 'Match to Sheer', },
     ],
-    Dream : [
+    Dream: [
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EA', value: 'Silver', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EB', value: 'Midnight', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EC', value: 'Dusk', },
@@ -153,7 +153,7 @@ const blackoutColours = {
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EE', value: 'Dawn', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EF', value: 'Match to Sheer', },
     ],
-    Cosmos : [
+    Cosmos: [
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EA', value: 'Ecru', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EB', value: 'Coal', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EC', value: 'Fossil', },
@@ -162,27 +162,27 @@ const blackoutColours = {
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EF', value: 'Hickory', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EG', value: 'Slate', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EH', value: 'Snow', },
-        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EI', value: 'Tahini', },  
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EI', value: 'Tahini', },
     ],
-    Eclipse : [
+    Eclipse: [
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EC', value: 'Saturn', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5ED', value: 'Aurora', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EE', value: 'Comet', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EF', value: 'Dusk', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EG', value: 'Erth', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EH', value: 'Halley', },
-        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EI', value: 'Luna', },   
-        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EK', value: 'Mars', },   
-        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EL', value: 'Mercury', },   
-        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EM', value: 'Nebula', },   
-        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EN', value: 'Neutron', },   
-        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EO', value: 'Pluto', },   
-        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EP', value: 'Twilight', },   
-        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5Eq', value: 'Venus', },   
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EI', value: 'Luna', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EK', value: 'Mars', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EL', value: 'Mercury', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EM', value: 'Nebula', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EN', value: 'Neutron', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EO', value: 'Pluto', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5EP', value: 'Twilight', },
+        { id: 'optval_01K6Z6D5B6166KXG3RQNVDQ5Eq', value: 'Venus', },
     ],
 }
 const sheerColours = {
-    Sierra : [
+    Sierra: [
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSG', value: 'Alabaster', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSH', value: 'Birch', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSI', value: 'Ebony', },
@@ -196,7 +196,7 @@ const sheerColours = {
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSQ', value: 'Mink', },
 
     ],
-    Cetalina : [
+    Cetalina: [
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSR', value: 'Ash', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSS', value: 'Black', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQST', value: 'Chalk', },
@@ -212,7 +212,7 @@ const sheerColours = {
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQTD', value: 'Thunder', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQTE', value: 'Storm', },
     ],
-    Bora : [
+    Bora: [
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSH', value: 'Basalt' },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSI', value: 'Coral' },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSJ', value: 'Grain' },
@@ -222,7 +222,7 @@ const sheerColours = {
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSN', value: 'White Heaven' },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQSO', value: 'Feather' },
     ],
-    Mojave : [
+    Mojave: [
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQTF', value: 'Asphalt', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQTG', value: 'Flax', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQTH', value: 'Mist', },
@@ -232,7 +232,7 @@ const sheerColours = {
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQTL', value: 'Sable', },
         { id: 'optval_01K6Z6D5B6166KXG3RQNVDQTM', value: 'Smoke', },
     ],
-    OakbankLien : [
+    OakbankLien: [
         { "id": "optval_01K6Z6D5B6166KXG3RQNVDQSP", "value": "Coast" },
         { "id": "optval_01K6Z6D5B6166KXG3RQNVDQSQ", "value": "Cosy" },
         { "id": "optval_01K6Z6D5B6166KXG3RQNVDQSR", "value": "Earth" },
@@ -265,31 +265,31 @@ function Double_curtain_customization(props) {
         last_name: string;
     };
     const [userData, setUserData] = useState<UserData | null>(null);
-    
+
     // Get available colors for selected fabric
     // const selectedBlackoutFabric = productData?.options?.[0]?.values?.find(fabric => fabric.label === blackoutFabric);
     // const blackoutColorOptions = selectedBlackoutFabric?.colors || blockoutOptions[0].values;
-    
+
     // const selectedSheerFabric = productData?.options?.[1]?.values?.find(fabric => fabric.label === sheerFabric);
     // const sheerColorOptions = selectedSheerFabric?.colors || sheerOptions[0].values;
-    
+
     const [data, setData] = useState([
-        {'title': 'Setup', 'value': ''},
-        {'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : ''},
-        {'title': 'Blackout Fabric', 'value': blackoutFabric},
-        {'title': 'Blackout Colour', 'value': blackoutColour},
-        {'title': 'Blockout Curtain Style', 'value': ''},
-        {'title': 'Blockout Hem', 'value': ''},
-        {'title': 'Sheer Fabric', 'value': sheerFabric},
-        {'title': 'Sheer Colour', 'value': sheerColour},
-        {'title': 'Sheer Curtain Style', 'value': ''},
-        {'title': 'Sheer Hem', 'value': ''},
-        {'title': 'Fitting Type', 'value': ''},
-        {'title': 'Select Fit', 'value': ''},
-        {'title': 'Track Type', 'value': ''},
-        {'title': 'Curtain Stack', 'value': ''},
-        {'title': 'Wand Length', 'value': ''},
-        {'title': 'Track Colour', 'value': ''},
+        { 'title': 'Setup', 'value': '' },
+        { 'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : '' },
+        { 'title': 'Blackout Fabric', 'value': blackoutFabric },
+        { 'title': 'Blackout Colour', 'value': blackoutColour },
+        { 'title': 'Blockout Curtain Style', 'value': '' },
+        { 'title': 'Blockout Hem', 'value': '' },
+        { 'title': 'Sheer Fabric', 'value': sheerFabric },
+        { 'title': 'Sheer Colour', 'value': sheerColour },
+        { 'title': 'Sheer Curtain Style', 'value': '' },
+        { 'title': 'Sheer Hem', 'value': '' },
+        { 'title': 'Fitting Type', 'value': '' },
+        { 'title': 'Select Fit', 'value': '' },
+        { 'title': 'Track Type', 'value': '' },
+        { 'title': 'Curtain Stack', 'value': '' },
+        { 'title': 'Wand Length', 'value': '' },
+        { 'title': 'Track Colour', 'value': '' },
     ]);
     const [blockoutColourData, setBlockoutColourData] = useState([{
         id: 'optgrp_01K6Z6D5B6166KXE3RGNVDQ5EN',
@@ -304,13 +304,13 @@ function Double_curtain_customization(props) {
         values: []
     }]);
 
-    useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
+    // useEffect(() => {
+    //     gsap.registerPlugin(ScrollTrigger);
 
-        // if (lenis) {
-        //     lenis.on('scroll', ScrollTrigger.update);
-        // }
-    }, [lenis]);
+    //     // if (lenis) {
+    //     //     lenis.on('scroll', ScrollTrigger.update);
+    //     // }
+    // }, [lenis]);
 
     useEffect(() => {
         if (productData?.options?.[0]?.values?.[0]?.value && !selectedColor) {
@@ -329,13 +329,13 @@ function Double_curtain_customization(props) {
             }
         }
     }, [productData]);
-    
-    
+
+
     // Handle option selection updates
     const handleOptionChange = (optionTitle, value) => {
-        setData(prev => 
-            prev.map(item => 
-                item.title === optionTitle 
+        setData(prev =>
+            prev.map(item =>
+                item.title === optionTitle
                     ? { ...item, value: value }
                     : item
             )
@@ -364,7 +364,7 @@ function Double_curtain_customization(props) {
         }
         return 0;
     };
-    
+
     useEffect(() => {
         if (blackoutFabric) {
             if (blackoutColours[blackoutFabric]) {
@@ -398,21 +398,21 @@ function Double_curtain_customization(props) {
         }
     }, [sheerFabric]);
 
-    
+
 
     // Update color in data array when selectedColor changes
     useEffect(() => {
-        setData(prev => 
-            prev.map(item => 
+        setData(prev =>
+            prev.map(item =>
                 item.title === 'Blackout Fabric'
-                ? { ...item, value: blackoutFabric }
-                : item.title === 'Blackout Colour'
-                ? { ...item, value: blackoutColour }
-                : item.title === 'Sheer Fabric'
-                ? { ...item, value: sheerFabric }
-                : item.title === 'Sheer Colour'
-                ? { ...item, value: sheerColour }
-                : item
+                    ? { ...item, value: blackoutFabric }
+                    : item.title === 'Blackout Colour'
+                        ? { ...item, value: blackoutColour }
+                        : item.title === 'Sheer Fabric'
+                            ? { ...item, value: sheerFabric }
+                            : item.title === 'Sheer Colour'
+                                ? { ...item, value: sheerColour }
+                                : item
             )
         );
         // Calculate total price based on area
@@ -420,7 +420,7 @@ function Double_curtain_customization(props) {
         const area = measurements.width * measurements.height;
         const newTotalPrice = Math.round(basePrice * area);
         setTotalPrice(newTotalPrice);
-    }, [blackoutFabric,blackoutColour,sheerFabric,sheerColour, productData?.variants, measurements.width, measurements.height]);
+    }, [blackoutFabric, blackoutColour, sheerFabric, sheerColour, productData?.variants, measurements.width, measurements.height]);
 
 
     useEffect(() => {
@@ -509,7 +509,7 @@ function Double_curtain_customization(props) {
                     <h2 className="text-xl">Double Curtains Customisations</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
-                <Separate/>
+                <Separate />
                 <div className="w-full flex flex-col gap-2">
                     <h2 className="text-lg">Enter Measurements</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
@@ -517,10 +517,10 @@ function Double_curtain_customization(props) {
                 <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} />
                 {setupOptions.map((option, index) => (
                     <React.Fragment key={`option-${index}`}>
-                        <Separate/>
-                        <SelectVarient 
+                        <Separate />
+                        <SelectVarient
                             variantData={option}
-                            onSelectionChange={(value) => handleOptionChange(option.title, value)} 
+                            onSelectionChange={(value) => handleOptionChange(option.title, value)}
                             selectedValue={data.find(item => item.title === option.title)?.value}
                         />
                     </React.Fragment>
@@ -540,7 +540,7 @@ function Double_curtain_customization(props) {
                             />
                         </React.Fragment>
                     ))}
-                    {blackoutFabric !== '' &&blockoutColourData.map((option, index) => (
+                    {blackoutFabric !== '' && blockoutColourData.map((option, index) => (
                         <React.Fragment key={`color-${index}`}>
                             <Separate />
                             <SelectColor
@@ -553,9 +553,9 @@ function Double_curtain_customization(props) {
                     {blockoutOptions.map((option, index) => (
                         <React.Fragment key={`option-${index}`}>
                             <Separate />
-                            <SelectVarient 
+                            <SelectVarient
                                 variantData={option}
-                                onSelectionChange={(value) => handleOptionChange(option.title, value)} 
+                                onSelectionChange={(value) => handleOptionChange(option.title, value)}
                                 selectedValue={data.find(item => item.title === option.title)?.value}
                             />
                         </React.Fragment>
@@ -576,7 +576,7 @@ function Double_curtain_customization(props) {
                             />
                         </React.Fragment>
                     ))}
-                    
+
                     {sheerFabric !== '' && sheerColourData.map((option, index) => (
                         <React.Fragment key={`color-${index}`}>
                             <Separate />
@@ -587,13 +587,13 @@ function Double_curtain_customization(props) {
                             />
                         </React.Fragment>
                     ))}
-                    
+
                     {sheerOptions.map((option, index) => (
                         <React.Fragment key={`option-${index}`}>
                             <Separate />
-                            <SelectVarient 
+                            <SelectVarient
                                 variantData={option}
-                                onSelectionChange={(value) => handleOptionChange(option.title, value)} 
+                                onSelectionChange={(value) => handleOptionChange(option.title, value)}
                                 selectedValue={data.find(item => item.title === option.title)?.value}
                             />
                         </React.Fragment>
@@ -601,15 +601,15 @@ function Double_curtain_customization(props) {
                 </div>
                 {productOptions.map((option, index) => (
                     <React.Fragment key={`option-${index}`}>
-                        <Separate/>
-                        <SelectVarient 
+                        <Separate />
+                        <SelectVarient
                             variantData={option}
-                            onSelectionChange={(value) => handleOptionChange(option.title, value)} 
+                            onSelectionChange={(value) => handleOptionChange(option.title, value)}
                             selectedValue={data.find(item => item.title === option.title)?.value}
                         />
                     </React.Fragment>
                 ))}
-                <Separate/>
+                <Separate />
                 <div className="flex items-center justify-between">
                     <h5 className="text-lg">TOTAL PRICE</h5>
                     <h5 className="text-lg">
@@ -631,9 +631,9 @@ function Double_curtain_customization(props) {
                     <p className="p-3 rounded-lg bg-green-50 text-green-600 text-sm">{success}</p>
                 )}
                 <div className="flex items-center gap-4">
-                    <Button 
-                        variant={'primary'} 
-                        size={'large'} 
+                    <Button
+                        variant={'primary'}
+                        size={'large'}
                         className="w-full flex-1"
                         disabled={!measurementsChecked}
                         onClick={handleAddToCart}
@@ -645,7 +645,7 @@ function Double_curtain_customization(props) {
                     </Button> */}
                 </div>
             </div>
-            <ProductCard 
+            <ProductCard
                 productData={productData}
                 customizationData={data}
                 totalPrice={`${currencySymbol}${addCommaToNumber(totalPrice)}`}

@@ -1,12 +1,12 @@
-﻿import React, { useEffect , useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+﻿import React, { useEffect, useState } from "react";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { Input } from '@lib/components/ui/input';
 import './css/style.css';
 import { Button } from "@lib/components/ui/button";
 import OrderListComponent from "./order-list";
-import {Select,SelectContent,SelectItem,SelectTrigger,SelectValue,} from "@lib/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue, } from "@lib/components/ui/select";
 import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 import { Loader2, Plus } from 'lucide-react';
 import Separate from "@components/separate";
@@ -22,7 +22,7 @@ function Checkout() {
 	const [show, setShow] = useState<boolean>(true);
 	const [loader, setLoader] = useState<boolean>(true);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	
+
 	const [shippingInfo, setShippingInfo] = useState({
 		// state: '',
 		country: '',
@@ -43,8 +43,8 @@ function Checkout() {
 	});
 	type UserData = {
 		id: string | number;
-        first_name: string;
-        last_name: string;
+		first_name: string;
+		last_name: string;
 		firstName?: string;
 		lastName?: string;
 		email?: string;
@@ -67,60 +67,60 @@ function Checkout() {
 	const [addressList, setAddressList] = useState('');
 	const [error, setError] = useState('');
 	const [orderList, setOrderList] = useState([
-			// {
-			//     id: 1,
-			//     title: "Product Name",
-			//     thumbnail: '/images/categories/1.png',
-			//     price: { amount: 150, currency_code: 'usd' },
-			//     options: [
-			//         { id: 1, name: "Color:", value: "Ash" },
-			//         { id: 2, name: "Size:", value: "24cm x 56cm" },
-			//         { id: 3, name: "Fit Type:", value: "Recess Fit" },
-			//         { id: 4, name: "Roll Direction:", value: "Front Roll" },
-			//         { id: 5, name: "Chain Colour:", value: "Silver" },
-			//         { id: 6, name: "Bracket Colour:", value: "Sandstone" },
-			//         { id: 7, name: "Base Rail Shape:", value: "Oval" },
-			//         { id: 8, name: "Base Rail Colour:", value: "Bone" },
-			//     ],
-			//     date: "2023-01-01",
-			//     status: "Shipped",
-			// },
-			// {
-			//     id: 2,
-			//     title: "Product 2",
-			//     thumbnail: '/images/categories/2.png',
-			//     price: { amount: 100, currency_code: 'usd' },
-			//     options: [
-			//         { id: 1, name: "Color:", value: "Ash" },
-			//         { id: 2, name: "Size:", value: "24cm x 56cm" },
-			//         { id: 3, name: "Fit Type:", value: "Recess Fit" },
-			//         { id: 4, name: "Roll Direction:", value: "Front Roll" },
-			//         { id: 5, name: "Chain Colour:", value: "Silver" },
-			//         { id: 6, name: "Bracket Colour:", value: "Sandstone" },
-			//         { id: 7, name: "Base Rail Shape:", value: "Oval" },
-			//         { id: 8, name: "Base Rail Colour:", value: "Bone" },
-			//     ],
-			//     date: "2023-01-02",
-			//     status: "Pending"
-			// }
+		// {
+		//     id: 1,
+		//     title: "Product Name",
+		//     thumbnail: '/images/categories/1.png',
+		//     price: { amount: 150, currency_code: 'usd' },
+		//     options: [
+		//         { id: 1, name: "Color:", value: "Ash" },
+		//         { id: 2, name: "Size:", value: "24cm x 56cm" },
+		//         { id: 3, name: "Fit Type:", value: "Recess Fit" },
+		//         { id: 4, name: "Roll Direction:", value: "Front Roll" },
+		//         { id: 5, name: "Chain Colour:", value: "Silver" },
+		//         { id: 6, name: "Bracket Colour:", value: "Sandstone" },
+		//         { id: 7, name: "Base Rail Shape:", value: "Oval" },
+		//         { id: 8, name: "Base Rail Colour:", value: "Bone" },
+		//     ],
+		//     date: "2023-01-01",
+		//     status: "Shipped",
+		// },
+		// {
+		//     id: 2,
+		//     title: "Product 2",
+		//     thumbnail: '/images/categories/2.png',
+		//     price: { amount: 100, currency_code: 'usd' },
+		//     options: [
+		//         { id: 1, name: "Color:", value: "Ash" },
+		//         { id: 2, name: "Size:", value: "24cm x 56cm" },
+		//         { id: 3, name: "Fit Type:", value: "Recess Fit" },
+		//         { id: 4, name: "Roll Direction:", value: "Front Roll" },
+		//         { id: 5, name: "Chain Colour:", value: "Silver" },
+		//         { id: 6, name: "Bracket Colour:", value: "Sandstone" },
+		//         { id: 7, name: "Base Rail Shape:", value: "Oval" },
+		//         { id: 8, name: "Base Rail Colour:", value: "Bone" },
+		//     ],
+		//     date: "2023-01-02",
+		//     status: "Pending"
+		// }
 	]);
 	const calculateTotalAmount = (items) => {
-        let total = 0;
-        let symbol = '';
-        
-        items.forEach(item => {
-            const itemAmount = (item.customizations?.amount || 0) * (item.quantity || 1);
-            total += itemAmount;
-            // Get currency symbol from first item (assuming all items have same currency)
-            if (!symbol && item.customizations?.currency) {
-                symbol = item.customizations.currency;
-            }
-        });
+		let total = 0;
+		let symbol = '';
 
-        setCurrencySymbol(symbol);
-        setTotalAmount(total);
-    };
-	
+		items.forEach(item => {
+			const itemAmount = (item.customizations?.amount || 0) * (item.quantity || 1);
+			total += itemAmount;
+			// Get currency symbol from first item (assuming all items have same currency)
+			if (!symbol && item.customizations?.currency) {
+				symbol = item.customizations.currency;
+			}
+		});
+
+		setCurrencySymbol(symbol);
+		setTotalAmount(total);
+	};
+
 	useEffect(() => {
 		const userDataString = localStorage.getItem("user");
 		if (!userDataString) {
@@ -151,7 +151,7 @@ function Checkout() {
 				endpoint: "/store/customers/addresses",
 				query: { email: userData.email },
 			});
-			if(data.addresses.length == 0){
+			if (data.addresses.length == 0) {
 				setAddressList("No addresses found");
 			}
 			setShippingInfo(prev => ({
@@ -167,12 +167,12 @@ function Checkout() {
 			console.error("Error fetching addresses:", error);
 		}
 	}
-	
+
 	useEffect(() => {
 		const getCart = async () => {
 			try {
 				if (!userData || !userData.email) {
-						console.error("User Data not found in localStorage");
+					console.error("User Data not found in localStorage");
 					return;
 				}
 				const data = await fetchMedusaApi<any>({
@@ -186,22 +186,22 @@ function Checkout() {
 				console.error("Error fetching cart:", error);
 			}
 		};
-		
+
 		getCart();
 		getAddress();
 	}, [userData]);
 
 	useEffect(() => {
-			calculateTotalAmount(orderList);
+		calculateTotalAmount(orderList);
 	}, [orderList]);
 
-	useEffect(() => {
-		gsap.registerPlugin(ScrollTrigger);
+	// useEffect(() => {
+	// 	gsap.registerPlugin(ScrollTrigger);
 
-		if (lenis) {
-			lenis.on('scroll', ScrollTrigger.update);
-		}
-	}, [lenis]);
+	// 	if (lenis) {
+	// 		lenis.on('scroll', ScrollTrigger.update);
+	// 	}
+	// }, [lenis]);
 
 	const handleCustomerInfoChange = (field: string, value: string) => {
 		setCustomerInfo(prev => ({
@@ -222,20 +222,20 @@ function Checkout() {
 		}));
 	};
 	const nextStep = async () => {
-		if(currentStep === 1){
-			if(!customerInfo.firstName || !customerInfo.lastName || !customerInfo.email || !customerInfo.phone){
+		if (currentStep === 1) {
+			if (!customerInfo.firstName || !customerInfo.lastName || !customerInfo.email || !customerInfo.phone) {
 				setError("Please fill in all required personal information.");
 				return;
-			}else{
+			} else {
 				setError("");
 			}
-		}else if(currentStep === 2){
-			if(!shippingInfo.country || !shippingInfo.city || !shippingInfo.zipCode || !shippingInfo.address){
+		} else if (currentStep === 2) {
+			if (!shippingInfo.country || !shippingInfo.city || !shippingInfo.zipCode || !shippingInfo.address) {
 				setError("Please fill in all required shipping information.");
 				return;
-			}else{
+			} else {
 				setError("");
-				if(addressList === "No addresses found"){
+				if (addressList === "No addresses found") {
 					console.log(addressList);
 					// Guard userData to avoid calling properties on null
 					if (!userData || !userData.id || !userData.email) {
@@ -252,7 +252,7 @@ function Checkout() {
 								postal_code: shippingInfo.zipCode,
 								country_code: shippingInfo.country
 							});
-							if(response.message === "Address created successfully"){
+							if (response.message === "Address created successfully") {
 								console.log("Address created successfully:", response);
 								getAddress();
 							}
@@ -262,11 +262,11 @@ function Checkout() {
 					}
 				}
 			}
-		}else if(currentStep === 3){
-			if(!paymentInfo.cardType || !paymentInfo.cardName || !paymentInfo.cardNumber || !paymentInfo.expiryDate || !paymentInfo.securityCode){
+		} else if (currentStep === 3) {
+			if (!paymentInfo.cardType || !paymentInfo.cardName || !paymentInfo.cardNumber || !paymentInfo.expiryDate || !paymentInfo.securityCode) {
 				setError("Please fill in all required payment information.");
 				return;
-			}else{
+			} else {
 				setError("");
 			}
 		}
@@ -278,7 +278,7 @@ function Checkout() {
 			}, 300);
 		}
 	};
-    const prevStep = () => {
+	const prevStep = () => {
 		if (currentStep > 1) {
 			setShow(false);
 			setTimeout(() => {
@@ -286,7 +286,7 @@ function Checkout() {
 				setShow(true);
 			}, 300);
 		}
-    };
+	};
 
 	return (
 		<section className="checkout-section w-screen flex flex-col gap-[80px] pb-[85px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="checkout">
@@ -299,8 +299,8 @@ function Checkout() {
 							{orderList.map((order, key) => (
 								<OrderListComponent item={order} key={key} />
 							))}
-                            </div>
-					):(
+						</div>
+					) : (
 
 						<div className="w-full min-h-full max-h-full flex justify-center py-10">
 							{loader ? (
@@ -315,18 +315,18 @@ function Checkout() {
 						<h5 className="text-lg">SUBTOTAL</h5>
 						<h5 className="text-lg">
 							{currencySymbol}
-                            {totalAmount.toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            })}
+							{totalAmount.toLocaleString('en-US', {
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2
+							})}
 						</h5>
 					</div>
 					<div className="flex items-center justify-between shrink-0">
 						<h5 className="text-lg">SHIPPING</h5>
 						<h5 className="text-lg">{currencySymbol}{shippingAmount.toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            })}</h5>
+							minimumFractionDigits: 2,
+							maximumFractionDigits: 2
+						})}</h5>
 					</div>
 					<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
 						<Plus className="size-[18px]" />
@@ -337,27 +337,27 @@ function Checkout() {
 						<h5 className="text-xl">TOTAL</h5>
 						<h5 className="text-xl">
 							{currencySymbol}
-                            {(totalAmount + shippingAmount).toLocaleString('en-US', {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2
-                            })}
+							{(totalAmount + shippingAmount).toLocaleString('en-US', {
+								minimumFractionDigits: 2,
+								maximumFractionDigits: 2
+							})}
 						</h5>
 					</div>
 				</div>
 				<div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] text-black rounded-48 xl:self-start">
 					<div className="hidden sm:flex items-center gap-4">
 						<div className="flex items-center gap-2 shrink-0">
-							<div className={`w-[24px] h-[24px] flex items-center justify-center border text-sm rounded-[24px] transition ${currentStep === 1 || currentStep === 2 ? 'border-[--primary] text-white bg-primary':'border-[--black] text-black'}`}>1</div>
+							<div className={`w-[24px] h-[24px] flex items-center justify-center border text-sm rounded-[24px] transition ${currentStep === 1 || currentStep === 2 ? 'border-[--primary] text-white bg-primary' : 'border-[--black] text-black'}`}>1</div>
 							<p className="text-sm">Personal Info</p>
 						</div>
 						<div className="w-full h-[1px] bg-black"></div>
 						<div className="flex items-center gap-2 shrink-0">
-							<div className={`w-[24px] h-[24px] flex items-center justify-center border text-sm rounded-[24px] transition ${currentStep === 2 || currentStep === 3 ? 'border-[--primary] text-white bg-primary':'border-[--black] text-black'}`}>2</div>
+							<div className={`w-[24px] h-[24px] flex items-center justify-center border text-sm rounded-[24px] transition ${currentStep === 2 || currentStep === 3 ? 'border-[--primary] text-white bg-primary' : 'border-[--black] text-black'}`}>2</div>
 							<p className="text-sm">Shipping Info</p>
 						</div>
 						<div className="w-full h-[1px] bg-black"></div>
 						<div className="flex items-center gap-2 shrink-0">
-							<div className={`w-[24px] h-[24px] flex items-center justify-center border text-sm rounded-[24px] transition ${currentStep === 3 ? 'border-[--primary] text-white bg-primary':'border-[--black] text-black'}`}>3</div>
+							<div className={`w-[24px] h-[24px] flex items-center justify-center border text-sm rounded-[24px] transition ${currentStep === 3 ? 'border-[--primary] text-white bg-primary' : 'border-[--black] text-black'}`}>3</div>
 							<p className="text-sm">Payment</p>
 						</div>
 					</div>
@@ -374,13 +374,13 @@ function Checkout() {
 						{error && (
 							<p className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">{error}</p>
 						)}
-						<div className={`w-full grid grid-cols-12 xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 ${show?'fade-in':'fade-out'}`}>
+						<div className={`w-full grid grid-cols-12 xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 ${show ? 'fade-in' : 'fade-out'}`}>
 							{currentStep === 1 ? (
 								<>
 									<div className="sm:col-span-6 col-span-12">
 										<Input
-											type="text" 
-											id="f-name" 
+											type="text"
+											id="f-name"
 											placeholder="First Name"
 											value={customerInfo.firstName}
 											onChange={(e) => handleCustomerInfoChange('firstName', e.target.value)}
@@ -389,7 +389,7 @@ function Checkout() {
 									<div className="sm:col-span-6 col-span-12">
 										<Input
 											type="text"
-											id="l-name" 
+											id="l-name"
 											placeholder="Last Name"
 											value={customerInfo.lastName}
 											onChange={(e) => handleCustomerInfoChange('lastName', e.target.value)}
@@ -397,8 +397,8 @@ function Checkout() {
 									</div>
 									<div className="sm:col-span-6 col-span-12">
 										<Input
-											type="email" 
-											id="email" 
+											type="email"
+											id="email"
 											placeholder="Email"
 											value={customerInfo.email}
 											onChange={(e) => handleCustomerInfoChange('email', e.target.value)}
@@ -406,8 +406,8 @@ function Checkout() {
 									</div>
 									<div className="sm:col-span-6 col-span-12">
 										<Input
-											type="tel" 
-											id="number" 
+											type="tel"
+											id="number"
 											placeholder="Number"
 											value={customerInfo.phone}
 											onChange={(e) => handleCustomerInfoChange('phone', e.target.value)}
@@ -422,31 +422,31 @@ function Checkout() {
 											onChange={(e) => handleCustomerInfoChange('company', e.target.value)}
 										/>
 									</div> */}
-									
+
 								</>
-							):currentStep === 2 ? (
+							) : currentStep === 2 ? (
 								<>
 									<div className="sm:col-span-6 col-span-12">
 										<Select value={shippingInfo.country} onValueChange={(value) => handleShippingInfoChange('country', value)}>
-												<SelectTrigger className="w-full">
-													<SelectValue placeholder="Country / Region" />
-												</SelectTrigger>
-												<SelectContent>
-													<SelectItem value="AUS">Australia</SelectItem>
-													<SelectItem value="USA">United States</SelectItem>
-													<SelectItem value="CAN">Canada</SelectItem>
-													<SelectItem value="GBR">United Kingdom</SelectItem>
-													<SelectItem value="NZL">New Zealand</SelectItem>
-													<SelectItem value="DEU">Germany</SelectItem>
-													<SelectItem value="FRA">France</SelectItem>
-													<SelectItem value="JPN">Japan</SelectItem>
-												</SelectContent>
-											</Select>
+											<SelectTrigger className="w-full">
+												<SelectValue placeholder="Country / Region" />
+											</SelectTrigger>
+											<SelectContent>
+												<SelectItem value="AUS">Australia</SelectItem>
+												<SelectItem value="USA">United States</SelectItem>
+												<SelectItem value="CAN">Canada</SelectItem>
+												<SelectItem value="GBR">United Kingdom</SelectItem>
+												<SelectItem value="NZL">New Zealand</SelectItem>
+												<SelectItem value="DEU">Germany</SelectItem>
+												<SelectItem value="FRA">France</SelectItem>
+												<SelectItem value="JPN">Japan</SelectItem>
+											</SelectContent>
+										</Select>
 									</div>
 									<div className="sm:col-span-6 col-span-12">
 										<Input
-											type="text" 
-											id="town" 
+											type="text"
+											id="town"
 											placeholder="Town / City"
 											value={shippingInfo.city}
 											onChange={(e) => handleShippingInfoChange('city', e.target.value)}
@@ -454,8 +454,8 @@ function Checkout() {
 									</div>
 									<div className="sm:col-span-6 col-span-12">
 										<Input
-											type="text" 
-											id="zipCode" 
+											type="text"
+											id="zipCode"
 											placeholder="Zip Code"
 											value={shippingInfo.zipCode}
 											onChange={(e) => handleShippingInfoChange('zipCode', e.target.value)}
@@ -463,8 +463,8 @@ function Checkout() {
 									</div>
 									<div className="sm:col-span-6 col-span-12">
 										<Input
-											type="text" 
-											id="address" 
+											type="text"
+											id="address"
 											placeholder="House number and street name"
 											value={shippingInfo.address}
 											onChange={(e) => handleShippingInfoChange('address', e.target.value)}
@@ -480,7 +480,7 @@ function Checkout() {
 										/>
 									</div> */}
 								</>
-							):(
+							) : (
 								<>
 									{/* <div className="sm:col-span-6 col-span-12">
 										<Select onValueChange={(value) => handlePaymentInfoChange('cardType', value)}>
@@ -532,11 +532,11 @@ function Checkout() {
 											onChange={(e) => handlePaymentInfoChange('securityCode', e.target.value)}
 										/>
 									</div> */}
-									<PaymentPage amount={(totalAmount + shippingAmount)} customer={customerInfo} shippingInfo={shippingInfo} back={prevStep}/>
+									<PaymentPage amount={(totalAmount + shippingAmount)} customer={customerInfo} shippingInfo={shippingInfo} back={prevStep} />
 								</>
 							)}
 							<div className="flex justify-end col-span-12 gap-2">
-								{ currentStep < 3 && (
+								{currentStep < 3 && (
 									<React.Fragment>
 										{currentStep > 1 && (
 											<Button variant={'light'} size={'small'} className="sm:w-[200px] w-full sm:shrink-0 shrink " onClick={prevStep}>

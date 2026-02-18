@@ -1,28 +1,28 @@
 ﻿import * as React from "react";
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { Plus } from 'lucide-react';
 
 function Tutorials(props) {
-	const [type, setType] = useState(1);
+    const [type, setType] = useState(1);
     const [show, setShow] = useState(true);
     const [filteredData, setFilteredData] = useState(props.data || []);
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1150;
-	const lenis = isDesktop ? useLenis() : null;
+    const lenis = isDesktop ? useLenis() : null;
 
-	useEffect(() => {
-		gsap.registerPlugin(ScrollTrigger);
-		if(window.innerWidth  > 1150){
-			ScrollTrigger.normalizeScroll(true);
-		}
+    // useEffect(() => {
+    // 	gsap.registerPlugin(ScrollTrigger);
+    // 	if(window.innerWidth  > 1150){
+    // 		ScrollTrigger.normalizeScroll(true);
+    // 	}
 
-		if (lenis) {
-			lenis.on('scroll', ScrollTrigger.update);
-		}
+    // 	if (lenis) {
+    // 		lenis.on('scroll', ScrollTrigger.update);
+    // 	}
 
-	}, [lenis]);
+    // }, [lenis]);
 
     const changeCategory = (newStep) => {
         setShow(false);
@@ -31,7 +31,7 @@ function Tutorials(props) {
             setType(newStep);
         }, 300);
     };
-     
+
     useEffect(() => {
         filterData();
     }, [type, props.data]);
@@ -42,24 +42,24 @@ function Tutorials(props) {
 
         switch (type) {
             case 2: // Blinds
-            filtered = filtered.filter(item => item.category?.toLowerCase() === "blinds");
-            break;
+                filtered = filtered.filter(item => item.category?.toLowerCase() === "blinds");
+                break;
             case 3: // Curtains
-            filtered = filtered.filter(item => item.category?.toLowerCase() === "curtains");
-            break;
+                filtered = filtered.filter(item => item.category?.toLowerCase() === "curtains");
+                break;
             case 4: // Shutters
-            filtered = filtered.filter(item => item.category?.toLowerCase() === "shutters");
-            break;
+                filtered = filtered.filter(item => item.category?.toLowerCase() === "shutters");
+                break;
             default: // all
-            break;
+                break;
         }
 
         filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
         setFilteredData(filtered);
     };
-    
 
-	return (
+
+    return (
         <div className="relative w-screen min-h-screen flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw gap-4 xl:p-[1.25vw] sm:p-[2.344vw p-4 xl:pt-0 sm:pt-0 pt-0 overflow-hidden" id="tutorials">
             <div className="w-full border border-[--Black] p-4 text-center rounded-48">
                 <h1 className="text-1xl text-[--Black] uppercase">Tutorials</h1>
@@ -112,7 +112,7 @@ function Tutorials(props) {
                 ))}
             </div>
         </div>
-	);
+    );
 }
 
 export default Tutorials;

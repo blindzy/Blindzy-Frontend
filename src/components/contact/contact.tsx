@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from '@iconify/react';
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import axios from 'axios';
 import { Input } from "@lib/components/ui/input";
@@ -10,80 +10,80 @@ import { Button } from "@lib/components/ui/button";
 
 
 function Contact() {
-	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
-	const lenis = isDesktop ? useLenis() : null;
+    const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
+    const lenis = isDesktop ? useLenis() : null;
 
-	// Form state
-	const [formData, setFormData] = useState({
-		name: '',
-		email: '',
-		phone: '',
-		enquiry: '',
-		number: '',
-		message: ''
-	});
-	const [loading, setLoading] = useState(false);
-	const [success, setSuccess] = useState(false);
-	const [error, setError] = useState<string | null>(null);
+    // Form state
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+        enquiry: '',
+        number: '',
+        message: ''
+    });
+    const [loading, setLoading] = useState(false);
+    const [success, setSuccess] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
-	// API configuration
-	const headers = {
-		"Content-Type": "application/json",
-		"x-publishable-api-key": "pk_618e1efe2b7d74576d7e072b76bd3c56d46ef94ede9463774e1c2b09c50f6bda",
-	};
-	const baseUrl = "https://api.blindzy.com";
+    // API configuration
+    const headers = {
+        "Content-Type": "application/json",
+        "x-publishable-api-key": "pk_618e1efe2b7d74576d7e072b76bd3c56d46ef94ede9463774e1c2b09c50f6bda",
+    };
+    const baseUrl = "https://api.blindzy.com";
 
-	// Handle form input changes
-	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-		const { id, value } = e.target;
-		setFormData(prev => ({
-			...prev,
-			[id]: value
-		}));
-	};
+    // Handle form input changes
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { id, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [id]: value
+        }));
+    };
 
-	// Handle form submission
-	const handleSubmit = async (e: React.FormEvent) => {
-		e.preventDefault();
-		setLoading(true);
-		setError(null);
-		setSuccess(false);
+    // Handle form submission
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setLoading(true);
+        setError(null);
+        setSuccess(false);
 
-		try {
-			const response = await axios.post(`${baseUrl}/store/customers/contact`, formData, {
-				headers,
-			});
-			console.log('Contact form submitted successfully:', response.data);
-			setSuccess(true);
-			// Reset form
-			setFormData({
-				name: '',
-				email: '',
-				phone: '',
-				enquiry: '',
-				number: '',
-				message: ''
-			});
-		} catch (err) {
-			console.error('Failed to submit contact form:', err);
-			setError('Failed to send message. Please try again.');
-		} finally {
-			setLoading(false);
-		}
-	};
+        try {
+            const response = await axios.post(`${baseUrl}/store/customers/contact`, formData, {
+                headers,
+            });
+            console.log('Contact form submitted successfully:', response.data);
+            setSuccess(true);
+            // Reset form
+            setFormData({
+                name: '',
+                email: '',
+                phone: '',
+                enquiry: '',
+                number: '',
+                message: ''
+            });
+        } catch (err) {
+            console.error('Failed to submit contact form:', err);
+            setError('Failed to send message. Please try again.');
+        } finally {
+            setLoading(false);
+        }
+    };
 
-	useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
-		ScrollTrigger.normalizeScroll(true);
+    // useEffect(() => {
+    //     gsap.registerPlugin(ScrollTrigger);
+    // 	ScrollTrigger.normalizeScroll(true);
 
-		// If using Lenis, connect it with GSAP
-		if (lenis) {
-			lenis.on('scroll', ScrollTrigger.update);
-		}
-	}, [lenis]);
-    
+    // 	// If using Lenis, connect it with GSAP
+    // 	if (lenis) {
+    // 		lenis.on('scroll', ScrollTrigger.update);
+    // 	}
+    // }, [lenis]);
 
-	return (
+
+    return (
         <div className="relative w-screen flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-2 xl:pt-0 sm:pt-0 pt-0 overflow-hidden" id="contact-us">
             <div className="w-full border border-[--Black] p-4 text-center rounded-48">
                 <h1 className="text-1xl text-black">CONTACT US</h1>
@@ -130,14 +130,14 @@ function Contact() {
                     <div className="flex flex-col gap-4 sm:text-left text-center">
                         <h4 className="text-xl uppercase">Fill Out The Form to Contact us</h4>
                         <p className="text-sm">Lorem ipsum dolor sit amet consectetur nunc faucibus ut ornare.</p>
-                        
+
                         {/* Success Message */}
                         {success && (
                             <div className="p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
                                 <p className="text-sm">✅ Message sent successfully! We'll get back to you soon.</p>
                             </div>
                         )}
-                        
+
                         {/* Error Message */}
                         {error && (
                             <div className="p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
@@ -148,9 +148,9 @@ function Contact() {
                     <form onSubmit={handleSubmit}>
                         <div className="grid items-stretch grid-cols-12 xl:gap-[0.833vw] sm:gap-[1.563vw] gap-4">
                             <div className="sm:col-span-6 col-span-12">
-                                <Input 
-                                    type="text" 
-                                    id="name" 
+                                <Input
+                                    type="text"
+                                    id="name"
                                     placeholder="Your Name"
                                     value={formData.name}
                                     onChange={handleInputChange}
@@ -158,9 +158,9 @@ function Contact() {
                                 />
                             </div>
                             <div className="sm:col-span-6 col-span-12">
-                                <Input 
-                                    type="email" 
-                                    id="email" 
+                                <Input
+                                    type="email"
+                                    id="email"
                                     placeholder="Your Email"
                                     value={formData.email}
                                     onChange={handleInputChange}
@@ -168,9 +168,9 @@ function Contact() {
                                 />
                             </div>
                             <div className="sm:col-span-6 col-span-12">
-                                <Input 
-                                    type="text" 
-                                    id="phone" 
+                                <Input
+                                    type="text"
+                                    id="phone"
                                     placeholder="Phone Number"
                                     value={formData.phone}
                                     onChange={handleInputChange}
@@ -178,9 +178,9 @@ function Contact() {
                                 />
                             </div>
                             <div className="sm:col-span-6 col-span-12">
-                                <Input 
-                                    type="text" 
-                                    id="enquiry" 
+                                <Input
+                                    type="text"
+                                    id="enquiry"
                                     placeholder="Enquiry About"
                                     value={formData.enquiry}
                                     onChange={handleInputChange}
@@ -188,9 +188,9 @@ function Contact() {
                                 />
                             </div>
                             <div className="col-span-12">
-                                <Input 
-                                    type="text" 
-                                    id="number" 
+                                <Input
+                                    type="text"
+                                    id="number"
                                     placeholder="Your Number"
                                     value={formData.number}
                                     onChange={handleInputChange}
@@ -198,9 +198,9 @@ function Contact() {
                                 />
                             </div>
                             <div className="col-span-12">
-                                <Textarea 
-                                    name="message" 
-                                    id="message" 
+                                <Textarea
+                                    name="message"
+                                    id="message"
                                     placeholder="Your Message Here"
                                     value={formData.message}
                                     onChange={handleInputChange}
@@ -208,8 +208,8 @@ function Contact() {
                                 />
                             </div>
                             <div className="col-span-12 flex justify-end">
-                                <Button 
-                                    type="submit" 
+                                <Button
+                                    type="submit"
                                     variant={"primary"}
                                     size={'smallest'}
                                     className="sm:w-fit w-full"
@@ -224,7 +224,7 @@ function Contact() {
 
             </div>
         </div>
-	);
+    );
 }
 
 export default Contact;

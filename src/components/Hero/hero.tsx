@@ -1,7 +1,7 @@
 ﻿import * as React from "react";
 import { useEffect } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+// import gsap from "gsap";
+// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { Button } from "@lib/components/ui/button";
 import Navbar from "@components/navbar/navbar";
@@ -11,34 +11,34 @@ function Hero() {
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1150;
 	const lenis = isDesktop ? useLenis() : null;
 
-	useEffect(() => {
-		gsap.registerPlugin(ScrollTrigger);
-		if(window.innerWidth  > 1150){
-			ScrollTrigger.normalizeScroll(true);
-		}
+	// useEffect(() => {
+	// 	gsap.registerPlugin(ScrollTrigger);
+	// 	if(window.innerWidth  > 1150){
+	// 		ScrollTrigger.normalizeScroll(true);
+	// 	}
 
-		// If using Lenis, connect it with GSAP
-		if (lenis) {
-			lenis.on('scroll', ScrollTrigger.update);
-		}
+	// 	// If using Lenis, connect it with GSAP
+	// 	if (lenis) {
+	// 		lenis.on('scroll', ScrollTrigger.update);
+	// 	}
 
-		gsap.to("#hero", {
-		    scrollTrigger: {
-		        trigger: ".hero-content",
-		        start: "top top",
-		        end: "center top",
-		        scrub: 1,
-		    },
-		    scale: 0.95,
-		    borderRadius: "60px",
-		    duration: 0.1,
-		});
-	}, [lenis]);
+	// 	gsap.to("#hero", {
+	// 	    scrollTrigger: {
+	// 	        trigger: ".hero-content",
+	// 	        start: "top top",
+	// 	        end: "center top",
+	// 	        scrub: 1,
+	// 	    },
+	// 	    scale: 0.95,
+	// 	    borderRadius: "60px",
+	// 	    duration: 0.1,
+	// 	});
+	// }, [lenis]);
 
 	return (
 		<section className="hero-section w-screen h-screen overflow-hidden" id="hero">
 			<div className="hero-content ">
-				<Navbar/>
+				<Navbar />
 				<div className="relative w-full h-full flex xl:flex-row flex-col items-center xl:justify-between justify-end xl:gap-0 gap-[48px]  mini:p-[1.25vw] xl:p-2 mini:pt-0 xl:pt-0 sm:p-[2.344vw] sm:pt-0 p-4 px-6 pt-0 z-[5]">
 					{/* Desktop/Tablet: Center/left text/buttons */}
 					<div className="flex xl:w-[35.521vw] sm:w-[80%] w-full xl:m-0 mx-auto xl:text-left text-center flex-col xl:gap-[1.25vw] gap-4 mb-[100px]">
@@ -96,5 +96,5 @@ function Hero() {
 	);
 }
 
-export default Hero; 
+export default Hero;
 
