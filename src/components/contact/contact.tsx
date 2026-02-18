@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Icon } from '@iconify/react';
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import axios from 'axios';
 import { Input } from "@lib/components/ui/input";
@@ -72,15 +72,15 @@ function Contact() {
         }
     };
 
-    // useEffect(() => {
-    //     gsap.registerPlugin(ScrollTrigger);
-    // 	ScrollTrigger.normalizeScroll(true);
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        ScrollTrigger.normalizeScroll(true);
 
-    // 	// If using Lenis, connect it with GSAP
-    // 	if (lenis) {
-    // 		lenis.on('scroll', ScrollTrigger.update);
-    // 	}
-    // }, [lenis]);
+        // If using Lenis, connect it with GSAP
+        if (lenis) {
+            lenis.on('scroll', ScrollTrigger.update);
+        }
+    }, [lenis]);
 
 
     return (

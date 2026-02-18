@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import SelectColor from "./selectColor";
 import SelectVarient from "./selectVarient";
@@ -304,13 +304,13 @@ function Double_curtain_customization(props) {
         values: []
     }]);
 
-    // useEffect(() => {
-    //     gsap.registerPlugin(ScrollTrigger);
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
 
-    //     // if (lenis) {
-    //     //     lenis.on('scroll', ScrollTrigger.update);
-    //     // }
-    // }, [lenis]);
+        // if (lenis) {
+        //     lenis.on('scroll', ScrollTrigger.update);
+        // }
+    }, [lenis]);
 
     useEffect(() => {
         if (productData?.options?.[0]?.values?.[0]?.value && !selectedColor) {

@@ -1,7 +1,7 @@
 ﻿import React, { useEffect } from "react";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-// import DrawSVGPlugin from "gsap/dist/DrawSVGPlugin";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import DrawSVGPlugin from "gsap/dist/DrawSVGPlugin";
 import { Button } from "@lib/components/ui/button";
 import './css/style.css'; // Ensure this path is correct relative to quality.tsx
 
@@ -10,41 +10,41 @@ function Quality() {
 
     useEffect(() => {
         if (window.innerWidth > 1150) {
-            // gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
+            gsap.registerPlugin(ScrollTrigger, DrawSVGPlugin);
 
-            // // Timeline for the first line animation and step-1 appearance
-            // const lineAnimate1 = gsap.timeline();
-            // lineAnimate1.fromTo('.linePath1', { drawSVG: "0% 0%" }, { drawSVG: "0% 100%", duration: 1, ease: "sine.inOut" });
-            // lineAnimate1.to('#quailty #step-1', { opacity: 1, x: 0, ease: "sine.inOut", duration: 1 }, '<');
+            // Timeline for the first line animation and step-1 appearance
+            const lineAnimate1 = gsap.timeline();
+            lineAnimate1.fromTo('.linePath1', { drawSVG: "0% 0%" }, { drawSVG: "0% 100%", duration: 1, ease: "sine.inOut" });
+            lineAnimate1.to('#quailty #step-1', { opacity: 1, x: 0, ease: "sine.inOut", duration: 1 }, '<');
 
-            // // ScrollTrigger for the first animation
-            // ScrollTrigger.create({
-            //     trigger: '#quailty',
-            //     scrub: 1,
-            //     markers: false,
-            //     start: "top 70%",
-            //     end: "top top",
-            //     animation: lineAnimate1,
-            // });
+            // ScrollTrigger for the first animation
+            ScrollTrigger.create({
+                trigger: '#quailty',
+                scrub: 1,
+                markers: false,
+                start: "top 70%",
+                end: "top top",
+                animation: lineAnimate1,
+            });
 
-            // const lineAnimate2 = gsap.timeline();
-            // lineAnimate2.fromTo('.linePath2', { drawSVG: "0% 0%" }, { drawSVG: "0% 100%", duration: 1, ease: "sine.inOut" });
-            // lineAnimate2.to('#quailty #step-2', { opacity: 1, x: 0, ease: "sine.inOut", duration: 1 }, '<');
-            // lineAnimate2.fromTo('.linePath3', { drawSVG: "0% 0%" }, { drawSVG: "0% 100%", duration: 1, ease: "sine.inOut" });
-            // lineAnimate2.to('#quailty #step-3', { opacity: 1, x: 0, ease: "sine.inOut", duration: 1 }, '<');
-            // lineAnimate2.fromTo('.linePath4', { drawSVG: "0% 0%" }, { drawSVG: "0% 100%", duration: 1, ease: "sine.inOut" });
-            // lineAnimate2.to('#quailty #step-4', { opacity: 1, x: 0, ease: "sine.inOut", duration: 1 }, '<');
+            const lineAnimate2 = gsap.timeline();
+            lineAnimate2.fromTo('.linePath2', { drawSVG: "0% 0%" }, { drawSVG: "0% 100%", duration: 1, ease: "sine.inOut" });
+            lineAnimate2.to('#quailty #step-2', { opacity: 1, x: 0, ease: "sine.inOut", duration: 1 }, '<');
+            lineAnimate2.fromTo('.linePath3', { drawSVG: "0% 0%" }, { drawSVG: "0% 100%", duration: 1, ease: "sine.inOut" });
+            lineAnimate2.to('#quailty #step-3', { opacity: 1, x: 0, ease: "sine.inOut", duration: 1 }, '<');
+            lineAnimate2.fromTo('.linePath4', { drawSVG: "0% 0%" }, { drawSVG: "0% 100%", duration: 1, ease: "sine.inOut" });
+            lineAnimate2.to('#quailty #step-4', { opacity: 1, x: 0, ease: "sine.inOut", duration: 1 }, '<');
 
-            // // ScrollTrigger for the second animation block, with pinning
-            // ScrollTrigger.create({
-            //     trigger: '#quailty',
-            //     scrub: 1,
-            //     markers: false,
-            //     pin: true,
-            //     start: "top top",
-            //     end: "+=120%",
-            //     animation: lineAnimate2,
-            // });
+            // ScrollTrigger for the second animation block, with pinning
+            ScrollTrigger.create({
+                trigger: '#quailty',
+                scrub: 1,
+                markers: false,
+                pin: true,
+                start: "top top",
+                end: "+=120%",
+                animation: lineAnimate2,
+            });
         }
     }, []);
 

@@ -1,6 +1,6 @@
 ﻿import React, { useEffect } from "react";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 
 interface InnerBannerProps {
@@ -12,16 +12,16 @@ function InnerBanner(props: InnerBannerProps) {
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
 	const lenis = isDesktop ? useLenis() : null;
 
-	// useEffect(() => {
-	// 	if (!isDesktop) return;
-	// 	gsap.registerPlugin(ScrollTrigger);
-	// 	ScrollTrigger.normalizeScroll(true);
+	useEffect(() => {
+		if (!isDesktop) return;
+		gsap.registerPlugin(ScrollTrigger);
+		ScrollTrigger.normalizeScroll(true);
 
-	// 	// If using Lenis, connect it with GSAP
-	// 	if (lenis) {
-	// 		lenis.on('scroll', ScrollTrigger.update);
-	// 	}
-	// }, [lenis, isDesktop]);
+		// If using Lenis, connect it with GSAP
+		if (lenis) {
+			lenis.on('scroll', ScrollTrigger.update);
+		}
+	}, [lenis, isDesktop]);
 
 	return (
 		<section className="w-full px-2 sm:px-6 xl:px-[1.25vw]" id="innerBanner">

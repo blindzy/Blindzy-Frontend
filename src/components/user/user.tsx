@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import Address from './address';
 import OrderList from "./orderList";
@@ -85,14 +85,14 @@ function User() {
             setShow(true);
         }, 300);
     };
-    // useEffect(() => {
-    //     gsap.registerPlugin(ScrollTrigger);
-    //     ScrollTrigger.normalizeScroll(true);
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        ScrollTrigger.normalizeScroll(true);
 
-    //     if (lenis) {
-    //         lenis.on('scroll', ScrollTrigger.update);
-    //     }
-    // }, [lenis]);
+        if (lenis) {
+            lenis.on('scroll', ScrollTrigger.update);
+        }
+    }, [lenis]);
 
     return (
         <div className="w-screen flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 overflow-hidden" id="user">

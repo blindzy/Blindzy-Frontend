@@ -1,21 +1,21 @@
 ﻿import React, { useEffect } from "react";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 
 function ShippingPolicy() {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
 
-    // useEffect(() => {
-    //     gsap.registerPlugin(ScrollTrigger);
-    // 	ScrollTrigger.normalizeScroll(true);
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        ScrollTrigger.normalizeScroll(true);
 
-    // 	// If using Lenis, connect it with GSAP
-    // 	if (lenis) {
-    // 		lenis.on('scroll', ScrollTrigger.update);
-    // 	}
-    // }, [lenis]);
+        // If using Lenis, connect it with GSAP
+        if (lenis) {
+            lenis.on('scroll', ScrollTrigger.update);
+        }
+    }, [lenis]);
 
 
     return (

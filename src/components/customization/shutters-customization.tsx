@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import SelectColor from "./selectColor";
 import SelectVarient from "./selectVarient";
@@ -105,13 +105,13 @@ function Shutters_customization(props) {
         }
     }
 
-    // useEffect(() => {
-    //     gsap.registerPlugin(ScrollTrigger);
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
 
-    //     if (lenis) {
-    //         lenis.on('scroll', ScrollTrigger.update);
-    //     }
-    // }, [lenis]);
+        if (lenis) {
+            lenis.on('scroll', ScrollTrigger.update);
+        }
+    }, [lenis]);
 
     // Set default color and price when component mounts
     useEffect(() => {

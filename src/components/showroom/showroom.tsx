@@ -1,7 +1,7 @@
 ﻿import React, { useEffect, useState, useMemo } from "react";
 import { Icon } from '@iconify/react';
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 
 
@@ -12,17 +12,17 @@ function Showroom(props) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1150;
     const lenis = isDesktop ? useLenis() : null;
 
-    // useEffect(() => {
-    // 	gsap.registerPlugin(ScrollTrigger);
-    // 	if(window.innerWidth  > 1150){
-    // 		ScrollTrigger.normalizeScroll(true);
-    // 	}
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        if (window.innerWidth > 1150) {
+            ScrollTrigger.normalizeScroll(true);
+        }
 
-    // 	if (lenis) {
-    // 		lenis.on('scroll', ScrollTrigger.update);
-    // 	}
+        if (lenis) {
+            lenis.on('scroll', ScrollTrigger.update);
+        }
 
-    // }, [lenis]);
+    }, [lenis]);
 
     const changeCategory = (newStep) => {
         setShow(false);

@@ -1,4 +1,4 @@
- import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { RadioGroup, RadioGroupItem } from "@lib/components/ui/radio-group";
 
 
@@ -9,7 +9,7 @@ function SelectVarient(props) {
     const options = optionData?.title || [];
     const optionTitle = optionData?.title || 'Select Option';
     const optionDescription = optionData?.description || '';
-    
+
     const [selected, setSelected] = useState(props.selectedValue || options[0]?.label || 'option-one');
 
     // Update parent component when selection changes
@@ -48,7 +48,7 @@ function SelectVarient(props) {
                             htmlFor={`${optionTitle}-${option.label}-${index}`}
                             className={`w-full flex flex-col gap-2 cursor-pointer`}
                         >
-                            <div className={`w-full h-[170px]  ${optionTitle === 'Track Colour' || optionTitle === 'Hinge Colour' ? 'sm:h-[170px]' :' sm:h-[27.344vw] xl:h-[18.229vw]' }  bg-[--white] rounded-24 outline overflow-hidden transition  ${(props.selectedValue || selected) === option.label ? 'outline-2 outline-[--primary] ring-2 ring-[--primary]' : 'outline-1 outline-[--lightGrey] ring-0'}`}>
+                            <div className={`w-full h-[170px]  ${optionTitle === 'Track Colour' || optionTitle === 'Hinge Colour' ? 'sm:h-[170px]' : ' sm:h-[27.344vw] xl:h-[18.229vw]'}  bg-[--white] rounded-24 outline overflow-hidden transition  ${(props.selectedValue || selected) === option.label ? 'outline-2 outline-[--primary] ring-2 ring-[--primary]' : 'outline-1 outline-[--lightGrey] ring-0'}`}>
                                 <img
                                     src={option.image}
                                     className="size-full object-cover rounded-[12px] sm:rounded-[14px] xl:rounded-[16px] overflow-hidden"

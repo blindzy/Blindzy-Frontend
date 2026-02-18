@@ -1,6 +1,6 @@
 ﻿import React, { useEffect, useState } from "react";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { Input } from '@lib/components/ui/input';
 import './css/style.css';
@@ -195,13 +195,13 @@ function Checkout() {
 		calculateTotalAmount(orderList);
 	}, [orderList]);
 
-	// useEffect(() => {
-	// 	gsap.registerPlugin(ScrollTrigger);
+	useEffect(() => {
+		gsap.registerPlugin(ScrollTrigger);
 
-	// 	if (lenis) {
-	// 		lenis.on('scroll', ScrollTrigger.update);
-	// 	}
-	// }, [lenis]);
+		if (lenis) {
+			lenis.on('scroll', ScrollTrigger.update);
+		}
+	}, [lenis]);
 
 	const handleCustomerInfoChange = (field: string, value: string) => {
 		setCustomerInfo(prev => ({

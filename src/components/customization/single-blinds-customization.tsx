@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import SelectDefaultColor from "./selectdefultColor";
 import SelectColor from "./selectColor";
@@ -135,13 +135,13 @@ function Single_blinds_customization(props) {
         calculatePrice();
     }, [measurements.width, measurements.height, priceGroup]);
 
-    // useEffect(() => {
-    //     gsap.registerPlugin(ScrollTrigger);
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
 
-    //     if (lenis) {
-    //         lenis.on('scroll', ScrollTrigger.update);
-    //     }
-    // }, [lenis]);
+        if (lenis) {
+            lenis.on('scroll', ScrollTrigger.update);
+        }
+    }, [lenis]);
 
     // Set default color and price when component mounts
     useEffect(() => {

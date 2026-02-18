@@ -1,8 +1,8 @@
 ﻿import * as React from "react";
 import { useEffect, } from "react";
 import { Icon } from '@iconify/react';
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import BlogContent from "./blog-content";
 
@@ -10,15 +10,15 @@ function BlogDetail(props) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
 
-    // useEffect(() => {
-    //     if (!isDesktop) return;
-    //     gsap.registerPlugin(ScrollTrigger);
-    // 	ScrollTrigger.normalizeScroll(true);
+    useEffect(() => {
+        if (!isDesktop) return;
+        gsap.registerPlugin(ScrollTrigger);
+        ScrollTrigger.normalizeScroll(true);
 
-    // 	if (lenis) {
-    // 		lenis.on('scroll', ScrollTrigger.update);
-    // 	}
-    // }, [lenis, isDesktop]);
+        if (lenis) {
+            lenis.on('scroll', ScrollTrigger.update);
+        }
+    }, [lenis, isDesktop]);
 
 
     function toShortDate(date) {

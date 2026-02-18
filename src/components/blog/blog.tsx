@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
-// import gsap from "gsap";
-// import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { Plus } from 'lucide-react';
 import { Button } from "@lib/components/ui/button";
@@ -26,18 +26,18 @@ function Blog(props) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1150;
     const lenis = isDesktop ? useLenis() : null;
 
-    // useEffect(() => {
-    //     gsap.registerPlugin(ScrollTrigger);
-    //     if (window.innerWidth > 1150) {
-    //         ScrollTrigger.normalizeScroll(true);
-    //     }
+    useEffect(() => {
+        gsap.registerPlugin(ScrollTrigger);
+        if (window.innerWidth > 1150) {
+            ScrollTrigger.normalizeScroll(true);
+        }
 
-    //     // If using Lenis, connect it with GSAP
-    //     if (lenis) {
-    //         lenis.on('scroll', ScrollTrigger.update);
-    //     }
+        // If using Lenis, connect it with GSAP
+        if (lenis) {
+            lenis.on('scroll', ScrollTrigger.update);
+        }
 
-    // }, [lenis]);
+    }, [lenis]);
 
     useEffect(() => {
         filterData();
