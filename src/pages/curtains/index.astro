@@ -13,18 +13,27 @@ const productsData = await fetchMedusaApi<any>({
 const filteredProducts = (productsData?.products || []).filter((product) => {
   const isSingleType = product.type?.value === "single";
   const hasBlindsCategory = product.categories?.some(
-    (cat) => cat.name?.toLowerCase() === "curtains"
+    (cat) => cat.name?.toLowerCase() === "curtains",
   );
 
   return isSingleType && hasBlindsCategory;
 });
-const tags = ["Sheer","Blockout"];
-
+const tags = ["Sheer", "Blockout"];
 ---
 
 <Layout>
-  <Navbar client:load logo="dark"/>
-  <InnerBanner client:load title={`Curtains SHOP`} content="Beautiful Designer Curtains You Can Install in 20 Minutes"/>
-  <ShopComponent client:load data={filteredProducts} customizePage="curtains/single" tags={tags} type="single"/>
-  <Footer client:visible/>
+  <Navbar client:load logo="dark" />
+  <InnerBanner
+    client:load
+    title={`Curtains SHOP`}
+    content="Beautiful Designer Curtains You Can Install in 20 Minutes"
+  />
+  <ShopComponent
+    client:load
+    data={filteredProducts}
+    customizePage="curtains"
+    tags={tags}
+    type="single"
+  />
+  <Footer client:visible />
 </Layout>

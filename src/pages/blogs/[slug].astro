@@ -3,32 +3,29 @@ import Layout from "@layouts/Layout.astro";
 import Navbar from "@components/navbar/navbar";
 import BlogDetailComponent from "@components/blog/blogDetail";
 import Footer from "@components/Footer/Footer";
-import fetchApi from '../../lib/strapi';
+import fetchApi from "@lib/strapi";
+import type { BlogData } from "@interfaces/interfaces";
 const { slug } = Astro.params;
 
 // Fetch data dynamically on request (SSR)
-
-import type {BlogData} from '../../interfaces/interfaces';
 async function getData() {
 	const blogData = await fetchApi<BlogData>({
 		endpoint: `blogs?filters[slug][$eq]=${slug}&populate=*`,
-		wrappedByKey: 'data',
+		wrappedByKey: "data",
 	});
 
 	const bloglist = await fetchApi<BlogData>({
 		endpoint: `blogs?populate=*`,
-		wrappedByKey: 'data',
+		wrappedByKey: "data",
 	});
-	
-	return { blogData,bloglist };
-}
-const { blogData,bloglist } = await getData();
 
+	return { blogData, bloglist };
+}
+const { blogData, bloglist } = await getData();
 ---
 
 <Layout>
-		<Navbar client:load logo="dark"/>
-		<BlogDetailComponent client:load data={blogData[0]} blogList={bloglist}/>
-		<Footer client:load/>
-	  </div>
+	<Navbar client:load logo="dark" />
+	<BlogDetailComponent client:load data={blogData[0]} blogList={bloglist} />
+	<Footer client:load />
 </Layout>

@@ -1,11 +1,20 @@
 ---
-
-
 import Layout from "@layouts/Layout.astro";
 import Navbar from "@components/navbar/navbar";
 import Footer from "@components/Footer/Footer";
 import Double_blind_customization from "@components/customization/double-blind-customization";
-import fetchMedusaApi from "@lib/lib/fetchMedusaApi"; 
+import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
+import fetchApi from "@lib/strapi";
+import type { GroupData } from "@interfaces/interfaces";
+
+async function getData() {
+  const groupData = await fetchApi<GroupData>({
+    endpoint: "blind-price?populate=*",
+    wrappedByKey: "data",
+  });
+  return { groupData };
+}
+const { groupData } = await getData();
 
 export async function getStaticPaths() {
   // First get list of all products to get their IDs
@@ -27,7 +36,11 @@ const productData = await fetchMedusaApi<any>({
 ---
 
 <Layout>
-    <Navbar client:load logo={'dark'} />
-    <Double_blind_customization client:load data={productData.product} />
-    <Footer client:load />
+  <Navbar client:load logo={"dark"} />
+  <Double_blind_customization
+    client:load
+    data={productData.product}
+    groupData={groupData}
+  />
+  <Footer client:load />
 </Layout>

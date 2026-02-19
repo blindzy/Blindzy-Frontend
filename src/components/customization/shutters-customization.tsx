@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
-import SelectColor from "./selectColor";
+import SelectColor from "./selectdefultColor";
 import SelectVarient from "./selectVarient";
 import ProductCard from "./ProductCard";
 import { Checkbox } from "@lib/components/ui/checkbox";
@@ -10,8 +10,8 @@ import { Button } from "@lib/components/ui/button";
 import Separate from "@components/separate";
 import Measurement from "./measurement";
 import { createAddToCart } from '../../services/add-to-cart';
-import { interpolate2D, widthValues, dropValues, priceMatrix } from "./curtain-interpolate";
-
+import { interpolate2D } from "./shutter-interpolate";
+import { addCommaToNumber, getCurrencySymbol } from "./customization-utils";
 
 
 const productOptions = [
@@ -21,8 +21,8 @@ const productOptions = [
         title: 'Select Fit',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
-            { label: 'Fit', image: '/images/custom/blind-fit-left.png' },
-            { label: 'Recess', image: '/images/custom/blind-fit-right.png' },
+            { label: 'Face Fit', image: '/images/custom/blind-fit-left.png' },
+            { label: 'Recess Fit', image: '/images/custom/blind-fit-right.png' },
         ]
     },
     {
@@ -38,11 +38,12 @@ const productOptions = [
     },
 ]
 
-function Shutters_customization(props) {
+function Shutters_customization({ data: propsData, groupData }) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
     const [measurements, setMeasurements] = useState({ roomName: '', width: 600, height: 1800 });
     const [selectedColor, setSelectedColor] = useState('');
+    const [priceGroup, setPriceGroup] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
     const [currencySymbol, setCurrencySymbol] = useState('');
     const [measurementsChecked, setMeasurementsChecked] = useState(false);
@@ -56,13 +57,14 @@ function Shutters_customization(props) {
         last_name: string;
     };
     const [userData, setUserData] = useState<UserData | null>(null);
-    const [productData, setProductData] = useState(props.data);
+    const [productData, setProductData] = useState(propsData);
     const [data, setData] = useState([
         { 'title': 'Colour', 'value': selectedColor },
         { 'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : '' },
         { 'title': 'Select Fit', 'value': '' },
         { 'title': 'Hinge Colour', 'value': '' },
     ]);
+
     const calculatePrice = () => {
         // Validate inputs
         if (!measurements.width || !measurements.height) {
@@ -77,10 +79,14 @@ function Shutters_customization(props) {
         const dropMm = Math.round(Number(measurements.height));
 
         // Check ranges (in mm)
-        const minWidth = Math.min(...widthValues);
-        const maxWidth = Math.max(...widthValues);
-        const minDrop = Math.min(...dropValues);
-        const maxDrop = Math.max(...dropValues);
+        const currentWidthValues = groupData?.Width_values || [];
+        const currentDropValues = groupData?.Drop_values || [];
+        const currentPriceMatrix = groupData?.Price_groups || [];
+
+        const minWidth = Math.min(...currentWidthValues);
+        const maxWidth = Math.max(...currentWidthValues);
+        const minDrop = Math.min(...currentDropValues);
+        const maxDrop = Math.max(...currentDropValues);
 
         if (widthMm < minWidth || widthMm > maxWidth) {
             setError(`Width must be between ${minWidth} mm and ${maxWidth} mm`)
@@ -94,7 +100,7 @@ function Shutters_customization(props) {
             return
         }
 
-        const price = interpolate2D(widthMm, dropMm, widthValues, dropValues, priceMatrix)
+        const price = interpolate2D(widthMm, dropMm, currentWidthValues, currentDropValues, currentPriceMatrix[priceGroup])
         console.log("Calculated Price:", price);
         if (price === null) {
             setError("Unable to calculate price for these dimensions")
@@ -126,8 +132,8 @@ function Shutters_customization(props) {
             );
 
             if (defaultVariant?.price_sets?.[0]?.prices?.[0]?.amount) {
-                // setTotalPrice(defaultVariant.price_sets[0].prices[0].amount);
-
+                var defaultGroup = defaultVariant.price_sets[0].prices[0].amount;
+                setPriceGroup(Math.max(0, defaultGroup));
             }
         }
     }, [productData]);
@@ -136,7 +142,7 @@ function Shutters_customization(props) {
     useEffect(() => {
         // debounce if needed, but call immediately for now
         calculatePrice();
-    }, [measurements.width, measurements.height]);
+    }, [measurements.width, measurements.height, priceGroup]);
 
     // Handle option selection updates
     const handleOptionChange = (optionTitle, value) => {
@@ -149,24 +155,14 @@ function Shutters_customization(props) {
         );
     };
 
-    const calculateBasePrice = () => {
+    const calculateBaseGroup = () => {
         if (selectedColor && productData?.variants) {
             const selectedVariant = productData.variants.find(
-                variant => variant.title === selectedColor ||
-                    variant.options.some(opt => opt.value === selectedColor)
+                variant => variant.title === (selectedColor.split(' - ')[0]) ||
+                    variant.options.some(opt => opt.value === (selectedColor.split(' - ')[0]))
             );
             const code = selectedVariant?.price_sets?.[0]?.prices?.[0]?.currency_code || 'aud';
-            let symbol = '';
-            switch (code) {
-                case 'usd': symbol = '$'; break;
-                case 'aud': symbol = 'A$'; break;
-                case 'gbp': symbol = '£'; break;
-                case 'eur': symbol = '€'; break;
-                case 'inr': symbol = '₹'; break;
-                case 'nzd': symbol = 'NZ$'; break;
-                default: symbol = code ? code.toUpperCase() + ' ' : '';
-            }
-            setCurrencySymbol(symbol);
+            setCurrencySymbol(getCurrencySymbol(code));
             return selectedVariant?.price_sets?.[0]?.prices?.[0]?.amount || 0;
         }
         return 0;
@@ -182,11 +178,8 @@ function Shutters_customization(props) {
             )
         );
 
-        // Calculate total price based on area
-        const basePrice = calculateBasePrice();
-        const area = measurements.width * measurements.height;
-        const newTotalPrice = Math.round(basePrice * area);
-        // setTotalPrice(newTotalPrice);
+        var group = calculateBaseGroup();
+        setPriceGroup(Math.max(0, group - 1));
 
     }, [selectedColor, productData?.variants, measurements.width, measurements.height]);
 
@@ -282,7 +275,7 @@ function Shutters_customization(props) {
                     <h2 className="text-lg">Enter Measurements</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
-                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} />
+                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={Math.min(...(groupData?.Width_values || []))} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
                 {productData?.options?.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate />
@@ -345,6 +338,7 @@ function Shutters_customization(props) {
             <ProductCard
                 productData={productData}
                 customizationData={data}
+                svg={false}
                 totalPrice={`${currencySymbol}${addCommaToNumber(totalPrice)}`}
             />
         </section>

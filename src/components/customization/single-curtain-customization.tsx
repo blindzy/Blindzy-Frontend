@@ -10,7 +10,7 @@ import { Button } from "@lib/components/ui/button";
 import Separate from "@components/separate";
 import Measurement from "./measurement";
 import { createAddToCart } from '../../services/add-to-cart';
-import { interpolate2D, widthValues, dropValues, priceMatrix } from "./curtain_interpolate";
+import { interpolate2D } from "./curtain_interpolate";
 import { addCommaToNumber, getCurrencySymbol } from "./customization-utils";
 import type { UserData, CustomizationDataItem } from "./customization-types";
 
@@ -102,11 +102,12 @@ const productOptions = [
     },
 ]
 
-function Single_curtain_customization(props) {
+function Single_curtain_customization({ data: propsData, groupData }) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
     const [measurements, setMeasurements] = useState({ roomName: '', width: 2000, height: 3800 });
     const [selectedColor, setSelectedColor] = useState('');
+    const [svgColor, setSvgColor] = useState('#4A4A4A');
     const [totalPrice, setTotalPrice] = useState(0);
     const [priceGroup, setPriceGroup] = useState(0);
     const [currencySymbol, setCurrencySymbol] = useState('');
@@ -115,7 +116,7 @@ function Single_curtain_customization(props) {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [userData, setUserData] = useState<UserData | null>(null);
-    const [productData, setProductData] = useState(props.data);
+    const [productData, setProductData] = useState(propsData);
     const [data, setData] = useState([
         { 'title': 'Colour', 'value': selectedColor },
         { 'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : '' },
@@ -153,10 +154,14 @@ function Single_curtain_customization(props) {
         const dropMm = Math.round(Number(measurements.height));
 
         // Check ranges (in mm)
-        const minWidth = Math.min(...widthValues);
-        const maxWidth = Math.max(...widthValues);
-        const minDrop = Math.min(...dropValues);
-        const maxDrop = Math.max(...dropValues);
+        const currentWidthValues = groupData?.Width_values || [];
+        const currentDropValues = groupData?.Drop_values || [];
+        const currentPriceMatrix = groupData?.Price_groups || [];
+
+        const minWidth = Math.min(...currentWidthValues);
+        const maxWidth = Math.max(...currentWidthValues);
+        const minDrop = Math.min(...currentDropValues);
+        const maxDrop = Math.max(...currentDropValues);
 
         if (widthMm < minWidth || widthMm > maxWidth) {
             setError(`Width must be between ${minWidth} mm and ${maxWidth} mm`)
@@ -170,7 +175,7 @@ function Single_curtain_customization(props) {
             return
         }
 
-        const price = interpolate2D(widthMm, dropMm, widthValues, dropValues, priceMatrix[priceGroup])
+        const price = interpolate2D(widthMm, dropMm, currentWidthValues, currentDropValues, currentPriceMatrix[priceGroup])
         console.log("Calculated Price:", price, priceGroup);
         if (price === null) {
             setError("Unable to calculate price for these dimensions")
@@ -233,6 +238,31 @@ function Single_curtain_customization(props) {
         return 0;
     };
 
+    // Extract random pixel color from the selected color image
+    const extractColorFromImage = (imageUrl: string) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return;
+            ctx.drawImage(img, 0, 0);
+            // Pick a random pixel from center region to avoid borders
+            const cx = Math.floor(img.width * 0.25 + Math.random() * img.width * 0.5);
+            const cy = Math.floor(img.height * 0.25 + Math.random() * img.height * 0.5);
+            const pixel = ctx.getImageData(cx, cy, 1, 1).data;
+            const hex = `#${pixel[0].toString(16).padStart(2, '0')}${pixel[1].toString(16).padStart(2, '0')}${pixel[2].toString(16).padStart(2, '0')}`;
+            setSvgColor(hex);
+        };
+        img.onerror = () => {
+            // fallback if image fails
+            setSvgColor('#4A4A4A');
+        };
+        img.src = imageUrl;
+    };
+
     useEffect(() => {
         // Update color in data array
         setData(prev =>
@@ -246,6 +276,12 @@ function Single_curtain_customization(props) {
         // Calculate total price based on area
         const group = calculateBaseGroup();
         setPriceGroup(Math.max(0, group - 1));
+
+        // Extract color from selected color image for SVG
+        if (selectedColor && productData?.title) {
+            const imageUrl = `/images/product-colors-image/curtains/${productData.title.toLowerCase()}/${selectedColor.toLowerCase()}.jpg`;
+            extractColorFromImage(imageUrl);
+        }
 
     }, [selectedColor, productData?.variants, measurements.width, measurements.height]);
 
@@ -332,7 +368,7 @@ function Single_curtain_customization(props) {
         <section className="w-screen flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-[64px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="ProductDetail">
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-6 xl:pb-[5.833vw]">
                 <div className="w-full flex flex-col gap-2 text-[--Black]">
-                    <h2 className="text-xl">{props.type ? props.type : 'Curtain'} Customisations</h2>
+                    <h2 className="text-xl">Curtain Customisations</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
                 <Separate />
@@ -340,7 +376,7 @@ function Single_curtain_customization(props) {
                     <h2 className="text-lg">Enter Measurements</h2>
                     <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                 </div>
-                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={Math.min(...widthValues)} widthMax={Math.max(...widthValues)} heightMin={Math.min(...dropValues)} heightMax={Math.max(...dropValues)} />
+                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={Math.min(...(groupData?.Width_values || []))} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
                 {productData?.options?.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate />
@@ -403,9 +439,11 @@ function Single_curtain_customization(props) {
                 </div>
             </div>
             <ProductCard
+                svg={true}
                 productData={productData}
                 customizationData={data}
                 totalPrice={`${currencySymbol}${addCommaToNumber(totalPrice)}`}
+                svgColor={svgColor}
             />
         </section>
     );

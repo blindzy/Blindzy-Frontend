@@ -12,7 +12,7 @@ import { Button } from "@lib/components/ui/button";
 import Separate from "@components/separate";
 import Measurement from "./measurement";
 import { createAddToCart } from '../../services/add-to-cart';
-import { interpolate2D, widthValues, dropValues, priceMatrix } from "./blind_interpolate";
+import { interpolate2D } from "./blind_interpolate";
 import { addCommaToNumber, getCurrencySymbol } from "./customization-utils";
 import { COLOR_OPTIONS } from "./customization-constants";
 import type { UserData, CustomizationDataItem } from "./customization-types";
@@ -137,15 +137,16 @@ const blackoutColours = {
     ],
 }
 
-function Double_blind_customization(props) {
+function Double_blind_customization({ data: propsData, groupData }) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
     const [measurements, setMeasurements] = useState({ roomName: '', width: 600, height: 2000 });
+    const [screenMeasurements, setScreenMeasurements] = useState({ roomName: '', width: 600, height: 2000 });
     const [blackoutFabric, setBlackoutFabric] = useState('');
     const [blackoutColour, setBlackoutColour] = useState('');
     const [screenBlindFabric, setSheerFabric] = useState('');
     // const [sheerColour, setSheerColour] = useState('');
-    const [productData, setProductData] = useState(props.data);
+    const [productData, setProductData] = useState(propsData);
     const [selectedColor, setSelectedColor] = useState('');
     const [chainColour, setChainColour] = useState('');
     const [bracketColour, setBracketColour] = useState('');
@@ -161,9 +162,10 @@ function Double_blind_customization(props) {
     const [userData, setUserData] = useState<UserData | null>(null);
     const [data, setData] = useState([
         { 'title': 'Setup', 'value': '' },
-        { 'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : '' },
+        { 'title': 'Blackout Fabric Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : '' },
         { 'title': 'Blackout Fabric', 'value': blackoutFabric },
         { 'title': 'Blackout Colour', 'value': blackoutColour },
+        { 'title': 'Screen Blind Fabrics Size', 'value': screenMeasurements.width && screenMeasurements.height ? `${screenMeasurements.width}m x ${screenMeasurements.height}m` : '' },
         { 'title': 'Screen Blind Fabrics', 'value': screenBlindFabric },
         { 'title': 'Controls', 'value': '' },
         { 'title': 'Select Fit', 'value': '' },
@@ -180,22 +182,26 @@ function Double_blind_customization(props) {
         values: []
     }]);
 
-    const calculatePrice = (group): number => {
+    const calculatePrice = (group, width, height): number => {
         // Validate inputs
-        if (!measurements.width || !measurements.height) {
+        if (!width || !height) {
             setError("Please enter both width and drop values")
             //   setCalculatedPrice(null)
             return 0;
         }
 
-        const widthMm = Math.round(Number(measurements.width));
-        const dropMm = Math.round(Number(measurements.height));
+        const widthMm = Math.round(Number(width));
+        const dropMm = Math.round(Number(height));
 
         // Check ranges (in mm)
-        const minWidth = Math.min(...widthValues);
-        const maxWidth = Math.max(...widthValues);
-        const minDrop = Math.min(...dropValues);
-        const maxDrop = Math.max(...dropValues);
+        const currentWidthValues = groupData?.Width_values || [];
+        const currentDropValues = groupData?.Drop_values || [];
+        const currentPriceMatrix = groupData?.Price_groups || [];
+
+        const minWidth = Math.min(...currentWidthValues);
+        const maxWidth = Math.max(...currentWidthValues);
+        const minDrop = Math.min(...currentDropValues);
+        const maxDrop = Math.max(...currentDropValues);
 
         if (widthMm < minWidth || widthMm > maxWidth) {
             setError(`Width must be between ${minWidth} mm and ${maxWidth} mm`)
@@ -210,7 +216,7 @@ function Double_blind_customization(props) {
             setError("Please select both blackout and screen fabrics")
             return 0;
         }
-        const blackoutPrice = interpolate2D(widthMm, dropMm, widthValues, dropValues, priceMatrix[group])
+        const blackoutPrice = interpolate2D(widthMm, dropMm, currentWidthValues, currentDropValues, currentPriceMatrix[group])
         // if (blackoutPrice === null || screenPrice === null) {
         if (blackoutPrice === null) {
             setError("Unable to calculate price for these dimensions")
@@ -222,11 +228,11 @@ function Double_blind_customization(props) {
     }
 
     useEffect(() => {
-        const blockoutPrice = calculatePrice(blackoutGroup);
-        const screenPrice = calculatePrice(screenGroup);
+        const blockoutPrice = calculatePrice(blackoutGroup, measurements.width, measurements.height);
+        const screenPrice = calculatePrice(screenGroup, screenMeasurements.width, screenMeasurements.height);
         const price = blockoutPrice + screenPrice;
         setTotalPrice(price);
-    }, [measurements.width, measurements.height, blackoutGroup, screenGroup]);
+    }, [measurements.width, screenMeasurements.width, measurements.height, screenMeasurements.height, blackoutGroup, screenGroup]);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -429,7 +435,7 @@ function Double_blind_customization(props) {
                         <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                     </div>
                     {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
-                    <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={Math.min(...widthValues)} widthMax={Math.max(...widthValues)} heightMin={Math.min(...dropValues)} heightMax={Math.max(...dropValues)} />
+                    <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={Math.min(...(groupData?.Width_values || []))} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
                     {productData?.options?.map((option, index) => {
                         const filteredOption = {
                             ...option,
@@ -472,7 +478,7 @@ function Double_blind_customization(props) {
                         <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                     </div>
                     {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
-                    <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={Math.min(...widthValues)} widthMax={Math.max(...widthValues)} heightMin={Math.min(...dropValues)} heightMax={Math.max(...dropValues)} />
+                    <Measurement measurements={screenMeasurements} setMeasurements={setScreenMeasurements} widthMin={Math.min(...(groupData?.Width_values || []))} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
                     {productData?.options?.map((option, index) => {
                         const lastValue = option.values?.[option.values.length - 1];
 
@@ -555,6 +561,7 @@ function Double_blind_customization(props) {
                 </div>
             </div>
             <ProductCard
+                svg={false}
                 productData={productData}
                 customizationData={data}
                 totalPrice={`${currencySymbol}${addCommaToNumber(totalPrice)}`}

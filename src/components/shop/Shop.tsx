@@ -27,7 +27,7 @@ function Shop(props) {
     return (
         <section className="shop-section w-full min-h-screen flex flex-col xl:flex-row items-start gap-4 sm:gap-6 xl:gap-[1.25vw] p-2 sm:p-6 xl:p-[1.25vw]" id="shop">
             <div className="w-full xl:w-[23.438vw] flex flex-col xl:gap-6 text-[--Black] shrink-0">
-                <div className="w-full flex flex-col gap-4 p-6 sm:p-6 xl:p-[1.25vw] border border-[--Black] rounded-48">
+                {/* <div className="w-full flex flex-col gap-4 p-6 sm:p-6 xl:p-[1.25vw] border border-[--Black] rounded-48">
                     <div className="flex flex-col gap-2">
                         <h5 className="text-lg uppercase">GET AN INSTANT PRICE</h5>
                         <p className="text-sm xl:w-[90%]">Enter window size for real-time pricing. Fine-tune later.</p>
@@ -61,45 +61,47 @@ function Shop(props) {
                     >
                         {calculating ? 'Calculating...' : 'Calculate'}
                     </Button>
-                </div>
+                </div> */}
                 {/* Sidebar info cards (large screens only) */}
                 <div className="hidden xl:flex flex-col gap-2">
                     <Instruction />
                 </div>
             </div>
             <div className="w-full flex flex-col gap-4 sm:gap-6 xl:gap-[1.25vw]">
-                {props.type !== 'double' && (
-                    <div className="w-full p-4 sm:py-[1.563vw] xl:py-[0.833vw] sm:px-[2.344vw] xl:p-[1.25vw] flex flex-col md:flex-row items-center justify-between gap-4 border border-[--Black] sm:rounded-full rounded-[32px]">
-                        <h6 className="text-md sm:block hidden text-black"></h6>
-                        {props.tags&&(
-                            <div className="relative flex sm:w-fit w-full shrink-0 ">
-                                <span className={`absolute top-0 transition w-[${100/(props.tags.length + 1)}%] sm:w-[14.648vw] xl:w-[9vw] h-full bg-[--primary] rounded-full`} style={{
-                                    left: selectedCategory === 'all' 
-                                        ? '0' 
-                                        : `${(props.tags.findIndex(tag => tag.toLowerCase() === selectedCategory) + 1) * (100/(props.tags.length + 1))}%`
-                                }} />
-                                <button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'all' ? 'text-[--white]' : ''}`}
-                                    onClick={() => setSelectedCategory('all')}>
-                                    All Products
-                                </button>
-                                {props.tags.map((tag)=>(
-                                    <button key={tag} className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === tag.toLowerCase() ? 'text-[--white]' : ''}`}
-                                        onClick={() => setSelectedCategory(tag.toLowerCase())}>
-                                        {tag}
+                {props.tags.length > 0 && (
+                    props.type !== 'double' && (
+                        <div className="w-full p-4 sm:py-[1.563vw] xl:py-[0.833vw] sm:px-[2.344vw] xl:p-[1.25vw] flex flex-col md:flex-row items-center justify-between gap-4 border border-[--Black] sm:rounded-full rounded-[32px]">
+                            <h6 className="text-md sm:block hidden text-black"></h6>
+                            {props.tags && (
+                                <div className="relative flex sm:w-fit w-full shrink-0 ">
+                                    <span className={`absolute top-0 transition w-[${100 / (props.tags.length + 1)}%] sm:w-[14.648vw] xl:w-[9vw] h-full bg-[--primary] rounded-full`} style={{
+                                        left: selectedCategory === 'all'
+                                            ? '0'
+                                            : `${(props.tags.findIndex(tag => tag.toLowerCase() === selectedCategory) + 1) * (100 / (props.tags.length + 1))}%`
+                                    }} />
+                                    <button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'all' ? 'text-[--white]' : ''}`}
+                                        onClick={() => setSelectedCategory('all')}>
+                                        All Products
                                     </button>
-                                ))}
-                                
-                            </div>
-                        )}
-                    </div>
+                                    {props.tags.map((tag) => (
+                                        <button key={tag} className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === tag.toLowerCase() ? 'text-[--white]' : ''}`}
+                                            onClick={() => setSelectedCategory(tag.toLowerCase())}>
+                                            {tag}
+                                        </button>
+                                    ))}
+
+                                </div>
+                            )}
+                        </div>
+                    )
                 )}
                 <div className="grid items-stretch grid-cols-12 gap-4 sm:gap-6 xl:gap-[1.25vw]">
                     {/*PRODUCT CARDS  */}
                     {loading && <div className="col-span-12 text-center py-8">Loading products...</div>}
                     {error && <div className="col-span-12 text-center py-8 text-red-500">{error}</div>}
                     {!loading && !error && products
-                        .filter(product => 
-                            selectedCategory === 'all' || 
+                        .filter(product =>
+                            selectedCategory === 'all' ||
                             (product.tags && product.tags.some(tag => tag.value.toLowerCase() === selectedCategory))
                         )
                         .map((product) => (

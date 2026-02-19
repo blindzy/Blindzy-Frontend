@@ -1,5 +1,5 @@
 export class CreateAddToCart {
-//   private baseUrl = import.meta.env.VITE_API_URL;
+  //   private baseUrl = import.meta.env.VITE_API_URL;
   private API_BASE = import.meta.env.VITE_API_URL || "https://api.blindzy.com"; // Medusa backend URL
   private API_BASE_KEY = import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY || "pk_618e1efe2b7d74576d7e072b76bd3c56d46ef94ede9463774e1c2b09c50f6bda"; // Medusa backend URL
 

@@ -11,7 +11,7 @@ import { Button } from "@lib/components/ui/button";
 import Separate from "@components/separate";
 import Measurement from "./measurement";
 import { createAddToCart } from '../../services/add-to-cart';
-import { interpolate2D, widthValues, dropValues, priceMatrix } from "./blind_interpolate";
+import { interpolate2D } from "./blind_interpolate";
 import { addCommaToNumber, getCurrencySymbol } from "./customization-utils";
 import { COLOR_OPTIONS } from "./customization-constants";
 import type { UserData, CustomizationDataItem } from "./customization-types";
@@ -58,10 +58,11 @@ const productOptions = [
 const colorOptions = COLOR_OPTIONS;
 
 
-function Single_blinds_customization(props) {
+function Single_blinds_customization({ data: propsData, groupData }) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const [measurements, setMeasurements] = useState({ roomName: '', width: 600, height: 1200 });
     const [selectedColor, setSelectedColor] = useState('');
+    const [svgColor, setSvgColor] = useState('#4A4A4A');
     const [chainColour, setChainColour] = useState('');
     const [bracketColour, setBracketColour] = useState('');
     const [baseRailColour, setBaseRailColour] = useState('');
@@ -73,7 +74,7 @@ function Single_blinds_customization(props) {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [userData, setUserData] = useState<UserData | null>(null);
-    const [productData, setProductData] = useState(props.data);
+    const [productData, setProductData] = useState(propsData);
     const [data, setData] = useState([
         { 'title': 'Colour', 'value': selectedColor },
         { 'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : '' },
@@ -101,10 +102,14 @@ function Single_blinds_customization(props) {
         const dropMm = Math.round(Number(measurements.height));
 
         // Check ranges (in mm)
-        const minWidth = Math.min(...widthValues);
-        const maxWidth = Math.max(...widthValues);
-        const minDrop = Math.min(...dropValues);
-        const maxDrop = Math.max(...dropValues);
+        const currentWidthValues = groupData?.Width_values || [];
+        const currentDropValues = groupData?.Drop_values || [];
+        const currentPriceMatrix = groupData?.Price_groups || [];
+
+        const minWidth = Math.min(...currentWidthValues);
+        const maxWidth = Math.max(...currentWidthValues);
+        const minDrop = Math.min(...currentDropValues);
+        const maxDrop = Math.max(...currentDropValues);
 
         if (widthMm < minWidth || widthMm > maxWidth) {
             setError(`Width must be between ${minWidth} mm and ${maxWidth} mm`)
@@ -118,7 +123,7 @@ function Single_blinds_customization(props) {
             return
         }
 
-        const price = interpolate2D(widthMm, dropMm, widthValues, dropValues, priceMatrix[priceGroup])
+        const price = interpolate2D(widthMm, dropMm, currentWidthValues, currentDropValues, currentPriceMatrix[priceGroup])
         // console.log("Calculated Price:", price);
         if (price === null) {
             setError("Unable to calculate price for these dimensions")
@@ -160,7 +165,7 @@ function Single_blinds_customization(props) {
                 // if(defaultGroup >= 1){
                 //     defaultGroup = defaultGroup - 1;
                 // }
-                setPriceGroup(Math.max(0, defaultGroup));
+                // setPriceGroup(Math.max(0, defaultGroup));
             }
         }
     }, [productData, priceGroup]);
@@ -190,6 +195,27 @@ function Single_blinds_customization(props) {
     };
 
 
+    // Extract random pixel color from the selected blind color image
+    const extractColorFromImage = (imageUrl: string) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return;
+            ctx.drawImage(img, 0, 0);
+            const cx = Math.floor(img.width * 0.25 + Math.random() * img.width * 0.5);
+            const cy = Math.floor(img.height * 0.25 + Math.random() * img.height * 0.5);
+            const pixel = ctx.getImageData(cx, cy, 1, 1).data;
+            const hex = `#${pixel[0].toString(16).padStart(2, '0')}${pixel[1].toString(16).padStart(2, '0')}${pixel[2].toString(16).padStart(2, '0')}`;
+            setSvgColor(hex);
+        };
+        img.onerror = () => setSvgColor('#4A4A4A');
+        img.src = imageUrl;
+    };
+
     // Update color in data array when selectedColor changes
     useEffect(() => {
         setData(prev =>
@@ -208,6 +234,18 @@ function Single_blinds_customization(props) {
         // Calculate total price based on area
         var group = calculateBaseGroup();
         setPriceGroup(Math.max(0, group - 1));
+
+        // Extract color from selected color image for SVG
+        // selectedColor format: "{fabricName} - {tag} - {colorName}" e.g. "phantom - blockout - breeze"
+        if (selectedColor) {
+            const parts = selectedColor.split(' - ');
+            if (parts.length >= 3) {
+                const fabricName = parts[0].trim().toLowerCase().replace(/\s+/g, '_');
+                const colorName = parts[2].trim().toLowerCase();
+                const imageUrl = `/images/product-colors-image/blinds-fabric/${fabricName}/${colorName}.jpg`;
+                extractColorFromImage(imageUrl);
+            }
+        }
 
     }, [selectedColor, chainColour, bracketColour, baseRailColour, productData?.variants, measurements.width, measurements.height]);
 
@@ -327,7 +365,7 @@ function Single_blinds_customization(props) {
                     {/* <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p> */}
                 </div>
                 {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
-                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={Math.min(...widthValues)} widthMax={Math.max(...widthValues)} heightMin={Math.min(...dropValues)} heightMax={Math.max(...dropValues)} />
+                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={Math.min(...(groupData?.Width_values || []))} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
                 {productData?.options?.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate />
@@ -402,9 +440,11 @@ function Single_blinds_customization(props) {
                 </div>
             </div>
             <ProductCard
+                svg={true}
                 productData={productData}
                 customizationData={data}
-                totalPrice={`${'A$'}${addCommaToNumber(totalPrice)}`}
+                totalPrice={`${currencySymbol}${addCommaToNumber(totalPrice)}`}
+                svgColor={svgColor}
             />
         </section>
     );

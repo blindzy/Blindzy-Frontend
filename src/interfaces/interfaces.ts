@@ -13,3 +13,8 @@ export interface BlogData {
   subTitle?: string;
   description?: string;
 }
+export interface GroupData {
+  Width_values?: any[];
+  Drop_values?: any[];
+  Price_groups?: any[];
+}
