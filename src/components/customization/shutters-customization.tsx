@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
-import SelectColor from "./selectdefultColor";
+import SelectDefultColor from "./selectdefultColor";
 import SelectVarient from "./selectVarient";
 import ProductCard from "./ProductCard";
 import { Checkbox } from "@lib/components/ui/checkbox";
@@ -10,7 +10,7 @@ import { Button } from "@lib/components/ui/button";
 import Separate from "@components/separate";
 import Measurement from "./measurement";
 import { createAddToCart } from '../../services/add-to-cart';
-import { interpolate2D } from "./shutter-interpolate";
+import { interpolate2D } from "./interpolate";
 import { addCommaToNumber, getCurrencySymbol } from "./customization-utils";
 
 
@@ -279,7 +279,7 @@ function Shutters_customization({ data: propsData, groupData }) {
                 {productData?.options?.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate />
-                        <SelectColor
+                        <SelectDefultColor
                             data={option}
                             title={'Colour'}
                             colorsType={'shutter'}

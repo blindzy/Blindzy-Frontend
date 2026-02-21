@@ -6,28 +6,33 @@ import ShopComponent from "@components/shop/Shop";
 import Footer from "@components/Footer/Footer";
 import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 
-
 const productsData = await fetchMedusaApi<any>({
   endpoint: "store/products/custom",
 });
 const filteredProducts = (productsData?.products || []).filter((product) => {
   const isSingleType = product.type?.value === "single";
   const hasBlindsCategory = product.categories?.some(
-    (cat) => cat.name?.toLowerCase() === "blinds"
+    (cat) => cat.name?.toLowerCase() === "blinds",
   );
 
   return isSingleType && hasBlindsCategory;
 });
-const tags = [
-  'Blockout',
-  'Light Filtering',
-  'Sunscreen',
-];
+const tags = ["Blockout", "Light Filtering", "Sunscreen"];
 ---
 
 <Layout>
-      <Navbar client:load logo="dark"/>
-      <InnerBanner client:load title="BLINDS SHOP" content="Beautiful Designer Blinds you Can Install in 20 Minutes"/>
-      <ShopComponent client:load data={filteredProducts} customizePage="blinds/single" tags={tags} type="single"/>
-      <Footer client:visible/>
+  <Navbar client:load logo="dark" />
+  <InnerBanner
+    client:load
+    title="BLINDS SHOP"
+    content="Beautiful Designer Blinds you Can Install in 20 Minutes"
+  />
+  <ShopComponent
+    client:load
+    data={filteredProducts}
+    customizePage="roller-blinds"
+    tags={tags}
+    type="single"
+  />
+  <Footer client:visible />
 </Layout>

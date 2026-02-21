@@ -59,7 +59,7 @@ function Navbar(props: NavbarProps) {
             dropdown: [
                 {
                     Name: 'Roller Blinds',
-                    Link: '/blinds/single'
+                    Link: '/blinds/roller-blinds'
                 },
                 // {
                 //     Name : 'Vertical Blinds',

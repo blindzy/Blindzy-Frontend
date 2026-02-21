@@ -10,7 +10,7 @@ import { Button } from "@lib/components/ui/button";
 import Separate from "@components/separate";
 import Measurement from "./measurement";
 import { createAddToCart } from '../../services/add-to-cart';
-import { interpolate2D } from "./curtain_interpolate";
+import { interpolate2D } from "./interpolate";
 import { addCommaToNumber, getCurrencySymbol } from "./customization-utils";
 import type { UserData, CustomizationDataItem } from "./customization-types";
 
