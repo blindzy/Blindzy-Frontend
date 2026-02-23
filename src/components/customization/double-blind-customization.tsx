@@ -140,8 +140,8 @@ const blackoutColours = {
 function Double_blind_customization({ data: propsData, groupData }) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
-    const [measurements, setMeasurements] = useState({ roomName: '', width: 600, height: 2000 });
-    const [screenMeasurements, setScreenMeasurements] = useState({ roomName: '', width: 600, height: 2000 });
+    const [measurements, setMeasurements] = useState({ roomName: '', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
+    const [screenMeasurements, setScreenMeasurements] = useState({ roomName: '', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
     const [blackoutFabric, setBlackoutFabric] = useState('');
     const [blackoutColour, setBlackoutColour] = useState('');
     const [screenBlindFabric, setSheerFabric] = useState('');

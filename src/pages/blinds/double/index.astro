@@ -5,7 +5,17 @@ import InnerBanner from "@components/inner-banner/innerBanner";
 import ShopComponent from "@components/shop/Shop";
 import Footer from "@components/Footer/Footer";
 import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
+import fetchApi from "@lib/strapi";
+import type { GroupData } from "@interfaces/interfaces";
 
+async function getData() {
+  const groupData = await fetchApi<GroupData>({
+    endpoint: "blind-price?populate=*",
+    wrappedByKey: "data",
+  });
+  return { groupData };
+}
+const { groupData } = await getData();
 
 const productsData = await fetchMedusaApi<any>({
   endpoint: "store/products/custom",
@@ -13,23 +23,28 @@ const productsData = await fetchMedusaApi<any>({
 const filteredProducts = (productsData?.products || []).filter((product) => {
   const isSingleType = product.type?.value === "double";
   const hasBlindsCategory = product.categories?.some(
-    (cat) => cat.name?.toLowerCase() === "blinds"
+    (cat) => cat.name?.toLowerCase() === "blinds",
   );
 
   return isSingleType && hasBlindsCategory;
 });
-const tags = [
-  'Blockout',
-  'Light Filtering',
-  'Sunscreen',
-];
-
-
+const tags = ["Blockout", "Light Filtering", "Sunscreen"];
 ---
 
 <Layout>
-      <Navbar client:load logo="dark"/>
-      <InnerBanner client:load title="Double Roller BLINDS SHOP" content="Beautiful Designer Double Roller Blinds You Can Install in 20 Minutes"/>
-      <ShopComponent client:load data={filteredProducts} customizePage="blinds/double" tags={tags} type="double"/>
-      <Footer client:visible/>
+  <Navbar client:load logo="dark" />
+  <InnerBanner
+    client:load
+    title="Double Roller BLINDS SHOP"
+    content="Beautiful Designer Double Roller Blinds You Can Install in 20 Minutes"
+  />
+  <ShopComponent
+    data={filteredProducts}
+    groupData={groupData}
+    customizePage="blinds/double"
+    tags={tags}
+    type="double"
+    client:load
+  />
+  <Footer client:visible />
 </Layout>

@@ -41,7 +41,7 @@ const productOptions = [
 function Shutters_customization({ data: propsData, groupData }) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
-    const [measurements, setMeasurements] = useState({ roomName: '', width: 600, height: 1800 });
+    const [measurements, setMeasurements] = useState({ roomName: '', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
     const [selectedColor, setSelectedColor] = useState('');
     const [priceGroup, setPriceGroup] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);

@@ -1,114 +1,112 @@
-import React, { useEffect, useState } from "react";
-import { Button } from "@lib/components/ui/button";
-import { Label } from "@lib/components/ui/label";
+import React, { useState } from "react";
 import ProductComponent from './product';
 import Instruction from './instruction';
+import Measurement from './measurement';
 
-
-
-
-
-
-function Shop(props) {
+function Shop({ data, groupData, tags, type, customizePage }) {
     const [selectedCategory, setSelectedCategory] = useState('all');
-    const [products, setProducts] = useState(props.data);
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState('');
-    const [dimensions, setDimensions] = useState({ width: '', height: '' });
+    const [products] = useState(data);
+    const [loading] = useState(false);
+    const [error] = useState('');
     const [calculating, setCalculating] = useState(false);
-    const [size, setSize] = useState(1);
-    console.log('Products in Shop:', products);
-    const handleCalculate = () => {
-        const sqMeter = parseFloat(dimensions.width) * parseFloat(dimensions.height);
-        setSize(sqMeter);
-    };
 
+    const widthValues = groupData?.Width_values || [];
+    const dropValues = groupData?.Drop_values || [];
+
+    const ranges = React.useMemo(() => ({
+        widthMin: Math.min(...widthValues),
+        widthMax: Math.max(...widthValues),
+        heightMin: Math.min(...dropValues),
+        heightMax: Math.max(...dropValues),
+    }), [widthValues, dropValues]);
+
+    const [measurements, setMeasurements] = useState({
+        roomName: '',
+        width: ranges.widthMin,
+        height: ranges.heightMin
+    });
+    const [appliedMeasurements, setAppliedMeasurements] = useState(measurements);
+
+    const handleCalculate = React.useCallback(() => {
+        setCalculating(true);
+        setAppliedMeasurements(measurements);
+        setTimeout(() => {
+            setCalculating(false);
+        }, 1000);
+    }, [measurements]);
+
+    const filteredProducts = React.useMemo(() => {
+        return products.filter(product =>
+            selectedCategory === 'all' ||
+            (product.tags && product.tags.some(tag => tag.value.toLowerCase() === selectedCategory))
+        );
+    }, [products, selectedCategory]);
 
     return (
         <section className="shop-section w-full min-h-screen flex flex-col xl:flex-row items-start gap-4 sm:gap-6 xl:gap-[1.25vw] p-2 sm:p-6 xl:p-[1.25vw]" id="shop">
             <div className="w-full xl:w-[23.438vw] flex flex-col xl:gap-6 text-[--Black] shrink-0">
-                {/* <div className="w-full flex flex-col gap-4 p-6 sm:p-6 xl:p-[1.25vw] border border-[--Black] rounded-48">
-                    <div className="flex flex-col gap-2">
-                        <h5 className="text-lg uppercase">GET AN INSTANT PRICE</h5>
-                        <p className="text-sm xl:w-[90%]">Enter window size for real-time pricing. Fine-tune later.</p>
-                    </div>
-                    <div className="w-full flex items-center gap-2 py-2 px-3 border border-[--Black] rounded-full">
-                        <Label htmlFor="Width" className="shrink-0">Width: <span className="text-xs">(m)</span></Label>
-                        <input
-                            type="number"
-                            id="Width"
-                            className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
-                            value={dimensions.width}
-                            onChange={(e) => setDimensions({ ...dimensions, width: e.target.value })}
-                        />
-                    </div>
-                    <div className="w-full flex items-center gap-2 py-2 px-3 border border-[--Black] rounded-full">
-                        <Label htmlFor="Height" className="shrink-0">Height: <span className="text-xs">(m)</span></Label>
-                        <input
-                            type="number"
-                            id="Height"
-                            className="w-full bg-transparent border-none shadow-none outline-none text-sm text-[--Black]"
-                            value={dimensions.height}
-                            onChange={(e) => setDimensions({ ...dimensions, height: e.target.value })}
-                        />
-                    </div>
-                    <Button
-                        variant={'primary'}
-                        size={'small'}
-                        className="w-full"
-                        onClick={handleCalculate}
-                        disabled={!dimensions.width || !dimensions.height || calculating}
-                    >
-                        {calculating ? 'Calculating...' : 'Calculate'}
-                    </Button>
-                </div> */}
-                {/* Sidebar info cards (large screens only) */}
+                <Measurement
+                    handleCalculate={handleCalculate}
+                    calculating={calculating}
+                    measurements={measurements}
+                    setMeasurements={setMeasurements}
+                    widthMin={ranges.widthMin}
+                    widthMax={ranges.widthMax}
+                    heightMin={ranges.heightMin}
+                    heightMax={ranges.heightMax}
+                />
                 <div className="hidden xl:flex flex-col gap-2">
                     <Instruction />
                 </div>
             </div>
-            <div className="w-full flex flex-col gap-4 sm:gap-6 xl:gap-[1.25vw]">
-                {props.tags.length > 0 && (
-                    props.type !== 'double' && (
-                        <div className="w-full p-4 sm:py-[1.563vw] xl:py-[0.833vw] sm:px-[2.344vw] xl:p-[1.25vw] flex flex-col md:flex-row items-center justify-between gap-4 border border-[--Black] sm:rounded-full rounded-[32px]">
-                            <h6 className="text-md sm:block hidden text-black"></h6>
-                            {props.tags && (
-                                <div className="relative flex sm:w-fit w-full shrink-0 ">
-                                    <span className={`absolute top-0 transition w-[${100 / (props.tags.length + 1)}%] sm:w-[14.648vw] xl:w-[9vw] h-full bg-[--primary] rounded-full`} style={{
-                                        left: selectedCategory === 'all'
-                                            ? '0'
-                                            : `${(props.tags.findIndex(tag => tag.toLowerCase() === selectedCategory) + 1) * (100 / (props.tags.length + 1))}%`
-                                    }} />
-                                    <button className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'all' ? 'text-[--white]' : ''}`}
-                                        onClick={() => setSelectedCategory('all')}>
-                                        All Products
-                                    </button>
-                                    {props.tags.map((tag) => (
-                                        <button key={tag} className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === tag.toLowerCase() ? 'text-[--white]' : ''}`}
-                                            onClick={() => setSelectedCategory(tag.toLowerCase())}>
-                                            {tag}
-                                        </button>
-                                    ))}
 
-                                </div>
-                            )}
+            <div className="w-full flex flex-col gap-4 sm:gap-6 xl:gap-[1.25vw]">
+                {tags.length > 0 && type !== 'double' && (
+                    <div className="w-full p-4 sm:py-[1.563vw] xl:py-[0.833vw] sm:px-[2.344vw] xl:p-[1.25vw] flex flex-col md:flex-row items-center justify-between gap-4 border border-[--Black] sm:rounded-full rounded-[32px]">
+                        <h6 className="text-md sm:block hidden text-black"></h6>
+                        <div className="relative flex sm:w-fit w-full shrink-0">
+                            <span
+                                className={`absolute top-0 transition h-full bg-[--primary] rounded-full`}
+                                style={{
+                                    width: `${100 / (tags.length + 1)}%`,
+                                    left: selectedCategory === 'all'
+                                        ? '0'
+                                        : `${(tags.findIndex(tag => tag.toLowerCase() === selectedCategory) + 1) * (100 / (tags.length + 1))}%`
+                                }}
+                            />
+                            <button
+                                className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === 'all' ? 'text-[--white]' : ''}`}
+                                onClick={() => setSelectedCategory('all')}
+                            >
+                                All Products
+                            </button>
+                            {tags.map((tag) => (
+                                <button
+                                    key={tag}
+                                    className={`relative z-[1] w-full sm:w-[14.648vw] xl:w-[9vw] text-sm py-3 px-1 xl:p-[0.833vw] text-center bg-transparent border-none outline-none shadow-none transition ${selectedCategory === tag.toLowerCase() ? 'text-[--white]' : ''}`}
+                                    onClick={() => setSelectedCategory(tag.toLowerCase())}
+                                >
+                                    {tag}
+                                </button>
+                            ))}
                         </div>
-                    )
+                    </div>
                 )}
+
                 <div className="grid items-stretch grid-cols-12 gap-4 sm:gap-6 xl:gap-[1.25vw]">
-                    {/*PRODUCT CARDS  */}
                     {loading && <div className="col-span-12 text-center py-8">Loading products...</div>}
                     {error && <div className="col-span-12 text-center py-8 text-red-500">{error}</div>}
-                    {!loading && !error && products
-                        .filter(product =>
-                            selectedCategory === 'all' ||
-                            (product.tags && product.tags.some(tag => tag.value.toLowerCase() === selectedCategory))
-                        )
-                        .map((product) => (
-                            <ProductComponent key={product.id} data={product} size={size} customizePage={props.customizePage} />
-                        ))
-                    }
+                    {!loading && !error && filteredProducts.map((product) => (
+                        <ProductComponent
+                            key={product.id}
+                            groupData={groupData}
+                            measurements={appliedMeasurements}
+                            data={product}
+                            customizePage={customizePage}
+                        />
+                    ))}
                 </div>
+
                 <div className="xl:hidden flex flex-col gap-2">
                     <Instruction />
                 </div>
@@ -118,4 +116,3 @@ function Shop(props) {
 }
 
 export default Shop;
-

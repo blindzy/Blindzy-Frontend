@@ -3,11 +3,11 @@ import { Button } from "@lib/components/ui/button";
 
 function Questions() {
 
-	useEffect(() => {
-	}, []);
+    useEffect(() => {
+    }, []);
 
-	return (
-		<section className="questions-section w-screen sm:h-screen flex items-center justify-center xl:py-[3.333vw] py-[6vh] xl:px-[1.25vw]" id="questions">
+    return (
+        <section className="questions-section w-screen sm:h-screen flex items-center justify-center xl:py-[3.333vw] py-[6vh] xl:px-[1.25vw]" id="questions">
             <div className="flex xl:flex-row flex-col-reverse xl:items-stretch xl:justify-between xl:gap-[1.25vw] w-full xl:px-2">
                 <div className="xl:w-full sm:w-[calc(100%-32px)] xl:h-[auto] sm:h-[42.969vw] h-[77.273vw] flex flex-col xl:gap-[2.5vw] sm:gap-[4.688vw] gap-[5.455vw] xl:items-start sm:items-center items-start  xl:text-left sm:text-center text-left sm:justify-center justify-between xl:p-[1.25vw] sm:p-[2.344vw] p-4 bg-primary rounded-48 shadow-shadow01 xl:mx-0 mx-4">
                     <div className="xl:w-fit sm:w-[70%] w-full flex flex-col gap-2">
@@ -32,7 +32,7 @@ function Questions() {
                         <img src="/images/questions/1.png" className="w-full xl:h-fit h-full object-cover" alt="" />
                         <div className="absolute left-0 top-0 size-full flex flex-col justify-between items-end xl:p-[1.25vw] sm:p-[2.344vw] p-[5.455vw] ">
                             <Button variant={"light"} size={"small"} asChild className="w-fit h-fit">
-                                <a href="/shutters" >
+                                <a href="/shutters" target="_blank">
                                     Shop Now
                                 </a>
                             </Button>
@@ -45,7 +45,7 @@ function Questions() {
                         <img src="/images/questions/2.png" className="w-full xl:h-fit h-full object-cover" alt="" />
                         <div className="absolute left-0 top-0 size-full flex flex-col justify-between items-end xl:p-[1.25vw] sm:p-[2.344vw] p-[5.455vw] ">
                             <Button variant={"light"} size={"small"} asChild className="w-fit h-fit">
-                                <a href="/blinds/single" >
+                                <a href="/blinds/roller-blinds" target="_blank">
                                     Shop Now
                                 </a>
                             </Button>
@@ -58,7 +58,7 @@ function Questions() {
                         <img src="/images/questions/3.png" className="w-full xl:h-fit h-full object-cover" alt="" />
                         <div className="absolute left-0 top-0 size-full flex flex-col justify-between items-end xl:p-[1.25vw] sm:p-[2.344vw] p-[5.455vw] ">
                             <Button variant={"light"} size={"small"} asChild className="w-fit h-fit">
-                                <a href="/curtains/single" >
+                                <a href="/curtains" target="_blank">
                                     Shop Now
                                 </a>
                             </Button>
@@ -70,8 +70,8 @@ function Questions() {
                 </div>
             </div>
 
-		</section>
-	);
+        </section>
+    );
 }
 
 export default Questions;

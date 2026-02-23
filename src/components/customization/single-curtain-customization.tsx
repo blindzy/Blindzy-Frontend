@@ -105,7 +105,7 @@ const productOptions = [
 function Single_curtain_customization({ data: propsData, groupData }) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
-    const [measurements, setMeasurements] = useState({ roomName: '', width: 2000, height: 3800 });
+    const [measurements, setMeasurements] = useState({ roomName: '', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
     const [selectedColor, setSelectedColor] = useState('');
     const [svgColor, setSvgColor] = useState('#4A4A4A');
     const [totalPrice, setTotalPrice] = useState(0);
@@ -176,7 +176,6 @@ function Single_curtain_customization({ data: propsData, groupData }) {
         }
 
         const price = interpolate2D(widthMm, dropMm, currentWidthValues, currentDropValues, currentPriceMatrix[priceGroup])
-        console.log("Calculated Price:", price, priceGroup);
         if (price === null) {
             setError("Unable to calculate price for these dimensions")
             setTotalPrice(0)
@@ -206,10 +205,8 @@ function Single_curtain_customization({ data: propsData, groupData }) {
 
             if (defaultVariant?.price_sets?.[0]?.prices?.[0]?.amount) {
                 var defaultGroup = defaultVariant.price_sets[0].prices[0].amount;
-                // if(defaultGroup >= 1){
-                //     defaultGroup = defaultGroup - 1;
-                // }
-                setPriceGroup(Math.max(0, defaultGroup));
+                console.log(defaultGroup - 1);
+                setPriceGroup(Math.max(0, defaultGroup - 1));
 
             }
         }
@@ -357,12 +354,12 @@ function Single_curtain_customization({ data: propsData, groupData }) {
         // setError('');
         // // Add your add to cart logic here
     }
-    const addCommaToNumber = (num) => {
-        return num.toLocaleString('en-US', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        });
-    }
+    // const addCommaToNumber = (num) => {
+    //     return num.toLocaleString('en-US', {
+    //         minimumFractionDigits: 2,
+    //         maximumFractionDigits: 2,
+    //     });
+    // }
 
     return (
         <section className="w-screen flex xl:flex-row flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-[64px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="ProductDetail">

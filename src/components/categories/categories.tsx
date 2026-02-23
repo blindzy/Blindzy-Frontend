@@ -10,32 +10,26 @@ import { Button } from "@lib/components/ui/button";
 const categoriesData = [
 	{
 		img: "/images/categories/1.png",
-		title: "Blinds",
+		title: "Roller Blinds",
+		link: "/blinds/roller-blinds",
 		desc: "Sleek and versatile, offering a simple and stylish way to control light and privacy in any room.",
 	},
 	{
 		img: "/images/categories/2.png",
 		title: "Curtains",
-		desc: "Sleek and versatile, offering a simple and stylish way to control light and privacy in any room.",
-	},
-	{
-		img: "/images/categories/3.png",
-		title: "Curtains",
-		desc: "Sleek and versatile, offering a simple and stylish way to control light and privacy in any room.",
-	},
-	{
-		img: "/images/categories/1.png",
-		title: "Curtains",
+		link: "/curtains",
 		desc: "Sleek and versatile, offering a simple and stylish way to control light and privacy in any room.",
 	},
 	{
 		img: "/images/categories/2.png",
-		title: "Curtains",
+		title: "Double Roller Blinds",
+		link: "/blinds/double",
 		desc: "Sleek and versatile, offering a simple and stylish way to control light and privacy in any room.",
 	},
 	{
 		img: "/images/categories/3.png",
-		title: "Curtains",
+		title: "Shutters",
+		link: "/shutters",
 		desc: "Sleek and versatile, offering a simple and stylish way to control light and privacy in any room.",
 	},
 ];
@@ -88,7 +82,7 @@ function Categories() {
 								/>
 								<div className="size-full flex flex-col justify-between relative z-10">
 									<Button variant={'light'} size={'large'} asChild className="w-fit ms-auto border-none">
-										<a href="/shop">
+										<a href={item.link} target="_blank">
 											Shop Now
 										</a>
 									</Button>

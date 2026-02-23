@@ -60,7 +60,7 @@ const colorOptions = COLOR_OPTIONS;
 
 function Single_blinds_customization({ data: propsData, groupData }) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
-    const [measurements, setMeasurements] = useState({ roomName: '', width: 600, height: 1200 });
+    const [measurements, setMeasurements] = useState({ roomName: '', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
     const [selectedColor, setSelectedColor] = useState('');
     const [svgColor, setSvgColor] = useState('#4A4A4A');
     const [chainColour, setChainColour] = useState('');
@@ -152,7 +152,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
     useEffect(() => {
         if (productData?.options?.[0]?.values?.[0]?.value && !selectedColor) {
             const defaultColor = productData.options[0].values[0].value;
-            // setSelectedColor(defaultColor);
+            setSelectedColor(defaultColor);
 
             // Find the variant with the default color and set its price
             const defaultVariant = productData?.variants?.find(
@@ -162,10 +162,9 @@ function Single_blinds_customization({ data: propsData, groupData }) {
 
             if (defaultVariant?.price_sets?.[0]?.prices?.[0]?.amount) {
                 var defaultGroup = defaultVariant.price_sets[0].prices[0].amount;
-                // if(defaultGroup >= 1){
-                //     defaultGroup = defaultGroup - 1;
-                // }
-                // setPriceGroup(Math.max(0, defaultGroup));
+                setPriceGroup(Math.max(0, defaultGroup - 1));
+                const code = defaultVariant?.price_sets?.[0]?.prices?.[0]?.currency_code || 'aud';
+                setCurrencySymbol(getCurrencySymbol(code));
             }
         }
     }, [productData, priceGroup]);

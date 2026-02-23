@@ -5,6 +5,17 @@ import InnerBanner from "@components/inner-banner/innerBanner";
 import ShopComponent from "@components/shop/Shop";
 import Footer from "@components/Footer/Footer";
 import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
+import fetchApi from "@lib/strapi";
+import type { GroupData } from "@interfaces/interfaces";
+
+async function getData() {
+  const groupData = await fetchApi<GroupData>({
+    endpoint: "shutter-price?populate=*",
+    wrappedByKey: "data",
+  });
+  return { groupData };
+}
+const { groupData } = await getData();
 
 const productsData = await fetchMedusaApi<any>({
   endpoint: "/store/products/custom",
@@ -12,7 +23,7 @@ const productsData = await fetchMedusaApi<any>({
 
 const filteredProducts = (productsData?.products || []).filter((product) => {
   const hasBlindsCategory = product.categories?.some(
-    (cat) => cat.name?.toLowerCase() === "shutters"
+    (cat) => cat.name?.toLowerCase() === "shutters",
   );
 
   return hasBlindsCategory;
@@ -25,8 +36,20 @@ const tags = [
 ---
 
 <Layout>
-      <Navbar client:load logo="dark"/>
-      <InnerBanner client:load title="Shutters SHOP" content="Beautiful Designer shutters You Can Install in 20 Minutes"/>
-      <ShopComponent client:load data={filteredProducts} customizePage="shutters" tags={tags} type=""/>
-      <Footer client:visible/>
-</Layout> 
+  <Navbar client:load logo="dark" />
+  <InnerBanner
+    client:load
+    title="Shutters SHOP"
+    content="Beautiful Designer shutters You Can Install in 20 Minutes"
+  />
+  <ShopComponent
+    client:load
+    data={filteredProducts}
+    customizePage="shutters"
+    tags={tags}
+    type=""
+    groupData={groupData}
+  />
+  <Footer client:visible />
+</Layout>
+
