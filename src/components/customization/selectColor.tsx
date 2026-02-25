@@ -95,7 +95,7 @@ function SelectColor(props) {
                     colorsOptions[color.value.toLowerCase().replace(/\s+/g, '_')]?.map((colorItem, i) => {
                         const optionValue = props.tag === '' ? colorItem.name : `${color.value} - ${props.tag} - ${colorItem.name}`;
                         return (
-                            <div key={i} className="flex items-center">
+                            <div key={i} className="flex flex-col gap-2 items-center">
                                 <RadioGroupItem value={optionValue} id={colorItem.id} className="hidden" />
                                 <label htmlFor={colorItem.id}
                                     className={`size-[55px] sm:size-[72px] xl:size-[85px] shrink-0 transition cursor-pointer p-1 sm:p-2 xl:p-2.5 rounded-[16px] sm:rounded-[18px] xl:rounded-[24px] outline
@@ -108,6 +108,7 @@ function SelectColor(props) {
                                         alt={colorItem.name}
                                     />
                                 </label>
+                                <span className="text-sm capitalize">{colorItem.name}</span>
                             </div>
                         );
                     })

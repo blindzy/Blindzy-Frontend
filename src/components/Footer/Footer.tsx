@@ -1,8 +1,19 @@
 ﻿import React, { } from "react";
 import './css/style.css';
 import { Icon } from '@iconify/react';
+import $ from 'jquery';
+
 
 function Footer() {
+
+    const handleNav = (id) => {
+        const $el = $(id);
+        const offset = $el.offset();
+        if (offset) {
+            const top = offset.top;
+            $('html, body').animate({ scrollTop: top }, 800);
+        }
+    }
 
     return (
         <section className="footer-section w-screen flex xl:flex-row flex-col items-stretch xl:gap-[1.25vw] sm:gap-4 gap-4 xl:pt-[17.4603vh] sm:pt-[10vh] pt-[6vh] xl:p-[1.25vw] sm:p-4 p-2 overflow-hidden" id="footer">
@@ -12,7 +23,9 @@ function Footer() {
                     <p className="text-sm text-white">Lorem ipsum dolor sit amet consectetur. Lacus commodo fusce at neque malesuada id et aliquam. Aliquam eleifend mattis a risus orci nunc pretium elementum sem. Porttitor enim elit enim in at. Proin eget tellus faucibus sem. At eros leo sed ut arcu in.</p>
                 </div>
                 <div className="flex sm:flex-row flex-col xl:items-stretch xl:gap-[1.25vw] sm:gap-4 gap-4">
-                    <a href="/shop" className="w-full xl:h-[17.4603vh] sm:h-[20vw] p-6 flex items-center justify-center gap-3 xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal bg-[--white] text-[--Black] transition hover:text-[--white] hover:bg-[--Black] sm:rounded-[48px] rounded-full">
+                    <button
+                        className="w-full xl:h-[17.4603vh] sm:h-[20vw] p-6 flex items-center justify-center gap-3 xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal bg-[--white] text-[--Black] transition hover:text-[--white] hover:bg-[--Black] sm:rounded-[48px] rounded-full"
+                        onClick={() => handleNav('#products')}>
                         <span>Browse Category</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
                             <path d="M11.1109 5.38867H6.66645C5.68462 5.38867 4.88867 6.18462 4.88867 7.16645V11.6109C4.88867 12.5927 5.68462 13.3887 6.66645 13.3887H11.1109C12.0927 13.3887 12.8887 12.5927 12.8887 11.6109V7.16645C12.8887 6.18462 12.0927 5.38867 11.1109 5.38867Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -21,7 +34,7 @@ function Footer() {
                             <path d="M23.1113 27.6108C25.3204 27.6108 27.1113 25.8199 27.1113 23.6108C27.1113 21.4018 25.3204 19.6108 23.1113 19.6108C20.9023 19.6108 19.1113 21.4018 19.1113 23.6108C19.1113 25.8199 20.9023 27.6108 23.1113 27.6108Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             <path d="M25.9023 26.4766L28.8143 29.3886" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                         </svg>
-                    </a>
+                    </button>
                     <a href="/contact" className="w-full xl:h-[17.4603vh] sm:h-[20vw] p-6 flex items-center justify-center gap-3 xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal bg-[--Black] text-[--white] transition hover:text-[--Black] hover:bg-[--white] sm:rounded-[48px] rounded-full">
                         <span>Contact Us</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">

@@ -230,9 +230,16 @@ function Double_blind_customization({ data: propsData, groupData }) {
     useEffect(() => {
         const blockoutPrice = calculatePrice(blackoutGroup, measurements.width, measurements.height);
         const screenPrice = calculatePrice(screenGroup, screenMeasurements.width, screenMeasurements.height);
-        const price = blockoutPrice + screenPrice;
+        let price = blockoutPrice + screenPrice;
+
+        const rollDirection = data.find(item => item.title === 'Roll Direction')?.value;
+        console.log(rollDirection);
+        if (rollDirection) {
+            price += 30;
+        }
+
         setTotalPrice(price);
-    }, [measurements.width, screenMeasurements.width, measurements.height, screenMeasurements.height, blackoutGroup, screenGroup]);
+    }, [measurements.width, screenMeasurements.width, measurements.height, screenMeasurements.height, blackoutGroup, screenGroup, data]);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);

@@ -2,14 +2,14 @@ import React, { useEffect, useState } from "react";
 import { RadioGroup, RadioGroupItem } from "@lib/components/ui/radio-group";
 
 const colorsOptions = {
-    phantom:[
-        'breeze','lunar','mercury','midnight','mocha','quartz','snow'
+    phantom: [
+        'breeze', 'lunar', 'mercury', 'midnight', 'mocha', 'quartz', 'snow'
     ],
 };
 
 
 function SelectColor(props) {
-    
+
     const [selected, setSelected] = useState(props.selectedColor || '');
 
     const handleColorChange = (value) => {
@@ -29,7 +29,7 @@ function SelectColor(props) {
             </div>
             <RadioGroup className="flex flex-wrap items-stretch gap-2" value={selected} onValueChange={handleColorChange}>
                 {props.data?.values.map((color, index) => (
-                    <div key={index} className="flex items-center">
+                    <div key={index} className="flex flex-col gap-2 items-center">
                         <RadioGroupItem value={color.color ? color.name : color.value} id={color.id} className="hidden" />
                         <label
                             htmlFor={color.id}
@@ -42,7 +42,7 @@ function SelectColor(props) {
                                     style={{ backgroundColor: color.color ? color.color : 'transparent' }}
                                 />
                             ) : (
-                                props.colorsType === 'shutter' ?(
+                                props.colorsType === 'shutter' ? (
                                     <div className=" size-full rounded-[12px] sm:rounded-[14px] xl:rounded-[16px] border border-[--lightGrey] overflow-hidden"
                                         style={{ backgroundColor: color.value ? color.value : 'transparent' }}
                                     />
@@ -57,10 +57,11 @@ function SelectColor(props) {
                                         className="size-full object-cover rounded-[12px] sm:rounded-[14px] xl:rounded-[16px] overflow-hidden"
                                         alt={color.value}
                                     />
-                                    
+
                                 )
                             )}
                         </label>
+                        <span className="text-sm capitalize">{color.value}</span>
                     </div>
                 ))}
             </RadioGroup>

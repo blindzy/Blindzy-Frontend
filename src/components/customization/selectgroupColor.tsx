@@ -23,7 +23,7 @@ function SelectColor(props) {
             </div>
             <RadioGroup className="flex flex-wrap items-stretch gap-2" value={selected} onValueChange={handleColorChange}>
                 {props.data?.values.map((color, index) => (
-                    <div key={index} className="flex items-center">
+                    <div key={index} className="flex flex-col gap-2 items-center">
                         <RadioGroupItem value={color.color ? color.name : color.value} id={color.id} className="hidden" />
                         <label
                             htmlFor={color.id}
@@ -56,6 +56,7 @@ function SelectColor(props) {
                                 />
                             )}
                         </label>
+                        <span className="text-sm capitalize">{color.value}</span>
                     </div>
                 ))}
             </RadioGroup>

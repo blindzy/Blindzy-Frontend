@@ -29,7 +29,7 @@ const productsData = [
 
 function Products() {
     return (
-        <section className="product-section relative w-screen xl:h-screen flex items-center justify-center z-[10] xl:py-0 sm:py-[6.25vw] py-[64px]" id="product">
+        <section className="product-section relative w-screen xl:h-screen flex items-center justify-center z-[10] xl:py-0 sm:py-[6.25vw] py-[64px]" id="products">
             <div className="w-full flex items-center xl:justify-center xl:gap-[1.25vw] sm:gap-[16px] gap-4 xl:px-[1.25vw] sm:px-6 px-2 xl:overflow-hidden overflow-auto scroll-hidden">
                 {productsData.map((product, index) => (
                     <a
