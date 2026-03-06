@@ -233,7 +233,6 @@ function Double_blind_customization({ data: propsData, groupData }) {
         let price = blockoutPrice + screenPrice;
 
         const rollDirection = data.find(item => item.title === 'Roll Direction')?.value;
-        console.log(rollDirection);
         if (rollDirection) {
             price += 30;
         }

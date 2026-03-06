@@ -8,6 +8,7 @@ node_modules/
 dist/
 .vercel/
 .astro/
+.env/
 
 # Compiled Java class files
 *.class
