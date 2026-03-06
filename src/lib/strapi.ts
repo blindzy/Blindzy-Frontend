@@ -23,7 +23,8 @@ interface Props {
       endpoint = endpoint.slice(1);
     }
   
-    const url = new URL(`https://strapi.blindzy.com/api/${endpoint}`);
+    const strapiUrl = import.meta.env.PUBLIC_STRAPI_API_URL;
+    const url = new URL(`${strapiUrl}/api/${endpoint}`);
     if (query) {
         Object.entries(query).forEach(([key, value]) => {
             url.searchParams.append(key, value);

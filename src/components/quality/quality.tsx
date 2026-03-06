@@ -83,7 +83,7 @@ function Quality() {
                         <div className="bg xl:h-[10.573vw] relative flex items-center xl:gap-[1.25vw] sm:gap-4 gap-[2.036vw]">
                             <img src="/images/icon/fabricpattern.png" className="sm:w-fit w-[16.285vw] object-scale-down mbl:w-[11.163vw]" alt="fabricpattern" />
                             <div className="flex flex-col xl:gap-[0.833vw] sm:gap-4 gap-2">
-                                <h4 className="text-xl xl:text-2xl text-black mbl:font-bold mbl:text-[4.884vw]">Chose Samples</h4>
+                                <h4 className="text-xl xl:text-2xl text-black mbl:font-bold mbl:text-[4.884vw]">Choose Samples</h4>
                                 <p className="text-md lg:text-lg xl:text-xl xl:line-clamp-2 mbl:font-normal mbl:text-xs mbl:pr-2">Receive free samples from us to help select and customise your home.</p>
                             </div>
                         </div>

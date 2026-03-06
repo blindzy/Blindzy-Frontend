@@ -51,10 +51,10 @@ function Footer() {
                 <div className="w-full h-full flex sm:flex-row flex-col justify-between xl:text-left text-center xl:gap-[1.25vw] sm:gap-4 gap-6 xl:p-[1.25vw] sm:p-[2.344vw] p-6 bg-white border border-[--Black] rounded-48">
                     <div className="w-full flex flex-col gap-3 text-black">
                         <h6 className="xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal ">SITE MAP</h6>
-                        <a href="/about" className="text-sm hover:text-primary">ABOUT US</a>
-                        <a href="/contact" className="text-sm hover:text-primary">CONTACT US</a>
-                        <a href="/privacy-policy" className="text-sm hover:text-primary">TERMS & CONDITIONS</a>
-                        <a href="/privacy-policy" className="text-sm hover:text-primary">PRIVACY POLICY</a>
+                        <a href="/about" className="text-sm hover:text-primary uppercase">ABOUT US</a>
+                        <a href="/contact" className="text-sm hover:text-primary uppercase">CONTACT US</a>
+                        <a href="/privacy-policy" className="text-sm hover:text-primary uppercase">TERMS & CONDITIONS</a>
+                        <a href="/privacy-policy" className="text-sm hover:text-primary uppercase">PRIVACY POLICY</a>
                     </div>
                     <div className="flex sm:flex-col items-center gap-2 shrink-0">
                         <Icon icon="uil:plus" className="text-[18px] text-black" />
@@ -63,9 +63,9 @@ function Footer() {
                     </div>
                     <div className="w-full flex flex-col gap-3 text-black">
                         <h6 className="xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal ">CATEGORIES</h6>
-                        <a href="/curtains" className="text-sm hover:text-primary">curtains</a>
-                        <a href="/blinds/roller-blinds" className="text-sm hover:text-primary">Roller Blinds</a>
-                        <a href="/blinds/double" className="text-sm hover:text-primary">Double Roller Blinds</a>
+                        <a href="/curtains" className="text-sm hover:text-primary uppercase">curtains</a>
+                        <a href="/blinds/roller-blinds" className="text-sm hover:text-primary uppercase">Roller Blinds</a>
+                        <a href="/blinds/double" className="text-sm hover:text-primary uppercase">Double Roller Blinds</a>
                     </div>
                     <div className="flex sm:flex-col items-center gap-2 shrink-0">
                         <Icon icon="uil:plus" className="text-[18px] text-black" />
@@ -103,41 +103,19 @@ function Footer() {
                         <Icon icon="uil:plus" className="text-[18px] text-black" />
                     </div>
                     <div className="sm:hidden flex items-center justify-center gap-2">
-                        <a href="">
-                            <img src="/images/afterPay.png" alt="afterPay" />
-                        </a>
-                        <a href="">
-                            <img src="/images/visa.png" alt="visa" />
-                        </a>
-                        <a href="">
-                            <img src="/images/ipple-pay.png" alt="ipple-pay" />
-                        </a>
-                        <a href="">
-                            <img src="/images/master-card.png" alt="master-card" />
-                        </a>
-                        <a href="">
-                            <img src="/images/pay-pal.png" alt="pay-pal" />
-                        </a>
+                        <span>
+                            <img src="/images/stripe.png" alt="stripe" />
+                        </span>
                     </div>
                 </div>
                 <div className="w-full flex sm:flex-row flex-col sm:gap-0 gap-4 items-center justify-between  xl:p-[1.25vw] sm:p-[2.344vw] p-6 bg-white border border-[--Black] rounded-24">
-                    <p className="text-sm text-black uppercase">©2024 All Rights Reserved</p>
+                    <p className="text-sm text-black uppercase">
+                        ©2026 All Rights Reserved
+                    </p>
                     <div className="hidden sm:flex items-center gap-2">
-                        <a href="">
-                            <img src="/images/afterPay.png" alt="afterPay" />
-                        </a>
-                        <a href="">
-                            <img src="/images/visa.png" alt="visa" />
-                        </a>
-                        <a href="">
-                            <img src="/images/ipple-pay.png" alt="ipple-pay" />
-                        </a>
-                        <a href="">
-                            <img src="/images/master-card.png" alt="master-card" />
-                        </a>
-                        <a href="">
-                            <img src="/images/pay-pal.png" alt="pay-pal" />
-                        </a>
+                        <span>
+                            <img src="/images/stripe.png" alt="stripe" />
+                        </span>
                     </div>
                     <div className="w-full sm:hidden flex items-center gap-2 shrink-0">
                         <Icon icon="uil:plus" className="text-[18px] text-black" />
@@ -145,7 +123,9 @@ function Footer() {
                         <Icon icon="uil:plus" className="text-[18px] text-black" />
                     </div>
                     <div className="flex items-center gap-2">
-                        <p className="text-sm text-black uppercase">©2024 All Rights Reserved</p>
+                        <p className="text-sm text-black uppercase">
+                            Designed & Developed by
+                        </p>
                         <a href="aithur.com" className="text-[--Black] hover:text-[--primary] transition">
                             <svg xmlns="http://www.w3.org/2000/svg" className="sm:w-[92px] sm:h-[24px] w-[56px] h-[18px]" width="92" height="24" viewBox="0 0 92 24" fill="none">
                                 <g clipPath="url(#clip0_30_1229)">

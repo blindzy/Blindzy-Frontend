@@ -1,6 +1,6 @@
 export class ForgotPasswordService {
-  private baseUrl = import.meta.env.VITE_API_URL || "https://api.blindzy.com"; // Medusa backend URL
-  private baseUrl_KEY = import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY || "pk_618e1efe2b7d74576d7e072b76bd3c56d46ef94ede9463774e1c2b09c50f6bda"; // Medusa backend URL
+  private baseUrl = import.meta.env.VITE_API_URL ; // Medusa backend URL
+  private baseUrl_KEY = import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY ; // Medusa backend URL
 
   private async medusaRequest<T>(endpoint: string, options: RequestInit): Promise<T> {
     const res = await fetch(`${this.baseUrl}${endpoint}`, {
