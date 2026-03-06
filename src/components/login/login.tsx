@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { EyeClosed , Eye } from 'lucide-react';
-import {ForgetPasswordPopup} from './forget-password';
+import { sdk } from "../../lib/sdk";
+import { EyeClosed, Eye } from 'lucide-react';
+
+import { ForgetPasswordPopup } from './forget-password';
 import Separate from '@components/separate';
 import { Input } from '@lib/components/ui/input';
 import { Button } from '@lib/components/ui/button';
@@ -18,6 +20,19 @@ function Login() {
     const [forgotError, setForgotError] = useState('');
     const [showPassword, setShowPassword] = useState(false);
 
+    const loginWithGoogle = async () => {
+        const result = await sdk.auth.login("customer", "google", {})
+
+        if (typeof result === "object" && result.location) {
+            // redirect to Google for authentication
+            window.location.href = result.location
+
+            return
+        }
+
+        alert("Authentication failed")
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
@@ -25,13 +40,21 @@ function Login() {
         setSuccess("");
 
         try {
-        const response = await login.login(email, password);
-        console.log("Login success:", response);
+            const response = await login.login(email, password);
+            console.log("Login success:", response);
 
-        setSuccess("Login successful!");
+            // Save user data and email to localStorage
+            if (typeof window !== "undefined") {
+                localStorage.setItem("user", JSON.stringify(response.customer));
+                localStorage.setItem("userEmail", response.customer.email);
+                localStorage.setItem("access_token", response.token);
+            }
 
-        // Redirect after success
-        window.location.href = "/user"; 
+            setSuccess("Login successful!");
+            // login.login handles redirect, but we ensure it happens
+            setTimeout(() => {
+                window.location.href = "/user";
+            }, 300);
         } catch (err: any) {
             console.error("Login error:", err);
             setError(err.message || "Something went wrong, please try again.");
@@ -41,7 +64,7 @@ function Login() {
     };
 
     const handleForgotPassword = async () => {
-        if(!email) {
+        if (!email) {
             setForgotError("Please input email");
             return;
         }
@@ -99,7 +122,7 @@ function Login() {
                                     required
                                 />
                                 <span onClick={() => setShowPassword(!showPassword)} className="cursor-pointer absolute top-0 right-0 w-fit h-full flex items-center pr-6 transition text-[16px] text-[--black] hover:text-[--primary]">
-                                    {showPassword ? <Eye className="size-[18px]"/> : <EyeClosed className="size-[18px]"/>}
+                                    {showPassword ? <Eye className="size-[18px]" /> : <EyeClosed className="size-[18px]" />}
                                 </span>
                             </div>
                             <div className="w-full flex flex-col gap-2">
@@ -132,17 +155,18 @@ function Login() {
                         <p className="text-sm shrink-0">or</p>
                         <div className="w-full h-[1px] bg-mediumGrey"></div>
                     </div>
-                    {/* <Button 
+                    <Button
                         variant={'light'}
                         size={'large'}
                         className="w-full"
+                        onClick={loginWithGoogle}
                     >
-                        <Icon icon="flat-color-icons:google" className="text-[28px] shrink-0" />
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-chromium-icon lucide-chromium"><path d="M10.88 21.94 15.46 14" /><path d="M21.17 8H12" /><path d="M3.95 6.06 8.54 14" /><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="4" /></svg>
                         <span className="text-sm">Continue as Google</span>
-                    </Button> */}
+                    </Button>
                     <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0">
                         <div className="flex items-center gap-2 shrink-0">
-                            <Checkbox id="measurements-checked"/>
+                            <Checkbox id="measurements-checked" />
                             <label htmlFor="measurements-checked" className="text-sm normal cursor-pointer">
                                 Remember me
                             </label>
