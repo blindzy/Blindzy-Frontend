@@ -6,6 +6,7 @@ import { useLenis } from '../../hooks/useLenis';
 import { signup } from '../../services/auth/signup';
 import { Input } from '@lib/components/ui/input';
 import { Button } from '@lib/components/ui/button';
+import { sdk } from "@lib/sdk";
 import { Checkbox } from "@lib/components/ui/checkbox";
 
 function SignUp() {
@@ -45,6 +46,19 @@ function SignUp() {
             [fieldName]: e.target.value
         });
     };
+
+    const registerWithGoogle = async () => {
+        const result = await sdk.auth.login("customer", "google", {})
+
+        if (typeof result === "object" && result.location) {
+            // redirect to Google for authentication
+            window.location.href = result.location
+
+            return
+        }
+
+        alert("Authentication failed")
+    }
 
     const handleCheckboxChange = (field: string) => (checked: boolean) => {
         if (field === 'agreedToTerms') {
@@ -142,14 +156,15 @@ function SignUp() {
 
                 {!viaEmail ? (
                     <>
-                        {/* <Button
-							variant={'light'}
-							size={'large'}
-							className="w-full"
-						>
-							<Icon icon="flat-color-icons:google" className="text-[28px] shrink-0" />
-							<span className="text-sm">Continue as Google</span>
-						</Button> */}
+                        <Button
+                            variant={'light'}
+                            size={'large'}
+                            className="w-full"
+                            onClick={registerWithGoogle}
+                        >
+                            <Icon icon="flat-color-icons:google" className="text-[28px] shrink-0" />
+                            <span className="text-sm">Continue as Google</span>
+                        </Button>
                         <Button onClick={() => setViaEmail(true)}
                             variant={'light'}
                             size={'large'}

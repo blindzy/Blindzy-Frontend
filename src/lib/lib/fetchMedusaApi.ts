@@ -15,7 +15,7 @@ export default async function fetchMedusaApi<T>({
     endpoint = endpoint.slice(1);
   }
 
-  const baseUrl = import.meta.env.VITE_API_URL;
+  const baseUrl = import.meta.env.VITE_API_URL || "http://localhost:9000";
   const url = new URL(`${baseUrl}/${endpoint}`);
 
   if (query) {
@@ -29,7 +29,7 @@ export default async function fetchMedusaApi<T>({
   const res = await fetch(url.toString(), {
     headers: {
       "Content-Type": "application/json",
-      "x-publishable-api-key": import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY,
+      "x-publishable-api-key": import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY || "pk_a31225b5bdde2ed0e28d918ac3467479184b1cffe21edca686b1a2a72217c210",
     },
   });
 

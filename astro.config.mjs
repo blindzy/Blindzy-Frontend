@@ -13,6 +13,7 @@ export default defineConfig({
     }),
     tailwind(),
   ],
+
   vite: {
     server: {
       proxy: {
@@ -24,5 +25,8 @@ export default defineConfig({
         },
       },
     },
+    ssr: {
+      noExternal: ["@medusajs/js-sdk"],
+    }
   },
 });

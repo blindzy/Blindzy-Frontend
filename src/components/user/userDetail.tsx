@@ -18,19 +18,23 @@ function UserDetail() {
     useEffect(() => {
         async function getUserData() {
             // Ye code ab sirf client pe chalega
-            const email = localStorage.getItem("userEmail");
-            if (!email) {
-                console.error("Email not found in localStorage");
-                return;
+            try {
+                const email = localStorage.getItem("userEmail");
+                if (!email) {
+                    console.error("Email not found in localStorage");
+                    return;
+                }
+
+                const data = await fetchMedusaApi<any>({
+                    endpoint: "/store/customers/get-customer",
+                    query: { email },
+                });
+
+                setUserData(data);
+                // console.log("user data:", data);
+            } catch (error) {
+                console.error("Error fetching user data:", error);
             }
-
-            const data = await fetchMedusaApi<any>({
-                endpoint: "/store/customers/get-customer",
-                query: { email },
-            });
-
-            setUserData(data);
-            // console.log("user data:", data);
         }
 
         getUserData();
@@ -74,13 +78,13 @@ function UserDetail() {
                                     <a href={`mailto:${userData.email}`} className="transition hover:text-[--Black]">{userData.email}</a>
                                 </div>
                             )}
-                            {userData.phone &&(
+                            {userData.phone && (
                                 <div className="flex items-center gap-2 text-md">
                                     <p>Phone:</p>
                                     <a href={`tel:${userData.phone}`} className="transition hover:text-[--Black]">{userData.phone}</a>
                                 </div>
                             )}
-                            {userData.company_name &&(
+                            {userData.company_name && (
                                 <div className="flex items-center gap-2 text-md">
                                     <p>Company Name:</p>
                                     <p>{userData.company_name}</p>
@@ -91,7 +95,7 @@ function UserDetail() {
 
                         </div>
                     </React.Fragment>
-                ):(
+                ) : (
                     <Icon icon="svg-spinners:8-dots-rotate" className="text-[36px] text-[--white] text-center mx-auto" />
                 )}
             </div>
