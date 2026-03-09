@@ -8,7 +8,8 @@ function ProductCard({ productData, customizationData, totalPrice, svg, svgColor
             <div className="size-full flex flex-col gap-6 xl:gap-[1.25vw] py-4 sm:py-6 xl:py-[1.25vw] sm:px-4 px-2 xl:px-[0.833vw] overflow-hidden">
                 <div className="relative w-full h-[60.465vw] sm:h-[88.945vw] xl:h-[23.438vw] shrink-0 rounded-32 overflow-hidden">
                     <img
-                        src={productData.thumbnail?.replace("http://localhost:9000", "https://api.blindzy.com")}
+                        // src={productData.thumbnail?.replace("http://localhost:9000", "https://api.blindzy.com")}
+                        src={'/images/single-product.jpg'}
                         // src={productData.thumbnail}
                         className="w-full h-full object-cover object-top-center xl:object-center"
                         alt={productData.title}

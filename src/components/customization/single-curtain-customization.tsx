@@ -105,7 +105,7 @@ const productOptions = [
 function Single_curtain_customization({ data: propsData, groupData }) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
-    const [measurements, setMeasurements] = useState({ roomName: '', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
+    const [measurements, setMeasurements] = useState({ roomName: 'Bedroom', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
     const [selectedColor, setSelectedColor] = useState('');
     const [svgColor, setSvgColor] = useState('#4A4A4A');
     const [totalPrice, setTotalPrice] = useState(0);
@@ -119,7 +119,7 @@ function Single_curtain_customization({ data: propsData, groupData }) {
     const [productData, setProductData] = useState(propsData);
     const [data, setData] = useState([
         { 'title': 'Colour', 'value': selectedColor },
-        { 'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : '' },
+        { 'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' },
         { 'title': 'Fitting Type', 'value': '' },
         { 'title': 'Select Fit', 'value': '' },
         { 'title': 'Curtain Stack', 'value': '' },
@@ -180,7 +180,10 @@ function Single_curtain_customization({ data: propsData, groupData }) {
             setError("Unable to calculate price for these dimensions")
             setTotalPrice(0)
         } else {
-            setError("")
+            // Only clear measurement/fabric related errors
+            if (error.includes("Width") || error.includes("Drop") || error.includes("dimensions")) {
+                setError("")
+            }
             setTotalPrice(price)
         }
     }
@@ -266,7 +269,9 @@ function Single_curtain_customization({ data: propsData, groupData }) {
             prev.map(item =>
                 item.title === 'Colour'
                     ? { ...item, value: selectedColor }
-                    : item
+                    : item.title === 'Size'
+                        ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
+                        : item
             )
         );
 
@@ -274,13 +279,19 @@ function Single_curtain_customization({ data: propsData, groupData }) {
         const group = calculateBaseGroup();
         setPriceGroup(Math.max(0, group - 1));
 
-        // Extract color from selected color image for SVG
+        // Clear "Please select all customization options" when user changes something
+        if (error.includes("select all")) {
+            setError("");
+        }
+    }, [selectedColor, productData?.variants, measurements.roomName, measurements.width, measurements.height]);
+
+    // Extract color from selected color image for SVG when selectedColor changes
+    useEffect(() => {
         if (selectedColor && productData?.title) {
             const imageUrl = `/images/product-colors-image/curtains/${productData.title.toLowerCase()}/${selectedColor.toLowerCase()}.jpg`;
             extractColorFromImage(imageUrl);
         }
-
-    }, [selectedColor, productData?.variants, measurements.width, measurements.height]);
+    }, [selectedColor, productData?.title]);
 
     useEffect(() => {
         const userDataString = localStorage.getItem("user");
@@ -290,7 +301,7 @@ function Single_curtain_customization({ data: propsData, groupData }) {
         }
         const userDataObj = JSON.parse(userDataString);
         setUserData(userDataObj);
-    }, [userData]);
+    }, []);
 
     const handleAddToCart = async () => {
         setLoading(true);
@@ -423,7 +434,7 @@ function Single_curtain_customization({ data: propsData, groupData }) {
                         variant={'primary'}
                         size={'large'}
                         className="w-full flex-1"
-                        disabled={!measurementsChecked}
+                        disabled={!measurementsChecked || !!error || totalPrice === 0}
                         onClick={handleAddToCart}
                     >
                         {loading ? 'Adding...' : 'Add to Cart'}

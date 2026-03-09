@@ -140,8 +140,8 @@ const blackoutColours = {
 function Double_blind_customization({ data: propsData, groupData }) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
-    const [measurements, setMeasurements] = useState({ roomName: '', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
-    const [screenMeasurements, setScreenMeasurements] = useState({ roomName: '', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
+    const [measurements, setMeasurements] = useState({ roomName: 'Bedroom', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
+    const [screenMeasurements, setScreenMeasurements] = useState({ roomName: 'Bedroom', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
     const [blackoutFabric, setBlackoutFabric] = useState('');
     const [blackoutColour, setBlackoutColour] = useState('');
     const [screenBlindFabric, setSheerFabric] = useState('');
@@ -162,10 +162,10 @@ function Double_blind_customization({ data: propsData, groupData }) {
     const [userData, setUserData] = useState<UserData | null>(null);
     const [data, setData] = useState([
         { 'title': 'Setup', 'value': '' },
-        { 'title': 'Blackout Fabric Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : '' },
+        { 'title': 'Blackout Fabric Size', 'value': measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}m x ${measurements.height}m` : '' },
         { 'title': 'Blackout Fabric', 'value': blackoutFabric },
         { 'title': 'Blackout Colour', 'value': blackoutColour },
-        { 'title': 'Screen Blind Fabrics Size', 'value': screenMeasurements.width && screenMeasurements.height ? `${screenMeasurements.width}m x ${screenMeasurements.height}m` : '' },
+        { 'title': 'Screen Blind Fabrics Size', 'value': screenMeasurements.width && screenMeasurements.height ? `${screenMeasurements.roomName} : ${screenMeasurements.width}m x ${screenMeasurements.height}m` : '' },
         { 'title': 'Screen Blind Fabrics', 'value': screenBlindFabric },
         { 'title': 'Controls', 'value': '' },
         { 'title': 'Select Fit', 'value': '' },
@@ -182,11 +182,10 @@ function Double_blind_customization({ data: propsData, groupData }) {
         values: []
     }]);
 
-    const calculatePrice = (group, width, height): number => {
+    const calculatePrice = (group, width, height, label): number => {
         // Validate inputs
         if (!width || !height) {
-            setError("Please enter both width and drop values")
-            //   setCalculatedPrice(null)
+            setError(`Please enter both width and drop values for ${label}`)
             return 0;
         }
 
@@ -204,32 +203,44 @@ function Double_blind_customization({ data: propsData, groupData }) {
         const maxDrop = Math.max(...currentDropValues);
 
         if (widthMm < minWidth || widthMm > maxWidth) {
-            setError(`Width must be between ${minWidth} mm and ${maxWidth} mm`)
+            setError(`${label} width must be between ${minWidth} mm and ${maxWidth} mm`)
             return 0;
         }
 
         if (dropMm < minDrop || dropMm > maxDrop) {
-            setError(`Drop must be between ${minDrop} mm and ${maxDrop} mm`)
+            setError(`${label} drop must be between ${minDrop} mm and ${maxDrop} mm`)
             return 0;
         }
         if (group === null || group === undefined || group === '') {
-            setError("Please select both blackout and screen fabrics")
+            setError(`Please select fabric for ${label}`)
             return 0;
         }
-        const blackoutPrice = interpolate2D(widthMm, dropMm, currentWidthValues, currentDropValues, currentPriceMatrix[group])
-        // if (blackoutPrice === null || screenPrice === null) {
-        if (blackoutPrice === null) {
-            setError("Unable to calculate price for these dimensions")
+        const price = interpolate2D(widthMm, dropMm, currentWidthValues, currentDropValues, currentPriceMatrix[group])
+        if (price === null) {
+            setError(`Unable to calculate ${label} price for these dimensions`)
             return 0;
         } else {
-            setError("")
-            return blackoutPrice;
+            return price;
         }
     }
 
     useEffect(() => {
-        const blockoutPrice = calculatePrice(blackoutGroup, measurements.width, measurements.height);
-        const screenPrice = calculatePrice(screenGroup, screenMeasurements.width, screenMeasurements.height);
+        const blockoutPrice = calculatePrice(blackoutGroup, measurements.width, measurements.height, "Blockout");
+        if (blockoutPrice === 0) {
+            setTotalPrice(0);
+            return;
+        }
+
+        const screenPrice = calculatePrice(screenGroup, screenMeasurements.width, screenMeasurements.height, "Sheer");
+        if (screenPrice === 0) {
+            setTotalPrice(0);
+            return;
+        }
+
+        // Clear measurement, fabric, or "select all" errors when everything is valid
+        if (error.includes("width") || error.includes("drop") || error.includes("fabric") || error.includes("dimensions") || error.includes("select all")) {
+            setError("");
+        }
         let price = blockoutPrice + screenPrice;
 
         const rollDirection = data.find(item => item.title === 'Roll Direction')?.value;
@@ -308,6 +319,10 @@ function Double_blind_customization({ data: propsData, groupData }) {
                                     ? { ...item, value: bracketColour }
                                     : item.title === 'Base Rail Colour'
                                         ? { ...item, value: baseRailColour }
+                                        : item.title === 'Blackout Fabric Size'
+                                        ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
+                                        : item.title === 'Screen Blind Fabrics Size'
+                                        ? { ...item, value: screenMeasurements.width && screenMeasurements.height ? `${screenMeasurements.roomName} : ${screenMeasurements.width}mm x ${screenMeasurements.height}mm` : '' }
                                         : item
             )
         );
@@ -323,7 +338,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
         setBlackoutGroup(blackoutGroup);
         setScreenGroup(screenGroup);
 
-    }, [blackoutFabric, blackoutColour, screenBlindFabric, chainColour, bracketColour, baseRailColour, productData?.variants, measurements.width, measurements.height, blackoutGroup, screenGroup]);
+    }, [blackoutFabric, blackoutColour, screenBlindFabric, chainColour, bracketColour, baseRailColour, productData?.variants, measurements.width, measurements.roomName, screenMeasurements.roomName, measurements.height, blackoutGroup, screenGroup]);
 
     useEffect(() => {
         const userDataString = localStorage.getItem("user");
@@ -556,7 +571,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
                         variant={'primary'}
                         size={'large'}
                         className="w-full flex-1"
-                        disabled={!measurementsChecked}
+                        disabled={!measurementsChecked || !!error || totalPrice === 0}
                         onClick={handleAddToCart}
                     >
                         {loading ? 'Adding...' : 'Add to Cart'}

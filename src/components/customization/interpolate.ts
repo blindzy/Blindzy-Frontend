@@ -7,11 +7,19 @@ export function interpolate2D(
   matrix: number[][],
 ): number | null {
   // Find index bounds
-  const i = widthVals.findIndex((w) => w > width)
-  const j = dropVals.findIndex((d) => d > drop)
+  let i = widthVals.findIndex((w) => w > width);
+  let j = dropVals.findIndex((d) => d > drop);
+
+  // Handle exact boundary values (e.g., if width is exactly the maximum in widthVals)
+  if (i === -1 && width === widthVals[widthVals.length - 1]) {
+    i = widthVals.length - 1;
+  }
+  if (j === -1 && drop === dropVals[dropVals.length - 1]) {
+    j = dropVals.length - 1;
+  }
 
   // Out of range check
-  if (i <= 0 || j <= 0) return null
+  if (i <= 0 || j <= 0) return null;
 
   const x1 = widthVals[i - 1] ?? 0
   const x2 = widthVals[i] ?? 0
