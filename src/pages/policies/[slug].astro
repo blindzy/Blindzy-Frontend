@@ -1,0 +1,44 @@
+---
+import Layout from "@layouts/Layout.astro";
+import Navbar from "@components/navbar/navbar";
+import PolicyDetail from "@components/policy/policyDetail";
+import Footer from "@components/Footer/Footer";
+import fetchApi from "../../lib/strapi";
+import type { PolicyData } from "../../interfaces/interfaces";
+
+// Grab the slug
+const { slug } = Astro.params;
+
+// Fetch single policy data
+async function getData() {
+  const policyData = await fetchApi<PolicyData>({
+    endpoint: `Policies?filters[slug][$eq]=${slug}&populate=*`,
+    wrappedByKey: "data",
+  });
+  return { policyData };
+}
+const { policyData } = await getData();
+
+// Export getStaticPaths
+export async function getStaticPaths() {
+  const policies = await fetchApi<PolicyData[]>({
+    endpoint: "policies?populate=*",
+    wrappedByKey: "data",
+  });
+
+  return policies.map((policy) => ({
+    params: { slug: policy.slug },
+  }));
+}
+---
+
+<Layout
+  title={policyData[0].metaTitle}
+  description={policyData[0].metaDescription}
+>
+  <!-- <div class="fixed left-0 top-0 z-[80] bg-fade pb-6">
+	</div> -->
+  <Navbar client:load />
+  <PolicyDetail client:load data={policyData[0]} />
+  <Footer client:load />
+</Layout>

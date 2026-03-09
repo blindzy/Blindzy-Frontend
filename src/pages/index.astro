@@ -7,31 +7,31 @@ import Categories from "@components/categories/categories";
 import About from "@components/about/about";
 import Questions from "@components/questions/questions";
 import Clients from "@components/clients/clients";
-import Inspiration from "@components/inspiration/inspiration";
+// import Inspiration from "@components/inspiration/inspiration";
 import Footer from "@components/Footer/Footer";
 
 import fetchApi from "@lib/strapi";
 import type { TestimonialData } from "@interfaces/interfaces";
 
 async function getData() {
-	const testimonialData = await fetchApi<TestimonialData>({
-		endpoint: "testimonials?populate=*&pagination[pageSize]=1000",
-		wrappedByKey: "data",
-	});
-	return { testimonialData };
+  const testimonialData = await fetchApi<TestimonialData>({
+    endpoint: "testimonials?populate=*&pagination[pageSize]=1000",
+    wrappedByKey: "data",
+  });
+  return { testimonialData };
 }
 const { testimonialData } = await getData();
 ---
 
 <Layout>
-	<Hero client:load />
-	<Products client:visible />
-	<Quality client:visible />
-	<Categories client:visible />
-	<About client:visible />
-	<Questions client:visible />
-	<Clients client:visible data={testimonialData} />
-	<!-- <Inspiration client:visible/> -->
-	<Footer client:visible />
-	<div class="relative bg-effect"></div>
+  <Hero client:load />
+  <Products client:visible />
+  <Quality client:visible />
+  <Categories client:visible />
+  <About client:visible />
+  <Questions client:visible />
+  <Clients client:visible data={testimonialData} />
+  <!-- <Inspiration client:visible/> -->
+  <Footer client:visible />
+  <div class="relative bg-effect"></div>
 </Layout>

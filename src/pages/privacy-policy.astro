@@ -3,11 +3,10 @@ import Layout from "@layouts/Layout.astro";
 import Navbar from "@components/navbar/navbar";
 import PrivacyPolicyComponent from "@components/policy/privacyPolicy";
 import Footer from "@components/Footer/Footer";
-
 ---
 
 <Layout>
-	<Navbar client:load logo="dark"/>
-	<PrivacyPolicyComponent client:load/>
-	<Footer client:load/>
+  <Navbar client:load logo="dark" />
+  <PrivacyPolicyComponent client:load />
+  <Footer client:load />
 </Layout>

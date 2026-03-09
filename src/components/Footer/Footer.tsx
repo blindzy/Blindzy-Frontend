@@ -1,4 +1,4 @@
-﻿import React, { } from "react";
+﻿import * as React from "react";
 import './css/style.css';
 import { Icon } from '@iconify/react';
 import $ from 'jquery';
@@ -53,8 +53,8 @@ function Footer() {
                         <h6 className="xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal ">SITE MAP</h6>
                         <a href="/about" className="text-sm hover:text-primary uppercase">ABOUT US</a>
                         <a href="/contact" className="text-sm hover:text-primary uppercase">CONTACT US</a>
-                        <a href="/privacy-policy" className="text-sm hover:text-primary uppercase">TERMS & CONDITIONS</a>
-                        <a href="/privacy-policy" className="text-sm hover:text-primary uppercase">PRIVACY POLICY</a>
+                        <a href="/policies/warranty-policy" className="text-sm hover:text-primary uppercase">Warranty Policy</a>
+                        <a href="/policies/privacy-policy" className="text-sm hover:text-primary uppercase">PRIVACY POLICY</a>
                     </div>
                     <div className="flex sm:flex-col items-center gap-2 shrink-0">
                         <Icon icon="uil:plus" className="text-[18px] text-black" />

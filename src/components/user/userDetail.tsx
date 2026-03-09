@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import * as React from "react";
+import { useEffect, useState } from "react";
 import { Camera, Plus } from 'lucide-react';
 import { Button } from "@lib/components/ui/button";
 import fetchMedusaApi from "../../lib/lib/fetchMedusaApi";
@@ -71,7 +72,7 @@ function UserDetail() {
                             <h4 className="text-xl">{userData.username}</h4>
                         </div>
                         <div className="flex flex-col gap-2">
-                            <h5 className="text-lg">DETAIL</h5>
+                            <h5 className="text-lg">DETAILS</h5>
                             {userData.email && (
                                 <div className="flex items-center gap-2 text-md">
                                     <p>Email:</p>
