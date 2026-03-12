@@ -18,3 +18,11 @@ export interface GroupData {
   Drop_values?: any[];
   Price_groups?: any[];
 }
+export interface PolicyData {
+  title?: string;
+  description?: string;
+  slug?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+  keyWords?: string;
+}

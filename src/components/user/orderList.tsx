@@ -53,7 +53,7 @@ function OrderList(props) {
                     className="sm:w-[500px] w-full"
                     asChild
                 >
-                    <a href="/blinds/single">
+                    <a href="/blinds/roller-blinds">
                         Start Shopping
                     </a>
                 </Button>

@@ -665,5 +665,9 @@ input[type="number"] {
 }
 
 .blog-content ul {
-  @apply flex flex-col gap-2 list-disc list-inside text-sm;
+  @apply flex flex-col gap-2 list-disc list-outside ps-4 ms-4 text-sm;
+}
+
+.blog-content ol {
+  @apply flex flex-col gap-2 list-decimal list-outside ps-8 ms-8 text-sm;
 }

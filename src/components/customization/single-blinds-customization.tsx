@@ -31,8 +31,8 @@ const productOptions = [
         title: 'Select Fit',
         description: 'Select either Face Fit or Recess Fit. You should have measured your window based on this choice.',
         values: [
-            { label: 'Fit', image: '/images/custom/blind-fit-left.png' },
-            { label: 'Recess', image: '/images/custom/blind-fit-right.png' },
+            { label: 'Face Fit', image: '/images/custom/blind-fit-left.png' },
+            { label: 'Recess Fit', image: '/images/custom/blind-fit-right.png' },
         ]
     },
     {
@@ -60,7 +60,7 @@ const colorOptions = COLOR_OPTIONS;
 
 function Single_blinds_customization({ data: propsData, groupData }) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
-    const [measurements, setMeasurements] = useState({ roomName: '', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
+    const [measurements, setMeasurements] = useState({ roomName: 'Bedroom', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
     const [selectedColor, setSelectedColor] = useState('');
     const [svgColor, setSvgColor] = useState('#4A4A4A');
     const [chainColour, setChainColour] = useState('');
@@ -77,7 +77,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
     const [productData, setProductData] = useState(propsData);
     const [data, setData] = useState([
         { 'title': 'Colour', 'value': selectedColor },
-        { 'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : '' },
+        { 'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' },
         { 'title': 'Controls', 'value': '' },
         { 'title': 'Select Fit', 'value': '' },
         { 'title': 'Roll Direction', 'value': '' },
@@ -129,7 +129,10 @@ function Single_blinds_customization({ data: propsData, groupData }) {
             setError("Unable to calculate price for these dimensions")
             setTotalPrice(0)
         } else {
-            setError("")
+            // Only clear measurement/fabric related errors
+            if (error.includes("Width") || error.includes("Drop") || error.includes("dimensions")) {
+                setError("")
+            }
             setTotalPrice(price)
         }
     }
@@ -215,7 +218,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
         img.src = imageUrl;
     };
 
-    // Update color in data array when selectedColor changes
+    // Update color in data array and price group when selection changes
     useEffect(() => {
         setData(prev =>
             prev.map(item =>
@@ -227,14 +230,23 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                             ? { ...item, value: bracketColour }
                             : item.title === 'Base Rail Colour'
                                 ? { ...item, value: baseRailColour }
-                                : item
+                                : item.title === 'Size'
+                                    ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
+                                    : item
             )
         );
         // Calculate total price based on area
-        var group = calculateBaseGroup();
+        const group = calculateBaseGroup();
         setPriceGroup(Math.max(0, group - 1));
 
-        // Extract color from selected color image for SVG
+        // Clear "Please select all customization options" when user changes something
+        if (error.includes("select all")) {
+            setError("");
+        }
+    }, [selectedColor, chainColour, bracketColour, baseRailColour, productData?.variants, measurements.roomName, measurements.width, measurements.height]);
+
+    // Extract color for SVG from selected fabric image
+    useEffect(() => {
         // selectedColor format: "{fabricName} - {tag} - {colorName}" e.g. "phantom - blockout - breeze"
         if (selectedColor) {
             const parts = selectedColor.split(' - ');
@@ -245,8 +257,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                 extractColorFromImage(imageUrl);
             }
         }
-
-    }, [selectedColor, chainColour, bracketColour, baseRailColour, productData?.variants, measurements.width, measurements.height]);
+    }, [selectedColor]);
 
     useEffect(() => {
         const userDataString = localStorage.getItem("user");
@@ -428,7 +439,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                         variant={'primary'}
                         size={'large'}
                         className="w-full flex-1"
-                        disabled={!measurementsChecked}
+                        disabled={!measurementsChecked || !!error || totalPrice === 0}
                         onClick={handleAddToCart}
                     >
                         {loading ? 'Adding...' : 'Add to Cart'}
