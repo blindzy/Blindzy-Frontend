@@ -2,7 +2,7 @@ import React, { useEffect, useRef , useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement, PaymentRequestButtonElement } from '@stripe/react-stripe-js';
 import { Icon } from '@iconify/react';
-const stripePromise = loadStripe('pk_test_51ReVtpEyZ8uIZ3ONqcj3Du0xz7OamUW7raZGxJk9sIBiBp5Jtf3ZTstDqx7Qw1yLEWjfeT4Poc9q8DPrTwU13zd100LbDhIgbs');
+const stripePromise = loadStripe(import.meta.env.PUBLIC_MEDUSA_PUBLISHABLE_KEY);
 import { Button } from '@lib/components/ui/button';
 import './css/style.css';
 
