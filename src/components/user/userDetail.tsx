@@ -213,7 +213,7 @@ function UserDetail() {
                             </div>
 
                             <div className="flex flex-col gap-2">
-                                <h5 className="text-lg">DETAIL</h5>
+                                <h5 className="text-lg">DETAILS</h5>
                                 <div className="flex items-center gap-2 text-md">
                                     <p>Email:</p>
                                     <a href={`mailto:${userData.email}`} className="transition hover:text-[--Black]">
