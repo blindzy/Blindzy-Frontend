@@ -8,6 +8,7 @@ import { Input } from "@lib/components/ui/input";
 import { Textarea } from "@lib/components/ui/textarea";
 import { Button } from "@lib/components/ui/button";
 
+const publishableKey = import.meta.env.PUBLIC_MEDUSA_PUBLISHABLE_KEY;
 
 function Contact() {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
@@ -29,7 +30,7 @@ function Contact() {
     // API configuration
     const headers = {
         "Content-Type": "application/json",
-        "x-publishable-api-key": "pk_618e1efe2b7d74576d7e072b76bd3c56d46ef94ede9463774e1c2b09c50f6bda",
+        "x-publishable-api-key": publishableKey,
     };
     const baseUrl = "https://api.blindzy.com";
 
