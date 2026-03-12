@@ -20,7 +20,7 @@ export default async function fetchMedusaApi<T>({
     endpoint = endpoint.slice(1);
   }
 
-  const baseUrl = import.meta.env.PUBLIC_API_URL || "http://localhost:9000";
+  const baseUrl = import.meta.env.PUBLIC_API_URL;
   const url = new URL(`${baseUrl}/${endpoint}`);
 
   if (query) {
