@@ -21,7 +21,7 @@ export async function getStaticPaths() {
     endpoint: "store/products/custom",
   });
   // Return array of objects with id params for all products
-  return (allProducts?.products || []).map((product) => ({
+  return (allProducts?.products || []).map((product: any) => ({
     params: { id: product.id },
   }));
 }

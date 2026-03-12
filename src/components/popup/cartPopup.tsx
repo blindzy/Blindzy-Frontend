@@ -15,6 +15,7 @@ export function CartPopup() {
     const [cartItems, setCartItems] = useState<any[]>([]);
     const [totalAmount, setTotalAmount] = useState(0);
     const [currencySymbol, setCurrencySymbol] = useState('');
+    const [cartItemCount, setCartItemCount] = useState(0);
 
     // Calculate total amount from all cart items
     const calculateTotalAmount = (items) => {
@@ -52,6 +53,7 @@ export function CartPopup() {
                 query: { email: userDataObj.email },
             });
             setCartItems(data.cart.items);
+            setCartItemCount(data.cart.items.length);
             calculateTotalAmount(data.cart.items);
         } catch (error) {
             console.error("Error fetching cart:", error);
@@ -60,6 +62,11 @@ export function CartPopup() {
         }
     };
 
+    // Fetch cart data on mount to show badge count without opening the dialog
+    useEffect(() => {
+        getCart();
+    }, []);
+
     // Fetch cart data when dialog opens
     useEffect(() => {
         if (open) {
@@ -67,21 +74,27 @@ export function CartPopup() {
         }
     }, [open]);
 
-    // Recalculate total when cart items change
+    // Recalculate total and update count when cart items change
     useEffect(() => {
         calculateTotalAmount(cartItems);
+        setCartItemCount(cartItems.length);
     }, [cartItems]);
     
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button variant={'light'} size={'xl'} className="border-none rounded-full">
+                <Button variant={'light'} size={'xl'} className="border-none rounded-full relative">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
                         <path d="M15.75 17.5L18.25 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         <path d="M24.25 17.5L21.75 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         <path d="M26 17.5L25.403 24.666C25.317 25.703 24.45 26.5 23.41 26.5H16.59C15.55 26.5 14.683 25.703 14.597 24.666L14 17.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                         <path d="M12.75 17.5H27.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
+                    {cartItemCount > 0 && (
+                        <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 flex items-center justify-center bg-[--primary] text-[--white] text-[10px] font-semibold rounded-full leading-none pointer-events-none">
+                            {cartItemCount > 99 ? '99+' : cartItemCount}
+                        </span>
+                    )}
                 </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[100vw] w-full h-[100vh] p-0 bg-transparent">
@@ -104,19 +117,6 @@ export function CartPopup() {
                             </div>
                         ) : cartItems && cartItems.length > 0 ? (
                             cartItems.map((item, index) => (
-                                // <CartProduct 
-                                //     key={index} 
-                                //     item={item}
-                                //     onQuantityChange={(item, newQuantity) => {
-                                //         const updatedItems = cartItems.map(cartItem => 
-                                //             cartItem.id === item.id 
-                                //                 ? {...cartItem, quantity: newQuantity}
-                                //                 : cartItem
-                                //         );
-                                //         setCartItems(updatedItems);
-                                //         calculateTotalAmount(updatedItems);
-                                //     }}
-                                // />
                                 <CartProduct 
                                     key={index} 
                                     item={item}
@@ -130,16 +130,11 @@ export function CartPopup() {
                                         calculateTotalAmount(updatedItems);
                                     }}
                                     onDeleteSuccess={(deletedItemId) => {
-                                        // ✅ Option 1: Remove from state directly
                                         const updatedItems = cartItems.filter(cartItem => cartItem.id !== deletedItemId);
                                         setCartItems(updatedItems);
                                         calculateTotalAmount(updatedItems);
-
-                                        // ✅ Option 2 (alternative): Refetch entire cart instead
-                                        // getCart();
                                     }}
                                 />
-
                             ))
                         ) : (
                             <div className="text-center text-[--white]">No items in cart</div>

@@ -21,18 +21,14 @@ import Footer from "@components/Footer/Footer";
 //   endpoint: "/store/products/custom",
 // });
 
-// const filteredProducts = (productsData?.products || []).filter((product) => {
+// const filteredProducts = (productsData?.products || []).filter((product: any) => {
 //   const hasBlindsCategory = product.categories?.some(
-//     (cat) => cat.name?.toLowerCase() === "shutters",
+//     (cat: any) => cat.name?.toLowerCase() === "shutters",
 //   );
 
 //   return hasBlindsCategory;
 // });
-const tags = [
-  // 'Blockout',
-  // 'Light Filtering',
-  // 'Sunscreen',
-];
+
 ---
 
 <Layout>

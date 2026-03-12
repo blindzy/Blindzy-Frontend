@@ -6,7 +6,6 @@ import { useLenis } from '../../hooks/useLenis';
 import Address from './address';
 import OrderList from "./orderList";
 import UserDetail from "./userDetail";
-import Payment from "./payment";
 import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 // import OrderListComponent from "./order-list";
 // import { Package } from 'lucide-react';
@@ -24,7 +23,6 @@ type PaymentCard = {
 function User() {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;
-    const [paymentDetail, setPaymentDetail] = useState<PaymentCard[]>([]);
     const [currentTab, setCurrentTab] = useState("");
     const [show, setShow] = useState(true);
 
@@ -36,7 +34,6 @@ function User() {
         // add other fields as needed
     };
     const [userData, setUserData] = useState<UserData | null>(null);
-    const [orderList, setOrderList] = useState<any[]>([]);
 
     useEffect(() => {
         const userDataString = localStorage.getItem("user");
@@ -71,14 +68,6 @@ function User() {
 
 
 
-    const handleCardChange = async () => {
-        // Fetch updated card list
-        const data = await fetchMedusaApi<any>({
-            endpoint: "/store/customers/cards",
-            query: { email: userData?.email ?? "" },
-        });
-        setPaymentDetail(data.cards);
-    };
     const handleTabChange = (tab: string) => {
         setShow(false);
         setTimeout(() => {

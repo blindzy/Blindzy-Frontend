@@ -20,7 +20,7 @@ const { groupData } = await getData();
 const productsData = await fetchMedusaApi<any>({
   endpoint: "store/products/custom",
 });
-const filteredProducts = (productsData?.products || []).filter((product) => {
+const filteredProducts = (productsData?.products || []).filter((product: any) => {
   const isSingleType = product.type?.value === "double-roller-blind";
   const hasBlindsCategory = product.categories?.some(
     (cat) => cat.name?.toLowerCase() === "blinds",

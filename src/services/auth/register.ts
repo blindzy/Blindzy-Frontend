@@ -1,8 +1,5 @@
 // src/services/auth/register.ts
 
-import { sdk } from "../../lib/sdk";
-import { FetchError } from "@medusajs/js-sdk";
-
 const API_BASE = import.meta.env.VITE_API_URL;
 const API_BASE_KEY = import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY;
 

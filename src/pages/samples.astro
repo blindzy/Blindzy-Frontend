@@ -10,9 +10,9 @@ const productsData = await fetchMedusaApi<any>({
   endpoint: "/store/products/custom",
 });
 
-const filteredProducts = (productsData?.products || []).filter((product) => {
+const filteredProducts = (productsData?.products || []).filter((product: any) => {
   const hasSamplesCategory = product.categories?.some(
-    (cat) => cat.name?.toLowerCase() === "samples"
+    (cat: any) => cat.name?.toLowerCase() === "samples"
   );
 
   return hasSamplesCategory;

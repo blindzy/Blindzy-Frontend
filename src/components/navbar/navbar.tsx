@@ -6,15 +6,6 @@ import { Button } from "../../lib/components/ui/button";
 import { CartPopup } from "@components/popup/cartPopup";
 import './css/style.css';
 
-declare global {
-    interface Window {
-        lenis?: {
-            stop: () => void;
-            start: () => void;
-        };
-    }
-}
-
 export interface NavbarProps {
     customClass?: string;
     logo?: string;
@@ -105,7 +96,7 @@ function Navbar(props: NavbarProps) {
     };
 
     useEffect(() => {
-        const lenis = window.lenis;
+        const lenis = (window as any).lenis;
         if (!lenis) return;
 
         if (isOpen) {

@@ -96,7 +96,7 @@ function Shop({ data, groupData, tags, type, customizePage }) {
                 <div className="grid items-stretch grid-cols-12 gap-4 sm:gap-6 xl:gap-[1.25vw]">
                     {loading && <div className="col-span-12 text-center py-8">Loading products...</div>}
                     {error && <div className="col-span-12 text-center py-8 text-red-500">{error}</div>}
-                    {!loading && !error && filteredProducts.map((product) => (
+                    {!loading && !error && filteredProducts.map((product: any) => (
                         <ProductComponent
                             key={product.id}
                             groupData={groupData}

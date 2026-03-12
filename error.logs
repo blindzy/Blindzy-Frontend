@@ -1,0 +1,1042 @@
+
+> Blindzy@0.0.1 build
+> astro check && astro build
+
+
+> Blindzy@0.0.1 build
+> astro check && astro build
+
+[2m07:12:56[22m [34m[content][39m Syncing content
+[2m07:12:56[22m [34m[content][39m Synced content
+[2m07:12:56[22m [34m[types][39m Generated [2m124ms[22m
+[2m07:12:56[22m [34m[check][39m Getting diagnostics for Astro files in D:\BlindzyFrontend...
+[96msrc/components/Footer/Footer.tsx[0m:[93m9[0m:[93m24[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'id' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m9[0m     const handleNav = (id) => {
+[7m [0m [93m                       ~~[0m
+
+[96msrc/components/blog/blog-content.tsx[0m:[93m5[0m:[93m33[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'content' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m5[0m function cleanGutenbergComments(content) {
+[7m [0m [93m                                ~~~~~~~[0m
+
+[96msrc/components/blog/blog.tsx[0m:[93m136[0m:[93m42[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m136[0m                 {filteredData.map((item, index) => (
+[7m   [0m [93m                                         ~~~~~[0m
+[96msrc/components/blog/blog.tsx[0m:[93m136[0m:[93m36[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m136[0m                 {filteredData.map((item, index) => (
+[7m   [0m [93m                                   ~~~~[0m
+[96msrc/components/blog/blog.tsx[0m:[93m94[0m:[93m27[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'b' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m94[0m         filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+[7m  [0m [93m                          ~[0m
+[96msrc/components/blog/blog.tsx[0m:[93m94[0m:[93m24[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'a' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m94[0m         filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+[7m  [0m [93m                       ~[0m
+[96msrc/components/blog/blog.tsx[0m:[93m88[0m:[93m44[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m88[0m                 filtered = filtered.filter(item => item.category?.toLowerCase() === "shutters");
+[7m  [0m [93m                                           ~~~~[0m
+[96msrc/components/blog/blog.tsx[0m:[93m85[0m:[93m44[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m85[0m                 filtered = filtered.filter(item => item.category?.toLowerCase() === "curtains");
+[7m  [0m [93m                                           ~~~~[0m
+[96msrc/components/blog/blog.tsx[0m:[93m82[0m:[93m44[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m82[0m                 filtered = filtered.filter(item => item.category?.toLowerCase() === "blinds");
+[7m  [0m [93m                                           ~~~~[0m
+[96msrc/components/blog/blog.tsx[0m:[93m74[0m:[93m40[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m74[0m             filtered = filtered.filter(item =>
+[7m  [0m [93m                                       ~~~~[0m
+[96msrc/components/blog/blog.tsx[0m:[93m54[0m:[93m26[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'date' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m54[0m     function toShortDate(date) {
+[7m  [0m [93m                         ~~~~[0m
+[96msrc/components/blog/blog.tsx[0m:[93m46[0m:[93m25[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'newStep' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m46[0m     const changeStep = (newStep) => {
+[7m  [0m [93m                        ~~~~~~~[0m
+[96msrc/components/blog/blog.tsx[0m:[93m24[0m:[93m24[0m - [93mwarning[0m[90m ts(6133): [0m'setSearchTerm' is declared but its value is never read.
+
+[7m24[0m     const [searchTerm, setSearchTerm] = useState("");
+[7m  [0m [93m                       ~~~~~~~~~~~~~[0m
+[96msrc/components/blog/blog.tsx[0m:[93m21[0m:[93m15[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m21[0m function Blog(props) {
+[7m  [0m [93m              ~~~~~[0m
+[96msrc/components/blog/blog.tsx[0m:[93m11[0m:[93m11[0m - [93mwarning[0m[90m ts(6196): [0m'BlogItem' is declared but never used.
+
+[7m11[0m interface BlogItem {
+[7m  [0m [93m          ~~~~~~~~[0m
+
+[96msrc/components/blog/blogDetail.tsx[0m:[93m53[0m:[93m60[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m53[0m                     {props.blogList.slice(0, 4).map((blog, index) => (
+[7m  [0m [93m                                                           ~~~~~[0m
+[96msrc/components/blog/blogDetail.tsx[0m:[93m53[0m:[93m54[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'blog' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m53[0m                     {props.blogList.slice(0, 4).map((blog, index) => (
+[7m  [0m [93m                                                     ~~~~[0m
+[96msrc/components/blog/blogDetail.tsx[0m:[93m24[0m:[93m26[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'date' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m24[0m     function toShortDate(date) {
+[7m  [0m [93m                         ~~~~[0m
+[96msrc/components/blog/blogDetail.tsx[0m:[93m9[0m:[93m21[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m9[0m function BlogDetail(props) {
+[7m [0m [93m                    ~~~~~[0m
+
+[96msrc/components/checkout/checkout.tsx[0m:[93m218[0m:[93m8[0m - [93mwarning[0m[90m ts(6133): [0m'handlePaymentInfoChange' is declared but its value is never read.
+
+[7m218[0m  const handlePaymentInfoChange = (field: string, value: string | boolean) => {
+[7m   [0m [93m       ~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/components/checkout/checkout.tsx[0m:[93m111[0m:[93m17[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m111[0m   items.forEach(item => {
+[7m   [0m [93m                ~~~~[0m
+[96msrc/components/checkout/checkout.tsx[0m:[93m107[0m:[93m32[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'items' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m107[0m  const calculateTotalAmount = (items) => {
+[7m   [0m [93m                               ~~~~~[0m
+[96msrc/components/checkout/checkout.tsx[0m:[93m65[0m:[93m25[0m - [93mwarning[0m[90m ts(6133): [0m'setShippingAmount' is declared but its value is never read.
+
+[7m65[0m  const [shippingAmount, setShippingAmount] = useState(0);
+[7m  [0m [93m                        ~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/checkout/order-list.tsx[0m:[93m44[0m:[93m123[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m44[0m                 {props.item.customizations?.customizationData && props.item.customizations?.customizationData.map((option,index) => (
+[7m  [0m [93m                                                                                                                          ~~~~~[0m
+[96msrc/components/checkout/order-list.tsx[0m:[93m44[0m:[93m116[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'option' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m44[0m                 {props.item.customizations?.customizationData && props.item.customizations?.customizationData.map((option,index) => (
+[7m  [0m [93m                                                                                                                   ~~~~~~[0m
+[96msrc/components/checkout/order-list.tsx[0m:[93m5[0m:[93m20[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m5[0m function OrderList(props) {
+[7m [0m [93m                   ~~~~~[0m
+
+[96msrc/components/checkout/payment.tsx[0m:[93m21[0m:[93m10[0m - [93mwarning[0m[90m ts(6133): [0m'paymentRequest' is declared but its value is never read.
+
+[7m21[0m   const [paymentRequest, setPaymentRequest] = useState<any>(null);
+[7m  [0m [93m         ~~~~~~~~~~~~~~[0m
+[96msrc/components/checkout/payment.tsx[0m:[93m3[0m:[93m57[0m - [93mwarning[0m[90m ts(6133): [0m'PaymentRequestButtonElement' is declared but its value is never read.
+
+[7m3[0m import { Elements, useStripe, useElements, CardElement, PaymentRequestButtonElement } from '@stripe/react-stripe-js';
+[7m [0m [93m                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/components/checkout/payment.tsx[0m:[93m1[0m:[93m28[0m - [93mwarning[0m[90m ts(6133): [0m'useRef' is declared but its value is never read.
+
+[7m1[0m import React, { useEffect, useRef , useState } from 'react';
+[7m [0m [93m                           ~~~~~~[0m
+
+[96msrc/components/clients/clients.tsx[0m:[93m80[0m:[93m69[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'idx' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m80[0m                         {props.data && props.data.map((testimonial, idx) => (
+[7m  [0m [93m                                                                    ~~~[0m
+[96msrc/components/clients/clients.tsx[0m:[93m80[0m:[93m56[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'testimonial' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m80[0m                         {props.data && props.data.map((testimonial, idx) => (
+[7m  [0m [93m                                                       ~~~~~~~~~~~[0m
+[96msrc/components/clients/clients.tsx[0m:[93m10[0m:[93m18[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m10[0m function Clients(props) {
+[7m  [0m [93m                 ~~~~~[0m
+
+[96msrc/components/customization/ProductCard.tsx[0m:[93m37[0m:[93m53[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m37[0m                     {customizationData.map((option, index) => (
+[7m  [0m [93m                                                    ~~~~~[0m
+[96msrc/components/customization/ProductCard.tsx[0m:[93m37[0m:[93m45[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'option' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m37[0m                     {customizationData.map((option, index) => (
+[7m  [0m [93m                                            ~~~~~~[0m
+
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m531[0m:[93m49[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m531[0m                             onSelectionChange={(value) => handleOptionChange(option.title, value)}
+[7m   [0m [93m                                                ~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m503[0m:[93m57[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m503[0m                     {productData?.options?.map((option, index) => {
+[7m   [0m [93m                                                        ~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m503[0m:[93m49[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'option' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m503[0m                     {productData?.options?.map((option, index) => {
+[7m   [0m [93m                                                ~~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m460[0m:[93m57[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m460[0m                     {productData?.options?.map((option, index) => {
+[7m   [0m [93m                                                        ~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m460[0m:[93m49[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'option' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m460[0m                     {productData?.options?.map((option, index) => {
+[7m   [0m [93m                                                ~~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m444[0m:[93m49[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m444[0m                             onSelectionChange={(value) => handleOptionChange(option.title, value)}
+[7m   [0m [93m                                                ~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m405[0m:[93m19[0m - [93mwarning[0m[90m ts(6133): [0m'response' is declared but its value is never read.
+
+[7m405[0m             const response = await createAddToCart.addToCart({
+[7m   [0m [93m                  ~~~~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m359[0m:[93m31[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'optionTitle' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m359[0m     const getSelectedColor = (optionTitle) => {
+[7m   [0m [93m                              ~~~~~~~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m349[0m:[93m29[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'optionTitle' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m349[0m     const getColorSetter = (optionTitle) => {
+[7m   [0m [93m                            ~~~~~~~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m280[0m:[93m39[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'opt' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m280[0m                 variant.options?.some(opt => opt.value === base)
+[7m   [0m [93m                                      ~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m278[0m:[93m13[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'variant' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m278[0m             variant =>
+[7m   [0m [93m            ~~~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m273[0m:[93m33[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'base' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m273[0m     const calculateBaseGroup = (base) => {
+[7m   [0m [93m                                ~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m263[0m:[93m46[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m263[0m     const handleOptionChange = (optionTitle, value) => {
+[7m   [0m [93m                                             ~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m263[0m:[93m33[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'optionTitle' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m263[0m     const handleOptionChange = (optionTitle, value) => {
+[7m   [0m [93m                                ~~~~~~~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m185[0m:[93m51[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'label' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m185[0m     const calculatePrice = (group, width, height, label): number => {
+[7m   [0m [93m                                                  ~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m185[0m:[93m43[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'height' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m185[0m     const calculatePrice = (group, width, height, label): number => {
+[7m   [0m [93m                                          ~~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m185[0m:[93m36[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'width' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m185[0m     const calculatePrice = (group, width, height, label): number => {
+[7m   [0m [93m                                   ~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m185[0m:[93m29[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'group' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m185[0m     const calculatePrice = (group, width, height, label): number => {
+[7m   [0m [93m                            ~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m149[0m:[93m25[0m - [93mwarning[0m[90m ts(6133): [0m'setProductData' is declared but its value is never read.
+
+[7m149[0m     const [productData, setProductData] = useState(propsData);
+[7m   [0m [93m                        ~~~~~~~~~~~~~~[0m
+[96msrc/components/customization/double-blind-customization.tsx[0m:[93m18[0m:[93m25[0m - [93mwarning[0m[90m ts(6196): [0m'CustomizationDataItem' is declared but never used.
+
+[7m18[0m import type { UserData, CustomizationDataItem } from "./customization-types";
+[7m  [0m [93m                        ~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/customization/measurement.tsx[0m:[93m57[0m:[93m45[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'prev' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m57[0m                             setMeasurements(prev => ({...prev, height: newValue}));
+[7m  [0m [93m                                            ~~~~[0m
+[96msrc/components/customization/measurement.tsx[0m:[93m38[0m:[93m45[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'prev' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m38[0m                             setMeasurements(prev => ({...prev, width: newValue}));
+[7m  [0m [93m                                            ~~~~[0m
+[96msrc/components/customization/measurement.tsx[0m:[93m22[0m:[93m54[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'prev' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m22[0m                     onChange={(e) => setMeasurements(prev => ({...prev, roomName: e.target.value}))}
+[7m  [0m [93m                                                     ~~~~[0m
+
+[96msrc/components/customization/selectColor.tsx[0m:[93m95[0m:[93m100[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'i' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m95[0m                     colorsOptions[color.value.toLowerCase().replace(/\s+/g, '_')]?.map((colorItem, i) => {
+[7m  [0m [93m                                                                                                   ~[0m
+[96msrc/components/customization/selectColor.tsx[0m:[93m95[0m:[93m89[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'colorItem' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m95[0m                     colorsOptions[color.value.toLowerCase().replace(/\s+/g, '_')]?.map((colorItem, i) => {
+[7m  [0m [93m                                                                                        ~~~~~~~~~[0m
+[96msrc/components/customization/selectColor.tsx[0m:[93m94[0m:[93m49[0m - [93mwarning[0m[90m ts(6133): [0m'index' is declared but its value is never read.
+
+[7m94[0m                 {props.data?.values.map((color, index) =>
+[7m  [0m [93m                                                ~~~~~[0m
+[96msrc/components/customization/selectColor.tsx[0m:[93m94[0m:[93m49[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m94[0m                 {props.data?.values.map((color, index) =>
+[7m  [0m [93m                                                ~~~~~[0m
+[96msrc/components/customization/selectColor.tsx[0m:[93m94[0m:[93m42[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'color' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m94[0m                 {props.data?.values.map((color, index) =>
+[7m  [0m [93m                                         ~~~~~[0m
+[96msrc/components/customization/selectColor.tsx[0m:[93m81[0m:[93m32[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m81[0m     const handleColorChange = (value) => {
+[7m  [0m [93m                               ~~~~~[0m
+[96msrc/components/customization/selectColor.tsx[0m:[93m78[0m:[93m22[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m78[0m function SelectColor(props) {
+[7m  [0m [93m                     ~~~~~[0m
+[96msrc/components/customization/selectColor.tsx[0m:[93m1[0m:[93m17[0m - [93mwarning[0m[90m ts(6133): [0m'useEffect' is declared but its value is never read.
+
+[7m1[0m import React, { useEffect, useState } from "react";
+[7m [0m [93m                ~~~~~~~~~[0m
+
+[96msrc/components/customization/selectVarient.tsx[0m:[93m44[0m:[93m49[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m44[0m                 {optionData.values.map((option, index) => (
+[7m  [0m [93m                                                ~~~~~[0m
+[96msrc/components/customization/selectVarient.tsx[0m:[93m44[0m:[93m41[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'option' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m44[0m                 {optionData.values.map((option, index) => (
+[7m  [0m [93m                                        ~~~~~~[0m
+[96msrc/components/customization/selectVarient.tsx[0m:[93m16[0m:[93m36[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m16[0m     const handleSelectionChange = (value) => {
+[7m  [0m [93m                                   ~~~~~[0m
+[96msrc/components/customization/selectVarient.tsx[0m:[93m5[0m:[93m24[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m5[0m function SelectVarient(props) {
+[7m [0m [93m                       ~~~~~[0m
+
+[96msrc/components/customization/selectdefultColor.tsx[0m:[93m31[0m:[93m49[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m31[0m                 {props.data?.values.map((color, index) => (
+[7m  [0m [93m                                                ~~~~~[0m
+[96msrc/components/customization/selectdefultColor.tsx[0m:[93m31[0m:[93m42[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'color' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m31[0m                 {props.data?.values.map((color, index) => (
+[7m  [0m [93m                                         ~~~~~[0m
+[96msrc/components/customization/selectdefultColor.tsx[0m:[93m15[0m:[93m32[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m15[0m     const handleColorChange = (value) => {
+[7m  [0m [93m                               ~~~~~[0m
+[96msrc/components/customization/selectdefultColor.tsx[0m:[93m11[0m:[93m22[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m11[0m function SelectColor(props) {
+[7m  [0m [93m                     ~~~~~[0m
+[96msrc/components/customization/selectdefultColor.tsx[0m:[93m4[0m:[93m7[0m - [93mwarning[0m[90m ts(6133): [0m'colorsOptions' is declared but its value is never read.
+
+[7m4[0m const colorsOptions = {
+[7m [0m [93m      ~~~~~~~~~~~~~[0m
+
+[96msrc/components/customization/selectgroupColor.tsx[0m:[93m25[0m:[93m49[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m25[0m                 {props.data?.values.map((color, index) => (
+[7m  [0m [93m                                                ~~~~~[0m
+[96msrc/components/customization/selectgroupColor.tsx[0m:[93m25[0m:[93m42[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'color' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m25[0m                 {props.data?.values.map((color, index) => (
+[7m  [0m [93m                                         ~~~~~[0m
+[96msrc/components/customization/selectgroupColor.tsx[0m:[93m9[0m:[93m32[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m9[0m     const handleColorChange = (value) => {
+[7m [0m [93m                               ~~~~~[0m
+[96msrc/components/customization/selectgroupColor.tsx[0m:[93m5[0m:[93m22[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m5[0m function SelectColor(props) {
+[7m [0m [93m                     ~~~~~[0m
+
+[96msrc/components/customization/shutters-customization.tsx[0m:[93m297[0m:[93m49[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m297[0m                             onSelectionChange={(value) => handleOptionChange(option.title, value)}
+[7m   [0m [93m                                                ~~~~~[0m
+[96msrc/components/customization/shutters-customization.tsx[0m:[93m279[0m:[93m53[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m279[0m                 {productData?.options?.map((option, index) => (
+[7m   [0m [93m                                                    ~~~~~[0m
+[96msrc/components/customization/shutters-customization.tsx[0m:[93m279[0m:[93m45[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'option' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m279[0m                 {productData?.options?.map((option, index) => (
+[7m   [0m [93m                                            ~~~~~~[0m
+[96msrc/components/customization/shutters-customization.tsx[0m:[93m258[0m:[93m31[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'num' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m258[0m     const addCommaToNumber = (num) => {
+[7m   [0m [93m                              ~~~[0m
+[96msrc/components/customization/shutters-customization.tsx[0m:[93m233[0m:[93m19[0m - [93mwarning[0m[90m ts(6133): [0m'response' is declared but its value is never read.
+
+[7m233[0m             const response = await createAddToCart.addToCart({
+[7m   [0m [93m                  ~~~~~~~~[0m
+[96msrc/components/customization/shutters-customization.tsx[0m:[93m162[0m:[93m42[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'opt' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m162[0m                     variant.options.some(opt => opt.value === (selectedColor.split(' - ')[0]))
+[7m   [0m [93m                                         ~~~[0m
+[96msrc/components/customization/shutters-customization.tsx[0m:[93m161[0m:[93m17[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'variant' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m161[0m                 variant => variant.title === (selectedColor.split(' - ')[0]) ||
+[7m   [0m [93m                ~~~~~~~[0m
+[96msrc/components/customization/shutters-customization.tsx[0m:[93m148[0m:[93m46[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m148[0m     const handleOptionChange = (optionTitle, value) => {
+[7m   [0m [93m                                             ~~~~~[0m
+[96msrc/components/customization/shutters-customization.tsx[0m:[93m148[0m:[93m33[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'optionTitle' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m148[0m     const handleOptionChange = (optionTitle, value) => {
+[7m   [0m [93m                                ~~~~~~~~~~~[0m
+[96msrc/components/customization/shutters-customization.tsx[0m:[93m131[0m:[93m42[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'opt' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m131[0m                     variant.options.some(opt => opt.value === defaultColor)
+[7m   [0m [93m                                         ~~~[0m
+[96msrc/components/customization/shutters-customization.tsx[0m:[93m130[0m:[93m17[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'variant' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m130[0m                 variant => variant.title === defaultColor ||
+[7m   [0m [93m                ~~~~~~~[0m
+[96msrc/components/customization/shutters-customization.tsx[0m:[93m60[0m:[93m25[0m - [93mwarning[0m[90m ts(6133): [0m'setProductData' is declared but its value is never read.
+
+[7m60[0m     const [productData, setProductData] = useState(propsData);
+[7m  [0m [93m                        ~~~~~~~~~~~~~~[0m
+[96msrc/components/customization/shutters-customization.tsx[0m:[93m14[0m:[93m10[0m - [93mwarning[0m[90m ts(6133): [0m'addCommaToNumber' is declared but its value is never read.
+
+[7m14[0m import { addCommaToNumber, getCurrencySymbol } from "./customization-utils";
+[7m  [0m [93m         ~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/customization/single-blinds-customization.tsx[0m:[93m398[0m:[93m49[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m398[0m                             onSelectionChange={(value) => handleOptionChange(option.title, value)}
+[7m   [0m [93m                                                ~~~~~[0m
+[96msrc/components/customization/single-blinds-customization.tsx[0m:[93m379[0m:[93m53[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m379[0m                 {productData?.options?.map((option, index) => (
+[7m   [0m [93m                                                    ~~~~~[0m
+[96msrc/components/customization/single-blinds-customization.tsx[0m:[93m379[0m:[93m45[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'option' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m379[0m                 {productData?.options?.map((option, index) => (
+[7m   [0m [93m                                            ~~~~~~[0m
+[96msrc/components/customization/single-blinds-customization.tsx[0m:[93m327[0m:[93m19[0m - [93mwarning[0m[90m ts(6133): [0m'response' is declared but its value is never read.
+
+[7m327[0m             const response = await createAddToCart.addToCart({
+[7m   [0m [93m                  ~~~~~~~~[0m
+[96msrc/components/customization/single-blinds-customization.tsx[0m:[93m281[0m:[93m31[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'optionTitle' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m281[0m     const getSelectedColor = (optionTitle) => {
+[7m   [0m [93m                              ~~~~~~~~~~~[0m
+[96msrc/components/customization/single-blinds-customization.tsx[0m:[93m271[0m:[93m29[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'optionTitle' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m271[0m     const getColorSetter = (optionTitle) => {
+[7m   [0m [93m                            ~~~~~~~~~~~[0m
+[96msrc/components/customization/single-blinds-customization.tsx[0m:[93m190[0m:[93m42[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'opt' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m190[0m                     variant.options.some(opt => opt.value === (selectedColor.split(' - ')[0]))
+[7m   [0m [93m                                         ~~~[0m
+[96msrc/components/customization/single-blinds-customization.tsx[0m:[93m189[0m:[93m17[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'variant' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m189[0m                 variant => variant.title === (selectedColor.split(' - ')[0]) ||
+[7m   [0m [93m                ~~~~~~~[0m
+[96msrc/components/customization/single-blinds-customization.tsx[0m:[93m176[0m:[93m46[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m176[0m     const handleOptionChange = (optionTitle, value) => {
+[7m   [0m [93m                                             ~~~~~[0m
+[96msrc/components/customization/single-blinds-customization.tsx[0m:[93m176[0m:[93m33[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'optionTitle' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m176[0m     const handleOptionChange = (optionTitle, value) => {
+[7m   [0m [93m                                ~~~~~~~~~~~[0m
+[96msrc/components/customization/single-blinds-customization.tsx[0m:[93m163[0m:[93m42[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'opt' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m163[0m                     variant.options.some(opt => opt.value === defaultColor)
+[7m   [0m [93m                                         ~~~[0m
+[96msrc/components/customization/single-blinds-customization.tsx[0m:[93m162[0m:[93m17[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'variant' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m162[0m                 variant => variant.title === defaultColor ||
+[7m   [0m [93m                ~~~~~~~[0m
+[96msrc/components/customization/single-blinds-customization.tsx[0m:[93m77[0m:[93m25[0m - [93mwarning[0m[90m ts(6133): [0m'setProductData' is declared but its value is never read.
+
+[7m77[0m     const [productData, setProductData] = useState(propsData);
+[7m  [0m [93m                        ~~~~~~~~~~~~~~[0m
+[96msrc/components/customization/single-blinds-customization.tsx[0m:[93m17[0m:[93m25[0m - [93mwarning[0m[90m ts(6196): [0m'CustomizationDataItem' is declared but never used.
+
+[7m17[0m import type { UserData, CustomizationDataItem } from "./customization-types";
+[7m  [0m [93m                        ~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/customization/single-curtain-customization.tsx[0m:[93m405[0m:[93m49[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m405[0m                             onSelectionChange={(value) => handleOptionChange(option.title, value)}
+[7m   [0m [93m                                                ~~~~~[0m
+[96msrc/components/customization/single-curtain-customization.tsx[0m:[93m387[0m:[93m53[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m387[0m                 {productData?.options?.map((option, index) => (
+[7m   [0m [93m                                                    ~~~~~[0m
+[96msrc/components/customization/single-curtain-customization.tsx[0m:[93m387[0m:[93m45[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'option' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m387[0m                 {productData?.options?.map((option, index) => (
+[7m   [0m [93m                                            ~~~~~~[0m
+[96msrc/components/customization/single-curtain-customization.tsx[0m:[93m342[0m:[93m19[0m - [93mwarning[0m[90m ts(6133): [0m'response' is declared but its value is never read.
+
+[7m342[0m             const response = await createAddToCart.addToCart({
+[7m   [0m [93m                  ~~~~~~~~[0m
+[96msrc/components/customization/single-curtain-customization.tsx[0m:[93m231[0m:[93m42[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'opt' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m231[0m                     variant.options.some(opt => opt.value === selectedColor)
+[7m   [0m [93m                                         ~~~[0m
+[96msrc/components/customization/single-curtain-customization.tsx[0m:[93m230[0m:[93m17[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'variant' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m230[0m                 variant => variant.title === selectedColor ||
+[7m   [0m [93m                ~~~~~~~[0m
+[96msrc/components/customization/single-curtain-customization.tsx[0m:[93m217[0m:[93m46[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m217[0m     const handleOptionChange = (optionTitle, value) => {
+[7m   [0m [93m                                             ~~~~~[0m
+[96msrc/components/customization/single-curtain-customization.tsx[0m:[93m217[0m:[93m33[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'optionTitle' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m217[0m     const handleOptionChange = (optionTitle, value) => {
+[7m   [0m [93m                                ~~~~~~~~~~~[0m
+[96msrc/components/customization/single-curtain-customization.tsx[0m:[93m206[0m:[93m42[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'opt' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m206[0m                     variant.options.some(opt => opt.value === defaultColor)
+[7m   [0m [93m                                         ~~~[0m
+[96msrc/components/customization/single-curtain-customization.tsx[0m:[93m205[0m:[93m17[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'variant' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m205[0m                 variant => variant.title === defaultColor ||
+[7m   [0m [93m                ~~~~~~~[0m
+[96msrc/components/customization/single-curtain-customization.tsx[0m:[93m119[0m:[93m25[0m - [93mwarning[0m[90m ts(6133): [0m'setProductData' is declared but its value is never read.
+
+[7m119[0m     const [productData, setProductData] = useState(propsData);
+[7m   [0m [93m                        ~~~~~~~~~~~~~~[0m
+[96msrc/components/customization/single-curtain-customization.tsx[0m:[93m15[0m:[93m25[0m - [93mwarning[0m[90m ts(6196): [0m'CustomizationDataItem' is declared but never used.
+
+[7m15[0m import type { UserData, CustomizationDataItem } from "./customization-types";
+[7m  [0m [93m                        ~~~~~~~~~~~~~~~~~~~~~[0m
+
+[96msrc/components/inspiration/inspiration.tsx[0m:[93m11[0m:[93m12[0m - [93mwarning[0m[90m ts(6133): [0m'screen' is declared but its value is never read.
+
+[7m11[0m     const [screen, setScreen] = useState<boolean>(true);
+[7m  [0m [93m           ~~~~~~[0m
+
+[96msrc/components/login/forget-password.tsx[0m:[93m35[0m:[93m21[0m - [93mwarning[0m[90m ts(6133): [0m'setLoading' is declared but its value is never read.
+
+[7m35[0m     const [loading, setLoading] = useState(false);
+[7m  [0m [93m                    ~~~~~~~~~~[0m
+[96msrc/components/login/forget-password.tsx[0m:[93m23[0m:[93m37[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m23[0m export function ForgetPasswordPopup(props) {
+[7m  [0m [93m                                    ~~~~~[0m
+[96msrc/components/login/forget-password.tsx[0m:[93m11[0m:[93m5[0m - [93mwarning[0m[90m ts(6133): [0m'DialogTrigger' is declared but its value is never read.
+
+[7m11[0m     DialogTrigger,
+[7m  [0m [93m    ~~~~~~~~~~~~~[0m
+[96msrc/components/login/forget-password.tsx[0m:[93m1[0m:[93m17[0m - [93mwarning[0m[90m ts(6133): [0m'useEffect' is declared but its value is never read.
+
+[7m1[0m import React, { useEffect,useRef, useState } from "react";
+[7m [0m [93m                ~~~~~~~~~[0m
+
+[96msrc/components/login/login.tsx[0m:[93m1[0m:[93m17[0m - [93mwarning[0m[90m ts(6133): [0m'useEffect' is declared but its value is never read.
+
+[7m1[0m import React, { useEffect, useState } from "react";
+[7m [0m [93m                ~~~~~~~~~[0m
+
+[96msrc/components/login/oauth-callback.tsx[0m:[93m13[0m:[93m10[0m - [93mwarning[0m[90m ts(6133): [0m'customer' is declared but its value is never read.
+
+[7m13[0m   const [customer, setCustomer] = useState<any>(null);
+[7m  [0m [93m         ~~~~~~~~[0m
+
+[96msrc/components/navbar/navbar.tsx[0m:[93m114[0m:[93m19[0m - [91merror[0m[90m ts(2339): [0mProperty 'start' does not exist on type '{ version?: string | undefined; horizontal?: boolean | undefined; snap?: boolean | undefined; }'.
+
+[7m114[0m             lenis.start();
+[7m   [0m [91m                  ~~~~~[0m
+[96msrc/components/navbar/navbar.tsx[0m:[93m112[0m:[93m19[0m - [91merror[0m[90m ts(2339): [0mProperty 'stop' does not exist on type '{ version?: string | undefined; horizontal?: boolean | undefined; snap?: boolean | undefined; }'.
+
+[7m112[0m             lenis.stop();
+[7m   [0m [91m                  ~~~~[0m
+[96msrc/components/navbar/navbar.tsx[0m:[93m11[0m:[93m9[0m - [91merror[0m[90m ts(2717): [0mSubsequent property declarations must have the same type.  Property 'lenis' must be of type '{ version?: string | undefined; horizontal?: boolean | undefined; snap?: boolean | undefined; }', but here has type '{ stop: () => void; start: () => void; } | undefined'.
+
+[7m11[0m         lenis?: {
+[7m  [0m [91m        ~~~~~[0m
+[96msrc/components/navbar/navbar.tsx[0m:[93m11[0m:[93m9[0m - [91merror[0m[90m ts(2687): [0mAll declarations of 'lenis' must have identical modifiers.
+
+[7m11[0m         lenis?: {
+[7m  [0m [91m        ~~~~~[0m
+
+[96msrc/components/policy/policyDetail.tsx[0m:[93m16[0m:[93m11[0m - [93mwarning[0m[90m ts(6133): [0m'apiUrl' is declared but its value is never read.
+
+[7m16[0m     const apiUrl = 'https://strapi.blindzy.com';
+[7m  [0m [93m          ~~~~~~[0m
+[96msrc/components/policy/policyDetail.tsx[0m:[93m7[0m:[93m12[0m - [93mwarning[0m[90m ts(6133): [0m'virtual' is declared but its value is never read.
+
+[7m7[0m     const [virtual, setVirtual] = useState(true);
+[7m [0m [93m           ~~~~~~~[0m
+[96msrc/components/policy/policyDetail.tsx[0m:[93m6[0m:[93m38[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m6[0m export default function PolicyDetail(props) {
+[7m [0m [93m                                     ~~~~~[0m
+
+[96msrc/components/policy/privacyPolicy.tsx[0m:[93m1[0m:[93m28[0m - [93mwarning[0m[90m ts(6133): [0m'useState' is declared but its value is never read.
+
+[7m1[0m import React, { useEffect, useState } from "react";
+[7m [0m [93m                           ~~~~~~~~[0m
+
+[96msrc/components/popup/cart-product.tsx[0m:[93m69[0m:[93m19[0m - [93mwarning[0m[90m ts(6133): [0m'response' is declared but its value is never read.
+
+[7m69[0m             const response = await deleteCart.deleteCart(props.item.id);
+[7m  [0m [93m                  ~~~~~~~~[0m
+[96msrc/components/popup/cart-product.tsx[0m:[93m48[0m:[93m19[0m - [93mwarning[0m[90m ts(6133): [0m'response' is declared but its value is never read.
+
+[7m48[0m             const response = await updateCart.updateCart(props.item.id, {
+[7m  [0m [93m                  ~~~~~~~~[0m
+[96msrc/components/popup/cart-product.tsx[0m:[93m28[0m:[93m19[0m - [93mwarning[0m[90m ts(6133): [0m'response' is declared but its value is never read.
+
+[7m28[0m             const response = await updateCart.updateCart(props.item.id, {
+[7m  [0m [93m                  ~~~~~~~~[0m
+[96msrc/components/popup/cart-product.tsx[0m:[93m11[0m:[93m26[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'qty' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m11[0m     const updatePrice = (qty) => {
+[7m  [0m [93m                         ~~~[0m
+[96msrc/components/popup/cart-product.tsx[0m:[93m7[0m:[93m29[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m7[0m export function CartProduct(props) {
+[7m [0m [93m                            ~~~~~[0m
+
+[96msrc/components/popup/cartPopup.tsx[0m:[93m132[0m:[93m55[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'deletedItemId' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m132[0m                                     onDeleteSuccess={(deletedItemId) => {
+[7m   [0m [93m                                                      ~~~~~~~~~~~~~[0m
+[96msrc/components/popup/cartPopup.tsx[0m:[93m123[0m:[93m62[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'newQuantity' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m123[0m                                     onQuantityChange={(item, newQuantity) => {
+[7m   [0m [93m                                                             ~~~~~~~~~~~[0m
+[96msrc/components/popup/cartPopup.tsx[0m:[93m123[0m:[93m56[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m123[0m                                     onQuantityChange={(item, newQuantity) => {
+[7m   [0m [93m                                                       ~~~~[0m
+[96msrc/components/popup/cartPopup.tsx[0m:[93m25[0m:[93m23[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m25[0m         items.forEach(item => {
+[7m  [0m [93m                      ~~~~[0m
+[96msrc/components/popup/cartPopup.tsx[0m:[93m21[0m:[93m35[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'items' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m21[0m     const calculateTotalAmount = (items) => {
+[7m  [0m [93m                                  ~~~~~[0m
+[96msrc/components/popup/cartPopup.tsx[0m:[93m14[0m:[93m12[0m - [93mwarning[0m[90m ts(6133): [0m'userData' is declared but its value is never read.
+
+[7m14[0m     const [userData, setUserData] = useState(null);
+[7m  [0m [93m           ~~~~~~~~[0m
+[96msrc/components/popup/cartPopup.tsx[0m:[93m1[0m:[93m28[0m - [93mwarning[0m[90m ts(6133): [0m'useRef' is declared but its value is never read.
+
+[7m1[0m import React, { useEffect, useRef, useState } from "react";
+[7m [0m [93m                           ~~~~~~[0m
+
+[96msrc/components/shop/Shop.tsx[0m:[93m83[0m:[93m40[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'tag' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m83[0m                             {tags.map((tag) => (
+[7m  [0m [93m                                       ~~~[0m
+[96msrc/components/shop/Shop.tsx[0m:[93m74[0m:[93m62[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'tag' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m74[0m                                         : `${(tags.findIndex(tag => tag.toLowerCase() === selectedCategory) + 1) * (100 / (tags.length + 1))}%`
+[7m  [0m [93m                                                             ~~~[0m
+[96msrc/components/shop/Shop.tsx[0m:[93m41[0m:[93m48[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'tag' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m41[0m             (product.tags && product.tags.some(tag => tag.value.toLowerCase() === selectedCategory))
+[7m  [0m [93m                                               ~~~[0m
+[96msrc/components/shop/Shop.tsx[0m:[93m39[0m:[93m32[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'product' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m39[0m         return products.filter(product =>
+[7m  [0m [93m                               ~~~~~~~[0m
+
+[96msrc/components/shop/instruction.tsx[0m:[93m1[0m:[93m29[0m - [93mwarning[0m[90m ts(6133): [0m'useState' is declared but its value is never read.
+
+[7m1[0m import React, { useEffect , useState } from "react";
+[7m [0m [93m                            ~~~~~~~~[0m
+[96msrc/components/shop/instruction.tsx[0m:[93m1[0m:[93m17[0m - [93mwarning[0m[90m ts(6133): [0m'useEffect' is declared but its value is never read.
+
+[7m1[0m import React, { useEffect , useState } from "react";
+[7m [0m [93m                ~~~~~~~~~[0m
+
+[96msrc/components/shop/measurement.tsx[0m:[93m50[0m:[93m41[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'prev' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m50[0m                         setMeasurements(prev => ({ ...prev, height: newValue }));
+[7m  [0m [93m                                        ~~~~[0m
+[96msrc/components/shop/measurement.tsx[0m:[93m33[0m:[93m41[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'prev' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m33[0m                         setMeasurements(prev => ({ ...prev, width: newValue }));
+[7m  [0m [93m                                        ~~~~[0m
+
+[96msrc/components/shop/product.tsx[0m:[93m136[0m:[93m57[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'idx' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m136[0m                         {values.slice(0, 4).map((color, idx) => (
+[7m   [0m [93m                                                        ~~~[0m
+[96msrc/components/shop/product.tsx[0m:[93m136[0m:[93m50[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'color' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m136[0m                         {values.slice(0, 4).map((color, idx) => (
+[7m   [0m [93m                                                 ~~~~~[0m
+[96msrc/components/shop/product.tsx[0m:[93m132[0m:[93m46[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'i' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m132[0m             return data.options.map((option, i) => {
+[7m   [0m [93m                                             ~[0m
+[96msrc/components/shop/product.tsx[0m:[93m132[0m:[93m38[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'option' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m132[0m             return data.options.map((option, i) => {
+[7m   [0m [93m                                     ~~~~~~[0m
+[96msrc/components/shop/product.tsx[0m:[93m126[0m:[93m46[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m126[0m             return data.options.map((option, index) => (
+[7m   [0m [93m                                             ~~~~~[0m
+[96msrc/components/shop/product.tsx[0m:[93m126[0m:[93m38[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'option' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m126[0m             return data.options.map((option, index) => (
+[7m   [0m [93m                                     ~~~~~~[0m
+[96msrc/components/shop/product.tsx[0m:[93m119[0m:[93m46[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m119[0m             return data.options.map((option, index) => (
+[7m   [0m [93m                                             ~~~~~[0m
+[96msrc/components/shop/product.tsx[0m:[93m119[0m:[93m38[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'option' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m119[0m             return data.options.map((option, index) => (
+[7m   [0m [93m                                     ~~~~~~[0m
+[96msrc/components/shop/product.tsx[0m:[93m96[0m:[93m64[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'opt' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m96[0m                 v.title === screenBlindColor || v.options.some(opt => opt.value === screenBlindColor)
+[7m  [0m [93m                                                               ~~~[0m
+[96msrc/components/shop/product.tsx[0m:[93m95[0m:[93m60[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'v' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m95[0m             const screenBlindVariant = data.variants?.find(v =>
+[7m  [0m [93m                                                           ~[0m
+[96msrc/components/shop/product.tsx[0m:[93m84[0m:[93m56[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'opt' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m84[0m             v.title === defaultColor || v.options.some(opt => opt.value === defaultColor)
+[7m  [0m [93m                                                       ~~~[0m
+[96msrc/components/shop/product.tsx[0m:[93m83[0m:[93m52[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'v' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m83[0m         const defaultVariant = data.variants?.find(v =>
+[7m  [0m [93m                                                   ~[0m
+[96msrc/components/shop/product.tsx[0m:[93m27[0m:[93m61[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'height' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m27[0m     const calculatePrice = React.useCallback((group, width, height) => {
+[7m  [0m [93m                                                            ~~~~~~[0m
+[96msrc/components/shop/product.tsx[0m:[93m27[0m:[93m54[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'width' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m27[0m     const calculatePrice = React.useCallback((group, width, height) => {
+[7m  [0m [93m                                                     ~~~~~[0m
+[96msrc/components/shop/product.tsx[0m:[93m27[0m:[93m47[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'group' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m27[0m     const calculatePrice = React.useCallback((group, width, height) => {
+[7m  [0m [93m                                              ~~~~~[0m
+[96msrc/components/shop/product.tsx[0m:[93m22[0m:[93m12[0m - [93mwarning[0m[90m ts(6133): [0m'error' is declared but its value is never read.
+
+[7m22[0m     const [error, setError] = useState("");
+[7m  [0m [93m           ~~~~~[0m
+
+[96msrc/components/shop/samples.tsx[0m:[93m147[0m:[93m38[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'x' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m147[0m             {option.values.map((opt, x) => (
+[7m   [0m [93m                                     ~[0m
+[96msrc/components/shop/samples.tsx[0m:[93m147[0m:[93m33[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'opt' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m147[0m             {option.values.map((opt, x) => (
+[7m   [0m [93m                                ~~~[0m
+[96msrc/components/shop/samples.tsx[0m:[93m145[0m:[93m40[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'i' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m145[0m           {sample.options.map((option, i) => (
+[7m   [0m [93m                                       ~[0m
+[96msrc/components/shop/samples.tsx[0m:[93m145[0m:[93m32[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'option' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m145[0m           {sample.options.map((option, i) => (
+[7m   [0m [93m                               ~~~~~~[0m
+[96msrc/components/shop/samples.tsx[0m:[93m126[0m:[93m45[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'idx' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m126[0m      {props.data && props.data.map((sample, idx) => (
+[7m   [0m [93m                                            ~~~[0m
+[96msrc/components/shop/samples.tsx[0m:[93m126[0m:[93m37[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'sample' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m126[0m      {props.data && props.data.map((sample, idx) => (
+[7m   [0m [93m                                    ~~~~~~[0m
+[96msrc/components/shop/samples.tsx[0m:[93m56[0m:[93m10[0m - [93mwarning[0m[90m ts(6133): [0m'response' is declared but its value is never read.
+
+[7m56[0m    const response = await createAddToCart.addToCart({
+[7m  [0m [93m         ~~~~~~~~[0m
+[96msrc/components/shop/samples.tsx[0m:[93m29[0m:[93m29[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'currency_code' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m29[0m  const getCurrencySymbol = (currency_code) => {
+[7m  [0m [93m                            ~~~~~~~~~~~~~[0m
+[96msrc/components/shop/samples.tsx[0m:[93m8[0m:[93m18[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m8[0m function Samples(props) {
+[7m [0m [93m                 ~~~~~[0m
+
+[96msrc/components/shop/selectColor.tsx[0m:[93m89[0m:[93m53[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'colorItem' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m89[0m                         {colorList.slice(0, 4).map((colorItem) => (
+[7m  [0m [93m                                                    ~~~~~~~~~[0m
+[96msrc/components/shop/selectColor.tsx[0m:[93m80[0m:[93m38[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'color' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m80[0m             {props.data?.values.map((color) => {
+[7m  [0m [93m                                     ~~~~~[0m
+[96msrc/components/shop/selectColor.tsx[0m:[93m77[0m:[93m22[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m77[0m function SelectColor(props) {
+[7m  [0m [93m                     ~~~~~[0m
+[96msrc/components/shop/selectColor.tsx[0m:[93m2[0m:[93m1[0m - [93mwarning[0m[90m ts(6192): [0mAll imports in import declaration are unused.
+
+[7m2[0m import { RadioGroup, RadioGroupItem } from "@lib/components/ui/radio-group";
+[7m [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+[96msrc/components/shop/selectColor.tsx[0m:[93m1[0m:[93m28[0m - [93mwarning[0m[90m ts(6133): [0m'useState' is declared but its value is never read.
+
+[7m1[0m import React, { useEffect, useState } from "react";
+[7m [0m [93m                           ~~~~~~~~[0m
+[96msrc/components/shop/selectColor.tsx[0m:[93m1[0m:[93m17[0m - [93mwarning[0m[90m ts(6133): [0m'useEffect' is declared but its value is never read.
+
+[7m1[0m import React, { useEffect, useState } from "react";
+[7m [0m [93m                ~~~~~~~~~[0m
+
+[96msrc/components/shop/selectdefultColor.tsx[0m:[93m13[0m:[93m33[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'color' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m13[0m             {visibleColors.map((color) => (
+[7m  [0m [93m                                ~~~~~[0m
+[96msrc/components/shop/selectdefultColor.tsx[0m:[93m3[0m:[93m28[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m3[0m function SelectDefultColor(props) {
+[7m [0m [93m                           ~~~~~[0m
+
+[96msrc/components/showroom/showroom.tsx[0m:[93m99[0m:[93m42[0m - [93mwarning[0m[90m ts(6133): [0m'index' is declared but its value is never read.
+
+[7m99[0m                 {filteredData.map((item, index) => (
+[7m  [0m [93m                                         ~~~~~[0m
+[96msrc/components/showroom/showroom.tsx[0m:[93m99[0m:[93m42[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m99[0m                 {filteredData.map((item, index) => (
+[7m  [0m [93m                                         ~~~~~[0m
+[96msrc/components/showroom/showroom.tsx[0m:[93m99[0m:[93m36[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m99[0m                 {filteredData.map((item, index) => (
+[7m  [0m [93m                                   ~~~~[0m
+[96msrc/components/showroom/showroom.tsx[0m:[93m57[0m:[93m27[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'b' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m57[0m         filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+[7m  [0m [93m                          ~[0m
+[96msrc/components/showroom/showroom.tsx[0m:[93m57[0m:[93m24[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'a' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m57[0m         filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+[7m  [0m [93m                       ~[0m
+[96msrc/components/showroom/showroom.tsx[0m:[93m51[0m:[93m44[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m51[0m                 filtered = filtered.filter(item => item.category?.toLowerCase() === "shutters");
+[7m  [0m [93m                                           ~~~~[0m
+[96msrc/components/showroom/showroom.tsx[0m:[93m48[0m:[93m44[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m48[0m                 filtered = filtered.filter(item => item.category?.toLowerCase() === "curtains");
+[7m  [0m [93m                                           ~~~~[0m
+[96msrc/components/showroom/showroom.tsx[0m:[93m45[0m:[93m44[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m45[0m                 filtered = filtered.filter(item => item.category?.toLowerCase() === "blinds");
+[7m  [0m [93m                                           ~~~~[0m
+[96msrc/components/showroom/showroom.tsx[0m:[93m27[0m:[93m29[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'newStep' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m27[0m     const changeCategory = (newStep) => {
+[7m  [0m [93m                            ~~~~~~~[0m
+[96msrc/components/showroom/showroom.tsx[0m:[93m8[0m:[93m19[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m8[0m function Showroom(props) {
+[7m [0m [93m                  ~~~~~[0m
+[96msrc/components/showroom/showroom.tsx[0m:[93m1[0m:[93m38[0m - [93mwarning[0m[90m ts(6133): [0m'useMemo' is declared but its value is never read.
+
+[7m1[0m import React, { useEffect, useState, useMemo } from "react";
+[7m [0m [93m                                     ~~~~~~~[0m
+
+[96msrc/components/tutorials/tutorials.tsx[0m:[93m99[0m:[93m42[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'idx' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m99[0m                 {filteredData.map((card, idx) => (
+[7m  [0m [93m                                         ~~~[0m
+[96msrc/components/tutorials/tutorials.tsx[0m:[93m99[0m:[93m36[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'card' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m99[0m                 {filteredData.map((card, idx) => (
+[7m  [0m [93m                                   ~~~~[0m
+[96msrc/components/tutorials/tutorials.tsx[0m:[93m57[0m:[93m27[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'b' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m57[0m         filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+[7m  [0m [93m                          ~[0m
+[96msrc/components/tutorials/tutorials.tsx[0m:[93m57[0m:[93m24[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'a' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m57[0m         filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+[7m  [0m [93m                       ~[0m
+[96msrc/components/tutorials/tutorials.tsx[0m:[93m51[0m:[93m44[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m51[0m                 filtered = filtered.filter(item => item.category?.toLowerCase() === "shutters");
+[7m  [0m [93m                                           ~~~~[0m
+[96msrc/components/tutorials/tutorials.tsx[0m:[93m48[0m:[93m44[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m48[0m                 filtered = filtered.filter(item => item.category?.toLowerCase() === "curtains");
+[7m  [0m [93m                                           ~~~~[0m
+[96msrc/components/tutorials/tutorials.tsx[0m:[93m45[0m:[93m44[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m45[0m                 filtered = filtered.filter(item => item.category?.toLowerCase() === "blinds");
+[7m  [0m [93m                                           ~~~~[0m
+[96msrc/components/tutorials/tutorials.tsx[0m:[93m27[0m:[93m29[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'newStep' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m27[0m     const changeCategory = (newStep) => {
+[7m  [0m [93m                            ~~~~~~~[0m
+[96msrc/components/tutorials/tutorials.tsx[0m:[93m8[0m:[93m20[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m8[0m function Tutorials(props) {
+[7m [0m [93m                   ~~~~~[0m
+[96msrc/components/tutorials/tutorials.tsx[0m:[93m2[0m:[93m21[0m - [93mwarning[0m[90m ts(6133): [0m'useRef' is declared but its value is never read.
+
+[7m2[0m import { useEffect, useRef, useState } from "react";
+[7m [0m [93m                    ~~~~~~[0m
+
+[96msrc/components/user/add-address.tsx[0m:[93m62[0m:[93m23[0m - [93mwarning[0m[90m ts(6133): [0m'response' is declared but its value is never read.
+
+[7m62[0m                 const response = await createAddresses.storeAddress({
+[7m  [0m [93m                      ~~~~~~~~[0m
+[96msrc/components/user/add-address.tsx[0m:[93m39[0m:[93m39[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m39[0m     const handleInputChange = (field, value) => {
+[7m  [0m [93m                                      ~~~~~[0m
+[96msrc/components/user/add-address.tsx[0m:[93m39[0m:[93m32[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'field' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m39[0m     const handleInputChange = (field, value) => {
+[7m  [0m [93m                               ~~~~~[0m
+[96msrc/components/user/add-address.tsx[0m:[93m25[0m:[93m28[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m25[0m export function AddAddress(props) {
+[7m  [0m [93m                           ~~~~~[0m
+
+[96msrc/components/user/add-card.tsx[0m:[93m66[0m:[93m19[0m - [93mwarning[0m[90m ts(6133): [0m'response' is declared but its value is never read.
+
+[7m66[0m             const response = await storeCardDetails.storeCard({
+[7m  [0m [93m                  ~~~~~~~~[0m
+[96msrc/components/user/add-card.tsx[0m:[93m37[0m:[93m45[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m37[0m     const handlePaymentInfoChange = (field, value) => {
+[7m  [0m [93m                                            ~~~~~[0m
+[96msrc/components/user/add-card.tsx[0m:[93m37[0m:[93m38[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'field' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m37[0m     const handlePaymentInfoChange = (field, value) => {
+[7m  [0m [93m                                     ~~~~~[0m
+[96msrc/components/user/add-card.tsx[0m:[93m24[0m:[93m25[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m24[0m export function AddCard(props) {
+[7m  [0m [93m                        ~~~~~[0m
+
+[96msrc/components/user/address.tsx[0m:[93m33[0m:[93m22[0m - [93mwarning[0m[90m ts(6133): [0m'setUserData' is declared but its value is never read.
+
+[7m33[0m     const [userData, setUserData] = useState<UserData | null>(null);
+[7m  [0m [93m                     ~~~~~~~~~~~[0m
+[96msrc/components/user/address.tsx[0m:[93m25[0m:[93m18[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m25[0m function Address(props) {
+[7m  [0m [93m                 ~~~~~[0m
+[96msrc/components/user/address.tsx[0m:[93m16[0m:[93m6[0m - [93mwarning[0m[90m ts(6196): [0m'PaymentCard' is declared but never used.
+
+[7m16[0m type PaymentCard = {
+[7m  [0m [93m     ~~~~~~~~~~~[0m
+[96msrc/components/user/address.tsx[0m:[93m1[0m:[93m28[0m - [93mwarning[0m[90m ts(6133): [0m'useRef' is declared but its value is never read.
+
+[7m1[0m import React, { useEffect, useRef, useState } from "react";
+[7m [0m [93m                           ~~~~~~[0m
+
+[96msrc/components/user/edit-address.tsx[0m:[93m75[0m:[93m19[0m - [93mwarning[0m[90m ts(6133): [0m'response' is declared but its value is never read.
+
+[7m75[0m             const response = await updateAddresses.updateAddress(
+[7m  [0m [93m                  ~~~~~~~~[0m
+[96msrc/components/user/edit-address.tsx[0m:[93m51[0m:[93m39[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m51[0m     const handleInputChange = (field, value) => {
+[7m  [0m [93m                                      ~~~~~[0m
+[96msrc/components/user/edit-address.tsx[0m:[93m51[0m:[93m32[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'field' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m51[0m     const handleInputChange = (field, value) => {
+[7m  [0m [93m                               ~~~~~[0m
+[96msrc/components/user/edit-address.tsx[0m:[93m24[0m:[93m29[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m24[0m export function EditAddress(props) {
+[7m  [0m [93m                            ~~~~~[0m
+
+[96msrc/components/user/edit-card.tsx[0m:[93m95[0m:[93m27[0m - [93mwarning[0m[90m ts(6133): [0m'response' is declared but its value is never read.
+
+[7m95[0m                     const response = await updateCard.updateCard(
+[7m  [0m [93m                          ~~~~~~~~[0m
+[96msrc/components/user/edit-card.tsx[0m:[93m66[0m:[93m45[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'value' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m66[0m     const handlePaymentInfoChange = (field, value) => {
+[7m  [0m [93m                                            ~~~~~[0m
+[96msrc/components/user/edit-card.tsx[0m:[93m66[0m:[93m38[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'field' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m66[0m     const handlePaymentInfoChange = (field, value) => {
+[7m  [0m [93m                                     ~~~~~[0m
+[96msrc/components/user/edit-card.tsx[0m:[93m40[0m:[93m26[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m40[0m export function EditCard(props) {
+[7m  [0m [93m                         ~~~~~[0m
+[96msrc/components/user/edit-card.tsx[0m:[93m35[0m:[93m11[0m - [93mwarning[0m[90m ts(6196): [0m'Props' is declared but never used.
+
+[7m35[0m interface Props {
+[7m  [0m [93m          ~~~~~[0m
+
+[96msrc/components/user/order-list.tsx[0m:[93m56[0m:[93m74[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m56[0m                 {props.data.customizations.customizationData.map((option,index) => (
+[7m  [0m [93m                                                                         ~~~~~[0m
+[96msrc/components/user/order-list.tsx[0m:[93m56[0m:[93m67[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'option' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m56[0m                 {props.data.customizations.customizationData.map((option,index) => (
+[7m  [0m [93m                                                                  ~~~~~~[0m
+[96msrc/components/user/order-list.tsx[0m:[93m6[0m:[93m20[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m6[0m function OrderList(props) {
+[7m [0m [93m                   ~~~~~[0m
+[96msrc/components/user/order-list.tsx[0m:[93m2[0m:[93m31[0m - [93mwarning[0m[90m ts(6133): [0m'Package' is declared but its value is never read.
+
+[7m2[0m import { Camera, ChevronDown, Package, Plus } from 'lucide-react';
+[7m [0m [93m                              ~~~~~~~[0m
+[96msrc/components/user/order-list.tsx[0m:[93m2[0m:[93m10[0m - [93mwarning[0m[90m ts(6133): [0m'Camera' is declared but its value is never read.
+
+[7m2[0m import { Camera, ChevronDown, Package, Plus } from 'lucide-react';
+[7m [0m [93m         ~~~~~~[0m
+[96msrc/components/user/order-list.tsx[0m:[93m1[0m:[93m17[0m - [93mwarning[0m[90m ts(6133): [0m'useEffect' is declared but its value is never read.
+
+[7m1[0m import React, { useEffect, useState } from "react";
+[7m [0m [93m                ~~~~~~~~~[0m
+
+[96msrc/components/user/orderList.tsx[0m:[93m34[0m:[93m48[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'index' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m34[0m                         {order.items.map((item,index) => (
+[7m  [0m [93m                                               ~~~~~[0m
+[96msrc/components/user/orderList.tsx[0m:[93m34[0m:[93m43[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'item' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m34[0m                         {order.items.map((item,index) => (
+[7m  [0m [93m                                          ~~~~[0m
+[96msrc/components/user/orderList.tsx[0m:[93m6[0m:[93m20[0m - [93mwarning[0m[90m ts(6133): [0m'props' is declared but its value is never read.
+
+[7m6[0m function OrderList(props) {
+[7m [0m [93m                   ~~~~~[0m
+[96msrc/components/user/orderList.tsx[0m:[93m6[0m:[93m20[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m6[0m function OrderList(props) {
+[7m [0m [93m                   ~~~~~[0m
+
+[96msrc/components/user/payment.tsx[0m:[93m37[0m:[93m38[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'card' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m37[0m                     {props.list.map((card) => (
+[7m  [0m [93m                                     ~~~~[0m
+[96msrc/components/user/payment.tsx[0m:[93m24[0m:[93m28[0m - [93mwarning[0m[90m ts(6133): [0m'newCard' is declared but its value is never read.
+
+[7m24[0m     const handleAddCard = (newCard) => {
+[7m  [0m [93m                           ~~~~~~~[0m
+[96msrc/components/user/payment.tsx[0m:[93m24[0m:[93m28[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'newCard' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m24[0m     const handleAddCard = (newCard) => {
+[7m  [0m [93m                           ~~~~~~~[0m
+[96msrc/components/user/payment.tsx[0m:[93m24[0m:[93m11[0m - [93mwarning[0m[90m ts(6133): [0m'handleAddCard' is declared but its value is never read.
+
+[7m24[0m     const handleAddCard = (newCard) => {
+[7m  [0m [93m          ~~~~~~~~~~~~~[0m
+[96msrc/components/user/payment.tsx[0m:[93m22[0m:[93m18[0m - [93mwarning[0m[90m ts(7044): [0mParameter 'props' implicitly has an 'any' type, but a better type may be inferred from usage.
+
+[7m22[0m function Payment(props) {
+[7m  [0m [93m                 ~~~~~[0m
+[96msrc/components/user/payment.tsx[0m:[93m13[0m:[93m6[0m - [93mwarning[0m[90m ts(6196): [0m'PaymentCard' is declared but never used.
+
+[7m13[0m type PaymentCard = {
+[7m  [0m [93m     ~~~~~~~~~~~[0m
+
+[96msrc/components/user/user.tsx[0m:[93m14[0m:[93m6[0m - [93mwarning[0m[90m ts(6196): [0m'PaymentCard' is declared but never used.
+
+[7m14[0m type PaymentCard = {
+[7m  [0m [93m     ~~~~~~~~~~~[0m
+[96msrc/components/user/user.tsx[0m:[93m9[0m:[93m1[0m - [93mwarning[0m[90m ts(6133): [0m'fetchMedusaApi' is declared but its value is never read.
+
+[7m9[0m import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
+[7m [0m [93m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m
+
+Result (104 files): 
+- 4 errors
+- 0 warnings
+- 241 hints
+

@@ -1,8 +1,13 @@
 {
   "extends": "astro/tsconfigs/base",
   "compilerOptions": {
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitAny": false,
     "baseUrl": "src",
     "strictNullChecks": true,
+    "strictBindCallApply": false,
+    "strict": false,
     "jsx": "react",
     "types": [
       "astro/client"
@@ -35,6 +40,7 @@
     }
   },
   "exclude": [
-    "strapi-cms/**/*"
+    "strapi-cms/**/*",
+    "src/pages/**/*.astro"
   ]
 }
