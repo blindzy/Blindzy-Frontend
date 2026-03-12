@@ -6,7 +6,6 @@ import { Icon } from '@iconify/react';
 
 interface UserData {
     id: string;
-    username?: string;
     email?: string;
     phone?: string;
     company_name?: string;
@@ -14,7 +13,7 @@ interface UserData {
 }
 
 interface EditForm {
-    username: string;
+    email: string;
     phone: string;
     company_name: string;
 }
@@ -24,7 +23,7 @@ function UserDetail() {
     const [preview, setPreview] = useState<string | null>(null);
     const [isUploading, setIsUploading] = useState(false);
     const [isEditOpen, setIsEditOpen] = useState(false);
-    const [editForm, setEditForm] = useState<EditForm>({ username: "", phone: "", company_name: "" });
+    const [editForm, setEditForm] = useState<EditForm>({ email: "", phone: "", company_name: "" });
     const [isSaving, setIsSaving] = useState(false);
 
     useEffect(() => {
@@ -53,7 +52,7 @@ function UserDetail() {
     const openEdit = () => {
         if (!userData) return;
         setEditForm({
-            username: userData.username ?? "",
+            email: userData.email ?? "",
             phone: userData.phone ?? "",
             company_name: userData.company_name ?? "",
         });
@@ -74,7 +73,7 @@ function UserDetail() {
                 method: "PATCH",
                 body: {
                     id: userData.id,
-                    username: editForm.username,
+                    email: editForm.email,
                     phone: editForm.phone,
                     company_name: editForm.company_name,
                 },
@@ -84,7 +83,7 @@ function UserDetail() {
                 prev
                     ? {
                           ...prev,
-                          username: editForm.username,
+                          email: editForm.email,
                           phone: editForm.phone,
                           company_name: editForm.company_name,
                       }
@@ -210,7 +209,7 @@ function UserDetail() {
                                     </label>
                                 </div>
 
-                                <h4 className="text-xl">{userData.username}</h4>
+                                <h4 className="text-xl">{userData.email}</h4>
                             </div>
 
                             <div className="flex flex-col gap-2">
@@ -263,19 +262,6 @@ function UserDetail() {
                         </div>
 
                         <div className="flex flex-col gap-4">
-                            {/* Username */}
-                            <div className="flex flex-col gap-1">
-                                <label className="text-sm font-medium text-gray-600">Username</label>
-                                <input
-                                    type="text"
-                                    name="username"
-                                    value={editForm.username}
-                                    onChange={handleEditChange}
-                                    placeholder="Enter username"
-                                    className="border border-gray-200 rounded-lg px-4 py-2.5 text-sm outline-none focus:border-primary transition"
-                                />
-                            </div>
-
                             {/* Email (read-only) */}
                             <div className="flex flex-col gap-1">
                                 <label className="text-sm font-medium text-gray-600">Email</label>

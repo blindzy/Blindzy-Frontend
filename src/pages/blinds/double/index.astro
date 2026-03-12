@@ -23,7 +23,7 @@ const productsData = await fetchMedusaApi<any>({
 const filteredProducts = (productsData?.products || []).filter((product: any) => {
   const isSingleType = product.type?.value === "double-roller-blind";
   const hasBlindsCategory = product.categories?.some(
-    (cat) => cat.name?.toLowerCase() === "blinds",
+    (cat: any) => cat.name?.toLowerCase() === "blinds",
   );
 
   return isSingleType && hasBlindsCategory;

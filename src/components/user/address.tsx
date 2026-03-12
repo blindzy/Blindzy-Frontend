@@ -34,6 +34,15 @@ function Address(props) {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+
+        const userDataString = localStorage.getItem("user");
+        if (!userDataString) {
+            console.error("User Data not found in localStorage");
+            return;
+        }
+        const userDataObj = JSON.parse(userDataString);
+        setUserData(userDataObj);
+
         fetchAddresses();
     }, [props.userData]);
 
@@ -79,7 +88,7 @@ function Address(props) {
                             <EditAddress
                                 userData={userData}
                                 address={address}
-                                onSuccess={handleAddressChange} 
+                                onSuccess={handleAddressChange}
                             />
                         </div>
                         <p>{address?.address_1} , {address.city}</p>
@@ -93,7 +102,7 @@ function Address(props) {
                 ))}
                 <div className="sm:col-span-6 col-span-12 flex flex-col items-center justify-center gap-2 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48">
                     <h5 className="text-lg text-center">WANT TO ADD A NEW ADDRESS?</h5>
-                    <AddAddress userData={props.userData} onSuccess={handleAddressChange} /> 
+                    <AddAddress userData={props.userData} onSuccess={handleAddressChange} />
                 </div>
             </div>
         ) : (

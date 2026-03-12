@@ -50,7 +50,6 @@ export const register = {
     first_name: string;
     last_name: string;
     phone?: string;
-    username?: string;
   }): Promise<RegisterResponse> {
     console.log("🟢 Registration attempt for:", userData.email);
 

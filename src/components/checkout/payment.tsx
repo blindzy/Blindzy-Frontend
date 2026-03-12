@@ -6,6 +6,7 @@ const stripePromise = loadStripe('pk_test_51ReVtpEyZ8uIZ3ONqcj3Du0xz7OamUW7raZGx
 import { Button } from '@lib/components/ui/button';
 import './css/style.css';
 
+const publishableKey = import.meta.env.PUBLIC_MEDUSA_PUBLISHABLE_KEY;
 
 const PaymentPage = ({ amount, customer, shippingInfo, back }) => (
   <Elements stripe={stripePromise}>
@@ -36,7 +37,7 @@ const CheckoutForm = ({ amount, customer, shippingInfo, back }: { amount: any; c
       method: 'POST',
        headers: {
             "Content-Type": "application/json",
-            "x-publishable-api-key": 'pk_618e1efe2b7d74576d7e072b76bd3c56d46ef94ede9463774e1c2b09c50f6bda',
+            "x-publishable-api-key": publishableKey,
         },
       body: JSON.stringify({
         amount: amountInCents,
@@ -112,7 +113,7 @@ const CheckoutForm = ({ amount, customer, shippingInfo, back }: { amount: any; c
           method: 'POST',
           headers: {
             "Content-Type": "application/json",
-            "x-publishable-api-key": "pk_618e1efe2b7d74576d7e072b76bd3c56d46ef94ede9463774e1c2b09c50f6bda",
+            "x-publishable-api-key": publishableKey,
           },
           body: JSON.stringify({
             customer_id: customer.id,
@@ -137,7 +138,7 @@ const CheckoutForm = ({ amount, customer, shippingInfo, back }: { amount: any; c
     //     method: 'POST',
     //     headers: {
     //           "Content-Type": "application/json",
-    //           "x-publishable-api-key": 'pk_618e1efe2b7d74576d7e072b76bd3c56d46ef94ede9463774e1c2b09c50f6bda',
+    //           "x-publishable-api-key": '',
     //       },
     //     body: JSON.stringify({
     //       customer_id: customer.id,
