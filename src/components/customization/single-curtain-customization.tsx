@@ -205,7 +205,6 @@ function Single_curtain_customization({ data: propsData, groupData }) {
 
             if (defaultVariant?.price_sets?.[0]?.prices?.[0]?.amount) {
                 var defaultGroup = defaultVariant.price_sets[0].prices[0].amount;
-                console.log(defaultGroup - 1);
                 setPriceGroup(Math.max(0, defaultGroup - 1));
 
             }
@@ -290,7 +289,7 @@ function Single_curtain_customization({ data: propsData, groupData }) {
         }
         const userDataObj = JSON.parse(userDataString);
         setUserData(userDataObj);
-    }, [userData]);
+    }, []);
 
     const handleAddToCart = async () => {
         setLoading(true);

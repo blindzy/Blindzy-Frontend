@@ -1,7 +1,8 @@
 // src/services/auth/login.ts
 
-const API_BASE = import.meta.env.VITE_API_URL ; // Medusa backend URL
-const API_BASE_KEY = import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY ; // Medusa backend URL
+
+const API_BASE = import.meta.env.PUBLIC_API_URL;
+const API_BASE_KEY = import.meta.env.PUBLIC_MEDUSA_PUBLISHABLE_KEY;
 
 // ✅ Cookie setting utility (client-side)
 function setCookie(name: string, value: string, days = 7) {

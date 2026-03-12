@@ -29,46 +29,45 @@ function Address(props) {
         email: string;
         first_name: string;
         last_name: string;
-        // add other fields as needed
     };
     const [userData, setUserData] = useState<UserData | null>(null);
-    
-    // const handleUpdateAddress = (updatedAddress) => {
-    //     setAddressList(prev =>
-    //         prev.map(address =>
-    //             address.id === updatedAddress.id ? updatedAddress : address
-    //         )
-    //     );
-    // };
-     useEffect(() => {
-        async function getAddress() {
-            // const userDataString = localStorage.getItem("user");
-            if (!props.userData) {
-                console.error("User Data not found in localStorage");
-                return;
-            }
-            // const userDataObj = JSON.parse(userDataString);
-            // setUserData(userDataObj);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetchAddresses();
+    }, [props.userData]);
+
+    const handleAddressChange = async () => {
+        await fetchAddresses();
+        props.onAddressChange?.(); // also notify parent if needed
+    };
+
+    const fetchAddresses = async () => {
+        if (!props.userData?.email) return;
+
+        try {
+            setLoading(true);
 
             const data = await fetchMedusaApi<any>({
                 endpoint: "/store/customers/addresses",
                 query: { email: props.userData.email },
             });
 
-            setAddressList(data.addresses);
-            // console.log("Addresses:", data.addresses);
+            setAddressList(data.addresses || []);
+        } catch (err) {
+            console.error("Error fetching addresses:", err);
+        } finally {
+            setLoading(false);
         }
-        getAddress();
-    }, [props.userData]);
-
-    const handleAddressChange = async () => {
-        // Fetch updated address list
-        const data = await fetchMedusaApi<any>({
-            endpoint: "/store/customers/addresses",
-            query: { email: props.userData?.email ?? "" },
-        });
-        setAddressList(data.addresses);
     };
+
+    if (loading) {
+        return (
+            <div className="w-full flex justify-center items-center py-10">
+                <p className="text-gray-500">Loading addresses...</p>
+            </div>
+        );
+    }
 
     return (
         addressList.length > 0 ? (
@@ -80,10 +79,9 @@ function Address(props) {
                             <EditAddress
                                 userData={userData}
                                 address={address}
-                                onSuccess={props.onAddressChange}
+                                onSuccess={handleAddressChange} 
                             />
                         </div>
-                        {/* <p>{address.address_1} , {address.state}, {address.city}</p> */}
                         <p>{address?.address_1} , {address.city}</p>
                         <div className="flex items-center gap-2 justify-between">
                             <p className="text-md text-[--Black]">Postal Code: {address.postal_code}</p>
@@ -95,7 +93,7 @@ function Address(props) {
                 ))}
                 <div className="sm:col-span-6 col-span-12 flex flex-col items-center justify-center gap-2 xl:p-[1.25vw] sm:p-[2.344vw] p-4 border border-[--Black] rounded-48">
                     <h5 className="text-lg text-center">WANT TO ADD A NEW ADDRESS?</h5>
-                    <AddAddress userData={props.userData} onSuccess={props.onAddressChange} />
+                    <AddAddress userData={props.userData} onSuccess={handleAddressChange} /> 
                 </div>
             </div>
         ) : (
@@ -114,4 +112,3 @@ function Address(props) {
 };
 
 export default Address;
-

@@ -8,7 +8,6 @@ import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 import './css/style.css';
 
 
-
 export function CartPopup() {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState<boolean>(false);

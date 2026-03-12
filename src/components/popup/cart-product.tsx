@@ -79,7 +79,7 @@ export function CartProduct(props) {
                 <img
                     src={props.item.customizations?.thumbnail?.replace("http://localhost:9000", "https://api.blindzy.com")}
                     // src={props.item.customizations?.thumbnail}
-                    className="w-full h-full object-cover object-center" 
+                    className="w-full h-full object-cover object-center"
                     alt={props.item.customizations?.title}
                 />
             </div>
@@ -93,7 +93,7 @@ export function CartProduct(props) {
                         <button
                             className="size-[32px] flex items-center justify-center border border-[--black] text-[--black] bg-transparent hover:bg-[--black] hover:text-[--white] rounded-[10px] shrink-0 transition disabled:opacity-50 disabled:cursor-not-allowed"
                             onClick={decreaseQuantity}
-                            disabled={isUpdating}
+                            disabled={isUpdating || quantity <= 1}
                         >
                             {isUpdating ? <Loader2 className="h-4 w-4 animate-spin" /> : <Minus />}
                         </button>
@@ -124,7 +124,7 @@ export function CartProduct(props) {
                         className="size-[32px] flex items-center justify-center border border-[--black] text-[--danger] bg-transparent hover:bg-[--danger] hover:border-[--danger] hover:text-[--white] rounded-[10px] shrink-0 transition  disabled:opacity-50 disabled:cursor-not-allowed"
                         onClick={handleDelete}
                     >
-                        <Trash2  className="size-[16px]"/>
+                        <Trash2 className="size-[16px]" />
                     </button>
                 </div>
 

@@ -1,7 +1,7 @@
 export class CreateAddToCart {
   //   private baseUrl = import.meta.env.VITE_API_URL;
-  private API_BASE = import.meta.env.VITE_API_URL; // Medusa backend URL
-  private API_BASE_KEY = import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY; // Medusa backend URL
+  private API_BASE = import.meta.env.PUBLIC_API_URL; // Medusa backend URL
+  private API_BASE_KEY = import.meta.env.PUBLIC_MEDUSA_PUBLISHABLE_KEY; // Medusa backend URL
 
 
   private async medusaRequest<T>(endpoint: string, options: RequestInit): Promise<T> {
