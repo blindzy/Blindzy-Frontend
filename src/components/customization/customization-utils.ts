@@ -18,7 +18,7 @@ export const getCurrencySymbol = (code: string): string => {
         case 'usd': return '$';
         case 'aud': return 'A$';
         case 'gbp': return '£';
-        case 'eur': return '€';
+        case 'eur': return 'A$';
         case 'inr': return '₹';
         case 'nzd': return 'NZ$';
         default: return code ? code.toUpperCase() + ' ' : '';

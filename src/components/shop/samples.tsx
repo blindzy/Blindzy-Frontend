@@ -34,7 +34,7 @@ function Samples(props) {
 			case 'usd': symbol = '$'; break;
 			case 'aud': symbol = 'A$'; break;
 			case 'gbp': symbol = '£'; break;
-			case 'eur': symbol = '€'; break;
+			case 'eur': symbol = 'A$'; break;
 			case 'inr': symbol = '₹'; break;
 			case 'nzd': symbol = 'NZ$'; break;
 			default: symbol = code ? code.toUpperCase() + ' ' : '';
