@@ -1,3 +1,3 @@
-Blinzy
+Blindzy
 
 
