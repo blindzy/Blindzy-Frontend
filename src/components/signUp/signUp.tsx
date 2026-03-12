@@ -16,7 +16,6 @@ function SignUp() {
         last_name: '',
         email: '',
         phone: '',
-        username: '',
         password: '',
         confirmPassword: ''
     });
@@ -95,8 +94,7 @@ function SignUp() {
             !formData.last_name ||
             !formData.email ||
             !formData.password ||
-            !formData.confirmPassword ||
-            !formData.username
+            !formData.confirmPassword
         ) {
             setError("Please fill all required fields.");
             setLoading(false);
@@ -125,7 +123,6 @@ function SignUp() {
                 first_name: formData.first_name,
                 last_name: formData.last_name,
                 phone: formData.phone,
-                username: formData.username,
             });
 
             console.log("Signup success:", response);
@@ -218,14 +215,6 @@ function SignUp() {
                                     name="phone"
                                     placeholder="Phone"
                                     value={formData.phone}
-                                    onChange={handleChange}
-                                />
-                            </div>
-                            <div className="col-span-12">
-                                <Input type="text"
-                                    name="username"
-                                    placeholder="Username"
-                                    value={formData.username}
                                     onChange={handleChange}
                                 />
                             </div>

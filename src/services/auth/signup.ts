@@ -28,7 +28,6 @@ export class SignupService {
     first_name: string;
     last_name: string;
     phone?: string;
-    username?: string;
   }): Promise<any> {
     try {
       const response = await this.medusaRequest<any>("/store/customers/register", {
