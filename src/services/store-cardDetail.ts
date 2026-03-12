@@ -1,6 +1,6 @@
 export class StoreCardDetails {
-  private baseUrl = import.meta.env.VITE_API_URL; // Medusa backend URL
-  private baseUrl_KEY = import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY; // Medusa backend URL
+  private baseUrl = import.meta.env.PUBLIC_API_URL; // Medusa backend URL
+  private baseUrl_KEY = import.meta.env.PUBLIC_MEDUSA_PUBLISHABLE_KEY; // Medusa backend URL
 
   private async medusaRequest<T>(endpoint: string, options: RequestInit): Promise<T> {
     const res = await fetch(`${this.baseUrl}${endpoint}`, {
@@ -10,7 +10,7 @@ export class StoreCardDetails {
         "x-publishable-api-key": this.baseUrl_KEY,
         ...(options.headers || {}),
       },
-    });
+      });
 
     if (!res.ok) {
       const errorText = await res.text();
