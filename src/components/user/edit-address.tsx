@@ -64,6 +64,7 @@ export function EditAddress(props) {
         setError(null);
         setSuccess(null);
         if (!props.userData || !props.address?.id) {
+            console.log(props)
             setLoading(false);
             setError("User data or address ID is not available.");
             console.error("User data or address ID is not available.");

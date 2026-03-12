@@ -24,6 +24,7 @@ interface Props {
     }
   
     const strapiUrl = import.meta.env.PUBLIC_STRAPI_API_URL;
+    console.log(strapiUrl)
     const url = new URL(`${strapiUrl}/api/${endpoint}`);
     if (query) {
         Object.entries(query).forEach(([key, value]) => {
