@@ -1,12 +1,13 @@
-import React, { useEffect, useRef , useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, CardElement, PaymentRequestButtonElement } from '@stripe/react-stripe-js';
 import { Icon } from '@iconify/react';
-const stripePromise = loadStripe(import.meta.env.PUBLIC_MEDUSA_PUBLISHABLE_KEY);
+const stripePromise = loadStripe(import.meta.env.PUBLIC_STRIPE_PROMISE_KEY);
 import { Button } from '@lib/components/ui/button';
 import './css/style.css';
 
 const publishableKey = import.meta.env.PUBLIC_MEDUSA_PUBLISHABLE_KEY;
+const baseUrl = import.meta.env.PUBLIC_API_URL;
 
 const PaymentPage = ({ amount, customer, shippingInfo, back }) => (
   <Elements stripe={stripePromise}>
@@ -32,13 +33,13 @@ const CheckoutForm = ({ amount, customer, shippingInfo, back }: { amount: any; c
       return;
     }
     // Create PaymentIntent on mount with the passed amount https://acp-backend.techplinth.com/api/checkout_sessions
-    
-    fetch('https://api.blindzy.com/store/customers/checkout_sessions', {
+
+    fetch(`${baseUrl}/store/customers/checkout_sessions`, {
       method: 'POST',
-       headers: {
-            "Content-Type": "application/json",
-            "x-publishable-api-key": publishableKey,
-        },
+      headers: {
+        "Content-Type": "application/json",
+        "x-publishable-api-key": publishableKey,
+      },
       body: JSON.stringify({
         amount: amountInCents,
         email: customer.email,
@@ -55,7 +56,10 @@ const CheckoutForm = ({ amount, customer, shippingInfo, back }: { amount: any; c
       }), // Pass the amount from the prop
     })
       .then((res) => res.json())
-      .then((data) => setClientSecret(data.clientSecret));
+      .then((data) => {
+        console.log(data)
+        setClientSecret(data.clientSecret)
+      });
 
     if (stripe) {
 
@@ -100,6 +104,7 @@ const CheckoutForm = ({ amount, customer, shippingInfo, back }: { amount: any; c
         card: cardElement,
       },
     });
+    console.log(result);
 
     const { error, paymentIntent } = result;
 
@@ -109,7 +114,7 @@ const CheckoutForm = ({ amount, customer, shippingInfo, back }: { amount: any; c
     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
       console.log(customer.id, shippingInfo.id);
       try {
-        const response = await fetch('https://api.blindzy.com/store/customers/checkout', {
+        const response = await fetch(`${baseUrl}/store/customers/checkout`, {
           method: 'POST',
           headers: {
             "Content-Type": "application/json",
@@ -156,14 +161,14 @@ const CheckoutForm = ({ amount, customer, shippingInfo, back }: { amount: any; c
         <>
           <CardElement />
           {error && <div className='text-red-600'>{error}</div>}
-            <div className='flex justify-end col-span-12 gap-2'>
-                <Button variant={'light'} size={'small'} className="sm:w-[200px] w-full sm:shrink-0 shrink " onClick={back}>
-                    Back
-                </Button>
-                <Button variant={'primary'} size={'small'} name='submit' className="sm:w-[200px] w-full sm:shrink-0 shrink " type="submit" disabled={!stripe}>
-                    {!loader ? 'Place Order' : 'processing...'}
-                </Button>
-            </div>
+          <div className='flex justify-end col-span-12 gap-2'>
+            <Button variant={'light'} size={'small'} className="sm:w-[200px] w-full sm:shrink-0 shrink " onClick={back}>
+              Back
+            </Button>
+            <Button variant={'primary'} size={'small'} name='submit' className="sm:w-[200px] w-full sm:shrink-0 shrink " type="submit" disabled={!stripe}>
+              {!loader ? 'Place Order' : 'processing...'}
+            </Button>
+          </div>
 
           {/* {paymentRequest && (
             <PaymentRequestButtonElement options={{ paymentRequest }} />
@@ -171,7 +176,7 @@ const CheckoutForm = ({ amount, customer, shippingInfo, back }: { amount: any; c
         </>
       ) : (
         <div className='h-full w-full flex flex-col justify-center items-center'>
-          <Icon icon="ph:check-circle-light" className='text-[128px] text-primary'/>
+          <Icon icon="ph:check-circle-light" className='text-[128px] text-primary' />
           <h2 className='text-xl text-black'>Order Successful</h2>
         </div>
       )}
