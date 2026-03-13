@@ -1,4 +1,4 @@
-Blindzy.
+Blindzy
 
 
 
