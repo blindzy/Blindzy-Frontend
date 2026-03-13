@@ -209,7 +209,7 @@ function UserDetail() {
                                     </label>
                                 </div>
 
-                                <h4 className="text-xl">{userData.email}</h4>
+                                <h4 className="text-lg">{userData.email}</h4>
                             </div>
 
                             <div className="flex flex-col gap-2">

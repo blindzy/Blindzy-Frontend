@@ -278,7 +278,7 @@ function SignUp() {
                         <div className="w-full flex flex-col sm:flex-row items-center sm:justify-between justify-center gap-2 sm:gap-0">
                             <div className="flex items-center gap-2 shrink-0">
                                 <Checkbox id="agree" checked={agreedToTerms} onCheckedChange={handleCheckboxChange('agreedToTerms')} />
-                                <label htmlFor="agree" className="text-sm normal cursor-pointer">By Signing up you agree to our Terms and Policies</label>
+                                <label htmlFor="agree" className="text-sm normal cursor-pointer">By Signing up you agree to our <a href="/policies/terms-conditions" target="_blank" className="font-bold text-[--primary] transition hover:underline focus:outline-none">Terms & Conditions</a></label>
                             </div>
                             <div className="flex items-center gap-2 shrink-0">
                                 <Checkbox id="Remember" checked={rememberMe} onCheckedChange={handleCheckboxChange('rememberMe')} />
@@ -287,7 +287,7 @@ function SignUp() {
                         </div>
                         <div className="flex items-center justify-center gap-1 text-sm">
                             Already have an account?
-                            <a href="/login" className="text-[--primary] transition hover:underline focus:outline-none">Login</a>
+                            <a href="/login" className="font-bold text-[--primary] transition hover:underline focus:outline-none">Login</a>
                         </div>
                     </>
                 )}
