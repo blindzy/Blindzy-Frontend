@@ -1,15 +1,12 @@
 export class SignupService {
-  // private baseUrl = import.meta.env.VITE_API_URL;
-  private baseUrl = import.meta.env.PUBLIC_API_URL; // Medusa backend URL
-  private baseUrl_KEY = import.meta.env.PUBLIC_MEDUSA_PUBLISHABLE_KEY; // Medusa backend URL
-
+  private baseUrl = import.meta.env.PUBLIC_API_URL;
+  private baseUrl_KEY = import.meta.env.PUBLIC_MEDUSA_PUBLISHABLE_KEY;
 
   private async medusaRequest<T>(endpoint: string, options: RequestInit): Promise<T> {
     const res = await fetch(`${this.baseUrl}${endpoint}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",
-        // "x-publishable-api-key": import.meta.env.VITE_MEDUSA_PUBLISHABLE_KEY,
         "x-publishable-api-key": this.baseUrl_KEY,
         ...(options.headers || {}),
       },
@@ -36,16 +33,30 @@ export class SignupService {
         body: JSON.stringify(userData),
       });
 
-      // Save user data locally
       if (typeof window !== "undefined") {
         localStorage.setItem("user", JSON.stringify(response.customer));
         localStorage.setItem("userEmail", userData.email);
-        console.log("Signup user data saved to localStorage");
       }
 
       return response;
     } catch (error) {
       console.error("Signup failed:", error);
+      throw error;
+    }
+  }
+
+  async verifyEmail(email: string, otp: string): Promise<{ message: string }> {
+    try {
+      const response = await this.medusaRequest<{ message: string }>(
+        "/store/customers/verify-email",
+        {
+          method: "POST",
+          body: JSON.stringify({ email, otp }),
+        }
+      );
+      return response;
+    } catch (error) {
+      console.error("OTP verification failed:", error);
       throw error;
     }
   }
