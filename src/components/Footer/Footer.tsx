@@ -55,6 +55,7 @@ function Footer() {
                         <a href="/contact" className="text-sm hover:text-primary uppercase">CONTACT US</a>
                         <a href="/policies/warranty-policy" className="text-sm hover:text-primary uppercase">Warranty Policy</a>
                         <a href="/policies/privacy-policy" className="text-sm hover:text-primary uppercase">PRIVACY POLICY</a>
+                        <a href="/policies/terms-conditions" className="text-sm hover:text-primary uppercase">TERMS & CONDITIONS</a>
                     </div>
                     <div className="flex sm:flex-col items-center gap-2 shrink-0">
                         <Icon icon="uil:plus" className="text-[18px] text-black" />
