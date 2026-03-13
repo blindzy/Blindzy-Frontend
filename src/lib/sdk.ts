@@ -6,7 +6,7 @@ const publishableKey = import.meta.env.PUBLIC_MEDUSA_PUBLISHABLE_KEY
 
 export const sdk = new Medusa({
   baseUrl,
-  debug: import.meta.env.DEV,
+  debug: true,
   publishableKey,
   auth: {
     type: "jwt",

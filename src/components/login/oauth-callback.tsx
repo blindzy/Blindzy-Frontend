@@ -1,118 +1,108 @@
-import React, { useEffect, useState } from "react";
-import { sdk } from "../../lib/sdk";
-import { decodeToken } from "react-jwt";
+import { HttpTypes } from "@medusajs/types"
+import React, { useEffect, useMemo, useState } from "react"
+import { decodeToken } from "react-jwt"
+import { sdk } from "@lib/sdk"
 
 function setCookie(name: string, value: string, days = 7) {
   const expires = new Date(Date.now() + days * 24 * 60 * 60 * 1000).toUTCString();
+  // ⚠️ Don't use HttpOnly or Domain here — JS can't set HttpOnly
   document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax; Secure`;
 }
 
-export default function OAuthCallback() {
-  const [status, setStatus] = useState<"loading" | "success" | "error">("loading");
-  const [error, setError] = useState("");
-  const [customer, setCustomer] = useState<any>(null);
+export default function GoogleCallback() {
+  const [loading, setLoading] = useState(true)
+  const [customer, setCustomer] = useState<HttpTypes.StoreCustomer>()
+  // for other than Next.js
 
-  const sendCallback = async (): Promise<string> => {
-    const searchParams = new URLSearchParams(window.location.search);
-    const queryParams = Object.fromEntries(searchParams.entries());
 
-    if (!queryParams.code && !queryParams.state) {
-      throw new Error("Missing OAuth parameters from provider");
+
+  const sendCallback = async () => {
+
+    const searchParams = new URLSearchParams(window.location.search)
+    const queryParams = Object.fromEntries(searchParams.entries())
+
+    let token = ""
+
+    try {
+      token = await sdk.auth.callback(
+        "customer",
+        "google",
+        // pass all query parameters received from the
+        // third party provider
+        queryParams
+      )
+    } catch (error) {
+      alert("Authentication Failed")
+
+      throw error
     }
 
-    const token = await sdk.auth.callback("customer", "google", queryParams);
-    if (!token) {
-      throw new Error("No token received from OAuth provider");
-    }
-
-    if (typeof window !== "undefined") {
-      localStorage.setItem("access_token", token);
-      setCookie("access_token", token);
-    }
-
-    return token;
-  };
+    return token
+  }
 
   const createCustomer = async (email: string) => {
-    await sdk.store.customer.create({ email });
-  };
+    // create customer
+    await sdk.store.customer.create({
+      email,
+    })
+  }
+
 
   const refreshToken = async () => {
-    await sdk.auth.refresh();
-  };
+    // refresh the token
+    const result = await sdk.auth.refresh()
+  }
 
   const validateCallback = async () => {
-    try {
-      const token = await sendCallback();
+    const token = await sendCallback()
 
-      const decoded = decodeToken(token) as {
-        actor_id: string;
-        user_metadata: Record<string, unknown>;
-      };
+    localStorage.setItem("access_token", token)
+    setCookie("access_token", token);
 
-      const shouldCreateCustomer = decoded.actor_id === "";
+    const decodedToken = decodeToken(token) as { actor_id: string, user_metadata: Record<string, unknown> }
 
-      if (shouldCreateCustomer) {
-        await createCustomer(decoded.user_metadata.email as string);
-        await refreshToken();
-      }
+    const shouldCreateCustomer = decodedToken.actor_id === ""
 
-      const { customer: customerData } = await sdk.store.customer.retrieve(
-        {},
-        { Authorization: `Bearer ${token}` }
-      );
-      setCustomer(customerData);
+    if (shouldCreateCustomer) {
+      await createCustomer(decodedToken.user_metadata.email as string)
 
-      console.log("OAuth login successful, customer data:", customerData);
-      localStorage.setItem("user", JSON.stringify(customerData));
-      localStorage.setItem("userEmail", customerData.email);
-
-      setStatus("success");
-
-      setTimeout(() => (window.location.href = "/user"), 500);
-    } catch (err: any) {
-      console.error("❌ OAuth validation error:", err);
-      setError(err.message || "Authentication failed. Please try again.");
-      setStatus("error");
+      await refreshToken()
     }
-  };
+
+    // use token to send authenticated requests
+    const { customer: customerData } = await sdk.store.customer.retrieve()
+
+    setCustomer(customerData)
+    setLoading(false)
+  }
 
   useEffect(() => {
-    validateCallback();
-  }, []);
+    if (!loading) {
+      return
+    }
+
+    validateCallback()
+  }, [loading])
+
+  useEffect(() => {
+    if (!customer) {
+      return
+    }
+
+    // Save data in localStorage
+    if (typeof window !== "undefined") {
+      localStorage.setItem("user", JSON.stringify(customer));
+      localStorage.setItem("userEmail", customer.email);
+    }
+
+    window.location.href = "/user"
+  }, [customer])
+
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white">
-      <div className="text-center flex flex-col items-center gap-4">
-        {status === "loading" && (
-          <>
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500"></div>
-            <p className="text-lg text-gray-600">Completing your login...</p>
-          </>
-        )}
-
-        {status === "success" && (
-          <>
-            <div className="text-green-500 text-5xl">✓</div>
-            <p className="text-lg text-gray-600">Login successful! Redirecting...</p>
-          </>
-        )}
-
-        {status === "error" && (
-          <>
-            <div className="text-red-500 text-5xl">✕</div>
-            <p className="text-lg text-red-600 font-semibold">Authentication Failed</p>
-            <p className="text-sm text-gray-600">{error}</p>
-            <a
-              href="/login"
-              className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
-            >
-              Back to Login
-            </a>
-          </>
-        )}
-      </div>
+    <div>
+      {loading && <span>Loading...</span>}
+      {customer && <span>Created customer {customer.email} with Google.</span>}
     </div>
-  );
+  )
 }
-
