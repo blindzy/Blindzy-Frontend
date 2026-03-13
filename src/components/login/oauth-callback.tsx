@@ -57,7 +57,10 @@ export default function OAuthCallback() {
         await refreshToken();
       }
 
-      const { customer: customerData } = await sdk.store.customer.retrieve();
+      const { customer: customerData } = await sdk.store.customer.retrieve(
+        {},
+        { Authorization: `Bearer ${token}` }
+      );
       setCustomer(customerData);
 
       console.log("OAuth login successful, customer data:", customerData);

@@ -9,7 +9,7 @@ export const sdk = new Medusa({
   debug: import.meta.env.DEV,
   publishableKey,
   auth: {
-    type: "session",
+    type: "jwt",
   },
 })
 

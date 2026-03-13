@@ -47,6 +47,12 @@ function SignUp() {
     };
 
     const registerWithGoogle = async () => {
+
+        if(!agreedToTerms) {
+            alert("You must agree to the terms and policies to sign up.");
+            return;
+        }
+
         const result = await sdk.auth.login("customer", "google", {})
 
         if (typeof result === "object" && result.location) {
@@ -69,6 +75,11 @@ function SignUp() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if(!agreedToTerms) {
+            alert("You must agree to the terms and policies to sign up.");
+            return;
+        }
 
         // prevent double submits
         if (submissionInProgress.current || loading) {
