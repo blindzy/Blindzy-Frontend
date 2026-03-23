@@ -1,1 +1,1 @@
-Blindzy.
+Blindzy
