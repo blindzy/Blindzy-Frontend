@@ -446,11 +446,9 @@ function Single_curtain_customization({ data: propsData, groupData }) {
                 </div>
             </div>
             <ProductCard
-                svg={true}
                 productData={productData}
                 customizationData={data}
                 totalPrice={`${currencySymbol}${addCommaToNumber(totalPrice)}`}
-                svgColor={svgColor}
             />
         </section>
     );

@@ -1,31 +1,26 @@
 import React from "react";
 import { Plus } from 'lucide-react';
 
-
-function ProductCard({ productData, customizationData, totalPrice, svg, svgColor = '#4A4A4A' }: { productData: any; customizationData: any; totalPrice: any; svg: boolean; svgColor?: string }) {
+function ProductCard({ productData, customizationData, totalPrice }: { productData: any; customizationData: any; totalPrice: any }) {
+    const selectedColor = customizationData.find(item => item.title === 'Colour')?.value;
+    const fabricImage = selectedColor ? `/images/Alaska ${selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1)}.png` : null;
     return (
         <div className="sticky top-4 w-full xl:max-w-[32.813vw] h-fit sm:h-[calc(100vh-32px)] px-2 xl:px-[0.417vw] text-[--Black] bg-[--white] border border-[--Black] shrink-0 rounded-48 overflow-hidden">
             <div className="size-full flex flex-col gap-6 xl:gap-[1.25vw] py-4 sm:py-6 xl:py-[1.25vw] sm:px-4 px-2 xl:px-[0.833vw] overflow-hidden">
                 <div className="relative w-full h-[60.465vw] sm:h-[88.945vw] xl:h-[23.438vw] shrink-0 rounded-32 overflow-hidden">
-                    <img
-                        // src={productData.thumbnail?.replace("http://localhost:9000", "https://api.blindzy.com")}
-                        src={'/images/single-product.jpg'}
-                        // src={productData.thumbnail}
-                        className="w-full h-full object-cover object-top-center xl:object-center"
-                        alt={productData.title}
-                    />
-                    {svg && <div className="size-full absolute left-0 top-0 flex justify-center pt-[12.326vw] sm:pt-[13.086vw] xl:pt-[1.042vw]">
-                        {/* <svg xmlns="http://www.w3.org/2000/svg" width="511" height="201" viewBox="0 0 511 201" fill="none"> */}
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-[77.674vw] sm:w-[79.102vw] xl:w-[26.615vw] h-[32.093vw] sm:h-[31.641vw] xl:h-[10.469vw]" viewBox="0 0 511 201" fill="none">
-                            <path d="M0 3L2 0H507H509L510.5 4V9L509 12L507 13V200.5H4V14.5L2 13L1 9.5L0 3Z" fill={svgColor} />
-                        </svg>
-                    </div>}
+                    {fabricImage && (
+                        <div className="size-full absolute left-0 top-0 flex justify-center pt-[12.326vw] sm:pt-[13.086vw] xl:pt-[1.042vw]">
+                            <img
+                                src={fabricImage}
+                                className="w-full h-full object-cover"
+                                alt={selectedColor}
+                            />
+                        </div>
+                    )}
                 </div>
                 <div className="w-full flex items-center justify-between shrink-0">
                     <h4 className="text-lg">{productData.title}</h4>
-                    <span className="text-lg">
-                        {totalPrice}
-                    </span>
+                    <span className="text-lg">{totalPrice}</span>
                 </div>
                 <div className="flex items-center gap-2 shrink-0 text-[--Black]">
                     <Plus className="size-[18px]" />
@@ -38,12 +33,11 @@ function ProductCard({ productData, customizationData, totalPrice, svg, svgColor
                         option.value ? (
                             <div className="w-full flex items-center justify-between" key={index}>
                                 <p className="text-sm">{option.title}</p>
-                                <p className="text-sm">{(option.value)}</p>
+                                <p className="text-sm">{option.value}</p>
                             </div>
                         ) : null
                     ))}
                 </div>
-
             </div>
         </div>
     );
