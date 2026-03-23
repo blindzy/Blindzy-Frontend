@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react';
 
 function ProductCard({ productData, customizationData, totalPrice }: { productData: any; customizationData: any; totalPrice: any }) {
     const selectedColor = customizationData.find(item => item.title === 'Colour')?.value;
-    const fabricImage = selectedColor ? `/images/Alaska ${selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1)}.png` : null;
+    const fabricImage = selectedColor ? `/images/${productData.title.charAt(0).toUpperCase() + productData.title.slice(1)} ${selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1)}.png` : null;
     return (
         <div className="sticky top-4 w-full xl:max-w-[32.813vw] h-fit sm:h-[calc(100vh-32px)] px-2 xl:px-[0.417vw] text-[--Black] bg-[--white] border border-[--Black] shrink-0 rounded-48 overflow-hidden">
             <div className="size-full flex flex-col gap-6 xl:gap-[1.25vw] py-4 sm:py-6 xl:py-[1.25vw] sm:px-4 px-2 xl:px-[0.833vw] overflow-hidden">
@@ -13,7 +13,7 @@ function ProductCard({ productData, customizationData, totalPrice }: { productDa
                             <img
                                 src={fabricImage}
                                 className="w-full h-full object-cover"
-                                alt={selectedColor}
+                                alt={fabricImage}
                             />
                         </div>
                     )}
