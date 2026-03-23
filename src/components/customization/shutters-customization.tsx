@@ -338,7 +338,6 @@ function Shutters_customization({ data: propsData, groupData }) {
             <ProductCard
                 productData={productData}
                 customizationData={data}
-                svg={false}
                 totalPrice={`${currencySymbol}${addCommaToNumber(totalPrice)}`}
             />
         </section>

@@ -582,7 +582,6 @@ function Double_blind_customization({ data: propsData, groupData }) {
                 </div>
             </div>
             <ProductCard
-                svg={false}
                 productData={productData}
                 customizationData={data}
                 totalPrice={`${currencySymbol}${addCommaToNumber(totalPrice)}`}
