@@ -7,25 +7,25 @@ function Instruction() {
             icon: '/images/icon/box-sm.png',
             alt: 'Box',
             title: 'Free Delivery',
-            desc: 'Phasellus lectus sit felis nascetu ante imperdiet semper leo.'
+            desc: 'Fast, reliable delivery across Australia straight from our factory to your home.'
         },
         {
             icon: '/images/icon/guarantee-sm.png',
             alt: 'guarantee',
             title: '10 Years Warranty',
-            desc: 'Phasellus lectus sit felis nascetu ante imperdiet semper leo.'
+            desc: 'Premium quality window furnishings backed by a 10 year warranty for long-term peace of mind.'
         },
         {
             icon: '/images/icon/australia-sm.png',
             alt: 'australia',
             title: 'Made in Australia',
-            desc: 'Phasellus lectus sit felis nascetu ante imperdiet semper leo.'
+            desc: 'Proudly manufactured in Melbourne using high quality materials and expert craftsmanship.'
         },
         {
             icon: '/images/icon/diy-sm.png',
             alt: 'diy',
             title: 'Install Yourself',
-            desc: 'Phasellus lectus sit felis nascetu ante imperdiet semper leo.'
+            desc: 'Easy-to-install blinds and curtains with simple guides.'
         }
     ]
 
