@@ -65,28 +65,28 @@ function Hero() {
 							<img src="/images/icon/box.png" className="w-fit shrink-0" alt="box" />
 							<div className="flex flex-col gap-1">
 								<p className="text-md">Free Delivery</p>
-								<p className="text-xs text-black"> Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
+								<p className="text-xs text-black">Fast, reliable delivery across Australia straight from our factory to your home.</p>
 							</div>
 						</div>
 						<div className="w-full h-full flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
 							<img src="/images/icon/guarantee.png" className="w-fit shrink-0" alt="guarantee" />
 							<div className="flex flex-col gap-1">
 								<p className="text-md">10 Years Warranty</p>
-								<p className="text-xs text-black"> Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
+								<p className="text-xs text-black"> Premium quality window furnishings backed by a 10 year warranty for long-term peace of mind.</p>
 							</div>
 						</div>
 						<div className="w-full h-full flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
 							<img src="/images/icon/australia.png" className="w-fit shrink-0" alt="australia" />
 							<div className="flex flex-col gap-1">
 								<p className="text-md">Made in Australia</p>
-								<p className="text-xs text-black"> Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
+								<p className="text-xs text-black">Proudly manufactured in Melbourne using high quality materials and expert craftsmanship.</p>
 							</div>
 						</div>
 						<div className="w-full h-full flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
 							<img src="/images/icon/diy.png" className="w-fit shrink-0" alt="diy" />
 							<div className="flex flex-col gap-1">
 								<p className="text-md">Install Yourself</p>
-								<p className="text-xs text-black"> Phasellus lectus sit felis nascetu ante imperdiet semper leo. </p>
+								<p className="text-xs text-black">Easy-to-install blinds and curtains with simple guides</p>
 							</div>
 						</div>
 					</div>

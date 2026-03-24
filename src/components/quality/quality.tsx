@@ -54,7 +54,7 @@ function Quality() {
             <div className="xl:w-[41.667vw] sm:w-[80%] w-full xl:m-0 mx-auto xl:text-left text-center flex flex-col xl:items-start items-center gap-[2.5vw]">
                 <div className="flex flex-col gap-2">
                     <h2 className="text-xxxl text-black uppercase mbl:px-4">4 Steps to Designer Quality Blinds</h2>
-                    <p className="text-sm lg:text-base xl:text-lg text-black"> Lorem ipsum dolor sit amet consectetur. Massa ultricies convallis condimentum etiam gravida tristique. Quisque faucibus molestie aliquam </p>
+                    <p className="text-sm lg:text-base xl:text-lg text-black">Create custom DIY blinds in Australia without the stress, high costs, or showroom pressure. Our simple process makes it easy from start to finish</p>
                 </div>
                 <Button variant={'primary'} size={'large'} className="hover:border-[--white] hover:text-[--white]">
                     Download Guide
@@ -71,7 +71,7 @@ function Quality() {
                             <img src="/images/icon/measuring.png" className="sm:w-fit w-[16.285vw] object-scale-down mbl:w-[11.163vw]" alt="measuring" />
                             <div className="flex flex-col xl:gap-[0.833vw] sm:gap-4 gap-2">
                                 <h4 className="text-xl xl:text-2xl text-black mbl:font-bold mbl:text-[4.884vw]">Measure Up</h4>
-                                <p className="text-md lg:text-lg xl:text-xl xl:line-clamp-2 mbl:font-normal mbl:text-xs mbl:pr-2">Measure your windows and leave the rest up to us!</p>
+                                <p className="text-md lg:text-lg xl:text-xl xl:line-clamp-2 mbl:font-normal mbl:text-xs mbl:pr-2">Measure your windows in minutes using a few easy steps</p>
                             </div>
                         </div>
                         <div className="relative xl:w-[3.333vw] sm:w-[6.25vw] w-[32px] xl:h-[3.333vw] sm:h-[6.25vw] h-[32px] bg-primary text-white flex items-center justify-center xl:rounded-[3.333vw] sm:rounded-[3.333vw] rounded-[32px] shrink-0 z-[10] xl:ms-[-1.25vw] ms-[-2vw]">
@@ -84,7 +84,7 @@ function Quality() {
                             <img src="/images/icon/fabricpattern.png" className="sm:w-fit w-[16.285vw] object-scale-down mbl:w-[11.163vw]" alt="fabricpattern" />
                             <div className="flex flex-col xl:gap-[0.833vw] sm:gap-4 gap-2">
                                 <h4 className="text-xl xl:text-2xl text-black mbl:font-bold mbl:text-[4.884vw]">Choose Samples</h4>
-                                <p className="text-md lg:text-lg xl:text-xl xl:line-clamp-2 mbl:font-normal mbl:text-xs mbl:pr-2">Receive free samples from us to help select and customise your home.</p>
+                                <p className="text-md lg:text-lg xl:text-xl xl:line-clamp-2 mbl:font-normal mbl:text-xs mbl:pr-2">Order free fabric and colour samples to see exactly how your blinds will look in your home before you buy</p>
                             </div>
                         </div>
                         <div className="relative xl:w-[3.333vw] sm:w-[6.25vw] w-[32px] xl:h-[3.333vw] sm:h-[6.25vw] h-[32px] bg-primary text-white flex items-center justify-center xl:rounded-[3.333vw] sm:rounded-[3.333vw] rounded-[32px] shrink-0 z-[10] xl:ms-[-1.25vw] ms-[-2vw]">
@@ -97,7 +97,7 @@ function Quality() {
                             <img src="/images/icon/customization.png" className="sm:w-fit w-[16.285vw] object-scale-down mbl:w-[11.163vw]" alt="customization" />
                             <div className="flex flex-col xl:gap-[0.833vw] sm:gap-4 gap-2">
                                 <h4 className="text-xl xl:text-2xl text-black mbl:font-bold mbl:text-[4.884vw]">Customise</h4>
-                                <p className="text-md lg:text-lg xl:text-xl xl:line-clamp-2 mbl:font-normal mbl:text-xs mbl:pr-2">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
+                                <p className="text-md lg:text-lg xl:text-xl xl:line-clamp-2 mbl:font-normal mbl:text-xs mbl:pr-2">Select your size, fabric, colour and finish. Every blind is custom-made to fit your space perfectly.</p>
                             </div>
                         </div>
                         <div className="relative xl:w-[3.333vw] sm:w-[6.25vw] w-[32px] xl:h-[3.333vw] sm:h-[6.25vw] h-[32px] bg-primary text-white flex items-center justify-center xl:rounded-[3.333vw] sm:rounded-[3.333vw] rounded-[32px] shrink-0 z-[10] xl:ms-[-1.25vw] ms-[-2vw]">
@@ -110,7 +110,7 @@ function Quality() {
                             <img src="/images/icon/diy-quality.png" className="sm:w-fit w-[16.285vw] object-scale-down  mbl:w-[11.163vw]" alt="diy-quality" />
                             <div className="flex flex-col xl:gap-[0.833vw] sm:gap-4 gap-2">
                                 <h4 className="text-xl xl:text-2xl text-black mbl:font-bold mbl:text-[4.884vw]">DIY Install</h4>
-                                <p className="text-md lg:text-lg xl:text-xl xl:line-clamp-2 mbl:font-normal mbl:text-xs mbl:pr-2">Use our simple guides to help install blinds and curtains in your home.</p>
+                                <p className="text-md lg:text-lg xl:text-xl xl:line-clamp-2 mbl:font-normal mbl:text-xs mbl:pr-2">Install your blinds with confidence using simple instructions</p>
                             </div>
                         </div>
                         <div className="relative xl:w-[3.333vw] sm:w-[6.25vw] w-[32px] xl:h-[3.333vw] sm:h-[6.25vw] h-[32px] bg-primary text-white flex items-center justify-center xl:rounded-[3.333vw] sm:rounded-[3.333vw] rounded-[32px] shrink-0 z-[10] xl:ms-[-1.25vw] ms-[-2vw]">
