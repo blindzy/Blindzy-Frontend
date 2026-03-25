@@ -1,10 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Plus, X } from 'lucide-react';
 
-function ProductCard({ productData, customizationData, totalPrice }: { productData: any; customizationData: any; totalPrice: any }) {
+function ProductCard({
+    productData,
+    customizationData,
+    totalPrice,
+    svg,
+    svgColor = '#4A4A4A'
+}: {
+    productData: any;
+    customizationData: any;
+    totalPrice: any;
+    svg?: boolean;
+    svgColor?: string;
+}) {
 
     const [imageLoaded, setImageLoaded] = useState(false);
     const [isZoomed, setIsZoomed] = useState(false);
+    const [imageSrc, setImageSrc] = useState<string | null>(null);
+    const [isFabricMode, setIsFabricMode] = useState(false);
 
     const selectedColor = customizationData?.find((item: any) => item?.title === 'Colour')?.value ?? null;
     const fabricImage = selectedColor && productData?.title
@@ -16,9 +30,18 @@ function ProductCard({ productData, customizationData, totalPrice }: { productDa
         "https://api.blindzy.com"
     );
 
-    const isFabricMode = !!fabricImage;
     const finalImage = isFabricMode ? fabricImage : defaultImage;
 
+    useEffect(() => {
+        if (fabricImage) {
+            setImageSrc(fabricImage);
+            setIsFabricMode(true); // optimistically assume fabric mode
+        } else {
+            setImageSrc(defaultImage);
+            setIsFabricMode(false);
+        }
+        setImageLoaded(false);
+    }, [fabricImage, defaultImage]);
 
     useEffect(() => {
         setImageLoaded(false);
@@ -48,18 +71,25 @@ function ProductCard({ productData, customizationData, totalPrice }: { productDa
                                 <img
                                     src={finalImage}
                                     className={`w-full h-full object-cover ${isFabricMode
-                                            ? `transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"
-                                            }`
-                                            : ""
+                                        ? `transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"
+                                        }`
+                                        : ""
                                         }`}
                                     alt={productData.title}
                                     onLoad={() => isFabricMode && setImageLoaded(true)}
+                                    onError={() => {
+                                        if (imageSrc !== defaultImage) {
+                                            setImageSrc(defaultImage);
+                                            setIsFabricMode(false); // fabric image doesn't exist, drop fabric mode
+                                            setImageLoaded(true);
+                                        }
+                                    }}
                                 />
                             </div>
                         )}
 
                         {/* SVG overlay ONLY for default mode */}
-                        {!isFabricMode && (
+                        {!isFabricMode && svg && (
                             <div className="size-full absolute left-0 top-0 flex justify-center pt-[12.326vw] sm:pt-[13.086vw] xl:pt-[1.042vw]">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -69,7 +99,7 @@ function ProductCard({ productData, customizationData, totalPrice }: { productDa
                                 >
                                     <path
                                         d="M0 3L2 0H507H509L510.5 4V9L509 12L507 13V200.5H4V14.5L2 13L1 9.5L0 3Z"
-                                        fill={selectedColor}
+                                        fill={svgColor}
                                     />
                                 </svg>
                             </div>

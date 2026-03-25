@@ -25,6 +25,7 @@ function ProductComponent({ data, groupData, measurements, customizePage }) {
     const [totalPrice, setTotalPrice] = useState(0);
     const [currencySymbol, setCurrencySymbol] = useState('');
     const [screenBlindPriceGroup, setScreenBlindPriceGroup] = useState(0);
+    const [cardImageSrc, setCardImageSrc] = useState<string | null>(null);
 
     const calculatePrice = React.useCallback((group, width, height) => {
         if (!width || !height) {
@@ -61,6 +62,14 @@ function ProductComponent({ data, groupData, measurements, customizePage }) {
         setError("");
         return price;
     }, [groupData]);
+
+    useEffect(() => {
+        const color = selectedColor
+            ? selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1)
+            : 'Ash';
+        const title = data.title.charAt(0).toUpperCase() + data.title.slice(1);
+        setCardImageSrc(`/images/${title} ${color}.png`);
+    }, [data.title, selectedColor]);
 
     useEffect(() => {
         const width = measurements?.width ?? 0;
@@ -160,9 +169,18 @@ function ProductComponent({ data, groupData, measurements, customizePage }) {
         <div className="col-span-12 sm:col-span-6 xl:col-span-4 flex flex-col justify-between gap-4 xl:gap-[0.833vw] p-4 xl:p-[0.833vw] border border-[--Black] rounded-48">
             <div className="relative rounded-32 overflow-hidden h-[250px] sm:h-[24.414vw] xl:h-[13.021vw]">
                 <img
-                    src={`/images/${data.title.charAt(0).toUpperCase() + data.title.slice(1)} ${selectedColor ? selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1) : 'Ash'}.png`}
+                    src={cardImageSrc!}
                     className="w-full h-full object-cover"
                     alt={data.title}
+                    onError={() => {
+                        const defaultImage = data?.thumbnail?.replace(
+                            "http://localhost:9000",
+                            "https://api.blindzy.com"
+                        );
+                        if (cardImageSrc !== defaultImage) {
+                            setCardImageSrc(defaultImage);
+                        }
+                    }}
                 />
                 {data.tags?.[0] && (
                     <p className="text-sm absolute left-4 top-4 px-3 py-2 bg-white rounded-[50px] z-[1]">
