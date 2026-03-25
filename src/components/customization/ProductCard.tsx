@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Plus, X } from 'lucide-react';
 
 function ProductCard({ productData, customizationData, totalPrice }: { productData: any; customizationData: any; totalPrice: any }) {
+
     const [imageLoaded, setImageLoaded] = useState(false);
     const [isZoomed, setIsZoomed] = useState(false);
 
@@ -9,6 +10,15 @@ function ProductCard({ productData, customizationData, totalPrice }: { productDa
     const fabricImage = selectedColor && productData?.title
         ? `/images/${productData.title.charAt(0).toUpperCase() + productData.title.slice(1)} ${selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1)}.png`
         : null;
+
+    const defaultImage = productData?.thumbnail?.replace(
+        "http://localhost:9000",
+        "https://api.blindzy.com"
+    );
+
+    const isFabricMode = !!fabricImage;
+    const finalImage = isFabricMode ? fabricImage : defaultImage;
+
 
     useEffect(() => {
         setImageLoaded(false);
@@ -24,22 +34,44 @@ function ProductCard({ productData, customizationData, totalPrice }: { productDa
 
                     {/* Image container */}
                     <div
-                        className="relative w-full h-[60.465vw] sm:h-[88.945vw] xl:h-[23.438vw] shrink-0 rounded-32 overflow-hidden cursor-zoom-in"
-                        onClick={() => fabricImage && setIsZoomed(true)}
+                        className={`relative w-full h-[60.465vw] sm:h-[88.945vw] xl:h-[23.438vw] shrink-0 rounded-32 overflow-hidden ${isFabricMode ? "cursor-zoom-in" : ""
+                            }`}
+                        onClick={() => isFabricMode && setIsZoomed(true)}
                     >
-                        {/* Skeleton — shown when no image or while loading */}
-                        {(!fabricImage || !imageLoaded) && (
+                        {/* Skeleton ONLY for fabric mode */}
+                        {isFabricMode && !imageLoaded && (
                             <div className="absolute inset-0 bg-[--Black]/10 animate-pulse rounded-32" />
                         )}
 
-                        {fabricImage && (
+                        {finalImage && (
                             <div className="size-full absolute left-0 top-0 flex justify-center pt-[12.326vw] sm:pt-[13.086vw] xl:pt-[1.042vw]">
                                 <img
-                                    src={fabricImage}
-                                    className={`w-full h-full object-cover transition-opacity duration-300 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                                    src={finalImage}
+                                    className={`w-full h-full object-cover ${isFabricMode
+                                            ? `transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"
+                                            }`
+                                            : ""
+                                        }`}
                                     alt={productData.title}
-                                    onLoad={() => setImageLoaded(true)}
+                                    onLoad={() => isFabricMode && setImageLoaded(true)}
                                 />
+                            </div>
+                        )}
+
+                        {/* SVG overlay ONLY for default mode */}
+                        {!isFabricMode && (
+                            <div className="size-full absolute left-0 top-0 flex justify-center pt-[12.326vw] sm:pt-[13.086vw] xl:pt-[1.042vw]">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="w-[77.674vw] sm:w-[79.102vw] xl:w-[26.615vw] h-[32.093vw] sm:h-[31.641vw] xl:h-[10.469vw]"
+                                    viewBox="0 0 511 201"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M0 3L2 0H507H509L510.5 4V9L509 12L507 13V200.5H4V14.5L2 13L1 9.5L0 3Z"
+                                        fill={selectedColor}
+                                    />
+                                </svg>
                             </div>
                         )}
                     </div>
