@@ -313,10 +313,32 @@ function Single_blinds_customization({ data: propsData, groupData }) {
             setError('');
             setSuccess('');
         }
+
+        const cartItem = {
+            id: `local_${Date.now()}_${Math.random().toString(36).slice(2)}`,
+            product_id: productData.id,
+            quantity: 1,
+            customizations: {
+                title: productData.title,
+                amount: totalPrice,
+                currency: currencySymbol,
+                thumbnail: productData.thumbnail,
+                customizationData: data,
+            },
+        };
+
+
         if (!userData) {
-            setError('Customer not found. Please register first.');
-            setSuccess('');
-            setLoading(false);
+            try {
+                const existing = JSON.parse(localStorage.getItem('guest_cart') || '[]');
+                existing.push(cartItem);
+                localStorage.setItem('guest_cart', JSON.stringify(existing));
+                setSuccess('Added to cart!');
+            } catch {
+                setError('Failed to save item to cart.');
+            } finally {
+                setLoading(false);
+            }
             return;
         } else {
             setError('');
@@ -324,28 +346,11 @@ function Single_blinds_customization({ data: propsData, groupData }) {
         }
 
         try {
-            const response = await createAddToCart.addToCart({
+            await createAddToCart.addToCart({
                 email: userData.email,
-                product_id: productData.id,
-                quantity: 1,
-                customizations: {
-                    title: productData.title,
-                    amount: totalPrice,
-                    currency: currencySymbol,
-                    thumbnail: productData.thumbnail,
-                    customizationData: data,
-                    // colour : selectedColor,
-                    // size : data.find(item => item.title === 'Size')?.value || '',
-                    // fitting : data.find(item => item.title === 'Fitting Type')?.value || '',
-                    // select_fit : data.find(item => item.title === 'Select Fit')?.value || '',
-                    // curtain_stack : data.find(item => item.title === 'Curtain Stack')?.value || '',
-                    // curtain_style : data.find(item => item.title === 'Curtain Style')?.value || '',
-                    // curtain_hem : data.find(item => item.title === 'Curtain Hem')?.value || '',
-                    // track_type : data.find(item => item.title === 'Track Type')?.value || '',
-                    // wand_length : data.find(item => item.title === 'Wand Length')?.value || '',
-                    // track_colour : data.find(item => item.title === 'Track Colour')?.value || '',
-                    // bracket_style : data.find(item => item.title === 'Bracket Style')?.value || '',
-                },
+                product_id: cartItem.product_id,
+                quantity: cartItem.quantity,
+                customizations: cartItem.customizations,
             });
 
             setSuccess("Add to Cart created successfully!");

@@ -2,8 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button } from "@lib/components/ui/button";
 import Separate from "@components/separate";
 import { CartProduct } from "./cart-product";
-import {Dialog,DialogClose,DialogContent,DialogFooter,DialogHeader,DialogTitle,DialogTrigger,} from "@lib/components/ui/dialog";
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger, } from "@lib/components/ui/dialog";
 import { X, Loader2 } from 'lucide-react';
+import { createAddToCart } from "services/add-to-cart";
+import { updateCart } from "services/update-cart";
 import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 import './css/style.css';
 
@@ -21,7 +23,7 @@ export function CartPopup() {
     const calculateTotalAmount = (items) => {
         let total = 0;
         let symbol = '';
-        
+
         items.forEach(item => {
             const itemAmount = (item.customizations?.amount || 0) * (item.quantity || 1);
             total += itemAmount;
@@ -34,31 +36,91 @@ export function CartPopup() {
         setCurrencySymbol(symbol);
         setTotalAmount(total);
     };
-    
+
+    const isSyncingRef = useRef(false);
 
     // Function to fetch cart data
     const getCart = async () => {
+
+        if (isSyncingRef.current) return;
+        isSyncingRef.current = true;
+
         setLoading(true);
         try {
-            const userDataString = localStorage.getItem("user");
+            const guestItems: any[] = JSON.parse(localStorage.getItem('guest_cart') || '[]');
+
+            const userDataString = localStorage.getItem('user');
             if (!userDataString) {
-                console.error("User Data not found in localStorage");
+                setCartItems(guestItems);
+                setCartItemCount(guestItems.length);
+                calculateTotalAmount(guestItems);
                 return;
             }
+
             const userDataObj = JSON.parse(userDataString);
             setUserData(userDataObj);
 
+            // Fetch server cart first so we can compare
             const data = await fetchMedusaApi<any>({
-                endpoint: "store/customers/cart",
+                endpoint: 'store/customers/cart',
                 query: { email: userDataObj.email },
             });
-            setCartItems(data.cart.items);
-            setCartItemCount(data.cart.items.length);
-            calculateTotalAmount(data.cart.items);
+
+            const serverItems = data.cart.items ?? [];
+
+            if (guestItems.length > 0) {
+                localStorage.removeItem('guest_cart');
+
+                const addPromises: Promise<any>[] = [];
+                const updatePromises: Promise<any>[] = [];
+
+                guestItems.forEach(guestItem => {
+                    const match = serverItems.find(
+                        serverItem => serverItem.product_id === guestItem.product_id
+                    );
+
+                    if (match) {
+                        // Product exists on server — update quantity instead of adding
+                        updatePromises.push(
+                            updateCart.updateCart(match.id, {
+                                quantity: match.quantity + guestItem.quantity,
+                            })
+                        );
+                    } else {
+                        // New product — add it fresh
+                        addPromises.push(
+                            createAddToCart.addToCart({
+                                email: userDataObj.email,
+                                product_id: guestItem.product_id,
+                                quantity: guestItem.quantity,
+                                customizations: guestItem.customizations,
+                            })
+                        );
+                    }
+                });
+
+                await Promise.all([...addPromises, ...updatePromises]);
+
+                // Re-fetch after sync so UI reflects the final merged state
+                const refreshed = await fetchMedusaApi<any>({
+                    endpoint: 'store/customers/cart',
+                    query: { email: userDataObj.email },
+                });
+
+                const finalItems = refreshed.cart.items ?? [];
+                setCartItems(finalItems);
+                setCartItemCount(finalItems.length);
+                calculateTotalAmount(finalItems);
+            } else {
+                setCartItems(serverItems);
+                setCartItemCount(serverItems.length);
+                calculateTotalAmount(serverItems);
+            }
         } catch (error) {
-            console.error("Error fetching cart:", error);
+            console.error('Error fetching cart:', error);
         } finally {
             setLoading(false);
+            isSyncingRef.current = false;
         }
     };
 
@@ -79,16 +141,16 @@ export function CartPopup() {
         calculateTotalAmount(cartItems);
         setCartItemCount(cartItems.length);
     }, [cartItems]);
-    
+
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 <Button variant={'light'} size={'xl'} className="border-none rounded-full relative">
                     <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
-                        <path d="M15.75 17.5L18.25 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M24.25 17.5L21.75 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M26 17.5L25.403 24.666C25.317 25.703 24.45 26.5 23.41 26.5H16.59C15.55 26.5 14.683 25.703 14.597 24.666L14 17.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M12.75 17.5H27.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M15.75 17.5L18.25 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M24.25 17.5L21.75 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M26 17.5L25.403 24.666C25.317 25.703 24.45 26.5 23.41 26.5H16.59C15.55 26.5 14.683 25.703 14.597 24.666L14 17.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M12.75 17.5H27.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     {cartItemCount > 0 && (
                         <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 flex items-center justify-center bg-[--primary] text-[--white] text-[10px] font-semibold rounded-full leading-none pointer-events-none">
@@ -108,7 +170,7 @@ export function CartPopup() {
                                 </Button>
                             </DialogClose>
                         </DialogHeader>
-                        <Separate/>
+                        <Separate />
                     </div>
                     <div className="w-full h-full flex flex-col gap-6 py-2 overflow-auto line-scroll" data-lenis-prevent>
                         {loading ? (
@@ -117,12 +179,12 @@ export function CartPopup() {
                             </div>
                         ) : cartItems && cartItems.length > 0 ? (
                             cartItems.map((item, index) => (
-                                <CartProduct 
-                                    key={index} 
+                                <CartProduct
+                                    key={index}
                                     item={item}
                                     onQuantityChange={(item, newQuantity) => {
-                                        const updatedItems = cartItems.map(cartItem => 
-                                            cartItem.id === item.id 
+                                        const updatedItems = cartItems.map(cartItem =>
+                                            cartItem.id === item.id
                                                 ? { ...cartItem, quantity: newQuantity }
                                                 : cartItem
                                         );
@@ -141,7 +203,7 @@ export function CartPopup() {
                         )}
                     </div>
                     <div className="w-full flex flex-col gap-4">
-                        <Separate/>
+                        <Separate />
                         <div className="w-full flex items-center justify-between">
                             <h5 className="text-lg">TOTAL</h5>
                             <h5 className="text-lg">
@@ -153,9 +215,9 @@ export function CartPopup() {
                             </h5>
                         </div>
                         <DialogFooter >
-                            <Button 
-                                variant={'primary'} 
-                                size={'smallest'} 
+                            <Button
+                                variant={'primary'}
+                                size={'smallest'}
                                 className="w-full"
                                 asChild
                             >

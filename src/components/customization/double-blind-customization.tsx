@@ -320,10 +320,10 @@ function Double_blind_customization({ data: propsData, groupData }) {
                                     : item.title === 'Base Rail Colour'
                                         ? { ...item, value: baseRailColour }
                                         : item.title === 'Blackout Fabric Size'
-                                        ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
-                                        : item.title === 'Screen Blind Fabrics Size'
-                                        ? { ...item, value: screenMeasurements.width && screenMeasurements.height ? `${screenMeasurements.roomName} : ${screenMeasurements.width}mm x ${screenMeasurements.height}mm` : '' }
-                                        : item
+                                            ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
+                                            : item.title === 'Screen Blind Fabrics Size'
+                                                ? { ...item, value: screenMeasurements.width && screenMeasurements.height ? `${screenMeasurements.roomName} : ${screenMeasurements.width}mm x ${screenMeasurements.height}mm` : '' }
+                                                : item
             )
         );
         // Calculate total price based on area
@@ -391,30 +391,43 @@ function Double_blind_customization({ data: propsData, groupData }) {
             setError('');
             setSuccess('');
         }
+
+        const cartItem = {
+            id: `local_${Date.now()}_${Math.random().toString(36).slice(2)}`,
+            product_id: productData.id,
+            quantity: 1,
+            customizations: {
+                title: productData.title,
+                amount: totalPrice,
+                currency: currencySymbol,
+                thumbnail: productData.thumbnail,
+                customizationData: data,
+            },
+        };
+
+
         if (!userData) {
-            setError('Customer not found. Please register first.');
-            setSuccess('');
-            setLoading(false);
+            try {
+                const existing = JSON.parse(localStorage.getItem('guest_cart') || '[]');
+                existing.push(cartItem);
+                localStorage.setItem('guest_cart', JSON.stringify(existing));
+                setSuccess('Added to cart!');
+            } catch {
+                setError('Failed to save item to cart.');
+            } finally {
+                setLoading(false);
+            }
             return;
-        } else {
-            setError('');
-            setSuccess('');
         }
 
         try {
-            const response = await createAddToCart.addToCart({
+            await createAddToCart.addToCart({
                 email: userData.email,
-                product_id: productData.id,
-                quantity: 1,
-                customizations: {
-                    title: productData.title,
-                    amount: totalPrice,
-                    currency: currencySymbol,
-                    thumbnail: productData.thumbnail,
-                    customizationData: data,
-                },
+                product_id: cartItem.product_id,
+                quantity: cartItem.quantity,
+                customizations: cartItem.customizations,
             });
-
+            
             setSuccess("Add to Cart created successfully!");
 
         } catch (err: any) {
