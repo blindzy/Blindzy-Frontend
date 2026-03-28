@@ -90,7 +90,7 @@ function SelectColor(props) {
                             <div key={colorItem.id} className="flex items-center">
                                 <label
                                     htmlFor={colorItem.id}
-                                    className="size-[32px] sm:size-[48px] xl:size-[60px] shrink-0 transition cursor-pointer p-1 sm:p-1.5 xl:rounded-[16px] border border-[--lightGrey]"
+                                    className="size-[32px] sm:size-[48px] xl:size-[3.125vw] shrink-0 transition cursor-pointer p-1 sm:p-1.5 xl:rounded-[16px] border border-[--lightGrey]"
                                 >
                                     <img
                                         src={`/images/product-colors-image/blinds-fabric/${key}/${colorItem.name}.jpg`}

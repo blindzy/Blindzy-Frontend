@@ -25,7 +25,7 @@ const setupOptions = [
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
         values: [
             { label: 'Blockout in Front', image: '/images/custom/blind-blockout-front.png' },
-            { label: 'Sunscreen or Light Filtering in Front', image: '/images/custom/sunscreen-front.png' },
+            { label: 'Sunscreen or Light Filtering in Back', image: '/images/custom/sunscreen-front.png' },
         ]
     },
 ]
@@ -52,8 +52,8 @@ const productOptions = [
         title: 'Select Fit',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
-            { label: 'Fit', image: '/images/custom/blind-fit-left.png' },
-            { label: 'Recess', image: '/images/custom/blind-fit-right.png' },
+            { label: 'Face Fit', image: '/images/custom/blind-fit-left.png' },
+            { label: 'Recess Fit', image: '/images/custom/blind-fit-right.png' },
         ]
     },
     {
@@ -189,8 +189,8 @@ function Double_blind_customization({ data: propsData, groupData }) {
             return 0;
         }
 
-        const widthMm = Math.round(Number(width));
-        const dropMm = Math.round(Number(height));
+        let widthMm = Math.round(Number(width));
+        let dropMm = Math.round(Number(height));
 
         // Check ranges (in mm)
         const currentWidthValues = groupData?.Width_values || [];
@@ -202,12 +202,17 @@ function Double_blind_customization({ data: propsData, groupData }) {
         const minDrop = Math.min(...currentDropValues);
         const maxDrop = Math.max(...currentDropValues);
 
-        if (widthMm < minWidth || widthMm > maxWidth) {
+        // Clamp values to valid range instead of rejecting
+        if (widthMm < minWidth) {
+            widthMm = minWidth;
+        } else if (widthMm > maxWidth) {
             setError(`${label} width must be between ${minWidth} mm and ${maxWidth} mm`)
             return 0;
         }
 
-        if (dropMm < minDrop || dropMm > maxDrop) {
+        if (dropMm < minDrop) {
+            dropMm = minDrop;
+        } else if (dropMm > maxDrop) {
             setError(`${label} drop must be between ${minDrop} mm and ${maxDrop} mm`)
             return 0;
         }
@@ -469,7 +474,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
                         <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                     </div>
                     {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
-                    <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={Math.min(...(groupData?.Width_values || []))} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
+                    <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={100} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
                     {productData?.options?.map((option, index) => {
                         const filteredOption = {
                             ...option,
@@ -512,7 +517,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
                         <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
                     </div>
                     {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
-                    <Measurement measurements={screenMeasurements} setMeasurements={setScreenMeasurements} widthMin={Math.min(...(groupData?.Width_values || []))} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
+                    <Measurement measurements={screenMeasurements} setMeasurements={setScreenMeasurements} widthMin={100} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
                     {productData?.options?.map((option, index) => {
                         const lastValue = option.values?.[option.values.length - 1];
 

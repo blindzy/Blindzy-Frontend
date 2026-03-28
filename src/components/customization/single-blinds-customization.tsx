@@ -11,7 +11,7 @@ import { Button } from "@lib/components/ui/button";
 import Separate from "@components/separate";
 import Measurement from "./measurement";
 import { createAddToCart } from '../../services/add-to-cart';
-import { interpolate2D } from "./interpolate";
+import { interpolate2D } from "./blind-interpolate";
 import { addCommaToNumber, getCurrencySymbol } from "./customization-utils";
 import { COLOR_OPTIONS } from "./customization-constants";
 import type { UserData, CustomizationDataItem } from "./customization-types";
@@ -98,8 +98,8 @@ function Single_blinds_customization({ data: propsData, groupData }) {
 
         // Measurements are provided in millimetres (MM) from the Measurement inputs.
         // Use values directly as mm for interpolation/validation.
-        const widthMm = Math.round(Number(measurements.width));
-        const dropMm = Math.round(Number(measurements.height));
+        let widthMm = Math.round(Number(measurements.width));
+        let dropMm = Math.round(Number(measurements.height));
 
         // Check ranges (in mm)
         const currentWidthValues = groupData?.Width_values || [];
@@ -111,13 +111,18 @@ function Single_blinds_customization({ data: propsData, groupData }) {
         const minDrop = Math.min(...currentDropValues);
         const maxDrop = Math.max(...currentDropValues);
 
-        if (widthMm < minWidth || widthMm > maxWidth) {
+        // Clamp values to valid range instead of rejecting
+        if (widthMm < minWidth) {
+            widthMm = minWidth;
+        } else if (widthMm > maxWidth) {
             setError(`Width must be between ${minWidth} mm and ${maxWidth} mm`)
             setTotalPrice(0)
             return
         }
 
-        if (dropMm < minDrop || dropMm > maxDrop) {
+        if (dropMm < minDrop) {
+            dropMm = minDrop;
+        } else if (dropMm > maxDrop) {
             setError(`Drop must be between ${minDrop} mm and ${maxDrop} mm`)
             setTotalPrice(0)
             return
@@ -380,7 +385,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                     {/* <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p> */}
                 </div>
                 {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
-                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={Math.min(...(groupData?.Width_values || []))} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
+                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={100} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
                 {productData?.options?.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate />

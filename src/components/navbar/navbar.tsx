@@ -146,7 +146,7 @@ function Navbar(props: NavbarProps) {
                     </ul>
                 </div>
                 <div className="w-fit xl:p-[0.208vw] p-1 flex items-center xl:gap-[0.833vw] gap-2 bg-[--white] border border-[--black] rounded-full">
-                    <Button variant={'light'} size={'xl'} className="border-none rounded-full xl:flex hidden" asChild>
+                    <Button variant={'light'} size={'xl'} className="border-none rounded-full flex " asChild>
                         <a href="/login" >
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
                                 <path d="M9 7.25C10.5188 7.25 11.75 6.01878 11.75 4.5C11.75 2.98122 10.5188 1.75 9 1.75C7.48122 1.75 6.25 2.98122 6.25 4.5C6.25 6.01878 7.48122 7.25 9 7.25Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
