@@ -50,8 +50,8 @@ const productOptions = [
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
             { label: 'S Fold', image: '/images/custom/s-fold.jpg' },
-            { label: 'Triple Pinch Pleat', image: '/images/custom/pinch.jpg' },
-            { label: 'Pencil Pleat', image: '/images/custom/pencil-pleat.jpg' },
+            // { label: 'Triple Pinch Pleat', image: '/images/custom/pinch.jpg' },
+            // { label: 'Pencil Pleat', image: '/images/custom/pencil-pleat.jpg' },
         ]
     },
     {

@@ -8,25 +8,25 @@ import type { ColorOption } from './customization-types';
 export const CHAIN_COLOUR_OPTIONS: ColorOption[] = [
     { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5CA', name: 'White', color: '#FBFBFB' },
     { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5CB', name: 'Black', color: '#0F0F0F' },
-    { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5CC', name: 'Grey', color: '#817F7E' },
-    { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5CD', name: 'Oak', color: '#CDCCCB' },
-    { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5CE', name: 'Walnut', color: '#FAF1C5' },
+    { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5CC', name: 'silver', color: '#C0C0C0' },
+    // { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5CD', name: 'Oak', color: '#CDCCCB' },
+    // { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5CE', name: 'Walnut', color: '#FAF1C5' },
 ];
 
 export const BRACKET_COLOUR_OPTIONS: ColorOption[] = [
     { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5BG', name: 'White', color: '#FBFBFB' },
     { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5BH', name: 'Black', color: '#0F0F0F' },
-    { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5BI', name: 'Grey', color: '#817F7E' },
-    { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5BJ', name: 'Oak', color: '#CDCCCB' },
-    { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5BK', name: 'Walnut', color: '#FAF1C5' },
+    { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5BI', name: 'silver', color: '#C0C0C0' },
+    // { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5BJ', name: 'Oak', color: '#CDCCCB' },
+    // { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5BK', name: 'Walnut', color: '#FAF1C5' },
 ];
 
 export const BASE_RAIL_COLOUR_OPTIONS: ColorOption[] = [
     { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ERM', name: 'White', color: '#FBFBFB' },
     { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ERN', name: 'Black', color: '#0F0F0F' },
-    { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ERO', name: 'Grey', color: '#817F7E' },
-    { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ERP', name: 'Oak', color: '#CDCCCB' },
-    { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ERQ', name: 'Walnut', color: '#FAF1C5' },
+    { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ERO', name: 'silver', color: '#C0C0C0' },
+    // { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ERP', name: 'Oak', color: '#CDCCCB' },
+    // { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ERQ', name: 'Walnut', color: '#FAF1C5' },
 ];
 
 /**

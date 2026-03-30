@@ -166,7 +166,7 @@ function ProductComponent({ data, groupData, measurements, customizePage }) {
     };
 
     return (
-        <div className="col-span-12 sm:col-span-6 xl:col-span-4 flex flex-col justify-between gap-4 xl:gap-[0.833vw] p-4 xl:p-[0.833vw] border border-[--Black] rounded-48">
+        <a href={`/${customizePage}/${data.id}`} target="_blank" rel="noopener noreferrer" className="col-span-12 sm:col-span-6 xl:col-span-4 flex flex-col justify-between gap-4 xl:gap-[0.833vw] p-4 xl:p-[0.833vw] border border-[--Black] rounded-48">
             <div className="relative rounded-32 overflow-hidden h-[250px] sm:h-[24.414vw] xl:h-[13.021vw]">
                 <img
                     src={cardImageSrc!}
@@ -210,13 +210,11 @@ function ProductComponent({ data, groupData, measurements, customizePage }) {
                     <Plus className="size-[18px]" />
                 </div>
 
-                <Button variant='primary' size='small' asChild>
-                    <a href={`/${customizePage}/${data.id}`} target="_blank" rel="noopener noreferrer">
-                        Customise
-                    </a>
+                <Button variant='primary' size='small'>
+                    Customise
                 </Button>
             </div>
-        </div>
+        </a>
     );
 }
 
