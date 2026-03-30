@@ -16,7 +16,6 @@ import { interpolate2D } from "./interpolate";
 import { addCommaToNumber, getCurrencySymbol } from "./customization-utils";
 import { COLOR_OPTIONS } from "./customization-constants";
 import type { UserData, CustomizationDataItem } from "./customization-types";
-import Se from "../../../dist/client/_astro/login.iuGBfi3h";
 
 
 const setupOptions = [
