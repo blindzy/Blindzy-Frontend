@@ -73,6 +73,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [isMotorised, setIsMotorised] = useState(false);
     const [userData, setUserData] = useState<UserData | null>(null);
     const [productData, setProductData] = useState(propsData);
     const [data, setData] = useState([
@@ -123,7 +124,11 @@ function Single_blinds_customization({ data: propsData, groupData }) {
             return
         }
 
-        const price = interpolate2D(widthMm, dropMm, currentWidthValues, currentDropValues, currentPriceMatrix[priceGroup])
+        
+
+        let price = interpolate2D(widthMm, dropMm, currentWidthValues, currentDropValues, currentPriceMatrix[priceGroup])
+
+        if(isMotorised && price) price += 200;
         // console.log("Calculated Price:", price);
         if (price === null) {
             setError("Unable to calculate price for these dimensions")
@@ -141,7 +146,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
     useEffect(() => {
         // debounce if needed, but call immediately for now
         calculatePrice();
-    }, [measurements.width, measurements.height, priceGroup]);
+    }, [measurements.width, measurements.height, priceGroup, isMotorised]);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -418,6 +423,35 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                         />
                     </React.Fragment>
                 ))}
+                <div className="flex flex-col items-start gap-4 self-stretch">
+                    <h5 className="text-lg">
+                        Do you want to make it motorised
+                    </h5>
+
+                    <p className="text-sm">
+                        Lorem ipsum
+                    </p>
+
+                    <div className="flex h-16 p-2 items-start gap-6 self-stretch rounded-full border border-[#0F0F0F]">
+                        <div className="flex flex-1 self-stretch gap-6">
+                            <button
+                                onClick={() => setIsMotorised(true)}
+                                className={`flex flex-1 items-center justify-center gap-2 self-stretch px-8 py-4 rounded-[48px] transition-colors ${isMotorised ? 'bg-[#CFB9FF]' : ''
+                                    }`}
+                            >
+                                Yes
+                            </button>
+
+                            <button
+                                onClick={() => setIsMotorised(false)}
+                                className={`flex flex-1 items-center justify-center gap-2 self-stretch px-8 py-4 rounded-[48px] transition-colors ${!isMotorised ? 'bg-[#CFB9FF]' : ''
+                                    }`}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <Separate />
                 <div className="flex items-center justify-between">
                     <h5 className="text-lg">TOTAL PRICE</h5>

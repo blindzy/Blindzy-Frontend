@@ -16,6 +16,7 @@ import { interpolate2D } from "./interpolate";
 import { addCommaToNumber, getCurrencySymbol } from "./customization-utils";
 import { COLOR_OPTIONS } from "./customization-constants";
 import type { UserData, CustomizationDataItem } from "./customization-types";
+import Se from "../../../dist/client/_astro/login.iuGBfi3h";
 
 
 const setupOptions = [
@@ -159,6 +160,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
+    const [isMotorised, setIsMotorised] = useState(false);
     const [userData, setUserData] = useState<UserData | null>(null);
     const [data, setData] = useState([
         { 'title': 'Setup', 'value': '' },
@@ -248,8 +250,10 @@ function Double_blind_customization({ data: propsData, groupData }) {
             price += 30;
         }
 
+        if(isMotorised) price += 200;
+
         setTotalPrice(price);
-    }, [measurements.width, screenMeasurements.width, measurements.height, screenMeasurements.height, blackoutGroup, screenGroup, data]);
+    }, [measurements.width, screenMeasurements.width, measurements.height, screenMeasurements.height, blackoutGroup, screenGroup, data, isMotorised]);
 
     useEffect(() => {
         gsap.registerPlugin(ScrollTrigger);
@@ -427,7 +431,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
                 quantity: cartItem.quantity,
                 customizations: cartItem.customizations,
             });
-            
+
             setSuccess("Add to Cart created successfully!");
 
         } catch (err: any) {
@@ -558,6 +562,35 @@ function Double_blind_customization({ data: propsData, groupData }) {
                         />
                     </React.Fragment>
                 ))}
+                <div className="flex flex-col items-start gap-4 self-stretch">
+                    <h5 className="text-lg">
+                        Do you want to make it motorised
+                    </h5>
+
+                    <p className="text-sm">
+                        Lorem ipsum
+                    </p>
+
+                    <div className="flex h-16 p-2 items-start gap-6 self-stretch rounded-full border border-[#0F0F0F]">
+                        <div className="flex flex-1 self-stretch gap-6">
+                            <button
+                                onClick={() => setIsMotorised(true)}
+                                className={`flex flex-1 items-center justify-center gap-2 self-stretch px-8 py-4 rounded-[48px] transition-colors ${isMotorised ? 'bg-[#CFB9FF]' : ''
+                                    }`}
+                            >
+                                Yes
+                            </button>
+
+                            <button
+                                onClick={() => setIsMotorised(false)}
+                                className={`flex flex-1 items-center justify-center gap-2 self-stretch px-8 py-4 rounded-[48px] transition-colors ${!isMotorised ? 'bg-[#CFB9FF]' : ''
+                                    }`}
+                            >
+                                No
+                            </button>
+                        </div>
+                    </div>
+                </div>
                 <Separate />
                 <div className="flex items-center justify-between">
                     <h5 className="text-lg">TOTAL PRICE</h5>

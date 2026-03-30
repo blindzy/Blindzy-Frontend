@@ -209,7 +209,7 @@ function Navbar(props: NavbarProps) {
                                 </div>
                             </div>
                         ) : (
-                            <a href={item.Link} className="text-xxl text-[--black] transition hover:text-[--primary]" key={index}>{item.Name}</a>
+                            <a href={item.Link} className="text-xxl capitalize text-[--black] transition hover:text-[--primary]" key={index}>{item.Name}</a>
                         )
                     ))}
                 </div>
