@@ -170,7 +170,7 @@ function ProductComponent({ data, groupData, measurements, customizePage }) {
             <div className="relative rounded-32 overflow-hidden h-[250px] sm:h-[24.414vw] xl:h-[13.021vw]">
                 <img
                     src={cardImageSrc!}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-fill"
                     alt={data.title}
                     onError={() => {
                         const defaultImage = data?.thumbnail?.replace(
