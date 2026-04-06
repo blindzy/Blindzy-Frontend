@@ -58,7 +58,7 @@ function ProductCard({
                     {/* Image container */}
                     <div
                         className={`relative w-full h-[60.465vw] sm:h-[88.945vw] xl:h-[23.438vw] shrink-0 rounded-32 overflow-hidden `}
-                        // onClick={() => isFabricMode && setIsZoomed(true)}
+                        onClick={() => isFabricMode && setIsZoomed(true)}
                     >
                         {/* Skeleton ONLY for fabric mode */}
                         {isFabricMode && !imageLoaded && (
@@ -129,7 +129,7 @@ function ProductCard({
             </div>
 
             {/* Zoom modal */}
-            {/* {isZoomed && fabricImage && (
+            {isZoomed && fabricImage && (
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
                     onClick={() => setIsZoomed(false)}
@@ -147,7 +147,7 @@ function ProductCard({
                         onClick={(e) => e.stopPropagation()}
                     />
                 </div>
-            )} */}
+            )}
         </>
     );
 }
