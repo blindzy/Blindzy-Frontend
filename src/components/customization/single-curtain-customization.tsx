@@ -30,8 +30,8 @@ const productOptions = [
         title: 'Select Fit',
         description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
         values: [
-            { label: 'Fit', image: '/images/custom/fit.jpg' },
-            { label: 'Recess', image: '/images/custom/racess.jpg' },
+            { label: 'Face Fit', image: '/images/custom/fit.jpg' },
+            { label: 'Recess Fit', image: '/images/custom/racess.jpg' },
         ]
     },
     {
@@ -98,6 +98,7 @@ const productOptions = [
         values: [
             { label: 'Standard', image: '/images/custom/standard.png' },
             { label: 'Extension', image: '/images/custom/extension.png' },
+            { label: 'Ceiling Bracket', image: '/images/custom/ceiling.png' },
         ]
     },
 ]

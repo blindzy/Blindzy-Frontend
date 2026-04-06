@@ -61,14 +61,64 @@ export function CartPopup() {
             setUserData(userDataObj);
 
             // Fetch server cart first so we can compare
-            const data = await fetchMedusaApi<any>({
-                endpoint: 'store/customers/cart',
-                query: { email: userDataObj.email },
-            });
+            let serverItems: any[] = [];
+            try {
+                const data = await fetchMedusaApi<any>({
+                    endpoint: 'store/customers/cart',
+                    query: { email: userDataObj.email },
+                });
+                serverItems = data.cart.items ?? [];
+            } catch (err: any) {
+                if (err?.message?.includes('404')) {
+                    if (guestItems.length > 0) {
 
-            const serverItems = data.cart.items ?? [];
+                        localStorage.removeItem('guest_cart'); // 👈 clear here so outer block skips
 
-            if (guestItems.length > 0) {
+                        // Create cart with the first guest item
+                        await fetchMedusaApi<any>({
+                            endpoint: 'store/customers/cart',
+                            method: 'POST',
+                            body: {
+                                email: userDataObj.email,
+                                product_id: guestItems[0].product_id,
+                                quantity: guestItems[0].quantity,
+                                customizations: guestItems[0].customizations,
+                            },
+                        });
+
+                        // Add remaining items if any
+                        if (guestItems.length > 1) {
+                            await Promise.all(
+                                guestItems.slice(1).map(item =>
+                                    createAddToCart.addToCart({
+                                        email: userDataObj.email,
+                                        product_id: item.product_id,
+                                        quantity: item.quantity,
+                                        customizations: item.customizations,
+                                    })
+                                )
+                            );
+                        }
+                    } else {
+                        // No guest items, just init the cart — revert backend validation for this case
+                        await fetchMedusaApi<any>({
+                            endpoint: 'store/customers/cart',
+                            method: 'POST',
+                            body: { email: userDataObj.email, product_id: null, quantity: null },
+                        });
+                    }
+
+                    const refreshed = await fetchMedusaApi<any>({
+                        endpoint: 'store/customers/cart',
+                        query: { email: userDataObj.email },
+                    });
+                    serverItems = refreshed.cart.items ?? [];
+                } else {
+                    throw err;
+                }
+            }
+
+            if (guestItems.length > 0 && localStorage.getItem('guest_cart') !== null) {
                 localStorage.removeItem('guest_cart');
 
                 const addPromises: Promise<any>[] = [];
