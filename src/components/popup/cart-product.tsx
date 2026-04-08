@@ -66,9 +66,37 @@ export function CartProduct(props) {
     }, []);
     const handleDelete = async () => {
         try {
-            const response = await deleteCart.deleteCart(props.item.id);
-            props.onDeleteSuccess?.(props.item.id);
-            // console.log("Cart deleted successfully:", response);
+            const itemId = props.item.id;
+            const productId = props.item.product_id?.toString();
+            
+            // Check if it's a guest item (stored in localStorage)
+            if (itemId?.toString().startsWith('local_')) {
+                // Delete from guest_cart in localStorage
+                const guestItems = JSON.parse(localStorage.getItem('guest_cart') || '[]');
+                const filteredItems = guestItems.filter(item => item.id !== itemId);
+                localStorage.setItem('guest_cart', JSON.stringify(filteredItems));
+                
+                // Dispatch event to refresh samples component
+                if (typeof window !== 'undefined') {
+                    window.dispatchEvent(new CustomEvent('cartItemDeleted', { 
+                        detail: { productId, itemId } 
+                    }));
+                }
+                
+                props.onDeleteSuccess?.(itemId);
+            } else {
+                // Delete from server cart
+                const response = await deleteCart.deleteCart(itemId);
+                
+                // Dispatch event to refresh samples component
+                if (typeof window !== 'undefined') {
+                    window.dispatchEvent(new CustomEvent('cartItemDeleted', { 
+                        detail: { productId, itemId } 
+                    }));
+                }
+                
+                props.onDeleteSuccess?.(itemId);
+            }
         } catch (error) {
             console.error("Error deleting cart:", error);
         }

@@ -86,6 +86,8 @@ function Single_blinds_customization({ data: propsData, groupData }) {
         { 'title': 'Chain Colour', 'value': chainColour },
         { 'title': 'Bracket Colour', 'value': bracketColour },
         { 'title': 'Base Rail Colour', 'value': baseRailColour },
+        { 'title': 'Base Rail Colour', 'value': baseRailColour },
+        { 'title': 'Motorised', 'value': isMotorised ? 'Yes' : 'No' },
     ]);
     const lenis = isDesktop ? useLenis() : null;
 
@@ -242,7 +244,9 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                                 ? { ...item, value: baseRailColour }
                                 : item.title === 'Size'
                                     ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
-                                    : item
+                                    : item.title === 'Motorised'
+                                        ? { ...item, value: isMotorised ? 'Yes' : 'No' }
+                                        : item
             )
         );
         // Calculate total price based on area
@@ -253,7 +257,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
         if (error.includes("select all")) {
             setError("");
         }
-    }, [selectedColor, chainColour, bracketColour, baseRailColour, productData?.variants, measurements.roomName, measurements.width, measurements.height]);
+    }, [selectedColor, chainColour, bracketColour, baseRailColour, isMotorised, productData?.variants, measurements.roomName, measurements.width, measurements.height]);
 
     // Extract color for SVG from selected fabric image
     useEffect(() => {

@@ -175,6 +175,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
         { 'title': 'Chain Colour', 'value': chainColour },
         { 'title': 'Bracket Colour', 'value': bracketColour },
         { 'title': 'Base Rail Colour', 'value': baseRailColour },
+        { 'title': 'Motorised', 'value': isMotorised ? 'Yes' : 'No' },
     ]);
     const [blockoutColourData, setBlockoutColourData] = useState([{
         id: 'optgrp_01K6Z6D5B6166KXE3RGNVDQ5EN',
@@ -318,20 +319,22 @@ function Double_blind_customization({ data: propsData, groupData }) {
                 item.title === 'Blackout Fabric'
                     ? { ...item, value: blackoutFabric }
                     : item.title === 'Blackout Colour'
-                        ? { ...item, value: blackoutColour }
-                        : item.title === 'Screen Blind Fabrics'
-                            ? { ...item, value: screenBlindFabric }
-                            : item.title === 'Chain Colour'
-                                ? { ...item, value: chainColour }
-                                : item.title === 'Bracket Colour'
-                                    ? { ...item, value: bracketColour }
-                                    : item.title === 'Base Rail Colour'
-                                        ? { ...item, value: baseRailColour }
-                                        : item.title === 'Blackout Fabric Size'
-                                            ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
-                                            : item.title === 'Screen Blind Fabrics Size'
-                                                ? { ...item, value: screenMeasurements.width && screenMeasurements.height ? `${screenMeasurements.roomName} : ${screenMeasurements.width}mm x ${screenMeasurements.height}mm` : '' }
-                                                : item
+                    ? { ...item, value: blackoutColour }
+                    : item.title === 'Screen Blind Fabrics'
+                    ? { ...item, value: screenBlindFabric }
+                    : item.title === 'Chain Colour'
+                    ? { ...item, value: chainColour }   
+                    : item.title === 'Bracket Colour'
+                    ? { ...item, value: bracketColour }
+                    : item.title === 'Base Rail Colour'
+                    ? { ...item, value: baseRailColour }
+                    : item.title === 'Blackout Fabric Size'
+                    ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
+                    : item.title === 'Screen Blind Fabrics Size'
+                    ? { ...item, value: screenMeasurements.width && screenMeasurements.height ? `${screenMeasurements.roomName} : ${screenMeasurements.width}mm x ${screenMeasurements.height}mm` : '' }
+                    : item.title === 'Motorised'
+                    ? { ...item, value: isMotorised ? 'Yes' : 'No' }
+                    : item
             )
         );
         // Calculate total price based on area
@@ -346,7 +349,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
         setBlackoutGroup(blackoutGroup);
         setScreenGroup(screenGroup);
 
-    }, [blackoutFabric, blackoutColour, screenBlindFabric, chainColour, bracketColour, baseRailColour, productData?.variants, measurements.width, measurements.roomName, screenMeasurements.roomName, measurements.height, blackoutGroup, screenGroup]);
+    }, [blackoutFabric, blackoutColour, screenBlindFabric, chainColour, bracketColour,isMotorised, baseRailColour, productData?.variants, measurements.width, measurements.roomName, screenMeasurements.roomName, measurements.height, blackoutGroup, screenGroup]);
 
     useEffect(() => {
         const userDataString = localStorage.getItem("user");

@@ -19,6 +19,17 @@ export function CartPopup() {
     const [currencySymbol, setCurrencySymbol] = useState('');
     const [cartItemCount, setCartItemCount] = useState(0);
 
+    useEffect(() => {
+        if (typeof window === 'undefined') return;
+
+        const handleOpenCart = () => setOpen(true);
+        window.addEventListener('openCartPopup', handleOpenCart);
+
+        return () => {
+            window.removeEventListener('openCartPopup', handleOpenCart);
+        };
+    }, []);
+
     // Calculate total amount from all cart items
     const calculateTotalAmount = (items) => {
         let total = 0;

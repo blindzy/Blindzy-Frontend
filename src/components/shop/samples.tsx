@@ -4,17 +4,19 @@ import { Label } from "@lib/components/ui/label";
 import { Plus } from 'lucide-react';
 import { createAddToCart } from '../../services/add-to-cart';
 import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
+	Select,
+	SelectContent,
+	SelectGroup,
+	SelectItem,
+	SelectTrigger,
+	SelectValue,
 } from "@lib/components/ui/select"
 
 
 function Samples(props) {
 	const [loading, setLoading] = useState(false);
+	const [loadingItems, setLoadingItems] = useState<Record<string, boolean>>({});
+	const [addedItems, setAddedItems] = useState<Record<string, boolean>>({});
 	const [error, setError] = useState('');
 	const [success, setSuccess] = useState('');
 	type UserData = {
@@ -34,6 +36,44 @@ function Samples(props) {
 		const userDataObj = JSON.parse(userDataString);
 		setUserData(userDataObj);
 	}, []);
+
+	useEffect(() => {
+		const guestItems = JSON.parse(localStorage.getItem('guest_cart') || '[]');
+		const added: Record<string, boolean> = {};
+		guestItems.forEach((item: any) => {
+			if (item.product_id) {
+				added[item.product_id] = true;
+			}
+		});
+		setAddedItems(added);
+	}, []);
+
+	useEffect(() => {
+		if (typeof window === 'undefined') return;
+
+		const handleCartItemDeleted = (event: any) => {
+			const { productId } = event.detail;
+			// Check if there are still items with this product_id in the cart
+			const guestItems = JSON.parse(localStorage.getItem('guest_cart') || '[]');
+			const hasProduct = guestItems.some((item: any) => item.product_id?.toString() === productId);
+			
+			// If no items with this product_id remain, remove it from addedItems
+			if (!hasProduct) {
+				setAddedItems(prev => {
+					const next = { ...prev };
+					delete next[productId];
+					return next;
+				});
+			}
+		};
+
+		window.addEventListener('cartItemDeleted', handleCartItemDeleted);
+
+		return () => {
+			window.removeEventListener('cartItemDeleted', handleCartItemDeleted);
+		};
+	}, []);
+
 	const getCurrencySymbol = (currency_code) => {
 		// const code = selectedVariant?.price_sets?.[0]?.prices?.[0]?.currency_code || 'USD';
 		const code = currency_code || 'USD';
@@ -47,12 +87,13 @@ function Samples(props) {
 			case 'nzd': symbol = 'NZ$'; break;
 			default: symbol = code ? code.toUpperCase() + ' ' : '';
 		}
-        return symbol;
-    };
+		return symbol;
+	};
 
 	const handleAddToCart = async (id: string | number, title: string, thumbnail: string, amount: number, currency_code: string) => {
-		setLoading(true);
-		
+		const productId = id.toString();
+		setLoadingItems(prev => ({ ...prev, [productId]: true }));
+
 		const cartItem = {
 			id: `local_${Date.now()}_${Math.random().toString(36).slice(2)}`,
 			product_id: id,
@@ -71,10 +112,15 @@ function Samples(props) {
 				existing.push(cartItem);
 				localStorage.setItem('guest_cart', JSON.stringify(existing));
 				setSuccess('Added to cart!');
+				setAddedItems(prev => ({ ...prev, [productId]: true }));
 			} catch {
 				setError('Failed to save item to cart.');
 			} finally {
-				setLoading(false);
+				setLoadingItems(prev => {
+					const next = { ...prev };
+					delete next[productId];
+					return next;
+				});
 			}
 			return;
 		}
@@ -82,19 +128,23 @@ function Samples(props) {
 		try {
 			await createAddToCart.addToCart({
 				email: userData.email,
-				product_id: cartItem.id,
+				product_id: id.toString(),
 				quantity: cartItem.quantity,
 				customizations: cartItem.customizations,
 			});
 
 			setSuccess("Add to Cart created successfully!");
-
+			setAddedItems(prev => ({ ...prev, [productId]: true }));
 
 		} catch (err: any) {
 			console.error("Add to Cart error:", err);
 			setError(err.message || "Something went wrong during Add to Cart.");
 		} finally {
-			setLoading(false);
+			setLoadingItems(prev => {
+				const next = { ...prev };
+				delete next[productId];
+				return next;
+			});
 		}
 	}
 	return (
@@ -216,10 +266,30 @@ function Samples(props) {
 									<Button variant={'light'} size={'small'} className="w-full flex-1">
 										{loading ? 'Adding...' : 'Add to Cart'}
 									</Button> */}
-									<Button variant={'primary'} size={'small'} className="w-full flex-1"
-										onClick={() => handleAddToCart(sample.id, sample.title, sample.thumbnail, sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.amount,sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.currency_code)}
+									<Button
+										variant={'primary'}
+										size={'small'}
+										className="w-full flex-1"
+										disabled={!!loadingItems[sample.id?.toString()]}
+										onClick={() => {
+											const itemId = sample.id?.toString();
+											const isAdded = itemId ? addedItems[itemId] : false;
+											if (isAdded) {
+												if (typeof window !== 'undefined') {
+													window.dispatchEvent(new CustomEvent('openCartPopup'));
+												}
+												return;
+											}
+											handleAddToCart(
+												sample.id,
+												sample.title,
+												sample.thumbnail,
+												sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.amount,
+												sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.currency_code
+											);
+										}}
 									>
-										{loading ? 'Adding...' : 'Add to Cart'}
+										{loadingItems[sample.id?.toString()] ? 'Adding...' : addedItems[sample.id?.toString()] ? 'View to cart' : 'Add to Cart'}
 									</Button>
 								</div>
 							</div>
