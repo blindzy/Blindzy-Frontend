@@ -214,7 +214,7 @@ export function CartPopup() {
                         <path d="M12.75 17.5H27.25" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     {cartItemCount > 0 && (
-                        <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 flex items-center justify-center bg-[--primary] text-[--white] text-[10px] font-semibold rounded-full leading-none pointer-events-none">
+                        <span className="absolute -top-2 -right-2 min-w-[18px] h-[18px] px-1 flex items-center justify-center bg-[--primary] text-[--white] text-[10px] font-semibold rounded-full leading-none pointer-events-none">
                             {cartItemCount > 99 ? '99+' : cartItemCount}
                         </span>
                     )}

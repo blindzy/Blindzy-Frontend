@@ -99,6 +99,9 @@ function Single_blinds_customization({ data: propsData, groupData }) {
             return
         }
 
+        // Clear any previous error since measurements are now valid
+        setError("");
+
         // Measurements are provided in millimetres (MM) from the Measurement inputs.
         // Use values directly as mm for interpolation/validation.
         let widthMm = Math.round(Number(measurements.width));
@@ -235,18 +238,18 @@ function Single_blinds_customization({ data: propsData, groupData }) {
         setData(prev =>
             prev.map(item =>
                 item.title === 'Colour'
-                    ? { ...item, value: selectedColor }
-                    : item.title === 'Chain Colour'
-                        ? { ...item, value: chainColour }
-                        : item.title === 'Bracket Colour'
-                            ? { ...item, value: bracketColour }
-                            : item.title === 'Base Rail Colour'
-                                ? { ...item, value: baseRailColour }
-                                : item.title === 'Size'
-                                    ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
-                                    : item.title === 'Motorised'
-                                        ? { ...item, value: isMotorised ? 'Yes' : 'No' }
-                                        : item
+                ? { ...item, value: selectedColor }
+                : item.title === 'Chain Colour'
+                ? { ...item, value: chainColour }
+                : item.title === 'Bracket Colour'
+                ? { ...item, value: bracketColour }
+                : item.title === 'Base Rail Colour'
+                ? { ...item, value: baseRailColour }
+                : item.title === 'Size'
+                ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
+                : item.title === 'Motorised'
+                ? { ...item, value: isMotorised ? 'Yes' : 'No' }
+                : item
             )
         );
         // Calculate total price based on area
@@ -394,7 +397,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                     {/* <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p> */}
                 </div>
                 {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
-                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={100} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
+                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={100} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={100} heightMax={Math.max(...(groupData?.Drop_values || []))} />
                 {productData?.options?.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate />

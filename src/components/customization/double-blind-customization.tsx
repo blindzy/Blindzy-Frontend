@@ -190,6 +190,8 @@ function Double_blind_customization({ data: propsData, groupData }) {
             setError(`Please enter both width and drop values for ${label}`)
             return 0;
         }
+        // Clear any previous error since measurements are now valid
+        setError("");
 
         let widthMm = Math.round(Number(width));
         let dropMm = Math.round(Number(height));

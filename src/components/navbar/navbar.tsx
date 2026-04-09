@@ -95,16 +95,16 @@ function Navbar(props: NavbarProps) {
         }
     };
 
-    useEffect(() => {
-        const lenis = (window as any).lenis;
-        if (!lenis) return;
+    // useEffect(() => {
+    //     const lenis = (window as any).lenis;
+    //     if (!lenis) return;
 
-        if (isOpen) {
-            lenis.stop();
-        } else {
-            lenis.start();
-        }
-    }, [isOpen]);
+    //     if (isOpen) {
+    //         lenis.stop();
+    //     } else {
+    //         lenis.start();
+    //     }
+    // }, [isOpen]);
 
     return (
         <>

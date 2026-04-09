@@ -148,6 +148,8 @@ function Single_curtain_customization({ data: propsData, groupData }) {
             //   setCalculatedPrice(null)
             return
         }
+        // Clear any previous error since measurements are now valid
+        setError("");
 
         // Measurements are provided in millimetres (MM) from the Measurement inputs.
         // Use values directly as mm for interpolation/validation.
