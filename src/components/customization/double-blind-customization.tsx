@@ -22,7 +22,7 @@ const setupOptions = [
     {
         id: 1,
         title: 'Setup',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
+        description: '',
         values: [
             { label: 'Blockout in Front', image: '/images/custom/blind-blockout-front.png' },
             { label: 'Sunscreen or Light Filtering in Back', image: '/images/custom/sunscreen-front.png' },
@@ -41,7 +41,7 @@ const productOptions = [
     {
         id: 1,
         title: 'Controls',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
+        description: '',
         values: [
             { label: 'Left', image: '/images/custom/controls-left.png' },
             { label: 'Right', image: '/images/custom/controls-right.png' },
@@ -50,7 +50,7 @@ const productOptions = [
     {
         id: 1,
         title: 'Select Fit',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        description: '',
         values: [
             { label: 'Face Fit', image: '/images/custom/blind-fit-left.png' },
             { label: 'Recess Fit', image: '/images/custom/blind-fit-right.png' },
@@ -59,7 +59,7 @@ const productOptions = [
     {
         id: 1,
         title: 'Roll Direction',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        description: '',
         values: [
             { label: 'Front & Back Roll', image: '/images/custom/front-back-roll.png' },
             { label: 'Both Front Roll', image: '/images/custom/both-front-roll.png' },
@@ -70,7 +70,7 @@ const productOptions = [
     {
         id: 1,
         title: 'Base Rail Shape',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        description: '',
         values: [
             { label: 'Oval', image: '/images/custom/rail-1.png' },
             { label: 'Square', image: '/images/custom/rail-2.png' },
@@ -180,7 +180,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
     const [blockoutColourData, setBlockoutColourData] = useState([{
         id: 'optgrp_01K6Z6D5B6166KXE3RGNVDQ5EN',
         title: 'Blockout Colour',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
+        description: '',
         values: []
     }]);
 
@@ -459,7 +459,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-6 xl:pb-[5.833vw]">
                 <div className="w-full flex flex-col gap-2 text-[--Black]">
                     <h2 className="text-xl">Double Roller BLINDS Customisations</h2>
-                    <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
+                    {/* <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p> */}
                 </div>
 
                 {setupOptions.map((option, index) => (
@@ -479,10 +479,10 @@ function Double_blind_customization({ data: propsData, groupData }) {
                     <Separate />
                     <div className="w-full flex flex-col gap-2">
                         <h2 className="text-lg">Enter Measurements</h2>
-                        <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
+                        {/* <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p> */}
                     </div>
                     {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
-                    <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={100} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
+                    <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={100} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={100} heightMax={Math.max(...(groupData?.Drop_values || []))} />
                     {productData?.options?.map((option, index) => {
                         const filteredOption = {
                             ...option,
@@ -522,10 +522,10 @@ function Double_blind_customization({ data: propsData, groupData }) {
                     <Separate />
                     <div className="w-full flex flex-col gap-2">
                         <h2 className="text-lg">Enter Measurements</h2>
-                        <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
+                        {/* <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p> */}
                     </div>
                     {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
-                    <Measurement measurements={screenMeasurements} setMeasurements={setScreenMeasurements} widthMin={100} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
+                    <Measurement measurements={screenMeasurements} setMeasurements={setScreenMeasurements} widthMin={100} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={100} heightMax={Math.max(...(groupData?.Drop_values || []))} />
                     {productData?.options?.map((option, index) => {
                         const lastValue = option.values?.[option.values.length - 1];
 
@@ -565,20 +565,17 @@ function Double_blind_customization({ data: propsData, groupData }) {
                         <SelectDefaultColor
                             data={option}
                             title={'Colour'}
-                            description={'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.'}
+                            description={''}
                             onColorSelect={getColorSetter(option.title)}
                             selectedColor={getSelectedColor(option.title)}
                         />
                     </React.Fragment>
                 ))}
+                <Separate />
                 <div className="flex flex-col items-start gap-4 self-stretch">
                     <h5 className="text-lg">
                         Do you want to make it motorised
                     </h5>
-
-                    <p className="text-sm">
-                        Lorem ipsum
-                    </p>
 
                     <div className="flex h-16 p-2 items-start gap-6 self-stretch rounded-full border border-[#0F0F0F]">
                         <div className="flex flex-1 self-stretch gap-6">

@@ -88,7 +88,7 @@ function SelectColor(props) {
         <div className="w-full flex flex-col gap-6 xl:gap-[1.25vw]">
             <div className="w-full flex flex-col gap-2">
                 <h2 className="text-lg">Choose Your {props.title ? props.title : props.data.title}</h2>
-                <p className="text-sm">{props.data.description}</p>
+                {props.data.description === '' ? null : <p className="text-sm">{props.data.description}</p>}
             </div>
             <RadioGroup className="flex flex-wrap items-stretch gap-2" value={selected} onValueChange={handleColorChange}>
                 {props.data?.values.map((color, index) =>

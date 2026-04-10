@@ -19,7 +19,7 @@ const productOptions = [
     {
         id: 1,
         title: 'Fitting Type',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
+        description: '',
         values: [
             { label: 'Left', image: '/images/custom/fitting-left.jpg' },
             { label: 'Right', image: '/images/custom/fitting-right.jpg' },
@@ -28,7 +28,7 @@ const productOptions = [
     {
         id: 1,
         title: 'Select Fit',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        description: '',
         values: [
             { label: 'Face Fit', image: '/images/custom/fit.jpg' },
             { label: 'Recess Fit', image: '/images/custom/racess.jpg' },
@@ -37,7 +37,7 @@ const productOptions = [
     {
         id: 1,
         title: 'Curtain Stack',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        description: '',
         values: [
             { label: 'Left Stack', image: '/images/custom/left-stack.jpg' },
             { label: 'Right Stack', image: '/images/custom/right-stack.jpg' },
@@ -47,7 +47,7 @@ const productOptions = [
     {
         id: 1,
         title: 'Curtain Style',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.',
+        description: '',
         values: [
             { label: 'S Fold', image: '/images/custom/s-fold.jpg' },
             // { label: 'Triple Pinch Pleat', image: '/images/custom/pinch.jpg' },
@@ -57,7 +57,7 @@ const productOptions = [
     {
         id: 1,
         title: 'Curtain Hem',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
+        description: '',
         values: [
             { label: 'Lead Weight', image: '/images/custom/lead-weight.png' },
             { label: '70mm Hem', image: '/images/custom/70mm.png' },
@@ -66,7 +66,7 @@ const productOptions = [
     {
         id: 1,
         title: 'Track Type',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
+        description: '',
         values: [
             { label: 'Designer', image: '/images/custom/designer.png' },
             { label: 'Residential', image: '/images/custom/residential.png' },
@@ -75,7 +75,7 @@ const productOptions = [
     {
         id: 1,
         title: 'Wand Length',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
+        description: '',
         values: [
             { label: '910mm', image: '/images/custom/wand-length.png' },
             { label: '1220mm', image: '/images/custom/wand-length.png' },
@@ -85,7 +85,7 @@ const productOptions = [
     {
         id: 1,
         title: 'Track Colour',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
+        description: '',
         values: [
             { label: 'White', image: '/images/custom/track-white.png' },
             { label: 'Black', image: '/images/custom/track-black.png' },
@@ -94,7 +94,7 @@ const productOptions = [
     {
         id: 1,
         title: 'Bracket Style',
-        description: 'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl. ',
+        description: '',
         values: [
             { label: 'Standard', image: '/images/custom/standard.png' },
             { label: 'Extension', image: '/images/custom/extension.png' },
@@ -153,8 +153,8 @@ function Single_curtain_customization({ data: propsData, groupData }) {
 
         // Measurements are provided in millimetres (MM) from the Measurement inputs.
         // Use values directly as mm for interpolation/validation.
-        const widthMm = Math.round(Number(measurements.width));
-        const dropMm = Math.round(Number(measurements.height));
+        let widthMm = Math.round(Number(measurements.width));
+        let dropMm = Math.round(Number(measurements.height));
 
         // Check ranges (in mm)
         const currentWidthValues = groupData?.Width_values || [];
@@ -166,17 +166,33 @@ function Single_curtain_customization({ data: propsData, groupData }) {
         const minDrop = Math.min(...currentDropValues);
         const maxDrop = Math.max(...currentDropValues);
 
-        if (widthMm < minWidth || widthMm > maxWidth) {
+        if (widthMm < minWidth) {
+            widthMm = minWidth;
+        } else if (widthMm > maxWidth) {
             setError(`Width must be between ${minWidth} mm and ${maxWidth} mm`)
             setTotalPrice(0)
             return
         }
 
-        if (dropMm < minDrop || dropMm > maxDrop) {
+        if (dropMm < minDrop) {
+            dropMm = minDrop;
+        } else if (dropMm > maxDrop) {
             setError(`Drop must be between ${minDrop} mm and ${maxDrop} mm`)
             setTotalPrice(0)
             return
         }
+
+        // if (widthMm < minWidth || widthMm > maxWidth) {
+        //     setError(`Width must be between ${minWidth} mm and ${maxWidth} mm`)
+        //     setTotalPrice(0)
+        //     return
+        // }
+
+        // if (dropMm < minDrop || dropMm > maxDrop) {
+        //     setError(`Drop must be between ${minDrop} mm and ${maxDrop} mm`)
+        //     setTotalPrice(0)
+        //     return
+        // }
 
         const price = interpolate2D(widthMm, dropMm, currentWidthValues, currentDropValues, currentPriceMatrix[priceGroup])
         if (price === null) {
@@ -393,14 +409,14 @@ function Single_curtain_customization({ data: propsData, groupData }) {
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-6 xl:pb-[5.833vw]">
                 <div className="w-full flex flex-col gap-2 text-[--Black]">
                     <h2 className="text-xl">Curtain Customisations</h2>
-                    <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
+                    {/* <p className="text-sm"></p> */}
                 </div>
                 <Separate />
                 <div className="w-full flex flex-col gap-2">
                     <h2 className="text-lg">Enter Measurements</h2>
-                    <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p>
+                    {/* <p className="text-sm"></p> */}
                 </div>
-                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={Math.min(...(groupData?.Width_values || []))} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={Math.min(...(groupData?.Drop_values || []))} heightMax={Math.max(...(groupData?.Drop_values || []))} />
+                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={100} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={100} heightMax={Math.max(...(groupData?.Drop_values || []))} />
                 {productData?.options?.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate />
@@ -408,7 +424,7 @@ function Single_curtain_customization({ data: propsData, groupData }) {
                             data={option}
                             title={'Colour'}
                             productName={productData.title}
-                            description={'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.'}
+                            description={''}
                             onColorSelect={setSelectedColor}
                             selectedColor={selectedColor}
                         />

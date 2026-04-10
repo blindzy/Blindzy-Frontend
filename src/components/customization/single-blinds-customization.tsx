@@ -29,7 +29,8 @@ const productOptions = [
     {
         id: 1,
         title: 'Select Fit',
-        description: 'Select either Face Fit or Recess Fit. You should have measured your window based on this choice.',
+        // description: 'Select either Face Fit or Recess Fit. You should have measured your window based on this choice.',
+        description: '',
         values: [
             { label: 'Face Fit', image: '/images/custom/blind-fit-left.png' },
             { label: 'Recess Fit', image: '/images/custom/blind-fit-right.png' },
@@ -38,7 +39,8 @@ const productOptions = [
     {
         id: 1,
         title: 'Roll Direction',
-        description: 'Choose between Front Roll (blind rolls off the front, tube hidden behind fabric) or Back Roll (most popular, minimizes gaps and blocks more light).',
+        // description: 'Choose between Front Roll (blind rolls off the front, tube hidden behind fabric) or Back Roll (most popular, minimizes gaps and blocks more light).',
+        description: '',
         values: [
             { label: 'Front Roll', image: '/images/custom/roll-direction-1.png' },
             { label: 'Back Roll', image: '/images/custom/roll-direction-2.png' },
@@ -47,7 +49,8 @@ const productOptions = [
     {
         id: 1,
         title: 'Base Rail Shape',
-        description: 'We offer a flat or oval option for the base rail, which gives weight to the bottom of your blind.',
+        // description: 'We offer a flat or oval option for the base rail, which gives weight to the bottom of your blind.',
+        description: '',
         values: [
             { label: 'Oval', image: '/images/custom/rail-1.png' },
             { label: 'Square', image: '/images/custom/rail-2.png' },
@@ -391,7 +394,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                     <h2 className="text-xl">Blinds Customisations</h2>
                     {/* <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p> */}
                 </div>
-                <Separate />
+                <Separate />    
                 <div className="w-full flex flex-col gap-2">
                     <h2 className="text-lg">Enter Measurements</h2>
                     {/* <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p> */}
@@ -406,7 +409,8 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                             tag={productData.tags?.[0].value || ''}
                             title={'Colour'}
                             colorsType={'blind'}
-                            description={'Pick your preferred colour. Consider ordering free samples to see the fabrics in person.'}
+                            // description={'Pick your preferred colour. Consider ordering free samples to see the fabrics in person.'}
+                            description={''}
                             onColorSelect={setSelectedColor}
                             selectedColor={selectedColor}
                         />
@@ -435,14 +439,15 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                         />
                     </React.Fragment>
                 ))}
+                <Separate />
                 <div className="flex flex-col items-start gap-4 self-stretch">
                     <h5 className="text-lg">
                         Do you want to make it motorised
                     </h5>
 
-                    <p className="text-sm">
+                    {/* <p className="text-sm">
                         Lorem ipsum
-                    </p>
+                    </p> */}
 
                     <div className="flex h-16 p-2 items-start gap-6 self-stretch rounded-full border border-[#0F0F0F]">
                         <div className="flex flex-1 self-stretch gap-6">

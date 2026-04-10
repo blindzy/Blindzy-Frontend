@@ -56,9 +56,9 @@ function Quality() {
                     <h2 className="text-xxxl text-black uppercase mbl:px-4">4 Steps to Designer Quality Blinds</h2>
                     <p className="text-sm lg:text-base xl:text-lg text-black">Create custom DIY blinds in Australia without the stress, high costs, or showroom pressure. Our simple process makes it easy from start to finish</p>
                 </div>
-                <Button variant={'primary'} size={'large'} className="hover:border-[--white] hover:text-[--white]">
+                {/* <Button variant={'primary'} size={'large'} className="hover:border-[--white] hover:text-[--white]">
                     Download Guide
-                </Button>
+                </Button> */}
             </div>
 
             {/* Right steps and line animation area */}

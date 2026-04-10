@@ -36,19 +36,22 @@ export const COLOR_OPTIONS = [
     {
         id: 'optgrp_01K6Z6D5B6166KXE3RQNVDQ5EN',
         title: 'Chain Colour',
-        description: "Select the desired colour for your blind's chain. Note that 'Silver' is a metal chain option.",
+        // description: "Select the desired colour for your blind's chain. Note that 'Silver' is a metal chain option.",
+        description: "",
         values: CHAIN_COLOUR_OPTIONS
     },
     {
         id: 'optgrp_01K6Z6D5B6166KXE3RQNVDQ5EM',
         title: 'Bracket Colour',
-        description: "Pick the colour you'd like for your brackets.",
+        // description: "Pick the colour you'd like for your brackets.",
+        description: "",
         values: BRACKET_COLOUR_OPTIONS
     },
     {
         id: 'optgrp_01K6Z6D5B6166KXE3RQNVDQ5EL',
         title: 'Base Rail Colour',
-        description: "Our base rails are aluminium, powder coated or anodised. Select your preferred colour.",
+        // description: "Our base rails are aluminium, powder coated or anodised. Select your preferred colour.",
+        description: "",
         values: BASE_RAIL_COLOUR_OPTIONS
     },
 ];
