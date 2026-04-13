@@ -26,9 +26,9 @@ function OrderList(props) {
                         <img src={props.data.metadata?.thumbnail?.replace("http://localhost:9000", "https://api.blindzy.com")} className="w-full object-cover" alt={props.data.metadata?.title} />
                     </div>
                     <h6 className="hidden sm:block text-md text-[--Black]">{props.data.metadata.title}</h6>
-                     <span className="text-xs text-[--lightBlack]">
-    {formattedDate}
-  </span>
+                    <span className="text-xs text-[--lightBlack]">
+                        {formattedDate}
+                    </span>
                     <div className="w-fit sm:hidden flex flex-col gap-1">
                         <h6 className="text-lg text-[--Black]">{props.data.metadata.title}</h6>
                         <p className="text-md text-[--Black]">

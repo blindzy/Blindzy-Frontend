@@ -79,6 +79,7 @@ export function CartPopup() {
                     query: { email: userDataObj.email },
                 });
                 serverItems = data.cart.items ?? [];
+                console.log('Fetched server cart items:', serverItems);
             } catch (err: any) {
                 if (err?.message?.includes('404')) {
                     if (guestItems.length > 0) {
@@ -185,6 +186,23 @@ export function CartPopup() {
         }
     };
 
+    const groupedItems = Object.values(
+        cartItems.reduce((acc, item) => {
+            const key = JSON.stringify({
+                product_id: item.product_id,
+                customizations: item.customizations,
+            });
+
+            if (!acc[key]) {
+                acc[key] = { ...item };
+            } else {
+                acc[key].quantity += item.quantity;
+            }
+
+            return acc;
+        }, {})
+    );
+
     // Fetch cart data on mount to show badge count without opening the dialog
     useEffect(() => {
         getCart();
@@ -239,7 +257,7 @@ export function CartPopup() {
                                 <Loader2 className="h-8 w-8 animate-spin text-[--primary]" />
                             </div>
                         ) : cartItems && cartItems.length > 0 ? (
-                            cartItems.map((item, index) => (
+                            groupedItems.map((item, index) => (
                                 <CartProduct
                                     key={index}
                                     item={item}
