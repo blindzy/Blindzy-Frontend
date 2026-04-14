@@ -13,7 +13,17 @@ import Separate from "@components/separate";
 import PaymentPage from "./payment";
 import { createAddresses } from "services/create-address";
 
-
+const normalizeCountry = (code?: string) => {
+	if (!code) return "au"
+	const map: Record<string, string> = {
+		AUS: "au",
+		USA: "us",
+		GBR: "gb",
+		CAN: "ca",
+		NZL: "nz",
+	}
+	return (map[code] ?? code).toLowerCase()
+}
 
 function Checkout() {
 	const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;

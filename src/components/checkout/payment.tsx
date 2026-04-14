@@ -121,15 +121,23 @@ const CheckoutForm = ({ amount, customer, shippingInfo, back }: { amount: any; c
           },
           body: JSON.stringify({
             customer_id: customer.id,
-            address_id: shippingInfo.id,
+            address: {
+              first_name: customer.firstName,
+              last_name: customer.lastName,
+              address_1: shippingInfo.address,
+              city: shippingInfo.city,
+              postal_code: shippingInfo.zipCode,
+              country_code: shippingInfo.country,
+              phone: customer.phone,
+            },
           }),
         });
 
         const data = await response.json();
 
         if (!response.ok) {
-  throw new Error(data?.message || "Checkout failed");
-}
+          throw new Error(data?.message || "Checkout failed");
+        }
 
         console.log("Checkout success:", data);
         setPaymentSuccess(true);
