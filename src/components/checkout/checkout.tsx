@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from "react";
+﻿import React, { useCallback, useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
@@ -12,6 +12,7 @@ import { Loader2, Plus } from 'lucide-react';
 import Separate from "@components/separate";
 import PaymentPage from "./payment";
 import { createAddresses } from "services/create-address";
+import { useGooglePlacesAutocomplete } from "hooks/useGoogleMapsAutoComplete";
 
 const normalizeCountry = (code?: string) => {
 	if (!code) return "au"
@@ -298,6 +299,25 @@ function Checkout() {
 		}
 	};
 
+	const addressInputRef = useRef<HTMLInputElement>(null);
+
+	const handlePlaceSelect = useCallback((fields: { address: string; city: string; zipCode: string; country: string }) => {
+		// Map short country code (e.g. "AU") to your Select values (e.g. "AUS")
+		const countryMap: Record<string, string> = {
+			AU: "AUS", US: "USA", CA: "CAN", GB: "GBR", NZ: "NZL",
+			DE: "DEU", FR: "FRA", JP: "JPN",
+		};
+		setShippingInfo(prev => ({
+			...prev,
+			address: fields.address,
+			city: fields.city,
+			zipCode: fields.zipCode,
+			country: countryMap[fields.country] ?? fields.country,
+		}));
+	}, []);
+
+	useGooglePlacesAutocomplete(addressInputRef, handlePlaceSelect);
+
 	return (
 		<section className="checkout-section w-screen flex flex-col gap-[80px] pb-[85px] xl:px-[1.25vw] sm:px-[2.344vw] px-2" id="checkout">
 			<div className="flex xl:flex-row flex-col gap-4 w-full xl:items-start">
@@ -472,12 +492,14 @@ function Checkout() {
 										/>
 									</div>
 									<div className="sm:col-span-6 col-span-12">
-										<Input
+										<input
+											ref={addressInputRef}
 											type="text"
-											id="address"
-											placeholder="House number and street name"
+											placeholder="Start typing your address..."
 											value={shippingInfo.address}
 											onChange={(e) => handleShippingInfoChange('address', e.target.value)}
+											autoComplete="off"
+											className="w-full border border-[--Black] rounded-full text-[--black] bg-white p-4 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-[--lightGrey] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
 										/>
 									</div>
 									{/* <div className="col-span-12">

@@ -36,6 +36,23 @@ const makeDes = description ? description + " | " + "Blindzy" :"Blindzy";
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="stylesheet" href="" />
         <meta name="generator" content={Astro.generator} />
+          <script
+    is:inline
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAy5wD2qfe48Gmoa96h6WCZ5yakOw4_EhQ&libraries=places&v=weekly&callback=onGoogleMapsReady"
+  ></script>
+<script is:inline>
+  window.addEventListener("google-maps-ready", () => {
+    console.log("✅ Google Maps loaded successfully");
+    console.log("Places available:", !!window.google?.maps?.places);
+  });
+
+  // Fallback check after 3 seconds
+  setTimeout(() => {
+    console.log("google object:", window.google);
+    console.log("maps:", window.google?.maps);
+    console.log("places:", window.google?.maps?.places);
+  }, 3000);
+</script>
         <SEO title={makeTitle}
           description={makeDes}
           twitter={{
