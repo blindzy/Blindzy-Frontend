@@ -5,7 +5,7 @@ import { useLenis } from '../../hooks/useLenis';
 import SelectDefaultColor from "./selectdefultColor";
 import SelectColor from "./selectColor";
 import SelectVarient from "./selectVarient";
-import ProductCard from "./ProductCard";
+import ProductCard from "./blind-productCard";
 import { Checkbox } from "@lib/components/ui/checkbox";
 import { Button } from "@lib/components/ui/button";
 import Separate from "@components/separate";
