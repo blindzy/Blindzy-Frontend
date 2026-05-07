@@ -24,7 +24,10 @@ async function getData() {
 const { blogData, bloglist } = await getData();
 ---
 
-<Layout>
+<Layout
+	title={`${blogData[0]?.attributes?.title || "Blog Detail"} | Blindzy Australia`}
+	description={blogData[0]?.attributes?.excerpt || "Read our latest blog post on Blindzy Australia for expert advice, installation guides, and inspiration for your home window furnishings. Stay updated with the latest news, tips, and trends in custom DIY blinds and curtains."}
+>
 	<Navbar client:load logo="dark" />
 	<BlogDetailComponent client:load data={blogData[0]} blogList={bloglist} />
 	<Footer client:load />

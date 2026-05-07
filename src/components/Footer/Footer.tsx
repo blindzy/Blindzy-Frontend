@@ -20,7 +20,9 @@ function Footer() {
             <div className="xl:w-[38.125vw] w-full flex flex-col justify-between gap-[2.5vw] xl:p-[1.25vw] sm:p-[2.344vw] p-4 shrink-0 bg-primary rounded-64">
                 <div className="xl:w-full sm:w-[80%] w-full xl:m-0 mx-auto xl:text-left text-center flex flex-col xl:items-start items-center gap-4">
                     <img src="/images/footer-logo.png" className="xl:w-[80%] w-[70%]" alt="footer-logo" />
-                    <p className="text-sm text-white">Lorem ipsum dolor sit amet consectetur. Lacus commodo fusce at neque malesuada id et aliquam. Aliquam eleifend mattis a risus orci nunc pretium elementum sem. Porttitor enim elit enim in at. Proin eget tellus faucibus sem. At eros leo sed ut arcu in.</p>
+                    <p className="text-sm text-white">
+                        Blindzy offers affordable custom DIY blinds and curtains in Australia, with high-quality window furnishings and easy installation solutions for every home.
+                    </p>
                 </div>
                 <div className="flex sm:flex-row flex-col xl:items-stretch xl:gap-[1.25vw] sm:gap-4 gap-4">
                     <button

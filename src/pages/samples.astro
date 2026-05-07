@@ -10,7 +10,6 @@ const productsData = await fetchMedusaApi<any>({
   endpoint: "/store/products/custom",
 });
 
-console.log("Fetched products data:", productsData);
 
 const filteredProducts = (productsData?.products || []).filter((product: any) => {
   const hasSamplesCategory = product.categories?.some(
@@ -21,7 +20,10 @@ const filteredProducts = (productsData?.products || []).filter((product: any) =>
 });
 ---
 
-<Layout>
+<Layout
+  title="Get Free Samples | Blindzy Australia"
+  description="Order free samples of our custom DIY blinds and curtains at Blindzy Australia. Experience the quality and style of our window furnishings before you buy. Get your free samples today and see the difference for yourself."
+>
       <Navbar client:load logo="dark"/>
       <InnerBanner client:load title="GET FREE SAMPLES" content="Beautiful Designer Blinds Cou Can Install in 20 Minutes"/>
       <SamplesComponent client:load data={filteredProducts}/>

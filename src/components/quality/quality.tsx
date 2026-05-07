@@ -53,12 +53,9 @@ function Quality() {
             {/* Left content area */}
             <div className="xl:w-[41.667vw] sm:w-[80%] w-full xl:m-0 mx-auto xl:text-left text-center flex flex-col xl:items-start items-center gap-[2.5vw]">
                 <div className="flex flex-col gap-2">
-                    <h2 className="text-xxxl text-black uppercase mbl:px-4">4 Steps to Designer Quality Blinds</h2>
+                    <h2 className="text-3xl text-black uppercase mbl:px-4">4 Steps to Designer Quality Blinds</h2>
                     <p className="text-sm lg:text-base xl:text-lg text-black">Create custom DIY blinds in Australia without the stress, high costs, or showroom pressure. Our simple process makes it easy from start to finish</p>
                 </div>
-                {/* <Button variant={'primary'} size={'large'} className="hover:border-[--white] hover:text-[--white]">
-                    Download Guide
-                </Button> */}
             </div>
 
             {/* Right steps and line animation area */}

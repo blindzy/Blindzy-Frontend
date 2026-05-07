@@ -8,7 +8,7 @@ function AboutDetail() {
         <section className="w-screen flex flex-col xl:gap-[4.167vw] sm:gap-[9.375vw] gap-[22.326vw] xl:py-[4.427vw] sm:py-[7.813vw] py-[11.163vw] xl:px-[1.25vw] sm:px-[2.344vw] px-6" id="aboutDetail">
             <div className="flex xl:flex-row flex-col items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-6">
                 <div className="w-full flex flex-col sm:gap-4 gap-2 text-[--Black] xl:text-left text-center">
-                    <h2 className="text-xxxl uppercase">Who We Are</h2>
+                    <h2 className="text-3xl uppercase">Who We Are</h2>
                     <div className="flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-2">
                         <p className="text-sm ">Blindzy was created to simplify the way Australians buy custom blinds and curtains. Instead
                             of dealing with expensive showrooms, pushy salespeople, and long wait times, we offer a
@@ -29,7 +29,7 @@ function AboutDetail() {
                     <img src="/images/about/2.png" className="w-full" alt="about-image" />
                 </div>
                 <div className="w-full flex flex-col sm:gap-4 gap-2 text-[--Black] xl:text-left text-center">
-                    <h2 className="text-xxxl uppercase">Our Mission</h2>
+                    <h2 className="text-3xl uppercase">Our Mission</h2>
                     <div className="flex flex-col xl:gap-[1.25vw] sm:gap-[2.344vw] gap-2">
                         <p className="text-sm">Our mission is to make premium window furnishings in Australia accessible, affordable, and
                             easy to install. By cutting out unnecessary middlemen and working directly with customers,

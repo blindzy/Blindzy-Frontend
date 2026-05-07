@@ -43,7 +43,7 @@ function Hero() {
 					{/* Desktop/Tablet: Center/left text/buttons */}
 					<div className="flex xl:w-[35.521vw] sm:w-[80%] w-full xl:m-0 mx-auto xl:text-left text-center flex-col xl:gap-[1.25vw] gap-4 mb-[100px]">
 						<div className="flex flex-col gap-2">
-							<h2 className="text-xxxl text-white uppercase">Installing Blinds Made Easy</h2>
+							<h1 className="text-3xl text-white uppercase">Installing Blinds Made Easy</h1>
 							<p className="text-sm text-white">Welcome to Blindzy, your trusted source for custom DIY window furnishings in Australia. Browse our wide range of affordable, high quality window furnishings, and follow our simple installation guides to effortlessly transform your home.</p>
 						</div>
 						<div className="flex items-center xl:justify-start justify-center gap-[24px]">

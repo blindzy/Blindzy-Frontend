@@ -202,7 +202,7 @@
 }
 
 /* 67px || 48 || 32 */
-.text-xxxl {
+.text-3xl {
   @apply xl:text-[3.49vw] sm:text-[4.688vw] text-[7.273vw] font-black font-plus leading-tight;
 }
 

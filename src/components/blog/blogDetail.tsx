@@ -42,7 +42,7 @@ function BlogDetail(props) {
 
             <div className="w-full flex flex-col xl:gap-[1.25vw] sm:p-6 sm:gap-[2.344vw] gap-4 text-black">
                 <div className="w-full flex items-center justify-between">
-                    <h3 className="text-xxxl uppercase font-black font-plus">{props.data.title}</h3>
+                    <h3 className="text-3xl uppercase font-black font-plus">{props.data.title}</h3>
                     <p className="text-sm text-primary">{toShortDate(props.data.date)}</p>
                 </div>
                 <BlogContent content={props.data.content} />
