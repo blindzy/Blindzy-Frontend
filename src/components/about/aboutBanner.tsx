@@ -29,7 +29,9 @@ function About() {
 				<div className="sm:bg-[url(/images/innerBanner/about-bg.jpg)] bg-[url(/images/innerBanner/about-bg-mobile.jpg)] bg-cover sm:bg-center bg-bottom bg-no-repeat w-full h-full flex sm:items-center items-end justify-center overflow-hidden rounded-48">
 					<div className="xl:w-[38.281vw] sm:w-[80%] w-full flex flex-col text-center gap-2 text-white sm:p-0 p-6">
 						<h2 className="xl:text-[4.688vw] sm:text-[8.203vw] text-[7.442vw] font-black font-plus leading-[110%] uppercase">about blindzy</h2>
-						<p className="xl:text-[1.094vw] sm:text-[1.758vw] text-[12px] sm:font-bold font-normal sm:font-plus font-roboto leading-normal">At Blindzy, we believe that luxury is all about the details. That's why we take pride in offering premium blinds and curtains that combine craftsmanship with elegance. Based in Melbourne, Victoria, our state-of-the-art manufacturing facility ensures that every product we create is handmade and of the highest quality. As experts in window furnishings, our passion is reflected in every product we make.</p>
+						<p className="xl:text-[1.094vw] sm:text-[1.758vw] text-[12px] sm:font-bold font-normal sm:font-plus font-roboto leading-normal">
+							At Blindzy, we specialize in premium handmade blinds and curtains in Melbourne, Australia. Our high-quality custom window furnishings are crafted with expert workmanship, modern designs, and durable materials to bring style, elegance, and functionality to every home.
+						</p>
 					</div>
 				</div>
 			</div>

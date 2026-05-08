@@ -21,12 +21,12 @@ function AboutDetail() {
                     </div>
                 </div>
                 <div className="w-full overflow-hidden rounded-48">
-                    <img src="/images/about/2.png" className="w-full" alt="about-image" />
+                    <img src="/images/about/3.png" className="w-full" alt="about-image" />
                 </div>
             </div>
             <div className="flex xl:flex-row flex-col-reverse items-center xl:gap-[1.25vw] sm:gap-[2.344vw] gap-6">
                 <div className="w-full overflow-hidden rounded-48">
-                    <img src="/images/about/2.png" className="w-full" alt="about-image" />
+                    <img src="/images/about/4.png" className="w-full" alt="about-image" />
                 </div>
                 <div className="w-full flex flex-col sm:gap-4 gap-2 text-[--Black] xl:text-left text-center">
                     <h2 className="text-3xl uppercase">Our Mission</h2>
