@@ -32,6 +32,6 @@ const { testimonialData } = await getData();
   <About client:visible />
   <Questions client:visible />
   <Clients client:visible data={testimonialData} />
-  <Footer client:visible />
+  <Footer client:visible category_button={true} />
   <div class="relative bg-effect"></div>
 </Layout>

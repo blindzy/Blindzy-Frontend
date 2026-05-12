@@ -22,5 +22,5 @@ const { blogData } = await getData();
 >
 	<Navbar client:load logo="dark" />
 	<Blog client:load data={blogData} />
-	<Footer client:visible />
+	<Footer client:visible category_button={false}/>
 </Layout>

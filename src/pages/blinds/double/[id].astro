@@ -45,5 +45,5 @@ const productData = await fetchMedusaApi<any>({
     data={productData.product}
     groupData={groupData}
   />
-  <Footer client:load />
+  <Footer client:load category_button={false} />
 </Layout>

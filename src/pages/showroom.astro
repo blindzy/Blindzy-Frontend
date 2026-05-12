@@ -22,5 +22,5 @@ const { tutorialsData } = await getData();
 >
 	<Navbar client:load logo="dark" />
 	<Showrooms client:load data={tutorialsData} />
-	<Footer client:visible />
+	<Footer client:visible category_button={false} />
 </Layout>

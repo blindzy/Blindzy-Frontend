@@ -30,5 +30,5 @@ const { blogData, bloglist } = await getData();
 >
 	<Navbar client:load logo="dark" />
 	<BlogDetailComponent client:load data={blogData[0]} blogList={bloglist} />
-	<Footer client:load />
+	<Footer client:load category_button={false}/>
 </Layout>

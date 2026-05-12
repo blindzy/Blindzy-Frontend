@@ -27,5 +27,5 @@ const filteredProducts = (productsData?.products || []).filter((product: any) =>
       <Navbar client:load logo="dark"/>
       <InnerBanner client:load title="GET FREE SAMPLES" content="Beautiful Designer Blinds Cou Can Install in 20 Minutes"/>
       <SamplesComponent client:load data={filteredProducts}/>
-      <Footer client:visible/>
+      <Footer client:visible category_button={false}/>
 </Layout>
