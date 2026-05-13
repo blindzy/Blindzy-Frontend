@@ -20,7 +20,7 @@ function Contact() {
         email: '',
         phone: '',
         enquiry: '',
-        number: '',
+        subject: '',
         message: ''
     });
     const [loading, setLoading] = useState(false);
@@ -62,7 +62,7 @@ function Contact() {
                 email: '',
                 phone: '',
                 enquiry: '',
-                number: '',
+                subject: '',
                 message: ''
             });
         } catch (err) {
@@ -191,9 +191,9 @@ function Contact() {
                             <div className="col-span-12">
                                 <Input
                                     type="text"
-                                    id="number"
-                                    placeholder="Your Number"
-                                    value={formData.number}
+                                    id="subject"
+                                    placeholder="Subject"
+                                    value={formData.subject}
                                     onChange={handleInputChange}
                                     required
                                 />
