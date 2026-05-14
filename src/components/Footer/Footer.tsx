@@ -93,8 +93,8 @@ function Footer() {
                         <div className="w-full flex flex-col gap-3 text-black">
                             <h6 className="xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal">CONTACT INFO</h6>
                             <div className="flex flex-col gap-3">
-                                <a href="tel:1300 337 446" className="text-sm hover:text-primary">1300 337 446</a>
-                                <a href="mailto:sales@info.com.au" className="text-sm hover:text-primary">sales@info.com.au</a>
+                                <a href="tel:61433618844" className="text-sm hover:text-primary">+61 433618844</a>
+                                <a href="blindzy11@gmail.com" className="text-sm hover:text-primary">blindzy11@gmail.com</a>
                             </div>
                         </div>
                     </div>
