@@ -35,12 +35,15 @@ const productData = await fetchMedusaApi<any>({
 });
 ---
 
-<Layout>
+<Layout
+  title="Double Roller Blinds Customization | Blindzy Australia"
+  description="Customize your double roller blinds with Blindzy Australia's easy-to-use customization tool. Choose from a variety of styles, colors, and materials to create the perfect double roller blinds for your home. Our custom DIY double roller blinds are designed for easy installation and long-lasting beauty. Start customizing your double roller blinds today and transform your windows with Blindzy Australia."
+>
   <Navbar client:load logo={"dark"} />
   <Double_blind_customization
     client:load
     data={productData.product}
     groupData={groupData}
   />
-  <Footer client:load />
+  <Footer client:load category_button={false} />
 </Layout>

@@ -16,8 +16,11 @@ async function getData() {
 const { tutorialsData } = await getData();
 ---
 
-<Layout>
+<Layout
+	title="Showroom | Blindzy Australia"
+	description="Visit the Blindzy Australia showroom to experience our custom DIY blinds and curtains in person. "
+>
 	<Navbar client:load logo="dark" />
 	<Showrooms client:load data={tutorialsData} />
-	<Footer client:visible />
+	<Footer client:visible category_button={false} />
 </Layout>

@@ -4,7 +4,7 @@ import { Icon } from '@iconify/react';
 import $ from 'jquery';
 
 
-function Footer() {
+function Footer(props) {
 
     const handleNav = (id) => {
         const $el = $(id);
@@ -20,22 +20,27 @@ function Footer() {
             <div className="xl:w-[38.125vw] w-full flex flex-col justify-between gap-[2.5vw] xl:p-[1.25vw] sm:p-[2.344vw] p-4 shrink-0 bg-primary rounded-64">
                 <div className="xl:w-full sm:w-[80%] w-full xl:m-0 mx-auto xl:text-left text-center flex flex-col xl:items-start items-center gap-4">
                     <img src="/images/footer-logo.png" className="xl:w-[80%] w-[70%]" alt="footer-logo" />
-                    <p className="text-sm text-white">Lorem ipsum dolor sit amet consectetur. Lacus commodo fusce at neque malesuada id et aliquam. Aliquam eleifend mattis a risus orci nunc pretium elementum sem. Porttitor enim elit enim in at. Proin eget tellus faucibus sem. At eros leo sed ut arcu in.</p>
+                    <p className="text-sm text-white">
+                        Blindzy offers affordable custom DIY blinds and curtains in Australia, with high-quality window furnishings and easy installation solutions for every home.
+                    </p>
                 </div>
                 <div className="flex sm:flex-row flex-col xl:items-stretch xl:gap-[1.25vw] sm:gap-4 gap-4">
-                    <button
-                        className="w-full xl:h-[17.4603vh] sm:h-[20vw] p-6 flex items-center justify-center gap-3 xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal bg-[--white] text-[--Black] transition hover:text-[--white] hover:bg-[--Black] sm:rounded-[48px] rounded-full"
-                        onClick={() => handleNav('#products')}>
-                        <span>Browse Category</span>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
-                            <path d="M11.1109 5.38867H6.66645C5.68462 5.38867 4.88867 6.18462 4.88867 7.16645V11.6109C4.88867 12.5927 5.68462 13.3887 6.66645 13.3887H11.1109C12.0927 13.3887 12.8887 12.5927 12.8887 11.6109V7.16645C12.8887 6.18462 12.0927 5.38867 11.1109 5.38867Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            <path d="M25.3336 5.38867H20.8891C19.9072 5.38867 19.1113 6.18462 19.1113 7.16645V11.6109C19.1113 12.5927 19.9072 13.3887 20.8891 13.3887H25.3336C26.3154 13.3887 27.1113 12.5927 27.1113 11.6109V7.16645C27.1113 6.18462 26.3154 5.38867 25.3336 5.38867Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            <path d="M11.1109 19.6108H6.66645C5.68462 19.6108 4.88867 20.4068 4.88867 21.3886V25.8331C4.88867 26.8149 5.68462 27.6108 6.66645 27.6108H11.1109C12.0927 27.6108 12.8887 26.8149 12.8887 25.8331V21.3886C12.8887 20.4068 12.0927 19.6108 11.1109 19.6108Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            <path d="M23.1113 27.6108C25.3204 27.6108 27.1113 25.8199 27.1113 23.6108C27.1113 21.4018 25.3204 19.6108 23.1113 19.6108C20.9023 19.6108 19.1113 21.4018 19.1113 23.6108C19.1113 25.8199 20.9023 27.6108 23.1113 27.6108Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                            <path d="M25.9023 26.4766L28.8143 29.3886" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                    </button>
-                    <a href="/contact" className="w-full xl:h-[17.4603vh] sm:h-[20vw] p-6 flex items-center justify-center gap-3 xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal bg-[--Black] text-[--white] transition hover:text-[--Black] hover:bg-[--white] sm:rounded-[48px] rounded-full">
+                    {props.category_button && (
+                        <button
+                            className="w-full xl:h-[17.4603vh] sm:h-[20vw] p-6 flex items-center justify-center gap-3 xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal bg-[--white] text-[--Black] transition hover:text-[--white] hover:bg-[--Black] sm:rounded-[48px] rounded-full"
+                            onClick={() => handleNav('#products')}
+                        >
+                                <span>Browse Category</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
+                                <path d="M11.1109 5.38867H6.66645C5.68462 5.38867 4.88867 6.18462 4.88867 7.16645V11.6109C4.88867 12.5927 5.68462 13.3887 6.66645 13.3887H11.1109C12.0927 13.3887 12.8887 12.5927 12.8887 11.6109V7.16645C12.8887 6.18462 12.0927 5.38867 11.1109 5.38867Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M25.3336 5.38867H20.8891C19.9072 5.38867 19.1113 6.18462 19.1113 7.16645V11.6109C19.1113 12.5927 19.9072 13.3887 20.8891 13.3887H25.3336C26.3154 13.3887 27.1113 12.5927 27.1113 11.6109V7.16645C27.1113 6.18462 26.3154 5.38867 25.3336 5.38867Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M11.1109 19.6108H6.66645C5.68462 19.6108 4.88867 20.4068 4.88867 21.3886V25.8331C4.88867 26.8149 5.68462 27.6108 6.66645 27.6108H11.1109C12.0927 27.6108 12.8887 26.8149 12.8887 25.8331V21.3886C12.8887 20.4068 12.0927 19.6108 11.1109 19.6108Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M23.1113 27.6108C25.3204 27.6108 27.1113 25.8199 27.1113 23.6108C27.1113 21.4018 25.3204 19.6108 23.1113 19.6108C20.9023 19.6108 19.1113 21.4018 19.1113 23.6108C19.1113 25.8199 20.9023 27.6108 23.1113 27.6108Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M25.9023 26.4766L28.8143 29.3886" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </button>
+                    )}
+                    <a href="/contact" className="w-full xl:max-w-[50%] xl:h-[17.4603vh] sm:h-[20vw] p-6 flex items-center justify-center gap-3 xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal bg-[--Black] text-[--white] transition hover:text-[--Black] hover:bg-[--white] sm:rounded-[48px] rounded-full">
                         <span>Contact Us</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="33" viewBox="0 0 32 33" fill="none">
                             <path d="M16.0001 15.6785C17.2461 15.6785 18.2561 14.6685 18.2561 13.4225C18.2561 12.1765 17.2461 11.1665 16.0001 11.1665C14.7542 11.1665 13.7441 12.1765 13.7441 13.4225C13.7441 14.6685 14.7542 15.6785 16.0001 15.6785Z" fill="currentColor" />
@@ -66,7 +71,7 @@ function Footer() {
                         <h6 className="xl:text-[1.094vw] sm:text-[2.758vw] text-[4.884vw] font-bold font-plus leading-normal ">CATEGORIES</h6>
                         <a href="/curtains" className="text-sm hover:text-primary uppercase">curtains</a>
                         <a href="/blinds/roller-blinds" className="text-sm hover:text-primary uppercase">Roller Blinds</a>
-                        <a href="/blinds/double" className="text-sm hover:text-primary uppercase">Double Roller Blinds</a>
+                        {/* <a href="/blinds/double" className="text-sm hover:text-primary uppercase">Double Roller Blinds</a> */}
                     </div>
                     <div className="flex sm:flex-col items-center gap-2 shrink-0">
                         <Icon icon="uil:plus" className="text-[18px] text-black" />

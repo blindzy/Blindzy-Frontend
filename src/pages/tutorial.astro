@@ -16,8 +16,11 @@ async function getData() {
 const { tutorialsData } = await getData();
 ---
 
-<Layout>
+<Layout
+	title="Tutorials | Blindzy Australia"
+	description="Explore our comprehensive tutorials at Blindzy Australia for easy installation of our custom DIY blinds and curtains. Step-by-step guides, tips, and videos to help you achieve the perfect window furnishings for your home."
+>
 	<Navbar client:load logo="dark" />
 	<Tutorials client:load data={tutorialsData} />
-	<Footer client:visible />
+	<Footer client:visible category_button={false} />
 </Layout>

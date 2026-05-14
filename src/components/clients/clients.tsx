@@ -49,7 +49,7 @@ function Clients(props) {
 		<section className="client-section w-screen xl:h-screen flex items-center xl:py-[1.25vw] sm:py-[10vh] py-[6vh] overflow-hidden" id="client">
             <div className="w-full flex flex-wrap items-center justify-between  overflow-hidden">
                 <div className="xl:w-fit w-full xl:text-left text-center order-1 xl:px-[1.25vw] sm:px-[2.344vw] px-[5.455vw]">
-                    <h2 className="text-xxxl text-black uppercase">What Our Clients are saying</h2>
+                    <h2 className="text-3xl text-black uppercase">What Our Clients are saying</h2>
                 </div>
                 <div className="xl:w-fit w-full flex justify-end gap-4 xl:order-1 order-3 xl:pe-[1.25vw] sm:px-[2.344vw] px-[5.455vw]">
                     <Button variant={'light'} size={'xxl'} className="rounded-full" id="client-slider-prev">

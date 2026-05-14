@@ -25,7 +25,7 @@ function OrderList(props) {
                     </div>
                 </div>
                 <h6 className="hidden sm:block text-md text-[--Black]">
-                    {props.item.customizations?.amount} x {props.item.quantity} = {props.item.customizations?.amount * props.item.quantity}
+                    A${props.item.customizations?.amount} x {props.item.quantity} = A${props.item.customizations?.amount * props.item.quantity}
                 </h6>
                 <div className="sm:hidden flex items-center gap-1 cursor-pointer" onClick={toggleDetails}>
                     <ChevronDown className={`text-[--primary] size-[24px] transition-transform duration-300 ${showDetails ? 'rotate-180' : 'rotate-0'}`} />

@@ -32,7 +32,10 @@ const filteredProducts = (productsData?.products || []).filter((product: any) =>
 const tags = ["Sheer", "Blockout"];
 ---
 
-<Layout>
+<Layout
+  title="Curtains | Blindzy Australia"
+  description="Shop custom DIY curtains at Blindzy Australia. Discover affordable, high-quality window furnishings with easy installation guides for every home."
+>
   <Navbar client:load logo="dark" />
   <InnerBanner
     client:load
@@ -47,5 +50,5 @@ const tags = ["Sheer", "Blockout"];
     tags={tags}
     type="single"
   />
-  <Footer client:visible />
+  <Footer client:visible category_button={false} />
 </Layout>

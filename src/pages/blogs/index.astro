@@ -16,8 +16,11 @@ async function getData() {
 const { blogData } = await getData();
 ---
 
-<Layout>
+<Layout
+	title="Blog | Blindzy Australia"
+	description="Stay updated with the latest news, tips, and trends in custom DIY blinds and curtains with the Blindzy Australia blog. Explore expert advice, installation guides, and inspiration for your home window furnishings."
+>
 	<Navbar client:load logo="dark" />
 	<Blog client:load data={blogData} />
-	<Footer client:visible />
+	<Footer client:visible category_button={false}/>
 </Layout>

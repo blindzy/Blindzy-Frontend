@@ -6,8 +6,11 @@ import Footer from "@components/Footer/Footer";
 
 ---
 
-<Layout>
+<Layout
+	title="Contact Us | Blindzy Australia"
+	description="Get in touch with Blindzy Australia for inquiries about our custom DIY blinds and curtains."
+>
 	<Navbar client:load logo={'dark'}/>
 	<ContactComponent client:load/>
-	<Footer client:load/>
+	<Footer client:load category_button={false}/>
 </Layout>

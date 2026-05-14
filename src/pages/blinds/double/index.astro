@@ -31,7 +31,9 @@ const filteredProducts = (productsData?.products || []).filter((product: any) =>
 const tags = ["Blockout", "Light Filtering", "Sunscreen"];
 ---
 
-<Layout>
+<Layout title="Double Roller Blinds | Blindzy Australia"
+  description="Shop custom DIY double roller blinds at Blindzy Australia. Discover affordable, high-quality window furnishings with easy installation guides for every home. Our double roller blinds offer versatile light control and stylish design to enhance any room. Start shopping for your perfect double roller blinds today and transform your windows with Blindzy Australia."
+>
   <Navbar client:load logo="dark" />
   <InnerBanner
     client:load
@@ -46,5 +48,5 @@ const tags = ["Blockout", "Light Filtering", "Sunscreen"];
     type="double"
     client:load
   />
-  <Footer client:visible />
+  <Footer client:visible category_button={false}/>
 </Layout>

@@ -35,7 +35,10 @@ const productData = await fetchMedusaApi<any>({
 });
 ---
 
-<Layout>
+<Layout
+  title="Curtain Customization | Blindzy Australia"
+  description="Customize your curtains with Blindzy Australia's easy-to-use customization tool. Choose from a variety of styles, colors, and materials to create the perfect curtains for your home. Our custom DIY curtains are designed for easy installation and long-lasting beauty. Start customizing your curtains today and transform your windows with Blindzy Australia."
+>
   <Navbar client:load logo={"dark"} />
   {
     productData?.product ? (
@@ -49,5 +52,5 @@ const productData = await fetchMedusaApi<any>({
     )
   }
   <!-- <Single_curtain_customization client:load data={sampleProducts[0]} type={'Curtains'} /> -->
-  <Footer client:load />
+  <Footer client:load category_button={false} />
 </Layout>

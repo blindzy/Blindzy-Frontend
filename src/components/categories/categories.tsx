@@ -42,7 +42,7 @@ function Categories() {
 				{/* Left Column */}
 				<div className="relative xl:w-[24.375vw] w-full xl:m-0 mx-auto xl:pb-[11vh] flex flex-col xl:items-start items-center xl:text-left text-center justify-between xl:gap-[14vh] gap-[10.909vw] z-[15] shrink-0">
 					<div className="flex flex-col gap-2 sm:px-0 px-8">
-						<h2 className="text-xxxl text-white">EXPLORE ALL CATEGORIES</h2>
+						<h2 className="text-3xl text-white">EXPLORE ALL CATEGORIES</h2>
 						<p className="sm:w-fit w-[80%] sm:mx-0 mx-auto text-sm text-white mb-12 sm:mb-0 mbl:mb-0">Browse the different options for window furnishings.</p>
 					</div>
 					<div className="xl:flex hidden items-stretch gap-4">

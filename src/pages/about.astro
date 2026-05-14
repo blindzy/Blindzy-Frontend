@@ -6,10 +6,13 @@ import Footer from "@components/Footer/Footer";
 
 ---
 
-<Layout>
+<Layout
+  title="About Blindzy | Premium Handmade Blinds & Curtains Australia"
+  description="Discover Blindzy, Melbourne’s trusted destination for premium handmade blinds and curtains. We create elegant custom window furnishings with expert craftsmanship and quality materials."
+>
   <AboutBanner client:load/>
   <AboutDetail client:visible/>
-  <Footer client:visible/>
+  <Footer client:visible category_button={false} />
   <div class="relative bg-effect">
   </div>
 </Layout>

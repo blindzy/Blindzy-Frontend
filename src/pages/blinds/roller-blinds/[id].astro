@@ -34,7 +34,10 @@ const productData = await fetchMedusaApi<any>({
 });
 ---
 
-<Layout>
+<Layout
+  title="Roller Blinds Customization | Blindzy Australia"
+  description="Customize your roller blinds with Blindzy Australia's easy-to-use customization tool. Choose from a variety of styles, colors, and materials to create the perfect roller blinds for your home. Our custom DIY roller blinds are designed for easy installation and long-lasting beauty. Start customizing your roller blinds today and transform your windows with Blindzy Australia."
+>
   <Navbar client:load logo="dark" />
   {
     productData?.product && (
@@ -45,5 +48,5 @@ const productData = await fetchMedusaApi<any>({
       />
     )
   }
-  <Footer client:load />
+  <Footer client:load category_button={false}/>
 </Layout>

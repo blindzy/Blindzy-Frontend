@@ -6,8 +6,11 @@ import Footer from "@components/Footer/Footer";
 
 ---
 
-<Layout>
+<Layout
+	title="Checkout | Blindzy Australia"
+	description="Complete your purchase of custom DIY blinds and curtains at Blindzy Australia. Review your order, enter your shipping details, and choose your payment method for a seamless checkout experience. Shop now for affordable, high-quality window furnishings with easy installation guides."
+>
 	<Navbar client:load logo="dark"/>
 	<CheckoutComponent client:load/>
-	<Footer client:load/>
+	<Footer client:load category_button={false}/>
 </Layout>

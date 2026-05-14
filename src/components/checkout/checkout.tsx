@@ -457,6 +457,17 @@ function Checkout() {
 							) : currentStep === 2 ? (
 								<>
 									<div className="sm:col-span-6 col-span-12">
+										<input
+											ref={addressInputRef}
+											type="text"
+											placeholder="Start typing your address..."
+											value={shippingInfo.address}
+											onChange={(e) => handleShippingInfoChange('address', e.target.value)}
+											autoComplete="off"
+											className="w-full border border-[--Black] rounded-full text-[--black] bg-white p-4 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-[--lightGrey] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+										/>
+									</div>
+									<div className="sm:col-span-6 col-span-12">
 										<Select value={shippingInfo.country} onValueChange={(value) => handleShippingInfoChange('country', value)}>
 											<SelectTrigger className="w-full">
 												<SelectValue placeholder="Country / Region" />
@@ -491,17 +502,7 @@ function Checkout() {
 											onChange={(e) => handleShippingInfoChange('zipCode', e.target.value)}
 										/>
 									</div>
-									<div className="sm:col-span-6 col-span-12">
-										<input
-											ref={addressInputRef}
-											type="text"
-											placeholder="Start typing your address..."
-											value={shippingInfo.address}
-											onChange={(e) => handleShippingInfoChange('address', e.target.value)}
-											autoComplete="off"
-											className="w-full border border-[--Black] rounded-full text-[--black] bg-white p-4 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground placeholder:text-[--lightGrey] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-										/>
-									</div>
+									
 									{/* <div className="col-span-12">
 										<Input
 											type="text" 
