@@ -79,5 +79,4 @@ Centralized TypeScript interfaces. This ensures that data fetched from Strapi or
 -   **Auth:** Managed via cookies (`access_token`).
 -   **Scrolling:** Controlled by Lenis on desktop (>1024px).
 -   **Layout:** All pages should be wrapped in the `<Layout />` component found in `src/layouts/Layout.astro` for consistent SEO and header/footer behavior.
-=======
-Blindzy.
+
