@@ -81,4 +81,3 @@ Centralized TypeScript interfaces. This ensures that data fetched from Strapi or
 -   **Layout:** All pages should be wrapped in the `<Layout />` component found in `src/layouts/Layout.astro` for consistent SEO and header/footer behavior.
 =======
 Blindzy.
->>>>>>> 2be14fdd5340de4c38791209791e31c843f8011c
