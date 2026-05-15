@@ -64,7 +64,7 @@ function OrderList(props) {
                     <div className="w-full border-b border-[--mediumGrey]"></div>
                     <Plus className="size-[18px]" />
                 </div>
-                {/* {props.data.metadata.map((option, index) => (
+                {props.data.metadata.customizationData?.map((option, index) => (
                     <div className="w-full flex items-center justify-between" key={index}>
                         <span className="text-sm text-[--lightBlack]">
                             {option.title}
@@ -73,7 +73,7 @@ function OrderList(props) {
                             {option.value}
                         </span>
                     </div>
-                ))} */}
+                ))}
             </div>
         </div>
     );
