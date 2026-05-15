@@ -26,6 +26,7 @@ export class CreateAddToCart {
     email: string;
     product_id: string;
     quantity: number;
+    variants: any;
     customizations: any;
   }): Promise<any> {
     try {

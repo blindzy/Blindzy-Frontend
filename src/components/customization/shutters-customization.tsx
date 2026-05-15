@@ -224,6 +224,7 @@ function Shutters_customization({ data: propsData, groupData }) {
             id: `local_${Date.now()}_${Math.random().toString(36).slice(2)}`,
             product_id: productData.id,
             quantity: 1,
+            variants: productData.product.variants,
             customizations: {
                 title: productData.title,
                 amount: totalPrice,
@@ -252,6 +253,7 @@ function Shutters_customization({ data: propsData, groupData }) {
                 email: userData.email,
                 product_id: cartItem.product_id,
                 quantity: cartItem.quantity,
+                variants: cartItem.variants,
                 customizations: cartItem.customizations,
             });
 
