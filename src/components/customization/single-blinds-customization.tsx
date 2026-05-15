@@ -190,6 +190,8 @@ function Single_blinds_customization({ data: propsData, groupData }) {
         }
     }, [productData, priceGroup]);
 
+    console.log("productData", productData)
+
     // Handle option selection updates
     const handleOptionChange = (optionTitle, value) => {
         setData(prev =>
@@ -347,6 +349,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                 customizationData: data,
             },
         };
+
 
 
         if (!userData) {

@@ -30,6 +30,9 @@ export class CreateAddToCart {
     customizations: any;
   }): Promise<any> {
     try {
+
+      console.log("userData: ", userData)
+
       const response = await this.medusaRequest<any>("/store/customers/cart", {
         method: "POST",
         body: JSON.stringify(userData),
