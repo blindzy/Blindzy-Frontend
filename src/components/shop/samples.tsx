@@ -56,7 +56,7 @@ function Samples(props) {
 			// Check if there are still items with this product_id in the cart
 			const guestItems = JSON.parse(localStorage.getItem('guest_cart') || '[]');
 			const hasProduct = guestItems.some((item: any) => item.product_id?.toString() === productId);
-			
+
 			// If no items with this product_id remain, remove it from addedItems
 			if (!hasProduct) {
 				setAddedItems(prev => {
@@ -90,13 +90,14 @@ function Samples(props) {
 		return symbol;
 	};
 
-	const handleAddToCart = async (id: string | number, title: string, thumbnail: string, amount: number, currency_code: string) => {
+	const handleAddToCart = async (id, title, thumbnail, amount, currency_code, variant_id) => {
 		const productId = id.toString();
 		setLoadingItems(prev => ({ ...prev, [productId]: true }));
 
 		const cartItem = {
 			id: `local_${Date.now()}_${Math.random().toString(36).slice(2)}`,
 			product_id: id,
+			variant_id: variant_id ?? null,   // ✅ add this
 			quantity: 1,
 			customizations: {
 				title: title,
@@ -130,6 +131,7 @@ function Samples(props) {
 				email: userData.email,
 				product_id: id.toString(),
 				quantity: cartItem.quantity,
+				variant_id: cartItem.variant_id,
 				customizations: cartItem.customizations,
 			});
 
@@ -285,7 +287,8 @@ function Samples(props) {
 												sample.title,
 												sample.thumbnail,
 												sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.amount,
-												sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.currency_code
+												sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.currency_code,
+												sample.variants?.[0]?.id 
 											);
 										}}
 									>

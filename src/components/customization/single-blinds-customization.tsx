@@ -89,7 +89,6 @@ function Single_blinds_customization({ data: propsData, groupData }) {
         { 'title': 'Chain Colour', 'value': chainColour },
         { 'title': 'Bracket Colour', 'value': bracketColour },
         { 'title': 'Base Rail Colour', 'value': baseRailColour },
-        { 'title': 'Base Rail Colour', 'value': baseRailColour },
         { 'title': 'Motorised', 'value': isMotorised ? 'Yes' : 'No' },
     ]);
     const lenis = isDesktop ? useLenis() : null;
@@ -137,11 +136,11 @@ function Single_blinds_customization({ data: propsData, groupData }) {
             return
         }
 
-        
+
 
         let price = interpolate2D(widthMm, dropMm, currentWidthValues, currentDropValues, currentPriceMatrix[priceGroup])
 
-        if(isMotorised && price) price += 200;
+        if (isMotorised && price) price += 200;
         // console.log("Calculated Price:", price);
         if (price === null) {
             setError("Unable to calculate price for these dimensions")
@@ -243,18 +242,18 @@ function Single_blinds_customization({ data: propsData, groupData }) {
         setData(prev =>
             prev.map(item =>
                 item.title === 'Colour'
-                ? { ...item, value: selectedColor }
-                : item.title === 'Chain Colour'
-                ? { ...item, value: chainColour }
-                : item.title === 'Bracket Colour'
-                ? { ...item, value: bracketColour }
-                : item.title === 'Base Rail Colour'
-                ? { ...item, value: baseRailColour }
-                : item.title === 'Size'
-                ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
-                : item.title === 'Motorised'
-                ? { ...item, value: isMotorised ? 'Yes' : 'No' }
-                : item
+                    ? { ...item, value: selectedColor }
+                    : item.title === 'Chain Colour'
+                        ? { ...item, value: chainColour }
+                        : item.title === 'Bracket Colour'
+                            ? { ...item, value: bracketColour }
+                            : item.title === 'Base Rail Colour'
+                                ? { ...item, value: baseRailColour }
+                                : item.title === 'Size'
+                                    ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
+                                    : item.title === 'Motorised'
+                                        ? { ...item, value: isMotorised ? 'Yes' : 'No' }
+                                        : item
             )
         );
         // Calculate total price based on area
@@ -336,11 +335,17 @@ function Single_blinds_customization({ data: propsData, groupData }) {
             setSuccess('');
         }
 
+        const selectedVariant = productData.variants.find(
+            variant => variant.title === selectedColor ||
+                variant.options.some(opt => opt.value === selectedColor)
+        )
+
+
         const cartItem = {
             id: `local_${Date.now()}_${Math.random().toString(36).slice(2)}`,
             product_id: productData.id,
             quantity: 1,
-            variants: productData.product.variants,
+            variant_id: selectedVariant.id ?? null,
             customizations: {
                 title: productData.title,
                 amount: totalPrice,
@@ -374,7 +379,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                 email: userData.email,
                 product_id: cartItem.product_id,
                 quantity: cartItem.quantity,
-                variants: cartItem.variants,
+                variant_id: cartItem.variant_id,
                 customizations: cartItem.customizations,
             });
 
@@ -399,7 +404,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                     <h2 className="text-xl">Blinds Customisations</h2>
                     {/* <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p> */}
                 </div>
-                <Separate />    
+                <Separate />
                 <div className="w-full flex flex-col gap-2">
                     <h2 className="text-lg">Enter Measurements</h2>
                     {/* <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p> */}
