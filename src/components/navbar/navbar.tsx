@@ -114,7 +114,6 @@ function Navbar(props: NavbarProps) {
     flex items-stretch justify-between
     xl:p-[1.25vw] sm:p-[2.344vw] p-4
     z-50
-    bg-white
     ${props.customClass && props.customClass}
   `}
             >
