@@ -4,6 +4,7 @@ import { Plus, X } from 'lucide-react';
 function ProductCard({
     productData,
     customizationData,
+    image,
     totalPrice,
     svg,
     svgColor = '#4A4A4A'
@@ -13,6 +14,7 @@ function ProductCard({
     totalPrice: any;
     svg?: boolean;
     svgColor?: string;
+    image: string;
 }) {
 
     const [imageLoaded, setImageLoaded] = useState(false);
@@ -20,32 +22,27 @@ function ProductCard({
     const [imageSrc, setImageSrc] = useState<string | null>(null);
     const [isFabricMode, setIsFabricMode] = useState(false);
 
-    const selectedColor = customizationData?.find((item: any) => item?.title === 'Colour')?.value ?? null;
-    const fabricImage = selectedColor && productData?.title
-        ? `/images/${productData.title.charAt(0).toUpperCase() + productData.title.slice(1)} ${selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1)}.png`
-        : null;
+    // const selectedColor = customizationData?.find((item: any) => item?.title === 'Colour')?.value ?? null;
+    // const fabricImage = selectedColor && productData?.title
+    //     ? `/images/${productData.title.charAt(0).toUpperCase() + productData.title.slice(1)} ${selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1)}.png`
+    //     : null;
 
-    const defaultImage = productData?.thumbnail?.replace(
-        "http://localhost:9000",
-        "https://api.blindzy.com"
-    );
+    // const finalImage = isFabricMode ? fabricImage : defaultImage;
 
-    const finalImage = isFabricMode ? fabricImage : defaultImage;
+    // useEffect(() => {
+    //     if (fabricImage) {
+    //         setImageSrc(fabricImage);
+    //         setIsFabricMode(true); // optimistically assume fabric mode
+    //     } else {
+    //         setImageSrc(defaultImage);
+    //         setIsFabricMode(false);
+    //     }
+    //     setImageLoaded(false);
+    // }, [fabricImage, defaultImage]);
 
-    useEffect(() => {
-        if (fabricImage) {
-            setImageSrc(fabricImage);
-            setIsFabricMode(true); // optimistically assume fabric mode
-        } else {
-            setImageSrc(defaultImage);
-            setIsFabricMode(false);
-        }
-        setImageLoaded(false);
-    }, [fabricImage, defaultImage]);
-
-    useEffect(() => {
-        setImageLoaded(false);
-    }, [fabricImage]);
+    // useEffect(() => {
+    //     setImageLoaded(false);
+    // }, [fabricImage]);
 
     // Guard — render nothing until minimum data is available
     if (!productData || !customizationData) return null;
@@ -65,30 +62,30 @@ function ProductCard({
                             <div className="absolute inset-0 bg-[--Black]/10 animate-pulse rounded-32" />
                         )}
 
-                        {finalImage && (
-                            <div className="size-full absolute left-0 top-0 flex justify-center ">
-                                <img
-                                    src={finalImage}
-                                    className={`w-full h-full object-cover ${isFabricMode
-                                        ? `transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"
-                                        }`
-                                        : ""
-                                        }`}
-                                    alt={productData.title}
-                                    onLoad={() => isFabricMode && setImageLoaded(true)}
-                                    onError={() => {
-                                        if (imageSrc !== defaultImage) {
-                                            setImageSrc(defaultImage);
-                                            setIsFabricMode(false); // fabric image doesn't exist, drop fabric mode
-                                            setImageLoaded(true);
-                                        }
-                                    }}
-                                />
-                            </div>
-                        )}
+                        <div className="size-full absolute left-0 top-0 flex justify-center ">
+                            <img
+                                src={image?image:'/images/placeholder.jpg'}
+                                className={`w-full h-full object-cover ${isFabricMode
+                                    ? `transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"
+                                    }`
+                                    : ""
+                                    }`}
+                                alt={productData.title}
+                                onLoad={() => isFabricMode && setImageLoaded(true)}
+                                onError={() => {
+                                    if (imageSrc !== image) {
+                                        setImageSrc(image);
+                                        setIsFabricMode(false); // fabric image doesn't exist, drop fabric mode
+                                        setImageLoaded(true);
+                                    }
+                                }}
+                            />
+                        </div>
+                        {/* {image && (
+                        )} */}
 
                         {/* SVG overlay ONLY for default mode */}
-                        {!isFabricMode && svg && (
+                        {/* {!isFabricMode && svg && (
                             <div className="size-full absolute left-0 top-0 flex justify-center pt-[12.326vw] sm:pt-[13.086vw] xl:pt-[1.042vw]">
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +99,7 @@ function ProductCard({
                                     />
                                 </svg>
                             </div>
-                        )}
+                        )} */}
                     </div>
 
                     <div className="w-full flex items-center justify-between shrink-0">
@@ -129,7 +126,7 @@ function ProductCard({
             </div>
 
             {/* Zoom modal */}
-            {isZoomed && fabricImage && (
+            {isZoomed && image && (
                 <div
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm"
                     onClick={() => setIsZoomed(false)}
@@ -141,7 +138,7 @@ function ProductCard({
                         <X className="size-6" />
                     </button>
                     <img
-                        src={fabricImage}
+                        src={image}
                         alt={productData.title}
                         className="max-w-[90vw] max-h-[90vh] object-contain rounded-2xl"
                         onClick={(e) => e.stopPropagation()}
@@ -152,4 +149,4 @@ function ProductCard({
     );
 }
 
-export default ProductCard;
+export default React.memo(ProductCard);

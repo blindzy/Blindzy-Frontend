@@ -10,15 +10,16 @@ function Shop({ data, groupData, tags, type, customizePage }) {
     const [error] = useState('');
     const [calculating, setCalculating] = useState(false);
 
-    const widthValues = groupData?.Width_values || [];
-    const dropValues = groupData?.Drop_values || [];
-
-    const ranges = React.useMemo(() => ({
-        widthMin: Math.min(...widthValues),
-        widthMax: Math.max(...widthValues),
-        heightMin: Math.min(...dropValues),
-        heightMax: Math.max(...dropValues),
-    }), [widthValues, dropValues]);
+    const ranges = React.useMemo(() => {
+        const widthValues = groupData?.Width_values || [];
+        const dropValues = groupData?.Drop_values || [];
+        return {
+            widthMin: Math.min(...widthValues),
+            widthMax: Math.max(...widthValues),
+            heightMin: Math.min(...dropValues),
+            heightMax: Math.max(...dropValues),
+        };
+    }, [groupData]);
 
     const [measurements, setMeasurements] = useState({
         roomName: '',

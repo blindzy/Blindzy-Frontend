@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
@@ -104,11 +104,28 @@ const productOptions = [
 ]
 
 function Single_curtain_customization({ data: propsData, groupData }) {
-    const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
-    const lenis = isDesktop ? useLenis() : null;
-    const [measurements, setMeasurements] = useState({ roomName: 'Bedroom', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
+
+    const lenis = useLenis();
+
+    // Min/max bounds derived once per groupData instead of re-spreading on every render.
+    const bounds = useMemo(() => {
+        const widthVals = groupData?.Width_values || [];
+        const dropVals = groupData?.Drop_values || [];
+        return {
+            minWidth: Math.min(...widthVals),
+            maxWidth: Math.max(...widthVals),
+            minDrop: Math.min(...dropVals),
+            maxDrop: Math.max(...dropVals),
+        };
+    }, [groupData]);
+
+    const [measurements, setMeasurements] = useState(() => ({
+        roomName: 'Bedroom',
+        width: Math.min(...(groupData?.Width_values || [])),
+        height: Math.min(...(groupData?.Drop_values || [])),
+    }));
     const [selectedColor, setSelectedColor] = useState('');
-    const [svgColor, setSvgColor] = useState('#4A4A4A');
+    const [selectedImage, setSelectedImage] = useState('');
     const [totalPrice, setTotalPrice] = useState(0);
     const [priceGroup, setPriceGroup] = useState(0);
     const [currencySymbol, setCurrencySymbol] = useState('');
@@ -118,6 +135,9 @@ function Single_curtain_customization({ data: propsData, groupData }) {
     const [success, setSuccess] = useState('');
     const [userData, setUserData] = useState<UserData | null>(null);
     const [productData, setProductData] = useState(propsData);
+
+    // console.log("Group Data:", productData);  
+
     const [data, setData] = useState([
         { 'title': 'Colour', 'value': selectedColor },
         { 'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' },
@@ -161,10 +181,7 @@ function Single_curtain_customization({ data: propsData, groupData }) {
         const currentDropValues = groupData?.Drop_values || [];
         const currentPriceMatrix = groupData?.Price_groups || [];
 
-        const minWidth = Math.min(...currentWidthValues);
-        const maxWidth = Math.max(...currentWidthValues);
-        const minDrop = Math.min(...currentDropValues);
-        const maxDrop = Math.max(...currentDropValues);
+        const { minWidth, maxWidth, minDrop, maxDrop } = bounds;
 
         if (widthMm < minWidth) {
             widthMm = minWidth;
@@ -218,6 +235,13 @@ function Single_curtain_customization({ data: propsData, groupData }) {
         if (productData?.options?.[0]?.values?.[0]?.value && !selectedColor) {
             const defaultColor = productData.options[0].values[0].value;
             setSelectedColor(defaultColor);
+            const matchedVariant = productData?.variants?.find(
+                variant => variant.title === defaultColor || variant.options?.some(opt => opt.value === defaultColor)
+            );
+            const swatchImage =
+                matchedVariant?.images?.find(img => img.url !== matchedVariant.thumbnail)?.url
+                || matchedVariant?.thumbnail;
+            setSelectedImage(swatchImage);
 
             // Find the variant with the default color and set its price
             const defaultVariant = productData?.variants?.find(
@@ -225,15 +249,15 @@ function Single_curtain_customization({ data: propsData, groupData }) {
                     variant.options.some(opt => opt.value === defaultColor)
             );
 
-            if (defaultVariant?.price_sets?.[0]?.prices?.[0]?.amount) {
-                var defaultGroup = defaultVariant.price_sets[0].prices[0].amount;
+            if (defaultVariant?.price_sets?.[0]?.prices?.[defaultVariant?.price_sets[0].prices.length - 1]?.amount) {
+                var defaultGroup = defaultVariant.price_sets[0].prices[defaultVariant?.price_sets[0].prices.length - 1].amount;
                 setPriceGroup(Math.max(0, defaultGroup - 1));
 
             }
         }
     }, [productData, priceGroup]);
 
-    const handleOptionChange = (optionTitle, value) => {
+    const handleOptionChange = useCallback((optionTitle, value) => {
         setData(prev =>
             prev.map(item =>
                 item.title === optionTitle
@@ -241,7 +265,25 @@ function Single_curtain_customization({ data: propsData, groupData }) {
                     : item
             )
         );
-    };
+    }, []);
+
+    // Stable per-option callbacks so memoized SelectVarient children don't re-render.
+    const optionChangeHandlers = useMemo(() => {
+        const handlers: Record<string, (value: string) => void> = {};
+        for (const option of productOptions) {
+            handlers[option.title] = (value: string) => handleOptionChange(option.title, value);
+        }
+        return handlers;
+    }, [handleOptionChange]);
+
+    // O(1) lookup of the currently selected value for each option title.
+    const dataValueByTitle = useMemo(() => {
+        const map: Record<string, string> = {};
+        for (const item of data) {
+            map[item.title] = item.value;
+        }
+        return map;
+    }, [data]);
 
     const calculateBaseGroup = () => {
         if (selectedColor && productData?.variants) {
@@ -249,36 +291,11 @@ function Single_curtain_customization({ data: propsData, groupData }) {
                 variant => variant.title === selectedColor ||
                     variant.options.some(opt => opt.value === selectedColor)
             );
-            const code = selectedVariant?.price_sets?.[0]?.prices?.[0]?.currency_code || 'aud';
+            const code = selectedVariant?.price_sets?.[0]?.prices?.[selectedVariant?.price_sets[0].prices.length - 1]?.currency_code || 'aud';
             setCurrencySymbol(getCurrencySymbol(code));
-            return selectedVariant?.price_sets?.[0]?.prices?.[0]?.amount || 0;
+            return selectedVariant?.price_sets?.[0]?.prices?.[selectedVariant?.price_sets[0].prices.length - 1]?.amount || 0;
         }
         return 0;
-    };
-
-    // Extract random pixel color from the selected color image
-    const extractColorFromImage = (imageUrl: string) => {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        img.onload = () => {
-            const canvas = document.createElement('canvas');
-            canvas.width = img.width;
-            canvas.height = img.height;
-            const ctx = canvas.getContext('2d');
-            if (!ctx) return;
-            ctx.drawImage(img, 0, 0);
-            // Pick a random pixel from center region to avoid borders
-            const cx = Math.floor(img.width * 0.25 + Math.random() * img.width * 0.5);
-            const cy = Math.floor(img.height * 0.25 + Math.random() * img.height * 0.5);
-            const pixel = ctx.getImageData(cx, cy, 1, 1).data;
-            const hex = `#${pixel[0].toString(16).padStart(2, '0')}${pixel[1].toString(16).padStart(2, '0')}${pixel[2].toString(16).padStart(2, '0')}`;
-            setSvgColor(hex);
-        };
-        img.onerror = () => {
-            // fallback if image fails
-            setSvgColor('#4A4A4A');
-        };
-        img.src = imageUrl;
     };
 
     useEffect(() => {
@@ -302,14 +319,6 @@ function Single_curtain_customization({ data: propsData, groupData }) {
             setError("");
         }
     }, [selectedColor, productData?.variants, measurements.roomName, measurements.width, measurements.height]);
-
-    // Extract color from selected color image for SVG when selectedColor changes
-    useEffect(() => {
-        if (selectedColor && productData?.title) {
-            const imageUrl = `/images/product-colors-image/curtains/${productData.title.toLowerCase()}/${selectedColor.toLowerCase()}.jpg`;
-            extractColorFromImage(imageUrl);
-        }
-    }, [selectedColor, productData?.title]);
 
     useEffect(() => {
         const userDataString = localStorage.getItem("user");
@@ -418,16 +427,18 @@ function Single_curtain_customization({ data: propsData, groupData }) {
                     <h2 className="text-lg">Enter Measurements</h2>
                     {/* <p className="text-sm"></p> */}
                 </div>
-                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={100} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={100} heightMax={Math.max(...(groupData?.Drop_values || []))} />
+                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={100} widthMax={bounds.maxWidth} heightMin={100} heightMax={bounds.maxDrop} />
                 {productData?.options?.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate />
                         <SelectDefaultColor
-                            data={option}
+                            data={productData?.variants}
+                            option={option}
                             title={'Colour'}
                             productName={productData.title}
                             description={''}
                             onColorSelect={setSelectedColor}
+                            onImageSelect={setSelectedImage}
                             selectedColor={selectedColor}
                         />
                     </React.Fragment>
@@ -437,8 +448,8 @@ function Single_curtain_customization({ data: propsData, groupData }) {
                         <Separate />
                         <SelectVarient
                             variantData={option}
-                            onSelectionChange={(value) => handleOptionChange(option.title, value)}
-                            selectedValue={data.find(item => item.title === option.title)?.value}
+                            onSelectionChange={optionChangeHandlers[option.title]}
+                            selectedValue={dataValueByTitle[option.title]}
                         />
                     </React.Fragment>
                 ))}
@@ -482,6 +493,7 @@ function Single_curtain_customization({ data: propsData, groupData }) {
             </div>
             <ProductCard
                 productData={productData}
+                image={selectedImage}
                 customizationData={data}
                 totalPrice={`${currencySymbol}${addCommaToNumber(totalPrice)}`}
             />

@@ -6,11 +6,10 @@ function SelectVarient(props) {
 
     // Get option data directly from props (which is now the option object)
     const optionData = props.variantData;
-    const options = optionData?.title || [];
     const optionTitle = optionData?.title || 'Select Option';
     const optionDescription = optionData?.description || '';
 
-    const [selected, setSelected] = useState(props.selectedValue || options[0]?.label || 'option-one');
+    const [selected, setSelected] = useState(props.selectedValue || '');
 
     // Update parent component when selection changes
     const handleSelectionChange = (value) => {
@@ -20,19 +19,14 @@ function SelectVarient(props) {
         }
     };
 
-    // Initialize with first option when component mounts
-    useEffect(() => {
-        if (options.length > 0 && !props.selectedValue && props.onSelectionChange) {
-            props.onSelectionChange(options[0].label);
-        }
-    }, [options, props.selectedValue, props.onSelectionChange]);
-
-    // Update local state when props.selectedValue changes
+    // Keep local state in sync when the controlled value from the parent changes
     useEffect(() => {
         if (props.selectedValue) {
             setSelected(props.selectedValue);
         }
     }, [props.selectedValue]);
+
+    const current = props.selectedValue || selected;
 
     return (
         <div className="w-full flex flex-col gap-6 xl:gap-[1.25vw]">
@@ -40,7 +34,7 @@ function SelectVarient(props) {
                 <h2 className="text-lg">Choose Your {optionTitle}</h2>
                 {optionDescription === '' ? null : <p className="text-sm">{optionDescription}</p>}
             </div>
-            <RadioGroup className="w-full flex xl:flex-nowrap flex-wrap items-stretch gap-2" value={props.selectedValue || selected} onValueChange={handleSelectionChange}>
+            <RadioGroup className="w-full flex xl:flex-nowrap flex-wrap items-stretch gap-2" value={current} onValueChange={handleSelectionChange}>
                 {optionData.values.map((option, index) => (
                     <div key={index} className="w-full max-w-[48%] flex items-center justify-between">
                         <RadioGroupItem value={option.label} id={`${optionTitle}-${option.label}-${index}`} className="hidden" />
@@ -48,9 +42,11 @@ function SelectVarient(props) {
                             htmlFor={`${optionTitle}-${option.label}-${index}`}
                             className={`w-full flex flex-col gap-2 cursor-pointer`}
                         >
-                            <div className={`w-full h-[170px]  ${optionTitle === 'Track Colour' || optionTitle === 'Hinge Colour' ? 'sm:h-[170px]' : ' sm:h-[27.344vw] xl:h-[18.229vw]'}  bg-[--white] rounded-24 outline overflow-hidden transition  ${(props.selectedValue || selected) === option.label ? 'outline-2 outline-[--primary] ring-2 ring-[--primary]' : 'outline-1 outline-[--lightGrey] ring-0'}`}>
+                            <div className={`w-full h-[170px]  ${optionTitle === 'Track Colour' || optionTitle === 'Hinge Colour' ? 'sm:h-[170px]' : ' sm:h-[27.344vw] xl:h-[18.229vw]'}  bg-[--white] rounded-24 outline overflow-hidden transition  ${current === option.label ? 'outline-2 outline-[--primary] ring-2 ring-[--primary]' : 'outline-1 outline-[--lightGrey] ring-0'}`}>
                                 <img
                                     src={option.image}
+                                    loading="lazy"
+                                    decoding="async"
                                     className="size-full object-cover rounded-[12px] sm:rounded-[14px] xl:rounded-[16px] overflow-hidden"
                                     alt={option.label}
                                 />
@@ -64,5 +60,4 @@ function SelectVarient(props) {
     );
 }
 
-export default SelectVarient;
-
+export default React.memo(SelectVarient);

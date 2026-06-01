@@ -94,6 +94,8 @@ function SelectColor(props) {
                                 >
                                     <img
                                         src={`/images/product-colors-image/blinds-fabric/${key}/${colorItem.name}.jpg`}
+                                        loading="lazy"
+                                        decoding="async"
                                         className="size-full object-cover rounded-[11px]"
                                         alt={colorItem.name}
                                     />

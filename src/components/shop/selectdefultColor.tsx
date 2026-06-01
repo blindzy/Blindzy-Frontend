@@ -1,10 +1,22 @@
 import React from "react";
 
-function SelectDefultColor(props) {
+type ColorVariant = {
+    id: string;
+    title?: string;
+    thumbnail?: string;
+};
 
-    const values = props.data?.values || []
-    const visibleColors = values.slice(0, 4)
-    const remainingCount = values.length - 4
+type SelectDefultColorProps = {
+    data?: ColorVariant[];
+    productName?: string;
+    colorsType?: string;
+};
+
+const MAX_VISIBLE = 4;
+
+function SelectDefultColor({ data = [] }: SelectDefultColorProps) {
+    const visibleColors = data.slice(0, MAX_VISIBLE);
+    const remainingCount = data.length - MAX_VISIBLE;
 
     return (
         <div className="flex items-center gap-2">
@@ -16,23 +28,13 @@ function SelectDefultColor(props) {
                     htmlFor={color.id}
                     className="size-[32px] sm:size-[4.688vw] xl:size-[3.125vw] shrink-0 transition cursor-pointer p-1 sm:p-1.5 xl:rounded-[16px] border border-[--lightGrey]"
                 >
-                    {color.color ? (
-                        <div
-                            className="size-full rounded-[11px] border border-[--lightGrey] overflow-hidden"
-                            style={{ backgroundColor: color.color }}
-                        />
-                    ) : props.colorsType === "shutter" ? (
-                        <div
-                            className="size-full rounded-[11px] border border-[--lightGrey] overflow-hidden"
-                            style={{ backgroundColor: color.value || "transparent" }}
-                        />
-                    ) : props.productName ? (
-                        <img
-                            src={`/images/product-colors-image/curtains/${props.productName.toLowerCase()}/${color.value?.toLowerCase()}.jpg`}
-                            className="size-full object-cover rounded-[11px]"
-                            alt={color.value}
-                        />
-                    ) : null}
+                    <img
+                        src={color.thumbnail}
+                        loading="lazy"
+                        decoding="async"
+                        className="size-full object-cover rounded-[11px]"
+                        alt={color.title}
+                    />
                 </label>
             ))}
 
@@ -44,8 +46,7 @@ function SelectDefultColor(props) {
             )}
 
         </div>
-    )
+    );
 }
 
-export default SelectDefultColor
-
+export default SelectDefultColor;

@@ -75,5 +75,5 @@ function Measurement({ measurements, setMeasurements,widthMin,widthMax,heightMin
     );
 }
 
-export default Measurement;
+export default React.memo(Measurement);
 
