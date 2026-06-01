@@ -32,7 +32,7 @@ function OrderList(props) {
                 {orderList.map((order,key) => (
                     <React.Fragment key={key}>
                         {order.items.map((item,index) => (
-                            <OrderListComponent  key={index} data={item} createdAt={order.created_at} />
+                            <OrderListComponent  key={index} data={item} createdAt={order.created_at} order={order} />
                         ))}
                     </React.Fragment>
                 ))}

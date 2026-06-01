@@ -257,7 +257,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
             price += 30;
         }
 
-        if(isMotorised) price += 200;
+        if (isMotorised) price += 200;
 
         setTotalPrice(price);
     }, [measurements.width, screenMeasurements.width, measurements.height, screenMeasurements.height, blackoutGroup, screenGroup, data, isMotorised]);
@@ -321,22 +321,22 @@ function Double_blind_customization({ data: propsData, groupData }) {
                 item.title === 'Blackout Fabric'
                     ? { ...item, value: blackoutFabric }
                     : item.title === 'Blackout Colour'
-                    ? { ...item, value: blackoutColour }
-                    : item.title === 'Screen Blind Fabrics'
-                    ? { ...item, value: screenBlindFabric }
-                    : item.title === 'Chain Colour'
-                    ? { ...item, value: chainColour }   
-                    : item.title === 'Bracket Colour'
-                    ? { ...item, value: bracketColour }
-                    : item.title === 'Base Rail Colour'
-                    ? { ...item, value: baseRailColour }
-                    : item.title === 'Blackout Fabric Size'
-                    ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
-                    : item.title === 'Screen Blind Fabrics Size'
-                    ? { ...item, value: screenMeasurements.width && screenMeasurements.height ? `${screenMeasurements.roomName} : ${screenMeasurements.width}mm x ${screenMeasurements.height}mm` : '' }
-                    : item.title === 'Motorised'
-                    ? { ...item, value: isMotorised ? 'Yes' : 'No' }
-                    : item
+                        ? { ...item, value: blackoutColour }
+                        : item.title === 'Screen Blind Fabrics'
+                            ? { ...item, value: screenBlindFabric }
+                            : item.title === 'Chain Colour'
+                                ? { ...item, value: chainColour }
+                                : item.title === 'Bracket Colour'
+                                    ? { ...item, value: bracketColour }
+                                    : item.title === 'Base Rail Colour'
+                                        ? { ...item, value: baseRailColour }
+                                        : item.title === 'Blackout Fabric Size'
+                                            ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
+                                            : item.title === 'Screen Blind Fabrics Size'
+                                                ? { ...item, value: screenMeasurements.width && screenMeasurements.height ? `${screenMeasurements.roomName} : ${screenMeasurements.width}mm x ${screenMeasurements.height}mm` : '' }
+                                                : item.title === 'Motorised'
+                                                    ? { ...item, value: isMotorised ? 'Yes' : 'No' }
+                                                    : item
             )
         );
         // Calculate total price based on area
@@ -351,7 +351,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
         setBlackoutGroup(blackoutGroup);
         setScreenGroup(screenGroup);
 
-    }, [blackoutFabric, blackoutColour, screenBlindFabric, chainColour, bracketColour,isMotorised, baseRailColour, productData?.variants, measurements.width, measurements.roomName, screenMeasurements.roomName, measurements.height, blackoutGroup, screenGroup]);
+    }, [blackoutFabric, blackoutColour, screenBlindFabric, chainColour, bracketColour, isMotorised, baseRailColour, productData?.variants, measurements.width, measurements.roomName, screenMeasurements.roomName, measurements.height, blackoutGroup, screenGroup]);
 
     useEffect(() => {
         const userDataString = localStorage.getItem("user");
@@ -405,11 +405,16 @@ function Double_blind_customization({ data: propsData, groupData }) {
             setSuccess('');
         }
 
+        const selectedVariant = productData.variants.find(
+            variant => variant.title === selectedColor ||
+                variant.options.some(opt => opt.value === selectedColor)
+        )
+
         const cartItem = {
             id: `local_${Date.now()}_${Math.random().toString(36).slice(2)}`,
             product_id: productData.id,
             quantity: 1,
-            variants: productData.product.variants,
+            variant_id: selectedVariant.id ?? null,
             customizations: {
                 title: productData.title,
                 amount: totalPrice,
@@ -439,7 +444,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
                 email: userData.email,
                 product_id: cartItem.product_id,
                 quantity: cartItem.quantity,
-                variants: cartItem.variants,
+                variant_id: cartItem.variant_id,
                 customizations: cartItem.customizations,
             });
 

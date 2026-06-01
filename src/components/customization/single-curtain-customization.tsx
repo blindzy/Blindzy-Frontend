@@ -357,12 +357,16 @@ function Single_curtain_customization({ data: propsData, groupData }) {
             setSuccess('');
         }
 
+        const selectedVariant = productData.variants.find(
+            variant => variant.title === selectedColor ||
+                variant.options.some(opt => opt.value === selectedColor)
+        )
 
         const cartItem = {
             id: `local_${Date.now()}_${Math.random().toString(36).slice(2)}`,
             product_id: productData.id,
             quantity: 1,
-            variants: productData.product.variants,
+            variant_id: selectedVariant.id ?? null,
             customizations: {
                 title: productData.title,
                 amount: totalPrice,
@@ -390,8 +394,8 @@ function Single_curtain_customization({ data: propsData, groupData }) {
             await createAddToCart.addToCart({
                 email: userData.email,
                 product_id: cartItem.product_id,
+                variant_id: cartItem.variant_id,  // add this
                 quantity: cartItem.quantity,
-                variants: cartItem.variants,
                 customizations: cartItem.customizations,
             });
 

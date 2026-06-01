@@ -105,6 +105,7 @@ export function CartPopup() {
                                     createAddToCart.addToCart({
                                         email: userDataObj.email,
                                         product_id: item.product_id,
+                                        variant_id: item.variant_id ?? null,
                                         quantity: item.quantity,
                                         customizations: item.customizations,
                                     })
@@ -116,7 +117,13 @@ export function CartPopup() {
                         await fetchMedusaApi<any>({
                             endpoint: 'store/customers/cart',
                             method: 'POST',
-                            body: { email: userDataObj.email, product_id: null, quantity: null },
+                            body: {
+                                email: userDataObj.email,
+                                product_id: guestItems[0].product_id,
+                                variant_id: guestItems[0].variant_id ?? null,
+                                quantity: guestItems[0].quantity,
+                                customizations: guestItems[0].customizations,
+                            },
                         });
                     }
 
@@ -154,6 +161,7 @@ export function CartPopup() {
                             createAddToCart.addToCart({
                                 email: userDataObj.email,
                                 product_id: guestItem.product_id,
+                                variant_id: guestItem.variant_id ?? null, 
                                 quantity: guestItem.quantity,
                                 customizations: guestItem.customizations,
                             })

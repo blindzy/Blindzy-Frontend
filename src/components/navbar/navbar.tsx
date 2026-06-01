@@ -108,7 +108,15 @@ function Navbar(props: NavbarProps) {
 
     return (
         <>
-            <div className={`relative w-full flex items-stretch justify-between xl:p-[1.25vw] sm:p-[2.344vw] p-4 z-10 ${props.customClass && props.customClass}`}>
+            <div
+                className={`
+    sticky top-0 left-0 w-full
+    flex items-stretch justify-between
+    xl:p-[1.25vw] sm:p-[2.344vw] p-4
+    z-50
+    ${props.customClass && props.customClass}
+  `}
+            >
                 <div className="w-fit xl:p-[0.625vw] xl:pr-[1.25vw] xl:bg-[--white] xl:border xl:border-[--black] xl:rounded-full flex items-center xl:gap-[2.5vw] gap-[48px]">
                     <a href="/">
                         <img src="/images/logo.png" className={`xl:w-[8.854vw] sm:w-[170px] w-[170px] ${props.logo === 'dark' ? 'block' : 'xl:block hidden'} `} alt="Logo" />

@@ -57,7 +57,15 @@ function Login() {
             }, 300);
         } catch (err: any) {
             console.error("Login error:", err);
-            setError(err.message || "Something went wrong, please try again.");
+
+            if (
+                err?.message?.includes("401") ||
+                err?.message?.includes("Unauthorized")
+            ) {
+                setError("Incorrect email or password.");
+            } else {
+                setError("Something went wrong, please try again.");
+            }
         } finally {
             setLoading(false);
         }
