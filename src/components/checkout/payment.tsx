@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
-import { Elements, useStripe, useElements, CardElement } from '@stripe/react-stripe-js';
+import { Elements, useStripe, useElements, CardElement, PaymentRequestButtonElement } from '@stripe/react-stripe-js';
 import { Icon } from '@iconify/react';
 const stripePromise = loadStripe(import.meta.env.PUBLIC_STRIPE_PUBLISHABLE_KEY);
 import { Button } from '@lib/components/ui/button';
@@ -9,13 +9,19 @@ import './css/style.css';
 const publishableKey = import.meta.env.PUBLIC_MEDUSA_PUBLISHABLE_KEY;
 const baseUrl = import.meta.env.PUBLIC_API_URL;
 
-const PaymentPage = ({ amount, customer, shippingInfo, back }) => (
+const PaymentPage = ({ amount, customer, shippingInfo, back, appliedPromo }) => (
   <Elements stripe={stripePromise}>
-    <CheckoutForm amount={amount} customer={customer} shippingInfo={shippingInfo} back={back} />
+    <CheckoutForm amount={amount} customer={customer} shippingInfo={shippingInfo} back={back} appliedPromo={appliedPromo} />
   </Elements>
 );
 
-const CheckoutForm = ({ amount, customer, shippingInfo, back }: { amount: any; customer: any; shippingInfo?: any; back: () => void }) => {
+const CheckoutForm = ({ amount, customer, shippingInfo, back, appliedPromo }: {
+  amount: any;
+  customer: any;
+  shippingInfo?: any;
+  back: () => void;
+  appliedPromo?: { code: string; discountValue: number; promotionId: string } | null;
+}) => {
   //  const containerRef = useRef();
   const stripe = useStripe();
   const elements = useElements();
@@ -133,6 +139,14 @@ const CheckoutForm = ({ amount, customer, shippingInfo, back }: { amount: any; c
               country_code: shippingInfo.country,
               phone: customer.phone,
             },
+            ...(appliedPromo && {
+              metadata: {
+                promo_code: appliedPromo.code,
+                discount_percent: appliedPromo.discountValue,
+                original_amount: amount / (1 - appliedPromo.discountValue / 100),
+                discounted_amount: amount,
+              }
+            }),
           }),
         });
 
