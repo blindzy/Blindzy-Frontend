@@ -34,6 +34,16 @@ function Checkout() {
 	const [loader, setLoader] = useState<boolean>(true);
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+	//PROMO CODE states
+	const [promoCode, setPromoCode] = useState('');
+	const [promoLoading, setPromoLoading] = useState(false);
+	const [promoError, setPromoError] = useState('');
+	const [appliedPromo, setAppliedPromo] = useState<null | {
+		code: string;
+		discountValue: number; // e.g. 10 for 10%
+		promotionId: string;
+	}>(null);
+
 	const [shippingInfo, setShippingInfo] = useState({
 		// state: '',
 		country: '',
@@ -190,6 +200,7 @@ function Checkout() {
 					endpoint: "store/customers/cart",
 					query: { email: userData.email },
 				});
+				console.log('debug', data.cart.items)
 				setOrderList(data.cart.items);
 				calculateTotalAmount(data.cart.items);
 				setLoader(false);
@@ -316,6 +327,55 @@ function Checkout() {
 		}));
 	}, []);
 
+	const validatePromoCode = async () => {
+		if (!promoCode.trim()) return;
+		setPromoLoading(true);
+		setPromoError('');
+
+		try {
+			const productIds = orderList.map((item: any) => item.product_id).filter(Boolean);
+
+			const data = await fetchMedusaApi<any>({
+				endpoint: '/store/products/validate-promo',
+				query: {
+					code: promoCode.trim(),
+					product_ids: productIds.join(','),
+					customer_id: customerInfo.id,    // add this
+				},
+			});
+
+			if (!data.valid) {
+				setPromoError(
+					data.reason === 'code_not_found' ? 'Invalid promo code.' :
+						data.reason === 'code_not_active' ? 'This promo code is not active.' :
+							data.reason === 'already_used' ? 'You have already used this promo code.' :
+								data.reason === 'usage_limit_reached' ? 'This promo code has reached its usage limit.' :
+									data.reason === 'product_not_eligible' ? 'This code is not valid for your items.' :
+										'This promo code is not applicable.'
+				);
+				setAppliedPromo(null);
+				return;
+			}
+
+			setAppliedPromo({
+				code: data.code,
+				discountValue: data.value,
+				promotionId: data.promotionId,
+			});
+
+		} catch (err) {
+			setPromoError('Failed to validate promo code.');
+			setAppliedPromo(null);
+		} finally {
+			setPromoLoading(false);
+		}
+	};
+	const discountAmount = appliedPromo
+		? (totalAmount + shippingAmount) * (appliedPromo.discountValue / 100)
+		: 0;
+
+	const grandTotal = totalAmount + shippingAmount - discountAmount;
+
 	useGooglePlacesAutocomplete(addressInputRef, handlePlaceSelect);
 
 	return (
@@ -358,6 +418,47 @@ function Checkout() {
 							maximumFractionDigits: 2
 						})}</h5>
 					</div>
+					{appliedPromo && (
+						<div className="flex items-center justify-between shrink-0 text-green-600">
+							<h5 className="text-lg">DISCOUNT ({appliedPromo.discountValue}%)</h5>
+							<h5 className="text-lg">
+								-{currencySymbol}{discountAmount.toLocaleString('en-US', {
+									minimumFractionDigits: 2,
+									maximumFractionDigits: 2
+								})}
+							</h5>
+						</div>
+					)}
+					{/* Promo Code */}
+					<div className="flex flex-col gap-2 shrink-0">
+						<div className="flex gap-2">
+							<Input
+								type="text"
+								placeholder="Promo code"
+								value={promoCode}
+								onChange={(e) => {
+									setPromoCode(e.target.value);
+									if (appliedPromo) setAppliedPromo(null);
+									setPromoError('');
+								}}
+							/>
+							<Button
+								variant="light"
+								size="small"
+								className="shrink-0"
+								onClick={validatePromoCode}
+								disabled={promoLoading || !promoCode.trim()}
+							>
+								{promoLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Apply'}
+							</Button>
+						</div>
+						{promoError && <p className="text-red-500 text-xs">{promoError}</p>}
+						{appliedPromo && (
+							<p className="text-green-600 text-xs">
+								"{appliedPromo.code}" applied — {appliedPromo.discountValue}% off
+							</p>
+						)}
+					</div>
 					<div className="flex items-center gap-2 shrink-0 text-mediumGrey">
 						<Plus className="size-[18px]" />
 						<div className="w-full h-[1px] bg-mediumGrey"></div>
@@ -367,7 +468,7 @@ function Checkout() {
 						<h5 className="text-xl">TOTAL</h5>
 						<h5 className="text-xl">
 							{currencySymbol}
-							{(totalAmount + shippingAmount).toLocaleString('en-US', {
+							{grandTotal.toLocaleString('en-US', {
 								minimumFractionDigits: 2,
 								maximumFractionDigits: 2
 							})}
@@ -502,7 +603,7 @@ function Checkout() {
 											onChange={(e) => handleShippingInfoChange('zipCode', e.target.value)}
 										/>
 									</div>
-									
+
 									{/* <div className="col-span-12">
 										<Input
 											type="text" 
@@ -565,7 +666,7 @@ function Checkout() {
 											onChange={(e) => handlePaymentInfoChange('securityCode', e.target.value)}
 										/>
 									</div> */}
-									<PaymentPage amount={(totalAmount + shippingAmount)} customer={customerInfo} shippingInfo={shippingInfo} back={prevStep} />
+									<PaymentPage amount={grandTotal} customer={customerInfo} shippingInfo={shippingInfo} back={prevStep} appliedPromo={appliedPromo} />
 								</>
 							)}
 							<div className="flex justify-end col-span-12 gap-2">
