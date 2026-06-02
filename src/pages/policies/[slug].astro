@@ -18,18 +18,6 @@ async function getData() {
   return { policyData };
 }
 const { policyData } = await getData();
-
-// Export getStaticPaths
-export async function getStaticPaths() {
-  const policies = await fetchApi<PolicyData[]>({
-    endpoint: "policies?populate=*",
-    wrappedByKey: "data",
-  });
-
-  return policies.map((policy) => ({
-    params: { slug: policy.slug },
-  }));
-}
 ---
 
 <Layout

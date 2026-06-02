@@ -15,17 +15,6 @@ async function getData() {
 }
 const { groupData } = await getData();
 
-export async function getStaticPaths() {
-  // First get list of all products to get their IDs
-  const allProducts = await fetchMedusaApi<any>({
-    endpoint: "store/products/custom",
-  });
-  // Return array of objects with id params for all products
-  return (allProducts?.products || []).map((product: any) => ({
-    params: { id: product.id },
-  }));
-}
-
 const { id } = Astro.params;
 
 // Fetch full product data at render time

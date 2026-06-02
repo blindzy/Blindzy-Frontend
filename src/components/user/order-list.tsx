@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Camera, ChevronDown, Package, Plus } from 'lucide-react';
+import React, { useState } from "react";
+import { ChevronDown, Plus } from 'lucide-react';
 import { Button } from "@lib/components/ui/button";
 
 const FULFILLMENT_STATUS_CONFIG: Record<string, { label: string; color: string }> = {

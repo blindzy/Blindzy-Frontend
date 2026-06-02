@@ -15,8 +15,8 @@ const filteredProducts = (productsData?.products || []).filter((product: any) =>
   const hasSamplesCategory = product.categories?.some(
     (cat: any) => cat.name?.toLowerCase() === "sample"
   );
-
-  return hasSamplesCategory;
+  const isPublished = product.status === "published";
+  return hasSamplesCategory && isPublished;
 });
 ---
 

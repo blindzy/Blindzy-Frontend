@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Plus} from 'lucide-react';
 
 function ProductCard({
@@ -16,15 +16,6 @@ function ProductCard({
 }) {
 
     const [isFabricMode, setIsFabricMode] = useState(false);
-
-    const selectedColor = customizationData?.find((item: any) => item?.title === 'Colour')?.value ?? null;
-
-
-    const defaultImage = productData?.thumbnail?.replace(
-        "http://localhost:9000",
-        "https://api.blindzy.com"
-    );
-
 
     // Guard — render nothing until minimum data is available
     if (!productData || !customizationData) return null;

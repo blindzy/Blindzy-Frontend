@@ -11,7 +11,7 @@ import Separate from "@components/separate";
 import Measurement from "./measurement";
 import { createAddToCart } from '../../services/add-to-cart';
 import { interpolate2D } from "./interpolate";
-import { addCommaToNumber, getCurrencySymbol } from "./customization-utils";
+import { getCurrencySymbol } from "./customization-utils";
 
 
 const productOptions = [
@@ -57,7 +57,7 @@ function Shutters_customization({ data: propsData, groupData }) {
         last_name: string;
     };
     const [userData, setUserData] = useState<UserData | null>(null);
-    const [productData, setProductData] = useState(propsData);
+    const [productData] = useState(propsData);
     const [data, setData] = useState([
         { 'title': 'Colour', 'value': selectedColor },
         { 'title': 'Size', 'value': measurements.width && measurements.height ? `${measurements.width}m x ${measurements.height}m` : '' },
@@ -355,6 +355,7 @@ function Shutters_customization({ data: propsData, groupData }) {
                 </div>
             </div>
             <ProductCard
+                image={productData?.thumbnail ?? ''}
                 productData={productData}
                 customizationData={data}
                 totalPrice={`${currencySymbol}${addCommaToNumber(totalPrice)}`}

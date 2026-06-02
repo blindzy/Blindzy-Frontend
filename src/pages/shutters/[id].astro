@@ -7,39 +7,39 @@ import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 import fetchApi from "@lib/strapi";
 import type { GroupData } from "@interfaces/interfaces";
 
-async function getData() {
-  const groupData = await fetchApi<GroupData>({
-    endpoint: "shutter-price?populate=*",
-    wrappedByKey: "data",
-  });
-  return { groupData };
-}
-const { groupData } = await getData();
+// async function getData() {
+//   const groupData = await fetchApi<GroupData>({
+//     endpoint: "shutter-price?populate=*",
+//     wrappedByKey: "data",
+//   });
+//   return { groupData };
+// }
+// const { groupData } = await getData();
 
-export async function getStaticPaths() {
-  // First get list of all products to get their IDs
-  const allProducts = await fetchMedusaApi<any>({
-    endpoint: "store/products/custom",
-  });
-  // Return array of objects with id params for all products
-  return (allProducts?.products || []).map((product: any) => ({
-    params: { id: product.id },
-  }));
-}
+// export async function getStaticPaths() {
+//   // First get list of all products to get their IDs
+//   const allProducts = await fetchMedusaApi<any>({
+//     endpoint: "store/products/custom",
+//   });
+//   // Return array of objects with id params for all products
+//   return (allProducts?.products || []).map((product: any) => ({
+//     params: { id: product.id },
+//   }));
+// }
 
-const { id } = Astro.params;
+// const { id } = Astro.params;
 
-// Fetch full product data at render time
-const productData = await fetchMedusaApi<any>({
-  endpoint: `store/products/custom/${id}`,
-});
+// // Fetch full product data at render time
+// const productData = await fetchMedusaApi<any>({
+//   endpoint: `store/products/custom/${id}`,
+// });
 ---
 
 <Layout
   title="Shutters Customization | Blindzy Australia"
   description="Customize your shutters with Blindzy Australia's easy-to-use customization tool. Choose from a variety of styles, colors, and materials to create the perfect shutters for your home. Our custom DIY shutters are designed for easy installation and long-lasting beauty. Start customizing your shutters today and transform your windows with Blindzy Australia.">
   <Navbar client:load logo={"dark"} />
-  {
+  <!-- {
     productData?.product && (
       <Shutters_customization
         data={productData.product}
@@ -47,6 +47,6 @@ const productData = await fetchMedusaApi<any>({
         client:load
       />
     )
-  }
+  } -->
   <Footer client:load category_button={false} />
 </Layout>

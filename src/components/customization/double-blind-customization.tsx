@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import SelectColor from "./selectColor";
 import SelectGroupColor from "./selectgroupColor";
-import SelectDefaultColor from "./selectdefultColor";
+import SelectBlockoutColor from "./selectBlockoutColor";
+import SelectSunscreenColor from "./selectSunscreenColor";
 import SelectVarient from "./selectVarient";
 import ProductCard from "./ProductCard";
 import { Checkbox } from "@lib/components/ui/checkbox";
@@ -15,7 +16,7 @@ import { createAddToCart } from '../../services/add-to-cart';
 import { interpolate2D } from "./interpolate";
 import { addCommaToNumber, getCurrencySymbol } from "./customization-utils";
 import { COLOR_OPTIONS } from "./customization-constants";
-import type { UserData, CustomizationDataItem } from "./customization-types";
+import type { UserData } from "./customization-types";
 
 
 const setupOptions = [
@@ -29,13 +30,6 @@ const setupOptions = [
         ]
     },
 ]
-const fabric = {
-    azure: "/images/product-colors-image/fabric/haven.jpg",
-    nova: "/images/product-colors-image/fabric/ora.jpg",
-    omega: "/images/product-colors-image/fabric/seclusion.jpg",
-    phantom: "/images/product-colors-image/fabric/seclusion.jpg",
-    zenith: "/images/product-colors-image/fabric/tranquil.jpg",
-};
 
 const productOptions = [
     {
@@ -80,73 +74,23 @@ const productOptions = [
 
 const colorOptions = COLOR_OPTIONS;
 
-const blackoutColours = {
-    phantom: [
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EO', value: 'breeze', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EP', value: 'lunar', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EQ', value: 'mercury', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ER', value: 'midnight', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ES', value: 'mocha', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ET', value: 'quartz', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EU', value: 'snow', },
-    ],
-    azure: [
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EW', value: 'white', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EO', value: 'black', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EP', value: 'cream', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ER', value: 'grey', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EQ', value: 'dark grey', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ES', value: 'moon', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ET', value: 'powder', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EU', value: 'sand', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EV', value: 'stone', },
-    ],
-    zenith: [
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EA', value: 'white', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EB', value: 'black', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EC', value: 'blush', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ED', value: 'grey', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EF', value: 'dark grey', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EG', value: 'charcoal', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EH', value: 'ghost', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EI', value: 'meadow', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EJ', value: 'ocean', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EK', value: 'silk', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EL', value: 'soft', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EM', value: 'whisfer', },
-    ],
-    nova: [
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EA', value: 'white', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EB', value: 'black', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EC', value: 'cream', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ED', value: 'sahara', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EF', value: 'sky', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EG', value: 'snow', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EH', value: 'stone', },
-    ],
-    omega: [
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EA', value: 'cream', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EB', value: 'frost', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EC', value: 'lvory', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5ED', value: 'mirage', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EF', value: 'raven', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EG', value: 'sage', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EH', value: 'saturn', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EI', value: 'venus', },
-        { id: 'optval_01K6Z6D5B6166KXE3RQNVDQ5EJ', value: 'willow', },
-    ],
-}
 
 function Double_blind_customization({ data: propsData, groupData }) {
-    const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
-    const lenis = isDesktop ? useLenis() : null;
+    // useLenis must be called unconditionally (Rules of Hooks); it self-guards on desktop/window internally.
+    const lenis = useLenis();
+    // Precompute measurement bounds once per groupData instead of on every render/JSX call.
+    const { maxWidth, maxDrop } = useMemo(() => ({
+        maxWidth: Math.max(...(groupData?.Width_values || [])),
+        maxDrop: Math.max(...(groupData?.Drop_values || [])),
+    }), [groupData]);
     const [measurements, setMeasurements] = useState({ roomName: 'Bedroom', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
     const [screenMeasurements, setScreenMeasurements] = useState({ roomName: 'Bedroom', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
     const [blackoutFabric, setBlackoutFabric] = useState('');
+    const [blackoutColours, setBlackoutColours] = useState([]);
     const [blackoutColour, setBlackoutColour] = useState('');
     const [screenBlindFabric, setSheerFabric] = useState('');
     // const [sheerColour, setSheerColour] = useState('');
-    const [productData, setProductData] = useState(propsData);
+    const [productData] = useState(propsData);
     const [selectedColor, setSelectedColor] = useState('');
     const [chainColour, setChainColour] = useState('');
     const [bracketColour, setBracketColour] = useState('');
@@ -301,42 +245,37 @@ function Double_blind_customization({ data: propsData, groupData }) {
         return blackoutPrice;
     };
 
-    useEffect(() => {
-        if (!blackoutFabric) return;
-        setBlockoutColourData(prev => [{
-            ...prev[0],
-            values: []
-        }]);
-        const newValues = blackoutColours[blackoutFabric] || [];
-        setBlockoutColourData(prev => [{
-            ...prev[0],
-            values: newValues
-        }]);
-        setBlackoutColour("");
-    }, [blackoutFabric]);
+    // useEffect(() => {
+    //     if (!blackoutFabric) return;
+    //     setBlockoutColourData(prev => [{
+    //         ...prev[0],
+    //         values: []
+    //     }]);
+    //     const newValues = blackoutColours[blackoutFabric] || [];
+    //     setBlockoutColourData(prev => [{
+    //         ...prev[0],
+    //         values: newValues
+    //     }]);
+    //     setBlackoutColour("");
+    // }, [blackoutFabric]);
 
     useEffect(() => {
+        const fieldValues = {
+            'Blackout Fabric': blackoutFabric,
+            'Blackout Colour': blackoutColour,
+            'Screen Blind Fabrics': screenBlindFabric,
+            'Chain Colour': chainColour,
+            'Bracket Colour': bracketColour,
+            'Base Rail Colour': baseRailColour,
+            'Blackout Fabric Size': measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '',
+            'Screen Blind Fabrics Size': screenMeasurements.width && screenMeasurements.height ? `${screenMeasurements.roomName} : ${screenMeasurements.width}mm x ${screenMeasurements.height}mm` : '',
+            'Motorised': isMotorised ? 'Yes' : 'No',
+        };
         setData(prev =>
             prev.map(item =>
-                item.title === 'Blackout Fabric'
-                    ? { ...item, value: blackoutFabric }
-                    : item.title === 'Blackout Colour'
-                        ? { ...item, value: blackoutColour }
-                        : item.title === 'Screen Blind Fabrics'
-                            ? { ...item, value: screenBlindFabric }
-                            : item.title === 'Chain Colour'
-                                ? { ...item, value: chainColour }
-                                : item.title === 'Bracket Colour'
-                                    ? { ...item, value: bracketColour }
-                                    : item.title === 'Base Rail Colour'
-                                        ? { ...item, value: baseRailColour }
-                                        : item.title === 'Blackout Fabric Size'
-                                            ? { ...item, value: measurements.width && measurements.height ? `${measurements.roomName} : ${measurements.width}mm x ${measurements.height}mm` : '' }
-                                            : item.title === 'Screen Blind Fabrics Size'
-                                                ? { ...item, value: screenMeasurements.width && screenMeasurements.height ? `${screenMeasurements.roomName} : ${screenMeasurements.width}mm x ${screenMeasurements.height}mm` : '' }
-                                                : item.title === 'Motorised'
-                                                    ? { ...item, value: isMotorised ? 'Yes' : 'No' }
-                                                    : item
+                item.title in fieldValues
+                    ? { ...item, value: fieldValues[item.title] }
+                    : item
             )
         );
         // Calculate total price based on area
@@ -488,8 +427,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
                         <h2 className="text-lg">Enter Measurements</h2>
                         {/* <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p> */}
                     </div>
-                    {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
-                    <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={100} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={100} heightMax={Math.max(...(groupData?.Drop_values || []))} />
+                    <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={100} widthMax={maxWidth} heightMin={100} heightMax={maxDrop} />
                     {productData?.options?.map((option, index) => {
                         const filteredOption = {
                             ...option,
@@ -500,27 +438,26 @@ function Double_blind_customization({ data: propsData, groupData }) {
                             <React.Fragment key={`color-${index}`}>
                                 <Separate />
                                 <SelectGroupColor
-                                    data={filteredOption}
-                                    colorsImage={fabric}
+                                    data={productData?.variants}
+                                    option={filteredOption}
                                     onColorSelect={setBlackoutFabric}
+                                    onBlackoutColour={setBlackoutColours}
                                     selectedColor={blackoutFabric}
                                 />
                             </React.Fragment>
                         );
                     })}
 
-                    {blackoutFabric !== '' && blockoutColourData.map((option, index) => (
-                        <React.Fragment key={`color-${index}`}>
+                    {blackoutFabric !== '' && (
+                        <React.Fragment>
                             <Separate />
-                            <SelectGroupColor
-                                data={option}
-                                selectedFabric={blackoutFabric}
-                                colorsType={'blind'}
+                            <SelectBlockoutColor
+                                data={blackoutColours}
                                 onColorSelect={setBlackoutColour}
                                 selectedColor={blackoutColour}
                             />
                         </React.Fragment>
-                    ))}
+                    )}
                 </div>
                 <div className="w-full xl:p-[1.25vw] sm:p-[2.344vw] p-4 flex flex-col xl:gap-[1.25vw] gap-6 border border-[--Black] rounded-48">
                     <h4 className="text-xl text-[--Black]">
@@ -529,10 +466,8 @@ function Double_blind_customization({ data: propsData, groupData }) {
                     <Separate />
                     <div className="w-full flex flex-col gap-2">
                         <h2 className="text-lg">Enter Measurements</h2>
-                        {/* <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p> */}
                     </div>
-                    {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
-                    <Measurement measurements={screenMeasurements} setMeasurements={setScreenMeasurements} widthMin={100} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={100} heightMax={Math.max(...(groupData?.Drop_values || []))} />
+                    <Measurement measurements={screenMeasurements} setMeasurements={setScreenMeasurements} widthMin={100} widthMax={maxWidth} heightMin={100} heightMax={maxDrop} />
                     {productData?.options?.map((option, index) => {
                         const lastValue = option.values?.[option.values.length - 1];
 
@@ -544,10 +479,9 @@ function Double_blind_customization({ data: propsData, groupData }) {
                         return (
                             <React.Fragment key={`color-${index}`}>
                                 <Separate />
-                                <SelectColor
-                                    data={filteredOption}
-                                    title={'Screen blind fabrics'}
-                                    tag={''}
+                                <SelectSunscreenColor
+                                    data={productData?.variants}
+                                    option={filteredOption}
                                     onColorSelect={setSheerFabric}
                                     selectedColor={screenBlindFabric}
                                 />
@@ -569,10 +503,8 @@ function Double_blind_customization({ data: propsData, groupData }) {
                 {colorOptions.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate />
-                        <SelectDefaultColor
+                        <SelectColor
                             data={option}
-                            title={'Colour'}
-                            description={''}
                             onColorSelect={getColorSetter(option.title)}
                             selectedColor={getSelectedColor(option.title)}
                         />
@@ -644,6 +576,7 @@ function Double_blind_customization({ data: propsData, groupData }) {
                 productData={productData}
                 customizationData={data}
                 totalPrice={`${currencySymbol}${addCommaToNumber(totalPrice)}`}
+                image={productData?.thumbnail ?? ''}
             />
         </section>
     );

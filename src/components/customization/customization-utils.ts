@@ -11,6 +11,20 @@ export const addCommaToNumber = (num: number): string => {
 };
 
 /**
+ * Derive a human-readable colour name from an image URL.
+ * e.g. ".../1780338389178-light%20grey.jpg" -> "light grey"
+ */
+export const getColorNameFromUrl = (url?: string): string => {
+    const fileName = (url || '').split('/').pop() || '';
+    const withoutExt = fileName.replace(/\.[^.]+$/, '').replace(/^\d+-/, '');
+    try {
+        return decodeURIComponent(withoutExt);
+    } catch {
+        return withoutExt;
+    }
+};
+
+/**
  * Get currency symbol from currency code
  */
 export const getCurrencySymbol = (code: string): string => {

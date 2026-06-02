@@ -25,8 +25,8 @@ const filteredProducts = (productsData?.products || []).filter((product: any) =>
   const hasBlindsCategory = product.categories?.some(
     (cat: any) => cat.name?.toLowerCase() === "blinds",
   );
-
-  return isSingleType && hasBlindsCategory;
+  const isPublished = product.status === "published";
+  return isSingleType && hasBlindsCategory && isPublished;
 });
 const tags = ["Blockout", "Light Filtering", "Sunscreen"];
 ---

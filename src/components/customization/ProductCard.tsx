@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Plus, X } from 'lucide-react';
 
 function ProductCard({
@@ -6,8 +6,6 @@ function ProductCard({
     customizationData,
     image,
     totalPrice,
-    svg,
-    svgColor = '#4A4A4A'
 }: {
     productData: any;
     customizationData: any;
@@ -22,29 +20,6 @@ function ProductCard({
     const [imageSrc, setImageSrc] = useState<string | null>(null);
     const [isFabricMode, setIsFabricMode] = useState(false);
 
-    // const selectedColor = customizationData?.find((item: any) => item?.title === 'Colour')?.value ?? null;
-    // const fabricImage = selectedColor && productData?.title
-    //     ? `/images/${productData.title.charAt(0).toUpperCase() + productData.title.slice(1)} ${selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1)}.png`
-    //     : null;
-
-    // const finalImage = isFabricMode ? fabricImage : defaultImage;
-
-    // useEffect(() => {
-    //     if (fabricImage) {
-    //         setImageSrc(fabricImage);
-    //         setIsFabricMode(true); // optimistically assume fabric mode
-    //     } else {
-    //         setImageSrc(defaultImage);
-    //         setIsFabricMode(false);
-    //     }
-    //     setImageLoaded(false);
-    // }, [fabricImage, defaultImage]);
-
-    // useEffect(() => {
-    //     setImageLoaded(false);
-    // }, [fabricImage]);
-
-    // Guard — render nothing until minimum data is available
     if (!productData || !customizationData) return null;
 
     return (
@@ -81,25 +56,6 @@ function ProductCard({
                                 }}
                             />
                         </div>
-                        {/* {image && (
-                        )} */}
-
-                        {/* SVG overlay ONLY for default mode */}
-                        {/* {!isFabricMode && svg && (
-                            <div className="size-full absolute left-0 top-0 flex justify-center pt-[12.326vw] sm:pt-[13.086vw] xl:pt-[1.042vw]">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    className="w-[77.674vw] sm:w-[79.102vw] xl:w-[26.615vw] h-[32.093vw] sm:h-[31.641vw] xl:h-[10.469vw]"
-                                    viewBox="0 0 511 201"
-                                    fill="none"
-                                >
-                                    <path
-                                        d="M0 3L2 0H507H509L510.5 4V9L509 12L507 13V200.5H4V14.5L2 13L1 9.5L0 3Z"
-                                        fill={svgColor}
-                                    />
-                                </svg>
-                            </div>
-                        )} */}
                     </div>
 
                     <div className="w-full flex items-center justify-between shrink-0">

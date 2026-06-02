@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { RadioGroup, RadioGroupItem } from "@lib/components/ui/radio-group";
 
 function SelectColor(props) {

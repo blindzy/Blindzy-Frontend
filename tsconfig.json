@@ -41,6 +41,8 @@
   },
   "exclude": [
     "strapi-cms/**/*",
-    "src/pages/**/*.astro"
+    "src/pages/**/*.astro",
+    "dist/**/*",
+    ".vercel/**/*"
   ]
 }

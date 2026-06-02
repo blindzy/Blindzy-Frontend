@@ -6,20 +6,20 @@ import { useLenis } from '../../hooks/useLenis';
 import Address from './address';
 import OrderList from "./orderList";
 import UserDetail from "./userDetail";
-import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
+// import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 // import OrderListComponent from "./order-list";
 // import { Package } from 'lucide-react';
 // import { Button } from "@lib/components/ui/button";
 
-type PaymentCard = {
-    id: string | number;
-    cardType: string;
-    cardName: string;
-    cardNumber: string;
-    expiryDate: string;
-    cvvCode: string;
-    createdAt: string;
-};
+// type PaymentCard = {
+//     id: string | number;
+//     cardType: string;
+//     cardName: string;
+//     cardNumber: string;
+//     expiryDate: string;
+//     cvvCode: string;
+//     createdAt: string;
+// };
 function User() {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const lenis = isDesktop ? useLenis() : null;

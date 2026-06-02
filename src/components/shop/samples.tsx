@@ -1,20 +1,10 @@
 ﻿import React, { useEffect, useState } from "react";
 import { Button } from "@lib/components/ui/button";
-import { Label } from "@lib/components/ui/label";
 import { Plus } from 'lucide-react';
 import { createAddToCart } from '../../services/add-to-cart';
-import {
-	Select,
-	SelectContent,
-	SelectGroup,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@lib/components/ui/select"
 
 
 function Samples(props) {
-	const [loading, setLoading] = useState(false);
 	const [loadingItems, setLoadingItems] = useState<Record<string, boolean>>({});
 	const [addedItems, setAddedItems] = useState<Record<string, boolean>>({});
 	const [error, setError] = useState('');

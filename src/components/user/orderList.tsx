@@ -3,7 +3,7 @@ import { Package } from 'lucide-react';
 import { Button } from "@lib/components/ui/button";
 import OrderListComponent from "./order-list";
 import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
-function OrderList(props) {
+function OrderList() {
     const [orderList, setOrderList] = useState<any[]>([]);
 
     useEffect(() => {

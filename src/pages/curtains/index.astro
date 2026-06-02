@@ -26,9 +26,11 @@ const filteredProducts = (productsData?.products || []).filter((product: any) =>
   const hasBlindsCategory = product.categories?.some(
     (cat: any) => cat.name?.toLowerCase() === "curtains",
   );
+  const isPublished = product.status === "published";
 
-  return hasBlindsCategory;
+  return hasBlindsCategory && isPublished;
 });
+console.log("Filtered Products:", filteredProducts);
 const tags = ["Sheer", "Blockout"];
 ---
 

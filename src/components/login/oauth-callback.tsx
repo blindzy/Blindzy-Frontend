@@ -1,4 +1,4 @@
-import { HttpTypes } from "@medusajs/types"
+import type { HttpTypes } from "@medusajs/types"
 import React, { useEffect, useMemo, useState } from "react"
 import { decodeToken } from "react-jwt"
 import { sdk } from "@lib/sdk"

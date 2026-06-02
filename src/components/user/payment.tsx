@@ -10,19 +10,19 @@ type Payment = {
     state: string;
     zipCode: string;
 };
-type PaymentCard = {
-    id: string | number;
-    cardType: string;
-    cardName: string;
-    cardNumber: string;
-    expiryDate: string;
-    cvvCode: string;
-    createdAt: string;
-};
+// type PaymentCard = {
+//     id: string | number;
+//     cardType: string;
+//     cardName: string;
+//     cardNumber: string;
+//     expiryDate: string;
+//     cvvCode: string;
+//     createdAt: string;
+// };
 function Payment(props) {
     
-    const handleAddCard = (newCard) => {
-        };
+    // const handleAddCard = (newCard) => {
+    //     };
         // const handleUpdateCard = (updatedCard) => {
         //     setPaymentDetail(prev => 
         //         prev.map(card => 

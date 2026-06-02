@@ -40,10 +40,12 @@ function BlogDetail(props) {
     return (
         <div className="relative w-screen min-h-screen flex xl:flex-row flex-col items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-4 xl:pt-0 sm:pt-0 pt-0 overflow-hidden" id="blogDetail">
 
-            <div className="w-full flex flex-col xl:gap-[1.25vw] sm:p-6 sm:gap-[2.344vw] gap-4 text-black">
-                <div className="w-full flex items-center justify-between">
+            <div className="w-full flex flex-col xl:gap-[1.25vw] xl:p-0 sm:p-6 sm:gap-[2.344vw] gap-4 text-black">
+                <div className="w-full flex flex-col gap-2">
+                    <div className="w-full py-2 px-4 border border-[--primary] rounded-full">
+                        <p className="text-sm text-primary shrink-0">{toShortDate(props.data.date)}</p>
+                    </div>
                     <h3 className="text-3xl uppercase font-black font-plus">{props.data.title}</h3>
-                    <p className="text-sm text-primary">{toShortDate(props.data.date)}</p>
                 </div>
                 <BlogContent content={props.data.content} />
             </div>
@@ -60,7 +62,7 @@ function BlogDetail(props) {
                             <a href={`/blogs/${blog.slug}`} className="flex items-center" key={index}>
                                 <div className="w-full flex flex-col gap-2 xl:p-[1.25vw] sm:p-[2.344vw] p-2">
                                     <p className="text-sm ">{toShortDate(blog.date)}</p>
-                                    <h6 className="text-md">{blog.title}</h6>
+                                    <h6 className="text-md line-clamp-1">{blog.title}</h6>
                                     <p className="text-sm line-clamp-3">{blog.description}</p>
                                 </div>
                                 <div className="xl:w-[11.979vw] xl:h-[10vw] sm:w-[230px] w-[150px] shrink-0 rounded-24 overflow-hidden">

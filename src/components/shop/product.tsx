@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Button } from "@lib/components/ui/button";
 import { Plus } from 'lucide-react';
-import SelectColor from "@components/shop/selectColor";
 import SelectDefultColor from "@components/shop/selectdefultColor";
 import { interpolate2D } from "@components/customization/interpolate";
 import { addCommaToNumber, getCurrencySymbol } from "@components/customization/customization-utils";
@@ -9,13 +8,6 @@ import { addCommaToNumber, getCurrencySymbol } from "@components/customization/c
 
 
 
-const fabric = {
-    azure: "/images/product-colors-image/fabric/haven.jpg",
-    nova: "/images/product-colors-image/fabric/ora.jpg",
-    omega: "/images/product-colors-image/fabric/seclusion.jpg",
-    phantom: "/images/product-colors-image/fabric/seclusion.jpg",
-    zenith: "/images/product-colors-image/fabric/tranquil.jpg",
-};
 function ProductComponent({ data, groupData, measurements, customizePage }) {
 
 
@@ -25,7 +17,6 @@ function ProductComponent({ data, groupData, measurements, customizePage }) {
     const [totalPrice, setTotalPrice] = useState(0);
     const [currencySymbol, setCurrencySymbol] = useState('');
     const [screenBlindPriceGroup, setScreenBlindPriceGroup] = useState(0);
-    const [cardImageSrc, setCardImageSrc] = useState<string | null>(null);
 
     // Derive range bounds once per groupData instead of re-spreading on every price calc.
     const bounds = useMemo(() => {
@@ -71,13 +62,6 @@ function ProductComponent({ data, groupData, measurements, customizePage }) {
         return price;
     }, [groupData, bounds]);
 
-    // useEffect(() => {
-    //     const color = selectedColor
-    //         ? selectedColor.charAt(0).toUpperCase() + selectedColor.slice(1)
-    //         : 'Ash';
-    //     const title = data.title.charAt(0).toUpperCase() + data.title.slice(1);
-    //     setCardImageSrc(`/images/${title} ${color}.png`);
-    // }, [data.title, selectedColor]);
 
     useEffect(() => {
         const width = measurements?.width ?? 0;

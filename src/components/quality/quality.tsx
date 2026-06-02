@@ -2,7 +2,6 @@
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import DrawSVGPlugin from "gsap/dist/DrawSVGPlugin";
-import { Button } from "@lib/components/ui/button";
 import './css/style.css'; // Ensure this path is correct relative to quality.tsx
 
 
