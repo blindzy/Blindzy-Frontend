@@ -41,11 +41,6 @@ function SelectColor(props) {
                             variant.options?.some(opt => opt.value === color.value)
                     );
                     const thumbnail = matchedVariant?.thumbnail;
-                    // Use the variant image that is NOT the thumbnail (the thumbnail
-                    // duplicates the first image, so pick the other one).
-                    const swatchImage =
-                    matchedVariant?.images?.find(img => img.url !== matchedVariant.thumbnail)?.url
-                    || matchedVariant?.thumbnail;
 
                     return (
                         <div key={index} className="flex flex-col gap-2 items-center">

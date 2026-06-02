@@ -134,44 +134,43 @@ function ProductComponent({ data, groupData, measurements, customizePage }) {
     const renderColors = () => {
         if (!data.options) return null;
 
-        if (customizePage === 'blinds/roller-blinds') {
-            return data.options.map((option, index) => (
-                <SelectColor key={index} data={option} colorsType='roller-blinds' />
-            ));
-        }
+        // if (customizePage === 'blinds/roller-blinds') {
+        //     return data.options.map((option, index) => (
+        //         <SelectColor key={index} data={option} colorsType='roller-blinds' />
+        //     ));
+        // }
 
-        if (customizePage === "curtains" || customizePage === "shutters") {
-            const type = customizePage === "curtains" ? 'curtains' : 'shutter';
+        if (customizePage === "curtains" || customizePage === "shutters" || customizePage === "blinds/roller-blinds" || customizePage === "blinds/double") {
             return data.variants && (
-                <SelectDefultColor data={data.variants} productName={data.title} colorsType={type} />
+                <SelectDefultColor data={data.variants}/>
             );
         }
 
-        if (customizePage === "blinds/double") {
-            return data.options.map((option, i) => {
-                const values = option.values?.slice(0, -1) || [];
-                return (
-                    <div key={i} className="flex flex-wrap items-stretch gap-2">
-                        {values.slice(0, 4).map((color, idx) => (
-                            <div key={idx} className="size-[32px] sm:size-[48px] xl:size-[60px] shrink-0 transition cursor-pointer p-1 sm:p-1.5 xl:rounded-[16px] border border-[--lightGrey]">
-                                <img
-                                    src={color.value ? fabric[color.value.toLowerCase()] : ''}
-                                    loading="lazy"
-                                    decoding="async"
-                                    className="size-full object-cover rounded-[11px] overflow-hidden"
-                                    alt={color.value}
-                                />
-                            </div>
-                        ))}
-                        {values.length > 4 && (
-                            <span className="text-sm text-[--black] self-center">
-                                +{values.length - 4} More
-                            </span>
-                        )}
-                    </div>
-                );
-            });
-        }
+        // if (customizePage === "blinds/double") {
+        //     return data.options.map((option, i) => {
+        //         const values = option.values?.slice(0, -1) || [];
+        //         return (
+        //             <div key={i} className="flex flex-wrap items-stretch gap-2">
+        //                 {values.slice(0, 4).map((color, idx) => (
+        //                     <div key={idx} className="size-[32px] sm:size-[48px] xl:size-[60px] shrink-0 transition cursor-pointer p-1 sm:p-1.5 xl:rounded-[16px] border border-[--lightGrey]">
+        //                         <img
+        //                             src={color.value ? fabric[color.value.toLowerCase()] : ''}
+        //                             loading="lazy"
+        //                             decoding="async"
+        //                             className="size-full object-cover rounded-[11px] overflow-hidden"
+        //                             alt={color.value}
+        //                         />
+        //                     </div>
+        //                 ))}
+        //                 {values.length > 4 && (
+        //                     <span className="text-sm text-[--black] self-center">
+        //                         +{values.length - 4} More
+        //                     </span>
+        //                 )}
+        //             </div>
+        //         );
+        //     });
+        // }
         return null;
     };
 

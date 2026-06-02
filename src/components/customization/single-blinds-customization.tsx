@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
-import SelectDefaultColor from "./selectdefultColor";
 import SelectColor from "./selectColor";
+import SelectBlindColor from "./selectBlindColor";
 import SelectVarient from "./selectVarient";
 import ProductCard from "./blind-productCard";
 import { Checkbox } from "@lib/components/ui/checkbox";
@@ -65,6 +65,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
     const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 1024;
     const [measurements, setMeasurements] = useState({ roomName: 'Bedroom', width: Math.min(...(groupData?.Width_values || [])), height: Math.min(...(groupData?.Drop_values || [])) });
     const [selectedColor, setSelectedColor] = useState('');
+    const [selectedImage, setSelectedImage] = useState('');
     const [svgColor, setSvgColor] = useState('#4A4A4A');
     const [chainColour, setChainColour] = useState('');
     const [bracketColour, setBracketColour] = useState('');
@@ -93,6 +94,22 @@ function Single_blinds_customization({ data: propsData, groupData }) {
     ]);
     const lenis = isDesktop ? useLenis() : null;
 
+    // Width/drop ranges & price matrix derived once from groupData instead of
+    // re-spreading the arrays (Math.min/max) on every render and price calc.
+    const { widthValues, dropValues, priceMatrix, minWidth, maxWidth, minDrop, maxDrop } = useMemo(() => {
+        const w = groupData?.Width_values || [];
+        const d = groupData?.Drop_values || [];
+        return {
+            widthValues: w,
+            dropValues: d,
+            priceMatrix: groupData?.Price_groups || [],
+            minWidth: Math.min(...w),
+            maxWidth: Math.max(...w),
+            minDrop: Math.min(...d),
+            maxDrop: Math.max(...d),
+        };
+    }, [groupData]);
+
     const calculatePrice = () => {
         // Validate inputs
         if (!measurements.width || !measurements.height) {
@@ -109,15 +126,10 @@ function Single_blinds_customization({ data: propsData, groupData }) {
         let widthMm = Math.round(Number(measurements.width));
         let dropMm = Math.round(Number(measurements.height));
 
-        // Check ranges (in mm)
-        const currentWidthValues = groupData?.Width_values || [];
-        const currentDropValues = groupData?.Drop_values || [];
-        const currentPriceMatrix = groupData?.Price_groups || [];
-
-        const minWidth = Math.min(...currentWidthValues);
-        const maxWidth = Math.max(...currentWidthValues);
-        const minDrop = Math.min(...currentDropValues);
-        const maxDrop = Math.max(...currentDropValues);
+        // Ranges & price matrix come from the memoised values above.
+        const currentWidthValues = widthValues;
+        const currentDropValues = dropValues;
+        const currentPriceMatrix = priceMatrix;
 
         // Clamp values to valid range instead of rejecting
         if (widthMm < minWidth) {
@@ -141,7 +153,6 @@ function Single_blinds_customization({ data: propsData, groupData }) {
         let price = interpolate2D(widthMm, dropMm, currentWidthValues, currentDropValues, currentPriceMatrix[priceGroup])
 
         if (isMotorised && price) price += 200;
-        // console.log("Calculated Price:", price);
         if (price === null) {
             setError("Unable to calculate price for these dimensions")
             setTotalPrice(0)
@@ -172,16 +183,18 @@ function Single_blinds_customization({ data: propsData, groupData }) {
     useEffect(() => {
         if (productData?.options?.[0]?.values?.[0]?.value && !selectedColor) {
             const defaultColor = productData.options[0].values[0].value;
-            setSelectedColor(defaultColor);
+            const defColor = defaultColor + ' - ' + (productData.tags?.[0].value || '');
+            setSelectedColor(defColor);
 
-            // Find the variant with the default color and set its price
+            // Find the variant for the default color once and reuse it.
             const defaultVariant = productData?.variants?.find(
                 variant => variant.title === defaultColor ||
-                    variant.options.some(opt => opt.value === defaultColor)
+                    variant.options?.some(opt => opt.value === defaultColor)
             );
+            setSelectedImage(defaultVariant?.thumbnail);
 
             if (defaultVariant?.price_sets?.[0]?.prices?.[0]?.amount) {
-                var defaultGroup = defaultVariant.price_sets[0].prices[0].amount;
+                const defaultGroup = defaultVariant.price_sets[0].prices[0].amount;
                 setPriceGroup(Math.max(0, defaultGroup - 1));
                 const code = defaultVariant?.price_sets?.[0]?.prices?.[0]?.currency_code || 'aud';
                 setCurrencySymbol(getCurrencySymbol(code));
@@ -189,10 +202,8 @@ function Single_blinds_customization({ data: propsData, groupData }) {
         }
     }, [productData, priceGroup]);
 
-    console.log("productData", productData)
-
     // Handle option selection updates
-    const handleOptionChange = (optionTitle, value) => {
+    const handleOptionChange = useCallback((optionTitle, value) => {
         setData(prev =>
             prev.map(item =>
                 item.title === optionTitle
@@ -200,7 +211,17 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                     : item
             )
         );
-    };
+    }, []);
+
+    // Stable per-option change handlers so the memoised SelectVarient children
+    // don't re-render on every parent render (a fresh arrow would defeat memo).
+    const optionChangeHandlers = useMemo(() => {
+        const handlers: Record<string, (value: string) => void> = {};
+        productOptions.forEach(option => {
+            handlers[option.title] = (value: string) => handleOptionChange(option.title, value);
+        });
+        return handlers;
+    }, [handleOptionChange]);
 
     const calculateBaseGroup = () => {
         if (selectedColor && productData?.variants) {
@@ -220,6 +241,11 @@ function Single_blinds_customization({ data: propsData, groupData }) {
     const extractColorFromImage = (imageUrl: string) => {
         const img = new Image();
         img.crossOrigin = 'anonymous';
+        // Route cross-origin images through the same-origin proxy so the canvas
+        // can read their pixels (the API static server sends no CORS headers).
+        const src = /^https?:\/\//i.test(imageUrl)
+            ? `/api/image-proxy?url=${encodeURIComponent(imageUrl)}`
+            : imageUrl;
         img.onload = () => {
             const canvas = document.createElement('canvas');
             canvas.width = img.width;
@@ -234,7 +260,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
             setSvgColor(hex);
         };
         img.onerror = () => setSvgColor('#4A4A4A');
-        img.src = imageUrl;
+        img.src = src;
     };
 
     // Update color in data array and price group when selection changes
@@ -268,17 +294,10 @@ function Single_blinds_customization({ data: propsData, groupData }) {
 
     // Extract color for SVG from selected fabric image
     useEffect(() => {
-        // selectedColor format: "{fabricName} - {tag} - {colorName}" e.g. "phantom - blockout - breeze"
-        if (selectedColor) {
-            const parts = selectedColor.split(' - ');
-            if (parts.length >= 3) {
-                const fabricName = parts[0].trim().toLowerCase().replace(/\s+/g, '_');
-                const colorName = parts[2].trim().toLowerCase();
-                const imageUrl = `/images/product-colors-image/blinds-fabric/${fabricName}/${colorName}.jpg`;
-                extractColorFromImage(imageUrl);
-            }
+        if (selectedImage) {
+            extractColorFromImage(selectedImage);
         }
-    }, [selectedColor]);
+    }, [selectedImage]);
 
     useEffect(() => {
         const userDataString = localStorage.getItem("user");
@@ -335,11 +354,19 @@ function Single_blinds_customization({ data: propsData, groupData }) {
             setSuccess('');
         }
 
-        const selectedVariant = productData.variants.find(
-            variant => variant.title === selectedColor ||
-                variant.options.some(opt => opt.value === selectedColor)
-        )
 
+        const parts = selectedColor.split(' - ');
+        let fabricName = '';
+        let colorName = '';
+        if (parts.length >= 2) {
+            fabricName = parts[0].trim().toLowerCase();
+            colorName = parts[1].trim().toLowerCase();
+        }
+
+        const selectedVariant = productData.variants.find(
+            variant => variant.title === fabricName ||
+                variant.options.some(opt => opt.value === fabricName)
+        )
 
         const cartItem = {
             id: `local_${Date.now()}_${Math.random().toString(36).slice(2)}`,
@@ -410,18 +437,19 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                     {/* <p className="text-sm">Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.</p> */}
                 </div>
                 {/* <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={600} widthMax={3000} heightMin={1200} heightMax={3000} /> */}
-                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={100} widthMax={Math.max(...(groupData?.Width_values || []))} heightMin={100} heightMax={Math.max(...(groupData?.Drop_values || []))} />
+                <Measurement measurements={measurements} setMeasurements={setMeasurements} widthMin={100} widthMax={maxWidth} heightMin={100} heightMax={maxDrop} />
                 {productData?.options?.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate />
-                        <SelectColor
-                            data={option}
+                        <SelectBlindColor
+                            data={productData?.variants}
+                            option={option}
                             tag={productData.tags?.[0].value || ''}
                             title={'Colour'}
                             colorsType={'blind'}
-                            // description={'Pick your preferred colour. Consider ordering free samples to see the fabrics in person.'}
                             description={''}
                             onColorSelect={setSelectedColor}
+                            onImageSelect={setSelectedImage}
                             selectedColor={selectedColor}
                         />
                     </React.Fragment>
@@ -431,7 +459,7 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                         <Separate />
                         <SelectVarient
                             variantData={option}
-                            onSelectionChange={(value) => handleOptionChange(option.title, value)}
+                            onSelectionChange={optionChangeHandlers[option.title]}
                             selectedValue={data.find(item => item.title === option.title)?.value}
                         />
                     </React.Fragment>
@@ -439,11 +467,8 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                 {colorOptions.map((option, index) => (
                     <React.Fragment key={`color-${index}`}>
                         <Separate />
-                        <SelectDefaultColor
+                        <SelectColor
                             data={option}
-                            title={'Colour'}
-                            colorsType={'blind'}
-                            // description={'Lorem ipsum dolor sit amet consectetr. Orci morbi id tortor nulla nisl.'}
                             onColorSelect={getColorSetter(option.title)}
                             selectedColor={getSelectedColor(option.title)}
                         />
@@ -454,10 +479,6 @@ function Single_blinds_customization({ data: propsData, groupData }) {
                     <h5 className="text-lg">
                         Do you want to make it motorised
                     </h5>
-
-                    {/* <p className="text-sm">
-                        Lorem ipsum
-                    </p> */}
 
                     <div className="flex h-16 p-2 items-start gap-6 self-stretch rounded-full border border-[#0F0F0F]">
                         <div className="flex flex-1 self-stretch gap-6">

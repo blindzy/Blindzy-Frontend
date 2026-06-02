@@ -8,8 +8,6 @@ type ColorVariant = {
 
 type SelectDefultColorProps = {
     data?: ColorVariant[];
-    productName?: string;
-    colorsType?: string;
 };
 
 const MAX_VISIBLE = 4;
@@ -20,7 +18,6 @@ function SelectDefultColor({ data = [] }: SelectDefultColorProps) {
 
     return (
         <div className="flex items-center gap-2">
-
             {/* First 4 Colors */}
             {visibleColors.map((color) => (
                 <label
