@@ -245,19 +245,6 @@ function Double_blind_customization({ data: propsData, groupData }) {
         return blackoutPrice;
     };
 
-    // useEffect(() => {
-    //     if (!blackoutFabric) return;
-    //     setBlockoutColourData(prev => [{
-    //         ...prev[0],
-    //         values: []
-    //     }]);
-    //     const newValues = blackoutColours[blackoutFabric] || [];
-    //     setBlockoutColourData(prev => [{
-    //         ...prev[0],
-    //         values: newValues
-    //     }]);
-    //     setBlackoutColour("");
-    // }, [blackoutFabric]);
 
     useEffect(() => {
         const fieldValues = {
@@ -345,8 +332,8 @@ function Double_blind_customization({ data: propsData, groupData }) {
         }
 
         const selectedVariant = productData.variants.find(
-            variant => variant.title === selectedColor ||
-                variant.options.some(opt => opt.value === selectedColor)
+            variant => variant.title === blackoutFabric ||
+                variant.options.some(opt => opt.value === blackoutFabric)
         )
 
         const cartItem = {
