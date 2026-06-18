@@ -1,10 +1,11 @@
-﻿import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useMemo, useState } from "react";
 import { Button } from "@lib/components/ui/button";
-import { Plus } from 'lucide-react';
+import { Plus, Search } from 'lucide-react';
 import { createAddToCart } from '../../services/add-to-cart';
 
 
 function Samples(props) {
+	const [searchQuery, setSearchQuery] = useState('');
 	const [loadingItems, setLoadingItems] = useState<Record<string, boolean>>({});
 	const [addedItems, setAddedItems] = useState<Record<string, boolean>>({});
 	const [error, setError] = useState('');
@@ -139,6 +140,19 @@ function Samples(props) {
 			});
 		}
 	}
+
+	const filteredSamples = useMemo(() => {
+		const query = searchQuery.trim().toLowerCase();
+		if (!query) return props.data || [];
+		return (props.data || []).filter((sample: any) => {
+			const matchesTitle = sample.title?.toLowerCase().includes(query);
+			const matchesColor = sample.options?.some((option: any) =>
+				option.values?.some((opt: any) => opt.value?.toLowerCase().includes(query))
+			);
+			return matchesTitle || matchesColor;
+		});
+	}, [props.data, searchQuery]);
+
 	return (
 		<section className="shop-section w-screen min-h-screen flex xl:flex-row flex-col items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-2" id="blindsShop">
 			{/* <div className="w-full xl:w-[23.438vw] flex flex-col xl:gap-6 text-[--Black] shrink-0">
@@ -205,6 +219,21 @@ function Samples(props) {
 				</div>
 			</div> */}
 			<div className="w-full flex flex-col gap-4">
+				<div className="w-full p-4 sm:py-[1.563vw] xl:py-[0.833vw] sm:px-[2.344vw] xl:p-[1.25vw] flex flex-col md:flex-row items-center justify-between gap-4 border border-[--Black] sm:rounded-full rounded-[32px]">
+					<label className="relative flex items-center w-full md:w-[14.648vw] xl:w-[16vw] shrink-0">
+						<Search className="absolute left-4 size-[18px] text-[--mediumGrey] pointer-events-none" />
+						<input
+							type="text"
+							value={searchQuery}
+							onChange={(e) => setSearchQuery(e.target.value)}
+							placeholder="Search"
+							className="w-full text-sm py-3 pl-11 pr-4 bg-transparent border border-[--Black] rounded-full outline-none placeholder:text-[--mediumGrey]"
+						/>
+					</label>
+					<h6 className="text-md sm:block hidden text-black whitespace-nowrap shrink-0">
+						Showing {filteredSamples.length} Result{filteredSamples.length === 1 ? '' : 's'}
+					</h6>
+				</div>
 				<div className="w-full grid items-stretch grid-cols-12 gap-4 sm:gap-6 xl:gap-[1.25vw]">
 					{error && (
 						<div className="col-span-12">
@@ -216,7 +245,12 @@ function Samples(props) {
 							<p className="p-3 rounded-lg bg-green-50 text-green-600 text-sm">{success}</p>
 						</div>
 					)}
-					{props.data && props.data.map((sample, idx) => (
+					{filteredSamples.length === 0 && (
+						<div className="col-span-12 text-center py-8 text-[--mediumGrey]">
+							No samples found{searchQuery.trim() ? ` for "${searchQuery.trim()}"` : ''}.
+						</div>
+					)}
+					{filteredSamples.map((sample, idx) => (
 						<div key={idx} className="col-span-12 sm:col-span-6 xl:col-span-4 flex flex-col justify-between gap-4 xl:gap-[0.833vw] p-4 xl:p-[0.833vw] border border-[--Black] rounded-48">
 							<div className="relative rounded-32 overflow-hidden h-[250px] sm:h-[24.414vw] xl:h-[19.271vw]">
 								<img
