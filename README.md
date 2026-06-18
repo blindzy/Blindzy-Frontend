@@ -5,7 +5,6 @@ This project is a high-performance, modern e-commerce storefront for window cove
 
 ---
 
-
 ## 🏗️ Core Architecture
 
 The application is built on three main pillars:
