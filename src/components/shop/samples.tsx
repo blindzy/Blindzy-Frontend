@@ -2,6 +2,7 @@
 import { Button } from "@lib/components/ui/button";
 import { Plus } from 'lucide-react';
 import { createAddToCart } from '../../services/add-to-cart';
+import SelectDefultColor from "@components/shop/selectdefultColor";
 
 
 function Samples(props) {
@@ -16,8 +17,28 @@ function Samples(props) {
 		last_name: string;
 	};
 	const [userData, setUserData] = useState<UserData | null>(null);
+	const [selectedVariants, setSelectedVariants] = useState<Record<string, any>>({});
+
+	const CATEGORIES = [
+		{ handle: "blinds", label: "Blinds", image: "/images/product/1.png" },
+		{ handle: "curtains", label: "Curtains", image: "/images/product/2.png" },
+		{ handle: "shutters", label: "Shutters", image: "/images/product/4.png" },
+	];
+	const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+	const filteredSamples = selectedCategory
+		? (props.data ?? []).filter((sample: any) =>
+			sample.categories?.some((cat: any) => cat.handle === selectedCategory)
+		)
+		: props.data ?? [];
+
+	const getSelectedVariant = (sample) => {
+		const sampleId = sample.id?.toString();
+		return selectedVariants[sampleId] ?? sample.variants?.[0];
+	};
 
 	useEffect(() => {
+		console.log('debug', props.data)
 		const userDataString = localStorage.getItem("user");
 		if (!userDataString) {
 			console.error("User Data not found in localStorage");
@@ -140,7 +161,7 @@ function Samples(props) {
 		}
 	}
 	return (
-		<section className="shop-section w-screen min-h-screen flex xl:flex-row flex-col items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-2" id="blindsShop">
+		<section className="shop-section w-screen flex xl:flex-row flex-col items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-2" id="blindsShop">
 			{/* <div className="w-full xl:w-[23.438vw] flex flex-col xl:gap-6 text-[--Black] shrink-0">
 				<div className="w-full flex flex-col gap-4 p-6 sm:p-6 xl:p-[1.25vw] border border-[--Black] rounded-48">
 					<div className="flex flex-col gap-2">
@@ -205,46 +226,105 @@ function Samples(props) {
 				</div>
 			</div> */}
 			<div className="w-full flex flex-col gap-4">
-				<div className="w-full grid items-stretch grid-cols-12 gap-4 sm:gap-6 xl:gap-[1.25vw]">
-					{error && (
-						<div className="col-span-12">
-							<p className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">{error}</p>
+				<div
+					key={selectedCategory ?? "categories"}
+					className="w-full grid items-stretch grid-cols-12 gap-4 sm:gap-6 xl:gap-[1.25vw] animate-in fade-in slide-in-from-bottom-2 duration-300"
+				>
+					{!selectedCategory && CATEGORIES.map((category) => (
+						<div
+							key={category.handle}
+							className="col-span-12 sm:col-span-4 relative rounded-32 overflow-hidden h-[250px] sm:h-[24.414vw] xl:h-[19.271vw] cursor-pointer group"
+							onClick={() => setSelectedCategory(category.handle)}
+						>
+							<img
+								src={category.image}
+								className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+								alt={category.label}
+							/>
+							<div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center gap-4 bg-black/10">
+								<h5 className="text-2xl text-white">{category.label}</h5>
+								<Button
+									variant={'primary'}
+									size={'small'}
+									onClick={(e) => {
+										e.stopPropagation();
+										setSelectedCategory(category.handle);
+									}}
+								>
+									Explore samples
+								</Button>
+							</div>
 						</div>
-					)}
-					{success && (
-						<div className="col-span-12">
-							<p className="p-3 rounded-lg bg-green-50 text-green-600 text-sm">{success}</p>
+					))}
+					{selectedCategory && (
+					<>
+						<div className="col-span-12 flex flex-wrap items-center gap-2 sm:gap-3">
+							{CATEGORIES.map((category) => (
+								<button
+									key={category.handle}
+									type="button"
+									className={`text-sm px-4 py-2 rounded-full border transition-colors duration-200 cursor-pointer ${
+										selectedCategory === category.handle
+											? "bg-[--primary] text-white border-[--primary]"
+											: "bg-transparent text-[--Black] border-[--Black]/30 hover:border-[--Black]"
+									}`}
+									onClick={() => setSelectedCategory(category.handle)}
+								>
+									{category.label}
+								</button>
+							))}
+							<button
+								type="button"
+								className="text-sm underline text-[--Black] ml-auto cursor-pointer"
+								onClick={() => setSelectedCategory(null)}
+							>
+								&larr; Back to all categories
+							</button>
 						</div>
+						{error && (
+							<div className="col-span-12">
+								<p className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">{error}</p>
+							</div>
+						)}
+						{success && (
+							<div className="col-span-12">
+								<p className="p-3 rounded-lg bg-green-50 text-green-600 text-sm">{success}</p>
+							</div>
+						)}
+						{filteredSamples.length === 0 && (
+							<div className="col-span-12 flex flex-col items-center justify-center gap-2 text-center py-16 xl:py-[3.5vw]">
+								<h5 className="text-lg text-[--Black]">No samples currently available for this category.</h5>
+								<p className="text-sm text-[--mediumGrey]">Please check back later or explore another category.</p>
+							</div>
+						)}
+					</>
 					)}
-					{props.data && props.data.map((sample, idx) => (
+					{selectedCategory && filteredSamples.map((sample, idx) => {
+						const sampleId = sample.id?.toString();
+						const selectedVariant = getSelectedVariant(sample);
+						return (
 						<div key={idx} className="col-span-12 sm:col-span-6 xl:col-span-4 flex flex-col justify-between gap-4 xl:gap-[0.833vw] p-4 xl:p-[0.833vw] border border-[--Black] rounded-48">
 							<div className="relative rounded-32 overflow-hidden h-[250px] sm:h-[24.414vw] xl:h-[19.271vw]">
 								<img
-									src={sample.thumbnail?.replace("http://localhost:9000", "https://api.blindzy.com")}
+									src={(selectedVariant?.thumbnail ?? sample.thumbnail)?.replace("http://localhost:9000", "https://api.blindzy.com")}
 									className="w-full h-full object-cover" alt={sample.title} />
 							</div>
 							<div className="flex flex-col gap-4 xl:gap-[0.833vw]">
 								<div className="flex items-center justify-between gap-2">
 									<h5 className="text-lg line-clamp-1">{sample.title}</h5>
 									<h5 className="text-lg text-primary shrink-0">
-										{sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.amount === 0
+										{selectedVariant?.price_sets?.[0]?.prices?.[0]?.amount === 0
 											? 'Free'
-											: `A$${sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.amount ?? 0}`}
+											: `A$${selectedVariant?.price_sets?.[0]?.prices?.[0]?.amount ?? 0}`}
 									</h5>
 								</div>
-								<div className="flex items-center gap-1">
-									<h6 className="text-md">Colour:</h6>
-									<h6 className="text-md ">
-										{sample.options.map((option, i) => (
-											<React.Fragment key={i}>
-												{option.values.map((opt, x) => (
-													<span key={x}>
-														{opt.value}
-													</span>
-												))}
-											</React.Fragment>
-										))}
-									</h6>
+								<div className="flex items-center gap-2">
+									<h6 className="text-md shrink-0">Colour:</h6>
+									<SelectDefultColor
+										data={sample.variants}
+										selectedId={selectedVariant?.id}
+										onSelect={(color) => setSelectedVariants(prev => ({ ...prev, [sampleId]: color }))}
+									/>
 								</div>
 								<div className="flex items-center gap-2 shrink-0 text-[--mediumGrey]">
 									<Plus className="size-[18px]" />
@@ -262,10 +342,9 @@ function Samples(props) {
 										variant={'primary'}
 										size={'small'}
 										className="w-full flex-1"
-										disabled={!!loadingItems[sample.id?.toString()]}
+										disabled={!!loadingItems[sampleId]}
 										onClick={() => {
-											const itemId = sample.id?.toString();
-											const isAdded = itemId ? addedItems[itemId] : false;
+											const isAdded = sampleId ? addedItems[sampleId] : false;
 											if (isAdded) {
 												if (typeof window !== 'undefined') {
 													window.dispatchEvent(new CustomEvent('openCartPopup'));
@@ -274,20 +353,21 @@ function Samples(props) {
 											}
 											handleAddToCart(
 												sample.id,
-												sample.title,
-												sample.thumbnail,
-												sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.amount,
-												sample.variants?.[0]?.price_sets?.[0]?.prices?.[0]?.currency_code,
-												sample.variants?.[0]?.id 
+												`${sample.title}${selectedVariant?.title ? ` - ${selectedVariant.title}` : ''}`,
+												selectedVariant?.thumbnail ?? sample.thumbnail,
+												selectedVariant?.price_sets?.[0]?.prices?.[0]?.amount,
+												selectedVariant?.price_sets?.[0]?.prices?.[0]?.currency_code,
+												selectedVariant?.id
 											);
 										}}
 									>
-										{loadingItems[sample.id?.toString()] ? 'Adding...' : addedItems[sample.id?.toString()] ? 'View to cart' : 'Add to Cart'}
+										{loadingItems[sampleId] ? 'Adding...' : addedItems[sampleId] ? 'View to cart' : 'Add to Cart'}
 									</Button>
 								</div>
 							</div>
 						</div>
-					))}
+						);
+					})}
 				</div>
 			</div>
 		</section>
