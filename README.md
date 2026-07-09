@@ -1,5 +1,5 @@
 
-# 🪟 Blindzy Frontend - Developer Documentation
+# 🪟 Blindzy Frontend - Developer Documentation.
 
 This project is a high-performance, modern e-commerce storefront for window coverings, built with the **Astro** framework. It uses a "headless" architecture, decoupling the UI from the content and commerce engines.
 
