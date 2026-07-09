@@ -22,8 +22,8 @@ function Samples(props) {
 
 	const CATEGORIES = [
 		{ handle: "blinds", label: "Blinds", image: "/images/product/1.png" },
-		{ handle: "curtains", label: "Curtains", image: "/images/product/2.png" },
-		{ handle: "shutters", label: "Shutters", image: "/images/product/4.png" },
+		{ handle: "curtains", label: "Curtains", image: "/images/product/4.png" },
+		{ handle: "shutters", label: "Shutters", image: "/images/product/2.png" },
 	];
 	const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
