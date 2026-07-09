@@ -8,11 +8,13 @@ type ColorVariant = {
 
 type SelectDefultColorProps = {
     data?: ColorVariant[];
+    selectedId?: string | null;
+    onSelect?: (color: ColorVariant) => void;
 };
 
 const MAX_VISIBLE = 4;
 
-function SelectDefultColor({ data = [] }: SelectDefultColorProps) {
+function SelectDefultColor({ data = [], selectedId = null, onSelect }: SelectDefultColorProps) {
     const visibleColors = data.slice(0, MAX_VISIBLE);
     const remainingCount = data.length - MAX_VISIBLE;
 
@@ -20,10 +22,12 @@ function SelectDefultColor({ data = [] }: SelectDefultColorProps) {
         <div className="flex items-center gap-2">
             {/* First 4 Colors */}
             {visibleColors.map((color) => (
-                <label
+                <button
+                    type="button"
                     key={color.id}
-                    htmlFor={color.id}
-                    className="size-[32px] sm:size-[4.688vw] xl:size-[3.125vw] shrink-0 transition cursor-pointer p-1 sm:p-1.5 xl:rounded-[16px] border border-[--lightGrey]"
+                    onClick={() => onSelect?.(color)}
+                    title={color.title}
+                    className={`size-[32px] sm:size-[4.688vw] xl:size-[3.125vw] shrink-0 transition cursor-pointer p-1 sm:p-1.5 xl:rounded-[16px] border ${selectedId === color.id ? "border-[--primary] border-2" : "border-[--lightGrey]"}`}
                 >
                     <img
                         src={color.thumbnail}
@@ -32,7 +36,7 @@ function SelectDefultColor({ data = [] }: SelectDefultColorProps) {
                         className="size-full object-cover rounded-[11px]"
                         alt={color.title}
                     />
-                </label>
+                </button>
             ))}
 
             {/* +More Text */}

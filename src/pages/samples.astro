@@ -9,7 +9,7 @@ import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 const productsData = await fetchMedusaApi<any>({
   endpoint: "/store/products/custom",
 });
-
+console.log(productsData)
 
 const filteredProducts = (productsData?.products || []).filter((product: any) => {
   const hasSamplesCategory = product.categories?.some(
