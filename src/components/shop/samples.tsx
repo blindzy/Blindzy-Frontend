@@ -27,12 +27,6 @@ function Samples(props) {
 	];
 	const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-	const filteredSamples = selectedCategory
-		? (props.data ?? []).filter((sample: any) =>
-			sample.categories?.some((cat: any) => cat.handle === selectedCategory)
-		)
-		: props.data ?? [];
-
 	const getSelectedVariant = (sample) => {
 		const sampleId = sample.id?.toString();
 		return selectedVariants[sampleId] ?? sample.variants?.[0];
@@ -164,15 +158,20 @@ function Samples(props) {
 
 	const filteredSamples = useMemo(() => {
 		const query = searchQuery.trim().toLowerCase();
-		if (!query) return props.data || [];
-		return (props.data || []).filter((sample: any) => {
+		const byCategory = selectedCategory
+			? (props.data ?? []).filter((sample: any) =>
+				sample.categories?.some((cat: any) => cat.handle === selectedCategory)
+			)
+			: props.data ?? [];
+		if (!query) return byCategory;
+		return byCategory.filter((sample: any) => {
 			const matchesTitle = sample.title?.toLowerCase().includes(query);
 			const matchesColor = sample.options?.some((option: any) =>
 				option.values?.some((opt: any) => opt.value?.toLowerCase().includes(query))
 			);
 			return matchesTitle || matchesColor;
 		});
-	}, [props.data, searchQuery]);
+	}, [props.data, searchQuery, selectedCategory]);
 
 	return (
 		<section className="shop-section w-screen flex xl:flex-row flex-col items-start xl:gap-[1.25vw] sm:gap-[2.344vw] gap-4 xl:p-[1.25vw] sm:p-[2.344vw] p-2" id="blindsShop">
@@ -260,7 +259,7 @@ function Samples(props) {
 						<div className="col-span-12">
 							<p className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">{error}</p>
 						</div>
-					))}
+					)}
 					{selectedCategory && (
 					<>
 						<div className="col-span-12 flex flex-wrap items-center gap-2 sm:gap-3">
@@ -309,7 +308,10 @@ function Samples(props) {
 							No samples found{searchQuery.trim() ? ` for "${searchQuery.trim()}"` : ''}.
 						</div>
 					)}
-					{filteredSamples.map((sample, idx) => (
+					{filteredSamples.map((sample, idx) => {
+						const sampleId = sample.id?.toString();
+						const selectedVariant = getSelectedVariant(sample);
+						return (
 						<div key={idx} className="col-span-12 sm:col-span-6 xl:col-span-4 flex flex-col justify-between gap-4 xl:gap-[0.833vw] p-4 xl:p-[0.833vw] border border-[--Black] rounded-48">
 							<div className="relative rounded-32 overflow-hidden h-[250px] sm:h-[24.414vw] xl:h-[19.271vw]">
 								<img
