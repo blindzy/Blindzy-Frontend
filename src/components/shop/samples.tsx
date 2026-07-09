@@ -239,6 +239,37 @@ function Samples(props) {
 				</div>
 			</div> */}
 			<div className="w-full flex flex-col gap-4">
+				{!selectedCategory ? (
+					<div className="w-full grid items-stretch grid-cols-12 gap-4 sm:gap-6 xl:gap-[1.25vw] animate-in fade-in slide-in-from-bottom-2 duration-300">
+						{CATEGORIES.map((category) => (
+							<div
+								key={category.handle}
+								className="col-span-12 sm:col-span-4 relative rounded-32 overflow-hidden h-[250px] sm:h-[24.414vw] xl:h-[19.271vw] cursor-pointer group"
+								onClick={() => setSelectedCategory(category.handle)}
+							>
+								<img
+									src={category.image}
+									className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+									alt={category.label}
+								/>
+								<div className="absolute inset-0 w-full h-full flex flex-col items-center justify-center text-center gap-4 bg-black/10">
+									<h5 className="text-2xl text-white">{category.label}</h5>
+									<Button
+										variant={'primary'}
+										size={'small'}
+										onClick={(e) => {
+											e.stopPropagation();
+											setSelectedCategory(category.handle);
+										}}
+									>
+										Explore samples
+									</Button>
+								</div>
+							</div>
+						))}
+					</div>
+				) : (
+				<>
 				<div className="w-full p-4 sm:py-[1.563vw] xl:py-[0.833vw] sm:px-[2.344vw] xl:p-[1.25vw] flex flex-col md:flex-row items-center justify-between gap-4 border border-[--Black] sm:rounded-full rounded-[32px]">
 					<label className="relative flex items-center w-full md:w-[14.648vw] xl:w-[16vw] shrink-0">
 						<Search className="absolute left-4 size-[18px] text-[--mediumGrey] pointer-events-none" />
@@ -260,48 +291,33 @@ function Samples(props) {
 							<p className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">{error}</p>
 						</div>
 					)}
-					{selectedCategory && (
-					<>
-						<div className="col-span-12 flex flex-wrap items-center gap-2 sm:gap-3">
-							{CATEGORIES.map((category) => (
-								<button
-									key={category.handle}
-									type="button"
-									className={`text-sm px-4 py-2 rounded-full border transition-colors duration-200 cursor-pointer ${
-										selectedCategory === category.handle
-											? "bg-[--primary] text-white border-[--primary]"
-											: "bg-transparent text-[--Black] border-[--Black]/30 hover:border-[--Black]"
-									}`}
-									onClick={() => setSelectedCategory(category.handle)}
-								>
-									{category.label}
-								</button>
-							))}
+					<div className="col-span-12 flex flex-wrap items-center gap-2 sm:gap-3">
+						{CATEGORIES.map((category) => (
 							<button
+								key={category.handle}
 								type="button"
-								className="text-sm underline text-[--Black] ml-auto cursor-pointer"
-								onClick={() => setSelectedCategory(null)}
+								className={`text-sm px-4 py-2 rounded-full border transition-colors duration-200 cursor-pointer ${
+									selectedCategory === category.handle
+										? "bg-[--primary] text-white border-[--primary]"
+										: "bg-transparent text-[--Black] border-[--Black]/30 hover:border-[--Black]"
+								}`}
+								onClick={() => setSelectedCategory(category.handle)}
 							>
-								&larr; Back to all categories
+								{category.label}
 							</button>
+						))}
+						<button
+							type="button"
+							className="text-sm underline text-[--Black] ml-auto cursor-pointer"
+							onClick={() => setSelectedCategory(null)}
+						>
+							&larr; Back to all categories
+						</button>
+					</div>
+					{success && (
+						<div className="col-span-12">
+							<p className="p-3 rounded-lg bg-green-50 text-green-600 text-sm">{success}</p>
 						</div>
-						{error && (
-							<div className="col-span-12">
-								<p className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">{error}</p>
-							</div>
-						)}
-						{success && (
-							<div className="col-span-12">
-								<p className="p-3 rounded-lg bg-green-50 text-green-600 text-sm">{success}</p>
-							</div>
-						)}
-						{filteredSamples.length === 0 && (
-							<div className="col-span-12 flex flex-col items-center justify-center gap-2 text-center py-16 xl:py-[3.5vw]">
-								<h5 className="text-lg text-[--Black]">No samples currently available for this category.</h5>
-								<p className="text-sm text-[--mediumGrey]">Please check back later or explore another category.</p>
-							</div>
-						)}
-					</>
 					)}
 					{filteredSamples.length === 0 && (
 						<div className="col-span-12 text-center py-8 text-[--mediumGrey]">
@@ -378,6 +394,8 @@ function Samples(props) {
 						);
 					})}
 				</div>
+				</>
+				)}
 			</div>
 		</section>
 	);
