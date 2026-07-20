@@ -9,6 +9,8 @@ function OrderList(props) {
         setShowDetails(!showDetails);
     };
     // console.log(props.item);
+    const amount = props.item.customizations?.amount || 0;
+    const lineTotal = amount * (props.item.quantity || 1);
   return (
         <div className="w-full p-4 flex flex-col items-center gap-2.5 border border-[--Black] rounded-24" >
             <div className="w-full flex items-center justify-between">
@@ -20,12 +22,12 @@ function OrderList(props) {
                     <div className="w-fit sm:hidden flex flex-col gap-1">
                         <h6 className="text-lg text-[--Black]">{props.item.customizations?.title}</h6>
                         <p className="text-md text-[--Black]">
-                            {props.item.customizations?.amount} x {props.item.quantity} = {props.item.customizations?.amount * props.item.quantity}
+                            A${amount} x {props.item.quantity} = A${lineTotal}
                         </p>
                     </div>
                 </div>
                 <h6 className="hidden sm:block text-md text-[--Black]">
-                    A${props.item.customizations?.amount} x {props.item.quantity} = A${props.item.customizations?.amount * props.item.quantity}
+                    A${amount} x {props.item.quantity} = A${lineTotal}
                 </h6>
                 <div className="sm:hidden flex items-center gap-1 cursor-pointer" onClick={toggleDetails}>
                     <ChevronDown className={`text-[--primary] size-[24px] transition-transform duration-300 ${showDetails ? 'rotate-180' : 'rotate-0'}`} />

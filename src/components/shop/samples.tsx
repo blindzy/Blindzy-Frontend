@@ -3,6 +3,7 @@ import { Button } from "@lib/components/ui/button";
 import { Plus, Search } from 'lucide-react';
 import { createAddToCart } from '../../services/add-to-cart';
 import SelectDefultColor from "@components/shop/selectdefultColor";
+import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
 
 
 function Samples(props) {
@@ -32,42 +33,70 @@ function Samples(props) {
 		return selectedVariants[sampleId] ?? sample.variants?.[0];
 	};
 
+	const getCartKey = (productId, variantId) =>
+		`${productId}_${variantId ?? 'default'}`;
+
 	useEffect(() => {
 		console.log('debug', props.data)
 		const userDataString = localStorage.getItem("user");
 		if (!userDataString) {
 			console.error("User Data not found in localStorage");
+			loadGuestAddedItems();
 			return;
 		}
 		const userDataObj = JSON.parse(userDataString);
 		setUserData(userDataObj);
+		loadServerAddedItems(userDataObj);
 	}, []);
 
-	useEffect(() => {
+	const loadGuestAddedItems = () => {
 		const guestItems = JSON.parse(localStorage.getItem('guest_cart') || '[]');
 		const added: Record<string, boolean> = {};
 		guestItems.forEach((item: any) => {
 			if (item.product_id) {
-				added[item.product_id] = true;
+				added[getCartKey(item.product_id, item.variant_id)] = true;
 			}
 		});
 		setAddedItems(added);
-	}, []);
+	};
+
+	const loadServerAddedItems = async (userDataObj: UserData) => {
+		try {
+			const data = await fetchMedusaApi<any>({
+				endpoint: 'store/customers/cart',
+				query: { email: userDataObj.email },
+			});
+			const serverItems = data?.cart?.items ?? [];
+			const added: Record<string, boolean> = {};
+			serverItems.forEach((item: any) => {
+				if (item.product_id) {
+					added[getCartKey(item.product_id, item.variant_id)] = true;
+				}
+			});
+			setAddedItems(added);
+		} catch (err) {
+			// No server cart yet (e.g. 404) — fall back to any pending guest items.
+			loadGuestAddedItems();
+		}
+	};
 
 	useEffect(() => {
 		if (typeof window === 'undefined') return;
 
 		const handleCartItemDeleted = (event: any) => {
-			const { productId } = event.detail;
-			// Check if there are still items with this product_id in the cart
+			const { productId, variantId } = event.detail;
+			const cartKey = getCartKey(productId, variantId);
+			// Check if there are still items with this product_id + variant_id in the cart
 			const guestItems = JSON.parse(localStorage.getItem('guest_cart') || '[]');
-			const hasProduct = guestItems.some((item: any) => item.product_id?.toString() === productId);
+			const hasVariant = guestItems.some((item: any) =>
+				getCartKey(item.product_id?.toString(), item.variant_id?.toString() ?? null) === cartKey
+			);
 
-			// If no items with this product_id remain, remove it from addedItems
-			if (!hasProduct) {
+			// If no items with this product_id + variant_id remain, remove it from addedItems
+			if (!hasVariant) {
 				setAddedItems(prev => {
 					const next = { ...prev };
-					delete next[productId];
+					delete next[cartKey];
 					return next;
 				});
 			}
@@ -98,7 +127,8 @@ function Samples(props) {
 
 	const handleAddToCart = async (id, title, thumbnail, amount, currency_code, variant_id) => {
 		const productId = id.toString();
-		setLoadingItems(prev => ({ ...prev, [productId]: true }));
+		const cartKey = getCartKey(productId, variant_id);
+		setLoadingItems(prev => ({ ...prev, [cartKey]: true }));
 
 		const cartItem = {
 			id: `local_${Date.now()}_${Math.random().toString(36).slice(2)}`,
@@ -119,13 +149,13 @@ function Samples(props) {
 				existing.push(cartItem);
 				localStorage.setItem('guest_cart', JSON.stringify(existing));
 				setSuccess('Added to cart!');
-				setAddedItems(prev => ({ ...prev, [productId]: true }));
+				setAddedItems(prev => ({ ...prev, [cartKey]: true }));
 			} catch {
 				setError('Failed to save item to cart.');
 			} finally {
 				setLoadingItems(prev => {
 					const next = { ...prev };
-					delete next[productId];
+					delete next[cartKey];
 					return next;
 				});
 			}
@@ -142,7 +172,7 @@ function Samples(props) {
 			});
 
 			setSuccess("Add to Cart created successfully!");
-			setAddedItems(prev => ({ ...prev, [productId]: true }));
+			setAddedItems(prev => ({ ...prev, [cartKey]: true }));
 
 		} catch (err: any) {
 			console.error("Add to Cart error:", err);
@@ -150,7 +180,7 @@ function Samples(props) {
 		} finally {
 			setLoadingItems(prev => {
 				const next = { ...prev };
-				delete next[productId];
+				delete next[cartKey];
 				return next;
 			});
 		}
@@ -327,6 +357,7 @@ function Samples(props) {
 					{filteredSamples.map((sample, idx) => {
 						const sampleId = sample.id?.toString();
 						const selectedVariant = getSelectedVariant(sample);
+						const cartKey = getCartKey(sampleId, selectedVariant?.id);
 						return (
 						<div key={idx} className="col-span-12 sm:col-span-6 xl:col-span-4 flex flex-col justify-between gap-4 xl:gap-[0.833vw] p-4 xl:p-[0.833vw] border border-[--Black] rounded-48">
 							<div className="relative rounded-32 overflow-hidden h-[250px] sm:h-[24.414vw] xl:h-[19.271vw]">
@@ -367,9 +398,9 @@ function Samples(props) {
 										variant={'primary'}
 										size={'small'}
 										className="w-full flex-1"
-										disabled={!!loadingItems[sampleId]}
+										disabled={!!loadingItems[cartKey]}
 										onClick={() => {
-											const isAdded = sampleId ? addedItems[sampleId] : false;
+											const isAdded = cartKey ? addedItems[cartKey] : false;
 											if (isAdded) {
 												if (typeof window !== 'undefined') {
 													window.dispatchEvent(new CustomEvent('openCartPopup'));
@@ -386,7 +417,7 @@ function Samples(props) {
 											);
 										}}
 									>
-										{loadingItems[sampleId] ? 'Adding...' : addedItems[sampleId] ? 'View to cart' : 'Add to Cart'}
+										{loadingItems[cartKey] ? 'Adding...' : addedItems[cartKey] ? 'View to cart' : 'Add to Cart'}
 									</Button>
 								</div>
 							</div>

@@ -75,6 +75,7 @@ export function CartProduct(props) {
     try {
       const itemId = props.item.id;
       const productId = props.item.product_id?.toString();
+      const variantId = props.item.variant_id?.toString() ?? null;
 
       if (itemId?.toString().startsWith("local_")) {
         const guestItems = JSON.parse(localStorage.getItem("guest_cart") || "[]");
@@ -87,7 +88,7 @@ export function CartProduct(props) {
       if (typeof window !== "undefined") {
         window.dispatchEvent(
           new CustomEvent("cartItemDeleted", {
-            detail: { productId, itemId },
+            detail: { productId, variantId, itemId },
           })
         );
       }
