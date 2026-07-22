@@ -1,11 +1,11 @@
 import { defineConfig } from "astro/config";
-import vercel from "@astrojs/vercel"; // 👈 Add this
+import vercel from "@astrojs/vercel";
 import react from "@astrojs/react";
 import tailwind from "@astrojs/tailwind";
 
 export default defineConfig({
-  output: "server", // 👈 Required for middleware
-  adapter: vercel(), // 👈 Add adapter here
+  output: "server",
+  adapter: vercel(),
   middleware: true,
   integrations: [
     react({
@@ -13,7 +13,6 @@ export default defineConfig({
     }),
     tailwind(),
   ],
-
   vite: {
     server: {
       proxy: {
@@ -26,7 +25,7 @@ export default defineConfig({
       },
     },
     ssr: {
-      noExternal: ["@medusajs/js-sdk"],
-    }
+      noExternal: ["@medusajs/js-sdk", "gsap"],
+    },
   },
 });
