@@ -1,21 +1,23 @@
 # Blindzy Website — Content Editing Guide
 
-This guide is written for someone with **no coding experience**, using nothing
-more than the file manager (File Explorer on Windows, Finder on Mac) and
-Notepad (Windows) or TextEdit (Mac). No special software required.
+This guide is written for someone with **no coding experience**, using
+nothing more than the file manager (File Explorer on Windows, Finder on
+Mac), Notepad (Windows) or TextEdit (Mac), and a couple of copy-paste
+commands. No coding knowledge required — just follow the steps in order.
 
 If you ever get stuck or something looks broken after an edit, **do not
 panic** — just undo your change (Ctrl+Z / Cmd+Z, then save again), or send
 the file to your developer. Nothing you do in these files can break the
-website permanently as long as you don't publish/upload a broken file.
+live website as long as you don't push a broken file (see Part 4).
 
 ---
 
-## 🎥 VIDEO GUIDE: Overview (placeholder)
+## 🎥 VIDEO GUIDE: Everything in one video (placeholder)
 
-*[Video to be added here: 2-minute walkthrough of opening the project folder
-and finding the two files you'll use most — `site-content.ts` and the
-`public/images` folder.]*
+*[Video to be added here — a single walkthrough covering: opening the
+project folder, installing Node.js, editing `site-content.ts`, replacing a
+photo, previewing the changes with `npm run dev`, and pushing the changes
+live with the git commands below.]*
 
 ---
 
@@ -31,6 +33,51 @@ the website work and should be left alone.
 
 ---
 
+## Part 0 — One-time setup (only needed the first time)
+
+Before you can preview your changes, your computer needs a free program
+called **Node.js** installed. You only need to do this once, ever.
+
+### Installing Node.js
+
+1. Go to **[https://nodejs.org](https://nodejs.org)**.
+2. Click the big green button that says **LTS** (this stands for "Long Term
+   Support" — it's the stable version, always pick this one, not "Current").
+3. Open the downloaded file and click **Next → Next → Next → Install**,
+   accepting all the defaults. Enter your computer password if asked.
+4. Once it's done, restart your computer (just to be safe).
+
+### Opening the "Terminal" (this is the black/white box you'll paste commands into)
+
+- **Windows:** Click the Start menu, type `Command Prompt`, and open it.
+- **Mac:** Open Finder → Applications → Utilities → **Terminal**.
+
+You'll use this window for the copy-paste commands in Part 3 and Part 4
+below. You never need to type anything yourself — just copy the exact text
+from this guide and paste it in (Windows: right-click to paste, Mac:
+Cmd+V), then press **Enter**.
+
+### Navigating to your project folder
+
+Every time you open a fresh Terminal window, the very first thing you do is
+"move into" the project folder. Copy-paste this, but **replace the path
+with the actual location of your project folder** (ask your developer for
+this exact path once, then save it somewhere handy — e.g. Notes app):
+
+```
+cd "C:\Users\YourName\Documents\blindzy-website"
+```
+
+(Mac example — paths look a little different):
+
+```
+cd ~/Documents/blindzy-website
+```
+
+You should do this **every time** before running any command below.
+
+---
+
 ## Part 1 — Editing text (`site-content.ts`)
 
 ### How to open it
@@ -42,11 +89,6 @@ the website work and should be left alone.
    - On Mac, if TextEdit adds formatting and breaks things, use TextEdit's
      menu **Format → Make Plain Text** first, or ask your developer to
      install a free plain-text editor like Notepad++ / VS Code.
-
-### 🎥 VIDEO GUIDE: Opening and editing site-content.ts (placeholder)
-
-*[Video to be added here: opening the file in Notepad, changing one sentence,
-saving it.]*
 
 ### The Golden Rules
 
@@ -121,11 +163,6 @@ To add a new one:
    actually exist in `public/images/product/` (see Part 2 below for how to
    add new pictures).
 
-### 🎥 VIDEO GUIDE: Adding a new product card (placeholder)
-
-*[Video to be added here: copying a product block, pasting it, editing the
-text, and uploading the matching images.]*
-
 ### Example: removing a card / reason / tile
 
 Select the entire block for that item, from its opening `{` to its closing
@@ -151,11 +188,6 @@ same file name**.
    taller/narrower crop (e.g. 1080×1400) for `hero-bg2.png`, so it doesn't
    look stretched or blurry.
 
-### 🎥 VIDEO GUIDE: Replacing the hero background photo (placeholder)
-
-*[Video to be added here: finding the hero images folder, resizing a photo
-if needed, and replacing the file.]*
-
 ### Changing a product photo
 
 Go to `public/images/product` and replace the relevant file (e.g.
@@ -178,6 +210,77 @@ If you'd rather use a new file name instead of replacing an old one:
 
 ---
 
+## Part 3 — Previewing your changes before they go live
+
+Once you've saved your edits (text and/or photos), you can check how they
+look **on your own computer only** — nobody else can see this preview yet.
+
+1. Open the Terminal (see Part 0) and navigate to the project folder:
+
+   ```
+   cd "C:\Users\YourName\Documents\blindzy-website"
+   ```
+
+2. The very first time only, install the project's building blocks by
+   pasting this and pressing Enter (this can take a minute or two):
+
+   ```
+   npm install
+   ```
+
+3. Then, every time you want to preview, paste this:
+
+   ```
+   npm run dev
+   ```
+
+4. Wait for a message that looks like `Local: http://localhost:4321/` and
+   then hold Ctrl (Windows) or Cmd (Mac) and click that link, or copy-paste
+   it into your browser.
+5. Your browser will show you the website with your changes. Refresh the
+   page after saving further edits to see them update.
+6. When you're done previewing, click back into the Terminal window and
+   press **Ctrl+C** to stop it.
+
+---
+
+## Part 4 — Pushing your changes live (git)
+
+Once you're happy with how things look in the preview, these commands
+publish your changes to the live website. **Copy and paste each block
+exactly as shown, one at a time, pressing Enter after each.**
+
+1. Make sure you're in the project folder (see Part 0):
+
+   ```
+   cd "C:\Users\YourName\Documents\blindzy-website"
+   ```
+
+2. Save your changes into git:
+
+   ```
+   git add .
+   ```
+
+3. Write a short note describing what you changed (you can edit the words
+   inside the quotes, e.g. `"Updated hero heading and about us photo"`):
+
+   ```
+   git commit -m "Updated website content"
+   ```
+
+4. Push it live:
+
+   ```
+   git push
+   ```
+
+That's it — your changes are now live. If the last command shows any red
+text that looks like an error, **stop and send a screenshot to your
+developer** rather than trying more commands.
+
+---
+
 ## What NOT to edit yourself
 
 - Any file ending in `.astro`, `.tsx`, or `.css` other than
@@ -192,6 +295,6 @@ If you'd rather use a new file name instead of replacing an old one:
 
 - Close the file **without saving**, and reopen it — you'll get back the
   last saved version.
-- If you already saved a broken change, contact your developer with a
-  description of what you changed; the file is tracked with version control
-  (Git), so any change can be safely reversed.
+- If you already saved a broken change and pushed it live, contact your
+  developer with a description of what you changed; the file is tracked
+  with version control (Git), so any change can be safely reversed.
