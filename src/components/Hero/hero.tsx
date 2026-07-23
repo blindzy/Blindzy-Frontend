@@ -1,10 +1,9 @@
 ﻿import * as React from "react";
 import { useEffect } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { Button } from "@lib/components/ui/button";
 import Navbar from "@components/navbar/navbar";
+import { heroContent, heroFeatureBoxes } from "@data/site-content";
 import './css/style.css';
 
 function Hero() {
@@ -12,27 +11,41 @@ function Hero() {
 	const lenis = isDesktop ? useLenis() : null;
 
 	useEffect(() => {
-		gsap.registerPlugin(ScrollTrigger);
-		if (window.innerWidth > 1150) {
-			ScrollTrigger.normalizeScroll(true);
-		}
+		let cancelled = false;
 
-		// If using Lenis, connect it with GSAP
-		if (lenis) {
-			lenis.on('scroll', ScrollTrigger.update);
-		}
+		(async () => {
+			const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
+				import("gsap"),
+				import("gsap/dist/ScrollTrigger"),
+			]);
+			if (cancelled) return;
 
-		gsap.to("#hero", {
-			scrollTrigger: {
-				trigger: ".hero-content",
-				start: "top top",
-				end: "center top",
-				scrub: 1,
-			},
-			scale: 0.95,
-			borderRadius: "60px",
-			duration: 0.1,
-		});
+			gsap.registerPlugin(ScrollTrigger);
+			if (window.innerWidth > 1150) {
+				ScrollTrigger.normalizeScroll(true);
+			}
+
+			// If using Lenis, connect it with GSAP
+			if (lenis) {
+				lenis.on('scroll', ScrollTrigger.update);
+			}
+
+			gsap.to("#hero", {
+				scrollTrigger: {
+					trigger: ".hero-content",
+					start: "top top",
+					end: "center top",
+					scrub: 1,
+				},
+				scale: 0.95,
+				borderRadius: "60px",
+				duration: 0.1,
+			});
+		})();
+
+		return () => {
+			cancelled = true;
+		};
 	}, [lenis]);
 
 	return (
@@ -43,52 +56,33 @@ function Hero() {
 					{/* Desktop/Tablet: Center/left text/buttons */}
 					<div className="flex xl:w-[35.521vw] sm:w-[80%] w-full xl:m-0 mx-auto xl:text-left text-center flex-col xl:gap-[1.25vw] gap-4 mb-[100px]">
 						<div className="flex flex-col gap-2">
-							<h1 className="text-3xl text-white uppercase">Installing Blinds Made Easy</h1>
-							<p className="text-sm text-white">Welcome to Blindzy, your trusted source for custom DIY window furnishings in Australia. Browse our wide range of affordable, high quality window furnishings, and follow our simple installation guides to effortlessly transform your home.</p>
+							<h1 className="text-3xl text-white uppercase">{heroContent.heading}</h1>
+							<p className="text-sm text-white">{heroContent.paragraph}</p>
 						</div>
 						<div className="flex items-center xl:justify-start justify-center gap-[24px]">
 							<Button variant={'primary'} size={'large'} asChild className="hover:border-[--white] hover:text-[--white]">
-								<a href="/samples">
-									Get Free Samples
+								<a href={heroContent.primaryButtonLink}>
+									{heroContent.primaryButtonText}
 								</a>
 							</Button>
 							<Button variant={'outline'} size={'large'} asChild>
-								<a href="/about">
-									Learn More
+								<a href={heroContent.secondaryButtonLink}>
+									{heroContent.secondaryButtonText}
 								</a>
 							</Button>
 						</div>
 					</div>
 					{/* Cards: hidden on mobile, visible on xl and up */}
 					<div className="hidden xl:flex xl:w-[340px] h-full flex-col xl:gap-[1.25vw] gap-6">
-						<div className="w-full h-full flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
-							<img src="/images/icon/box.png" className="w-fit shrink-0" alt="box" />
-							<div className="flex flex-col gap-1">
-								<p className="text-md">Free Delivery</p>
-								<p className="text-xs text-black">Fast, reliable delivery across Australia straight from our factory to your home.</p>
+						{heroFeatureBoxes.map((box, index) => (
+							<div key={index} className="w-full h-full flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
+								<img src={box.icon} className="w-fit shrink-0" alt={box.title} />
+								<div className="flex flex-col gap-1">
+									<p className="text-md">{box.title}</p>
+									<p className="text-xs text-black">{box.description}</p>
+								</div>
 							</div>
-						</div>
-						<div className="w-full h-full flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
-							<img src="/images/icon/guarantee.png" className="w-fit shrink-0" alt="guarantee" />
-							<div className="flex flex-col gap-1">
-								<p className="text-md">10 Years Warranty</p>
-								<p className="text-xs text-black"> Premium quality window furnishings backed by a 10 year warranty for long-term peace of mind.</p>
-							</div>
-						</div>
-						<div className="w-full h-full flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
-							<img src="/images/icon/australia.png" className="w-fit shrink-0" alt="australia" />
-							<div className="flex flex-col gap-1">
-								<p className="text-md">Made in Australia</p>
-								<p className="text-xs text-black">Proudly manufactured in Melbourne using high quality materials and expert craftsmanship.</p>
-							</div>
-						</div>
-						<div className="w-full h-full flex items-center xl:gap-[1.25vw] gap-4 xl:px-[1.25vw] px-2 xl:py-[1.667vw] bg-white border border-[--Black] rounded-32">
-							<img src="/images/icon/diy.png" className="w-fit shrink-0" alt="diy" />
-							<div className="flex flex-col gap-1">
-								<p className="text-md">Install Yourself</p>
-								<p className="text-xs text-black">Easy-to-install blinds and curtains with simple guides</p>
-							</div>
-						</div>
+						))}
 					</div>
 				</div>
 			</div>

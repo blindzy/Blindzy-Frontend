@@ -1,31 +1,5 @@
 ﻿import React from "react";
-
-const productsData = [
-    {
-        id: 1,
-        name: "Blinds",
-        description: "Sleek and versatile, offering a simple and stylish way to control light and privacy in any room.",
-        image: "/images/product/blinds.png",
-        backgroundImage: "/images/product/product1.jpg",
-        link: "/blinds/roller-blinds"
-    },
-    {
-        id: 2,
-        name: "Curtains",
-        description: "Offering a classic and elegant way to enhance privacy, control light, and add style to any room.",
-        image: "/images/product/curtain.png",
-        backgroundImage: "/images/product/product2.jpg",
-        link: "/curtains"
-    },
-    {
-        id: 3,
-        name: "Shutters",
-        description: "Plantation shutters are durable, louvered window coverings, designed to provide excellent light control, privacy, and a timeless, sophisticated look for any space.",
-        image: "/images/product/shutters.png",
-        backgroundImage: "/images/product/product3.jpg",
-        link: "/shutters"
-    }
-];
+import { productsData } from "@data/site-content";
 
 function Products() {
     return (

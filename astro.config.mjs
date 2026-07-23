@@ -25,7 +25,7 @@ export default defineConfig({
       },
     },
     ssr: {
-      noExternal: ["@medusajs/js-sdk", "gsap"],
+      noExternal: ["@medusajs/js-sdk"],
     },
   },
 });
