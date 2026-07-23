@@ -14,10 +14,7 @@ live website as long as you don't push a broken file (see Part 4).
 
 ## 🎥 VIDEO GUIDE: Everything in one video (placeholder)
 
-*[Video to be added here — a single walkthrough covering: opening the
-project folder, installing Node.js, editing `site-content.ts`, replacing a
-photo, previewing the changes with `npm run dev`, and pushing the changes
-live with the git commands below.]*
+(Video Guide)[https://vento.so/view/5cf9899a-e351-4a51-8725-c57fc56e6f9f?utm_medium=share]
 
 ---
 
