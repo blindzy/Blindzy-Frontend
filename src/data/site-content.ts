@@ -28,7 +28,7 @@
 export const heroContent = {
   heading: "Installing Blinds Made Easy",
   paragraph:
-    "Welcome to Blindz, your trusted source for custom DIY window furnishings in Australia. Browse our wide range of affordable, high quality window furnishings, and follow our simple installation guides to effortlessly transform your home.",
+    "Welcome to Blindzy, your trusted source for custom DIY window furnishings in Australia. Browse our wide range of affordable, high quality window furnishings, and follow our simple installation guides to effortlessly transform your home",
   primaryButtonText: "Get Free Samples",
   primaryButtonLink: "/samples",
   secondaryButtonText: "Learn More",
