@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import SelectDefaultColor from "./selectdefultColor";
 import SelectVarient from "./selectVarient";

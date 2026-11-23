@@ -10,6 +10,7 @@ async function getData() {
 	const tutorialsData = await fetchApi<TutorialsData>({
 		endpoint: "Tutorials?populate=*&pagination[pageSize]=1000",
 		wrappedByKey: "data",
+		fallback: [],
 	});
 	return { tutorialsData };
 }

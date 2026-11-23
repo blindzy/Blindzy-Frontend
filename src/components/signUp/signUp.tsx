@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Icon } from '@iconify/react';
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { signup } from '../../services/auth/signup';
 import { Input } from '@lib/components/ui/input';

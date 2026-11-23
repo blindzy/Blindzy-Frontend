@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 // import './css/style.css';
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import Navbar from "@components/navbar/navbar";
 

@@ -16,7 +16,7 @@ function Hero() {
 		(async () => {
 			const [{ default: gsap }, { ScrollTrigger }] = await Promise.all([
 				import("gsap"),
-				import("gsap/dist/ScrollTrigger"),
+				import("gsap/ScrollTrigger"),
 			]);
 			if (cancelled) return;
 

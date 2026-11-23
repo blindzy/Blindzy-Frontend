@@ -1,7 +1,7 @@
 ﻿import React, { useEffect } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import DrawSVGPlugin from "gsap/dist/DrawSVGPlugin";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { DrawSVGPlugin } from "gsap/DrawSVGPlugin";
 import './css/style.css'; // Ensure this path is correct relative to quality.tsx
 
 

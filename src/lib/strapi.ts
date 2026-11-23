@@ -3,6 +3,11 @@ interface Props {
     query?: Record<string, string>;
     wrappedByKey?: string;
     wrappedByList?: boolean;
+    /**
+     * Returned instead of throwing when Strapi is unreachable, slow, or
+     * answers with a non-OK / non-JSON response. Omit it to keep throwing.
+     */
+    fallback?: unknown;
 }
   
   /**
@@ -18,6 +23,7 @@ interface Props {
         query,
         wrappedByKey,
         wrappedByList,
+        fallback,
     }: Props): Promise<T> {
     if (endpoint.startsWith('/')) {
       endpoint = endpoint.slice(1);
@@ -32,8 +38,20 @@ interface Props {
         });
     }
     console.log(url.toString());
-    const res = await fetch(url.toString());
-    let data = await res.json();
+    let data;
+    if (fallback !== undefined) {
+      try {
+        const res = await fetch(url.toString(), { signal: AbortSignal.timeout(5000) });
+        if (!res.ok) throw new Error(`Strapi responded ${res.status}`);
+        data = await res.json();
+      } catch (err) {
+        console.warn(`[strapi] ${endpoint} failed, using fallback:`, err);
+        return fallback as T;
+      }
+    } else {
+      const res = await fetch(url.toString());
+      data = await res.json();
+    }
   
     if (wrappedByKey) {
       data = data[wrappedByKey];

@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useEffect, useState } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLenis } from '../../hooks/useLenis';
 import { Plus } from 'lucide-react';
 import { Button } from "@lib/components/ui/button";
