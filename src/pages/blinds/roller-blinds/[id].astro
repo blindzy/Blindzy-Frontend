@@ -4,13 +4,10 @@ import Navbar from "@components/navbar/navbar";
 import Footer from "@components/Footer/Footer";
 import Single_blinds_customization from "@components/customization/single-blinds-customization";
 import fetchMedusaApi from "@lib/lib/fetchMedusaApi";
-import fetchApi from "@lib/strapi";
+import fetchPriceGrid from "@lib/priceGrid";
 import type { GroupData } from "@interfaces/interfaces";
 async function getData() {
-  const groupData = await fetchApi<GroupData>({
-    endpoint: "blind-price?populate=*",
-    wrappedByKey: "data",
-  });
+  const groupData = await fetchPriceGrid("blinds");
   return { groupData };
 }
 const { groupData } = await getData();
